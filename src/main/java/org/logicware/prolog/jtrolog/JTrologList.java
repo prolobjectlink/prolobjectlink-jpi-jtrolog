@@ -19,13 +19,13 @@
  */
 package org.logicware.prolog.jtrolog;
 
-import static org.logicware.pdb.prolog.PrologTermType.LIST_TYPE;
+import static org.logicware.prolog.PrologTermType.LIST_TYPE;
 
 import java.util.Iterator;
 
-import org.logicware.pdb.prolog.PrologList;
-import org.logicware.pdb.prolog.PrologProvider;
-import org.logicware.pdb.prolog.PrologTerm;
+import org.logicware.prolog.PrologList;
+import org.logicware.prolog.PrologProvider;
+import org.logicware.prolog.PrologTerm;
 
 import jTrolog.terms.Struct;
 import jTrolog.terms.Term;

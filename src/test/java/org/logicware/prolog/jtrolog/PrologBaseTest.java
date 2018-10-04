@@ -22,14 +22,14 @@ package org.logicware.prolog.jtrolog;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.logicware.pdb.prolog.PrologAtom;
-import org.logicware.pdb.prolog.PrologDouble;
-import org.logicware.pdb.prolog.PrologFactory;
-import org.logicware.pdb.prolog.PrologFloat;
-import org.logicware.pdb.prolog.PrologInteger;
-import org.logicware.pdb.prolog.PrologProvider;
-import org.logicware.pdb.prolog.PrologTerm;
-import org.logicware.pdb.prolog.PrologVariable;
+import org.logicware.prolog.PrologAtom;
+import org.logicware.prolog.PrologDouble;
+import org.logicware.prolog.PrologFactory;
+import org.logicware.prolog.PrologFloat;
+import org.logicware.prolog.PrologInteger;
+import org.logicware.prolog.PrologProvider;
+import org.logicware.prolog.PrologTerm;
+import org.logicware.prolog.PrologVariable;
 
 public abstract class PrologBaseTest {
 

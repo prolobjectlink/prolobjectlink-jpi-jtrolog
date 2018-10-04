@@ -19,15 +19,15 @@
  */
 package org.logicware.prolog.jtrolog;
 
-import static org.logicware.pdb.prolog.PrologTermType.ATOM_TYPE;
-import static org.logicware.pdb.prolog.PrologTermType.VARIABLE_TYPE;
+import static org.logicware.prolog.PrologTermType.ATOM_TYPE;
+import static org.logicware.prolog.PrologTermType.VARIABLE_TYPE;
 
-import org.logicware.pdb.prolog.ArityError;
-import org.logicware.pdb.prolog.FunctorError;
-import org.logicware.pdb.prolog.IndicatorError;
-import org.logicware.pdb.prolog.PrologProvider;
-import org.logicware.pdb.prolog.PrologTerm;
-import org.logicware.pdb.prolog.PrologVariable;
+import org.logicware.prolog.ArityError;
+import org.logicware.prolog.FunctorError;
+import org.logicware.prolog.IndicatorError;
+import org.logicware.prolog.PrologProvider;
+import org.logicware.prolog.PrologTerm;
+import org.logicware.prolog.PrologVariable;
 
 import jTrolog.terms.Term;
 import jTrolog.terms.Var;

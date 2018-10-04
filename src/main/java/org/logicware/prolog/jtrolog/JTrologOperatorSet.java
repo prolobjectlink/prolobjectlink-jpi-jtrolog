@@ -24,7 +24,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
-import org.logicware.pdb.prolog.OperatorEntry;
+import org.logicware.prolog.OperatorEntry;
 
 import jTrolog.engine.Prolog;
 import jTrolog.terms.Int;

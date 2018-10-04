@@ -19,12 +19,12 @@
  */
 package org.logicware.prolog.jtrolog;
 
-import static org.logicware.pdb.logging.LoggerConstants.DONT_WORRY;
-import static org.logicware.pdb.logging.LoggerConstants.FILE_NOT_FOUND;
-import static org.logicware.pdb.logging.LoggerConstants.INDICATOR_NOT_FOUND;
-import static org.logicware.pdb.logging.LoggerConstants.IO;
-import static org.logicware.pdb.logging.LoggerConstants.RUNTIME_ERROR;
-import static org.logicware.pdb.logging.LoggerConstants.SYNTAX_ERROR;
+import static org.logicware.platform.logging.LoggerConstants.DONT_WORRY;
+import static org.logicware.platform.logging.LoggerConstants.FILE_NOT_FOUND;
+import static org.logicware.platform.logging.LoggerConstants.INDICATOR_NOT_FOUND;
+import static org.logicware.platform.logging.LoggerConstants.IO;
+import static org.logicware.platform.logging.LoggerConstants.RUNTIME_ERROR;
+import static org.logicware.platform.logging.LoggerConstants.SYNTAX_ERROR;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -39,19 +39,19 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
-import org.logicware.pdb.Licenses;
-import org.logicware.pdb.logging.LoggerConstants;
-import org.logicware.pdb.logging.LoggerUtils;
-import org.logicware.pdb.prolog.AbstractEngine;
-import org.logicware.pdb.prolog.OperatorEntry;
-import org.logicware.pdb.prolog.PredicateIndicator;
-import org.logicware.pdb.prolog.PrologClause;
-import org.logicware.pdb.prolog.PrologEngine;
-import org.logicware.pdb.prolog.PrologIndicator;
-import org.logicware.pdb.prolog.PrologOperator;
-import org.logicware.pdb.prolog.PrologProvider;
-import org.logicware.pdb.prolog.PrologQuery;
-import org.logicware.pdb.prolog.PrologTerm;
+import org.logicware.platform.Licenses;
+import org.logicware.platform.logging.LoggerConstants;
+import org.logicware.platform.logging.LoggerUtils;
+import org.logicware.prolog.AbstractEngine;
+import org.logicware.prolog.OperatorEntry;
+import org.logicware.prolog.PredicateIndicator;
+import org.logicware.prolog.PrologClause;
+import org.logicware.prolog.PrologEngine;
+import org.logicware.prolog.PrologIndicator;
+import org.logicware.prolog.PrologOperator;
+import org.logicware.prolog.PrologProvider;
+import org.logicware.prolog.PrologQuery;
+import org.logicware.prolog.PrologTerm;
 
 import jTrolog.engine.Prolog;
 import jTrolog.errors.PrologException;

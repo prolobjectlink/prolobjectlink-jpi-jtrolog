@@ -19,10 +19,10 @@
  */
 package org.logicware.prolog.jtrolog;
 
-import static org.logicware.pdb.prolog.PrologTermType.TRUE_TYPE;
+import static org.logicware.prolog.PrologTermType.TRUE_TYPE;
 
-import org.logicware.pdb.prolog.PrologProvider;
-import org.logicware.pdb.prolog.PrologTerm;
+import org.logicware.prolog.PrologProvider;
+import org.logicware.prolog.PrologTerm;
 
 import jTrolog.terms.Term;
 

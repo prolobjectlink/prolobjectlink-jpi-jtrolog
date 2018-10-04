@@ -19,36 +19,36 @@
  */
 package org.logicware.prolog.jtrolog;
 
-import static org.logicware.pdb.prolog.PrologTermType.ATOM_TYPE;
-import static org.logicware.pdb.prolog.PrologTermType.CUT_TYPE;
-import static org.logicware.pdb.prolog.PrologTermType.DOUBLE_TYPE;
-import static org.logicware.pdb.prolog.PrologTermType.EMPTY_TYPE;
-import static org.logicware.pdb.prolog.PrologTermType.FAIL_TYPE;
-import static org.logicware.pdb.prolog.PrologTermType.FALSE_TYPE;
-import static org.logicware.pdb.prolog.PrologTermType.FLOAT_TYPE;
-import static org.logicware.pdb.prolog.PrologTermType.INTEGER_TYPE;
-import static org.logicware.pdb.prolog.PrologTermType.LIST_TYPE;
-import static org.logicware.pdb.prolog.PrologTermType.LONG_TYPE;
-import static org.logicware.pdb.prolog.PrologTermType.NIL_TYPE;
-import static org.logicware.pdb.prolog.PrologTermType.STRUCTURE_TYPE;
-import static org.logicware.pdb.prolog.PrologTermType.TRUE_TYPE;
-import static org.logicware.pdb.prolog.PrologTermType.VARIABLE_TYPE;
+import static org.logicware.prolog.PrologTermType.ATOM_TYPE;
+import static org.logicware.prolog.PrologTermType.CUT_TYPE;
+import static org.logicware.prolog.PrologTermType.DOUBLE_TYPE;
+import static org.logicware.prolog.PrologTermType.EMPTY_TYPE;
+import static org.logicware.prolog.PrologTermType.FAIL_TYPE;
+import static org.logicware.prolog.PrologTermType.FALSE_TYPE;
+import static org.logicware.prolog.PrologTermType.FLOAT_TYPE;
+import static org.logicware.prolog.PrologTermType.INTEGER_TYPE;
+import static org.logicware.prolog.PrologTermType.LIST_TYPE;
+import static org.logicware.prolog.PrologTermType.LONG_TYPE;
+import static org.logicware.prolog.PrologTermType.NIL_TYPE;
+import static org.logicware.prolog.PrologTermType.STRUCTURE_TYPE;
+import static org.logicware.prolog.PrologTermType.TRUE_TYPE;
+import static org.logicware.prolog.PrologTermType.VARIABLE_TYPE;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 
-import org.logicware.pdb.prolog.AbstractConverter;
-import org.logicware.pdb.prolog.PrologAtom;
-import org.logicware.pdb.prolog.PrologConverter;
-import org.logicware.pdb.prolog.PrologDouble;
-import org.logicware.pdb.prolog.PrologFloat;
-import org.logicware.pdb.prolog.PrologInteger;
-import org.logicware.pdb.prolog.PrologLong;
-import org.logicware.pdb.prolog.PrologProvider;
-import org.logicware.pdb.prolog.PrologStructure;
-import org.logicware.pdb.prolog.PrologTerm;
-import org.logicware.pdb.prolog.PrologVariable;
-import org.logicware.pdb.prolog.UnknownTermError;
+import org.logicware.prolog.AbstractConverter;
+import org.logicware.prolog.PrologAtom;
+import org.logicware.prolog.PrologConverter;
+import org.logicware.prolog.PrologDouble;
+import org.logicware.prolog.PrologFloat;
+import org.logicware.prolog.PrologInteger;
+import org.logicware.prolog.PrologLong;
+import org.logicware.prolog.PrologProvider;
+import org.logicware.prolog.PrologStructure;
+import org.logicware.prolog.PrologTerm;
+import org.logicware.prolog.PrologVariable;
+import org.logicware.prolog.UnknownTermError;
 
 import jTrolog.terms.Double;
 import jTrolog.terms.Float;

@@ -23,20 +23,20 @@ import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static org.logicware.pdb.prolog.PrologTermType.STRUCTURE_TYPE;
+import static org.logicware.prolog.PrologTermType.STRUCTURE_TYPE;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.logicware.pdb.prolog.PrologAtom;
-import org.logicware.pdb.prolog.PrologDouble;
-import org.logicware.pdb.prolog.PrologFloat;
-import org.logicware.pdb.prolog.PrologInteger;
-import org.logicware.pdb.prolog.PrologList;
-import org.logicware.pdb.prolog.PrologLong;
-import org.logicware.pdb.prolog.PrologStructure;
-import org.logicware.pdb.prolog.PrologTerm;
-import org.logicware.pdb.prolog.PrologVariable;
+import org.logicware.prolog.PrologAtom;
+import org.logicware.prolog.PrologDouble;
+import org.logicware.prolog.PrologFloat;
+import org.logicware.prolog.PrologInteger;
+import org.logicware.prolog.PrologList;
+import org.logicware.prolog.PrologLong;
+import org.logicware.prolog.PrologStructure;
+import org.logicware.prolog.PrologTerm;
+import org.logicware.prolog.PrologVariable;
 
 public class PrologExpressionTest extends PrologBaseTest {
 
