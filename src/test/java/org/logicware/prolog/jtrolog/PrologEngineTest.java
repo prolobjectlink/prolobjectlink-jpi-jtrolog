@@ -19,9 +19,9 @@
  */
 package org.logicware.prolog.jtrolog;
 
-import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 import java.io.File;
@@ -1276,6 +1276,26 @@ public class PrologEngineTest extends PrologBaseTest {
 		engine.dispose();
 		assertTrue(engine.isProgramEmpty());
 		assertEquals(0, engine.getProgramSize());
+	}
+
+	@Test
+	public final void testIterator() {
+
+		engine = provider.newEngine();
+		engine.consult("family.pl");
+
+		int counter = 0;
+		Iterator<?> i = engine.iterator();
+		int size = engine.getProgramSize();
+
+		assertNotNull(i);
+		while (i.hasNext()) {
+			counter++;
+			i.next();
+		}
+
+		assertEquals(size, counter);
+
 	}
 
 }
