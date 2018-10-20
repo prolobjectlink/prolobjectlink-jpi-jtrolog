@@ -23,7 +23,6 @@ import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 
 import org.junit.Test;
 import org.logicware.prolog.PrologAtom;
@@ -192,41 +191,40 @@ public class PrologFalseTest extends PrologBaseTest {
 		// with atom
 		PrologTerm f = provider.prologFalse();
 		PrologAtom atom = provider.newAtom("John Doe");
-		assertEquals(f.compareTo(atom), 1);
+		assertEquals(1, f.compareTo(atom));
 
 		// with integer
 		PrologInteger iValue = provider.newInteger(36);
-		assertEquals(f.compareTo(iValue), 1);
+		assertEquals(1, f.compareTo(iValue));
 
 		// with long
 		PrologLong lValue = provider.newLong(28);
-		assertEquals(f.compareTo(lValue), 1);
+		assertEquals(1, f.compareTo(lValue));
 
 		// with float
 		PrologFloat fValue = provider.newFloat(36.47);
-		assertEquals(f.compareTo(fValue), 1);
+		assertEquals(1, f.compareTo(fValue));
 
 		// with double
 		PrologDouble dValue = provider.newDouble(36.47);
-		assertEquals(f.compareTo(dValue), 1);
+		assertEquals(1, f.compareTo(dValue));
 
 		// with variable
-		PrologVariable variable = provider.newVariable("X", 0);
-		// true. case [] and variable
-		assertEquals(f.compareTo(variable), 1);
+		PrologVariable variable = provider.newVariable("X",0);
+		assertEquals(1, f.compareTo(variable));
 
 		// with predicate
 		PrologStructure structure = provider.parsePrologStructure("some_predicate(a,b,c)");
-		assertEquals(f.compareTo(structure), -1);
+		assertEquals(-1, f.compareTo(structure));
 
 		// with list
 		PrologList list = provider.parsePrologList("[a,b,c]");
-		assertEquals(f.compareTo(list), -1);
-		assertEquals(f.compareTo(f), 0);
+		assertEquals(-1, f.compareTo(list));
+		assertEquals(0, f.compareTo(f));
 
 		// with expression
 		PrologTerm expression = provider.parsePrologTerm("58+93*10");
-		assertEquals(f.compareTo(expression), -1);
+		assertEquals(-1, f.compareTo(expression));
 
 	}
 

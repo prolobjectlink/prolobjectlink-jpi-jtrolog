@@ -29,6 +29,7 @@ import static org.logicware.prolog.PrologTermType.FLOAT_TYPE;
 import static org.logicware.prolog.PrologTermType.INTEGER_TYPE;
 import static org.logicware.prolog.PrologTermType.LIST_TYPE;
 import static org.logicware.prolog.PrologTermType.LONG_TYPE;
+import static org.logicware.prolog.PrologTermType.NIL_TYPE;
 import static org.logicware.prolog.PrologTermType.STRUCTURE_TYPE;
 import static org.logicware.prolog.PrologTermType.TRUE_TYPE;
 import static org.logicware.prolog.PrologTermType.VARIABLE_TYPE;
@@ -189,6 +190,7 @@ public abstract class JTrologTerm extends AbstractTerm implements PrologTerm {
 		}
 
 		switch (type) {
+		case NIL_TYPE:
 		case CUT_TYPE:
 		case FAIL_TYPE:
 		case TRUE_TYPE:
@@ -339,8 +341,9 @@ public abstract class JTrologTerm extends AbstractTerm implements PrologTerm {
 		if (value == null) {
 			if (other.value != null)
 				return false;
-		} else if (!value.equals(other.value))
+		} else if (!value.equals(other.value)) {
 			return false;
+		}
 		return true;
 	}
 

@@ -25,13 +25,14 @@ import java.util.Iterator;
 import java.util.Set;
 
 import org.logicware.prolog.OperatorEntry;
+import org.logicware.prolog.PrologOperatorSet;
 
 import jTrolog.engine.Prolog;
 import jTrolog.terms.Int;
 import jTrolog.terms.Struct;
 import jTrolog.terms.StructAtom;
 
-final class JTrologOperatorSet extends AbstractSet<OperatorEntry> {
+final class JTrologOperatorSet extends AbstractSet<OperatorEntry> implements PrologOperatorSet {
 
 	protected final Set<OperatorEntry> operators;
 
@@ -52,7 +53,7 @@ final class JTrologOperatorSet extends AbstractSet<OperatorEntry> {
 		}
 	}
 
-	protected boolean currentOp(String opreator) {
+	public boolean currentOp(String opreator) {
 		for (OperatorEntry operatorEntry : operators) {
 			if (operatorEntry.getOperator().equals(opreator)) {
 				return true;
@@ -91,8 +92,9 @@ final class JTrologOperatorSet extends AbstractSet<OperatorEntry> {
 		if (operators == null) {
 			if (other.operators != null)
 				return false;
-		} else if (!operators.equals(other.operators))
+		} else if (!operators.equals(other.operators)) {
 			return false;
+		}
 		return true;
 	}
 

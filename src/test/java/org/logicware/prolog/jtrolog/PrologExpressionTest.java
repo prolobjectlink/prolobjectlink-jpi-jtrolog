@@ -203,51 +203,51 @@ public class PrologExpressionTest extends PrologBaseTest {
 
 		// with atom
 		PrologAtom atom = provider.newAtom("John Doe");
-		assertEquals(expression.compareTo(atom), 1);
+		assertEquals(1, expression.compareTo(atom));
 
 		// with integer
 		PrologInteger iValue = provider.newInteger(28);
-		assertEquals(expression.compareTo(iValue), 1);
+		assertEquals(1, expression.compareTo(iValue));
 
 		// with long
 		PrologLong lValue = provider.newLong(28);
-		assertEquals(expression.compareTo(lValue), 1);
+		assertEquals(1, expression.compareTo(lValue));
 
 		// with float
 		PrologFloat fValue = provider.newFloat(36.47);
-		assertEquals(expression.compareTo(fValue), 1);
+		assertEquals(1, expression.compareTo(fValue));
 
 		// with double
 		PrologDouble dValue = provider.newDouble(36.47);
-		assertEquals(expression.compareTo(dValue), 1);
+		assertEquals(1, expression.compareTo(dValue));
 
 		// with variable
-		PrologVariable variable = provider.newVariable("X", 0);
+		PrologVariable variable = provider.newVariable("X",0);
 		// true. case expression and variable
-		assertEquals(expression.compareTo(variable), 1);
+		assertEquals(1, expression.compareTo(variable));
 
 		// with predicate
 		PrologStructure structure = provider.parsePrologStructure("some_predicate(a)");
-		assertEquals(expression.compareTo(structure), 1);
+		assertEquals(1, expression.compareTo(structure));
 
 		// with list
 		PrologList flattenList = provider.parsePrologList("['Some Literal']");
 		PrologList headTailList = provider.parsePrologList("['Some Literal'|[]]");
 		PrologTerm empty = provider.prologEmpty();
-		assertEquals(expression.compareTo(flattenList), -1);
-		assertEquals(expression.compareTo(headTailList), -1);
-		assertEquals(expression.compareTo(empty), 1);
+		assertEquals(-1, expression.compareTo(flattenList));
+		assertEquals(-1, expression.compareTo(headTailList));
+		assertEquals(1, expression.compareTo(empty));
 
 		// with expression
 		PrologTerm expression1 = provider.parsePrologTerm("X+Y*Z");
 		PrologTerm expression2 = provider.parsePrologTerm("3.14+1.58*2.71");
 
 		// true because are equals
-		assertEquals(expression.compareTo(expression), 0);
+		assertEquals(0, expression.compareTo(expression));
 		// true because match and their arguments are equals
-		assertEquals(expression.compareTo(expression1), 1);
+		assertEquals(1, expression.compareTo(expression1));
 		// false because match but their arguments not equals
-		assertEquals(expression.compareTo(expression2), 1);
+		assertEquals(1, expression.compareTo(expression2));
 
 	}
 

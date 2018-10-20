@@ -1,8 +1,8 @@
 /*
  * #%L
- * prolobjectlink-jpi-jtrolog
+ * prolobjectlink-jpi-tuprolog
  * %%
- * Copyright (C) 2012 - 2018 Logicware Project
+ * Copyright (C) 2012 - 2017 Logicware Project
  * %%
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,6 +23,7 @@ import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import static org.logicware.prolog.PrologTermType.NIL_TYPE;
 
 import org.junit.Test;
 import org.logicware.prolog.PrologAtom;
@@ -35,151 +36,159 @@ import org.logicware.prolog.PrologStructure;
 import org.logicware.prolog.PrologTerm;
 import org.logicware.prolog.PrologVariable;
 
-public class PrologCutTest extends PrologBaseTest {
+public class PrologNilTest extends PrologBaseTest {
 
-	private PrologTerm cut = provider.prologCut();
-
-	@Test
-	public void testGetArguments() {
-		assertArrayEquals(new PrologTerm[0], cut.getArguments());
-	}
+	private PrologTerm nil = provider.prologNil();
 
 	@Test
-	public void testGetArity() {
-		assertEquals(0, cut.getArity());
-	}
-
-	@Test
-	public void testGetFunctor() {
-		assertEquals("!", cut.getFunctor());
-	}
-
-	@Test
-	public void testGetIndicator() {
-		assertEquals("!/0", cut.getIndicator());
+	public final void testGetIndicator() {
+		assertEquals("nil/0", nil.getIndicator());
 	}
 
 	@Test
 	public void testHasIndicator() {
-		assertTrue(cut.hasIndicator("!", 0));
+		assertFalse(nil.hasIndicator("an", 100));
+		assertFalse(nil.hasIndicator("an", 0));
+		assertFalse(nil.hasIndicator("nil", 100));
+		assertTrue(nil.hasIndicator("nil", 0));
 	}
 
 	@Test
-	public void testHashCode() {
-		assertEquals(provider.prologCut().hashCode(), cut.hashCode());
+	public final void testGetArity() {
+		assertEquals(0, nil.getArity());
 	}
 
 	@Test
-	public void testIsAtom() {
-		assertTrue(cut.isAtom());
+	public final void testGetFunctor() {
+		assertEquals("nil", nil.getFunctor());
 	}
 
 	@Test
-	public void testIsNumber() {
-		assertFalse(cut.isNumber());
+	public final void testGetArguments() {
+		assertArrayEquals(new PrologTerm[0], nil.getArguments());
+	}
+
+	@Test
+	public final void testToString() {
+		assertEquals("nil", nil.toString());
+	}
+
+	@Test
+	public final void testHashCode() {
+		assertEquals(provider.prologNil().hashCode(), nil.hashCode());
+	}
+
+	@Test
+	public final void testGetType() {
+		assertEquals(NIL_TYPE, nil.getType());
+	}
+
+	@Test
+	public final void testGetTerm() {
+		assertEquals(nil, nil.getTerm());
+	}
+
+	@Test
+	public final void testIsAtom() {
+		assertTrue(nil.isAtom());
+	}
+
+	@Test
+	public final void testIsNumber() {
+		assertFalse(nil.isNumber());
 	}
 
 	@Test
 	public final void testIsFloat() {
-		assertFalse(cut.isFloat());
+		assertFalse(nil.isFloat());
 	}
 
 	@Test
 	public final void testIsDouble() {
-		assertFalse(cut.isDouble());
+		assertFalse(nil.isDouble());
 	}
 
 	@Test
 	public final void testIsInteger() {
-		assertFalse(cut.isInteger());
+		assertFalse(nil.isInteger());
 	}
 
 	@Test
 	public final void testIsLong() {
-		assertFalse(cut.isLong());
+		assertFalse(nil.isLong());
 	}
 
 	@Test
 	public final void testIsVariable() {
-		assertFalse(cut.isVariable());
+		assertFalse(nil.isVariable());
 	}
 
 	@Test
 	public final void testIsList() {
-		assertFalse(cut.isList());
+		assertFalse(nil.isList());
 	}
 
 	@Test
 	public final void testIsStructure() {
-		assertFalse(cut.isStructure());
+		assertFalse(nil.isStructure());
 	}
 
 	@Test
 	public final void testIsNil() {
-		assertFalse(cut.isNil());
+		assertTrue(nil.isNil());
 	}
 
 	@Test
 	public final void testIsEmptyList() {
-		assertFalse(cut.isEmptyList());
+		assertFalse(nil.isEmptyList());
 	}
 
 	@Test
-	public final void testIsEvaluable() {
-		assertFalse(cut.isEvaluable());
-	}
-
-	@Test
-	public void testIsAtomic() {
-		assertTrue(cut.isAtomic());
-	}
-
-	@Test
-	public void testIsCompound() {
-		assertFalse(cut.isCompound());
+	public final void testIsExpression() {
+		assertFalse(nil.isEvaluable());
 	}
 
 	@Test
 	public final void testUnify() {
 
 		// with atom
-		PrologTerm cut = provider.prologCut();
+		PrologTerm empty = provider.prologNil();
 		PrologAtom atom = provider.newAtom("John Doe");
-		assertFalse(cut.unify(atom));
+		assertFalse(empty.unify(atom));
 
 		// with integer
 		PrologInteger iValue = provider.newInteger(36);
-		assertFalse(cut.unify(iValue));
+		assertFalse(empty.unify(iValue));
 
 		// with long
 		PrologLong lValue = provider.newLong(28);
-		assertFalse(cut.unify(lValue));
+		assertFalse(empty.unify(lValue));
 
 		// with float
 		PrologFloat fValue = provider.newFloat(36.47);
-		assertFalse(cut.unify(fValue));
+		assertFalse(empty.unify(fValue));
 
 		// with double
 		PrologDouble dValue = provider.newDouble(36.47);
-		assertFalse(cut.unify(dValue));
+		assertFalse(empty.unify(dValue));
 
 		// with variable
 		PrologVariable variable = provider.newVariable("X", 0);
 		// true. case [] and variable
-		assertTrue(cut.unify(variable));
+		assertTrue(empty.unify(variable));
 
 		// with predicate
 		PrologStructure structure = provider.parsePrologStructure("some_predicate(a,b,c)");
-		assertFalse(cut.unify(structure));
+		assertFalse(empty.unify(structure));
 
 		// with list
 		PrologList list = provider.parsePrologList("[a,b,c]");
-		assertFalse(cut.unify(list));
-		assertTrue(cut.unify(cut));
+		assertFalse(empty.unify(list));
+		assertTrue(empty.unify(empty));
 
 		// with expression
 		PrologTerm expression = provider.parsePrologTerm("58+93*10");
-		assertFalse(cut.unify(expression));
+		assertFalse(empty.unify(expression));
 
 	}
 
@@ -187,53 +196,48 @@ public class PrologCutTest extends PrologBaseTest {
 	public final void testCompareTo() {
 
 		// with atom
-		PrologTerm cut = provider.prologCut();
+		PrologTerm empty = provider.prologNil();
 		PrologAtom atom = provider.newAtom("John Doe");
-		assertEquals(cut.compareTo(atom), -1);
+		assertEquals(1, empty.compareTo(atom));
 
 		// with integer
 		PrologInteger iValue = provider.newInteger(36);
-		assertEquals(1, cut.compareTo(iValue));
+		assertEquals(1, empty.compareTo(iValue));
 
 		// with long
 		PrologLong lValue = provider.newLong(28);
-		assertEquals(1, cut.compareTo(lValue));
+		assertEquals(1, empty.compareTo(lValue));
 
 		// with float
 		PrologFloat fValue = provider.newFloat(36.47);
-		assertEquals(1, cut.compareTo(fValue));
+		assertEquals(1, empty.compareTo(fValue));
 
 		// with double
 		PrologDouble dValue = provider.newDouble(36.47);
-		assertEquals(1, cut.compareTo(dValue));
+		assertEquals(1, empty.compareTo(dValue));
 
 		// with variable
 		PrologVariable variable = provider.newVariable("X", 0);
-		assertEquals(1, cut.compareTo(variable));
+		assertEquals(1, empty.compareTo(variable));
 
 		// with predicate
 		PrologStructure structure = provider.parsePrologStructure("some_predicate(a,b,c)");
-		assertEquals(-1, cut.compareTo(structure));
+		assertEquals(-1, empty.compareTo(structure));
 
 		// with list
 		PrologList list = provider.parsePrologList("[a,b,c]");
-		assertEquals(-1, cut.compareTo(list));
-		assertEquals(0, cut.compareTo(cut));
+		assertEquals(-1, empty.compareTo(list));
+		assertEquals(0, empty.compareTo(empty));
 
 		// with expression
 		PrologTerm expression = provider.parsePrologTerm("58+93*10");
-		assertEquals(-1, cut.compareTo(expression));
+		assertEquals(-1, empty.compareTo(expression));
 
 	}
 
 	@Test
-	public void testEqualsObject() {
-		assertTrue(cut.equals(provider.prologCut()));
-	}
-
-	@Test
-	public void testToString() {
-		assertEquals("!", cut.toString());
+	public final void testEqualsObject() {
+		assertEquals(provider.prologNil(), nil);
 	}
 
 }

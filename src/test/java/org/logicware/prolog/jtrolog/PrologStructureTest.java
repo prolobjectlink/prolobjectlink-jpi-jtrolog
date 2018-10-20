@@ -203,50 +203,49 @@ public class PrologStructureTest extends PrologBaseTest {
 		// with atom
 		PrologAtom atom = provider.newAtom("John Doe");
 		PrologStructure structure = provider.parsePrologStructure("some_predicate(a)");
-		assertEquals(structure.compareTo(atom), 1);
+		assertEquals(1, structure.compareTo(atom));
 
 		// with integer
 		PrologInteger iValue = provider.newInteger(28);
-		assertEquals(structure.compareTo(iValue), 1);
+		assertEquals(1, structure.compareTo(iValue));
 
 		// with long
 		PrologLong lValue = provider.newLong(28);
-		assertEquals(structure.compareTo(lValue), 1);
+		assertEquals(1, structure.compareTo(lValue));
 
 		// with float
 		PrologFloat fValue = provider.newFloat(36.47);
-		assertEquals(structure.compareTo(fValue), 1);
+		assertEquals(1, structure.compareTo(fValue));
 
 		// with double
 		PrologDouble dValue = provider.newDouble(36.47);
-		assertEquals(structure.compareTo(dValue), 1);
+		assertEquals(1, structure.compareTo(dValue));
 
 		// with variable
 		PrologVariable variable = provider.newVariable("X", 0);
-		// true. case predicate and variable
-		assertEquals(structure.compareTo(variable), 1);
+		assertEquals(1, structure.compareTo(variable));
 
 		// with predicate
 		PrologStructure structure1 = provider.parsePrologStructure("some_predicate(X)");
 		PrologStructure structure2 = provider.parsePrologStructure("some_predicate(28)");
 		// true because are equals
-		assertEquals(structure.compareTo(structure), 0);
+		assertEquals(0, structure.compareTo(structure));
 		// true because match and their arguments compareTo
-		assertEquals(structure.compareTo(structure1), 1);
+		assertEquals(1, structure.compareTo(structure1));
 		// false because match but their arguments not compareTo
-		assertEquals(structure.compareTo(structure2), 1);
+		assertEquals(1, structure.compareTo(structure2));
 
 		// with list
 		PrologList flattenList = provider.parsePrologList("['Some Literal']");
 		PrologList headTailList = provider.parsePrologList("['Some Literal'|[]]");
 		PrologTerm empty = provider.prologEmpty();
-		assertEquals(structure.compareTo(flattenList), -1);
-		assertEquals(structure.compareTo(headTailList), -1);
-		assertEquals(structure.compareTo(empty), 1);
+		assertEquals(-1, structure.compareTo(flattenList));
+		assertEquals(-1, structure.compareTo(headTailList));
+		assertEquals(1, structure.compareTo(empty));
 
 		// with expression
 		PrologTerm expression = provider.parsePrologTerm("58+93*10");
-		assertEquals(structure.compareTo(expression), -1);
+		assertEquals(-1, structure.compareTo(expression));
 
 	}
 

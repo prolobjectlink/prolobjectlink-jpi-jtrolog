@@ -234,47 +234,47 @@ public class PrologIntegerTest extends PrologBaseTest {
 		// with atom
 		PrologInteger iValue = provider.newInteger(28);
 		PrologAtom atom = provider.newAtom("John Doe");
-		assertEquals(iValue.compareTo(atom), -1);
+		assertEquals(-1, iValue.compareTo(atom));
 
 		// with integer
 		PrologInteger iValue1 = provider.newInteger(36);
 		// true because are equals
-		assertEquals(iValue.compareTo(iValue), 0);
+		assertEquals(0, iValue.compareTo(iValue));
 		// false because they are different
-		assertEquals(iValue.compareTo(iValue1), -1);
+		assertEquals(-1, iValue.compareTo(iValue1));
 
 		// with long
 		PrologLong lValue = provider.newLong(28);
 		PrologLong lValue1 = provider.newLong(100);
 		// true because are equals
-		assertEquals(iValue.compareTo(lValue), 0);
+		assertEquals(0, iValue.compareTo(lValue));
 		// false because they are different
-		assertEquals(iValue.compareTo(lValue1), -1);
+		assertEquals(-1, iValue.compareTo(lValue1));
 
 		// with float
 		PrologFloat fValue = provider.newFloat(36.47);
-		assertEquals(iValue.compareTo(fValue), -1);
+		assertEquals(-1, iValue.compareTo(fValue));
 
 		// with double
 		PrologDouble dValue = provider.newDouble(36.47);
-		assertEquals(iValue.compareTo(dValue), -1);
+		assertEquals(-1, iValue.compareTo(dValue));
 
 		// with variable
-		PrologVariable variable = provider.newVariable("X", 0);
+		PrologVariable variable = provider.newVariable("X",0);
 		// true. case atom and variable
-		assertEquals(iValue.compareTo(variable), 1);
+		assertEquals(1, iValue.compareTo(variable));
 
 		// with predicate
 		PrologStructure structure = provider.parsePrologStructure("some_predicate(a,b,c)");
-		assertEquals(iValue.compareTo(structure), -1);
+		assertEquals(-1, iValue.compareTo(structure));
 
 		// with list
 		PrologList list = provider.parsePrologList("[a,b,c]");
-		assertEquals(iValue.compareTo(list), -1);
+		assertEquals(-1, iValue.compareTo(list));
 
 		// with expression
 		PrologTerm expression = provider.parsePrologTerm("58+93*10");
-		assertEquals(iValue.compareTo(expression), -1);
+		assertEquals(-1, iValue.compareTo(expression));
 	}
 
 }

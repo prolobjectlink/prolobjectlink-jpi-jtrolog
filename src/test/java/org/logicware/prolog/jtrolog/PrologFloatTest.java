@@ -225,47 +225,47 @@ public class PrologFloatTest extends PrologBaseTest {
 		// with atom
 		PrologFloat fValue = provider.newFloat(36.47);
 		PrologAtom atom = provider.newAtom("doe");
-		assertEquals(fValue.compareTo(atom), -1);
+		assertEquals(-1, fValue.compareTo(atom));
 
 		// with integer
 		PrologInteger iValue = provider.newInteger(28);
-		assertEquals(fValue.compareTo(iValue), 1);
+		assertEquals(1, fValue.compareTo(iValue));
 
 		// with long
 		PrologLong lValue = provider.newLong(28);
-		assertEquals(fValue.compareTo(lValue), 1);
+		assertEquals(1, fValue.compareTo(lValue));
 
 		// with float
 		PrologFloat fValue1 = provider.newFloat(100.98);
 		// true because are equals
-		assertEquals(fValue.compareTo(fValue), 0);
+		assertEquals(0, fValue.compareTo(fValue));
 		// false because are different
-		assertEquals(fValue.compareTo(fValue1), -1);
+		assertEquals(-1, fValue.compareTo(fValue1));
 
 		// with double
 		PrologDouble dValue = provider.newDouble(36.47);
 		PrologDouble dValue1 = provider.newDouble(100.98);
 		// true because are equals
-		assertEquals(fValue.compareTo(dValue), 0);
+		assertEquals(0, fValue.compareTo(dValue));
 		// false because are different
-		assertEquals(fValue.compareTo(dValue1), -1);
+		assertEquals(-1, fValue.compareTo(dValue1));
 
 		// with variable
-		PrologVariable variable = provider.newVariable("X", 0);
+		PrologVariable variable = provider.newVariable("X",0);
 		// true. case float and variable
-		assertEquals(fValue.compareTo(variable), 1);
+		assertEquals(1, fValue.compareTo(variable));
 
 		// with predicate
 		PrologStructure structure = provider.parsePrologStructure("some_predicate(a,b,c)");
-		assertEquals(fValue.compareTo(structure), -1);
+		assertEquals(-1, fValue.compareTo(structure));
 
 		// with list
 		PrologList flattenedList = provider.parsePrologList("[a,b,c]");
-		assertEquals(fValue.compareTo(flattenedList), -1);
+		assertEquals(-1, fValue.compareTo(flattenedList));
 
 		// with expression
 		PrologTerm expression = provider.parsePrologTerm("58+93*10");
-		assertEquals(fValue.compareTo(expression), -1);
+		assertEquals(-1, fValue.compareTo(expression));
 
 	}
 

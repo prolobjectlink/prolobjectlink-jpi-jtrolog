@@ -185,41 +185,41 @@ public class PrologEmptyTest extends PrologBaseTest {
 		// with atom
 		PrologTerm empty = provider.prologEmpty();
 		PrologAtom atom = provider.newAtom("John Doe");
-		assertEquals(empty.compareTo(atom), 1);
+		assertEquals(1, empty.compareTo(atom));
 
 		// with integer
 		PrologInteger iValue = provider.newInteger(36);
-		assertEquals(empty.compareTo(iValue), 1);
+		assertEquals(1, empty.compareTo(iValue));
 
 		// with long
 		PrologLong lValue = provider.newLong(28);
-		assertEquals(empty.compareTo(lValue), 1);
+		assertEquals(1, empty.compareTo(lValue));
 
 		// with float
 		PrologFloat fValue = provider.newFloat(36.47);
-		assertEquals(empty.compareTo(fValue), 1);
+		assertEquals(1, empty.compareTo(fValue));
 
 		// with double
 		PrologDouble dValue = provider.newDouble(36.47);
-		assertEquals(empty.compareTo(dValue), 1);
+		assertEquals(1, empty.compareTo(dValue));
 
 		// with variable
-		PrologVariable variable = provider.newVariable("X", 0);
+		PrologVariable variable = provider.newVariable("X",0);
 		// true. case [] and variable
-		assertEquals(empty.compareTo(variable), 1);
+		assertEquals(1, empty.compareTo(variable));
 
 		// with predicate
 		PrologStructure structure = provider.parsePrologStructure("some_predicate(a,b,c)");
-		assertEquals(empty.compareTo(structure), -1);
+		assertEquals(-1, empty.compareTo(structure));
 
 		// with list
 		PrologList list = provider.parsePrologList("[a,b,c]");
-		assertEquals(empty.compareTo(list), -1);
-		assertEquals(empty.compareTo(empty), 0);
+		assertEquals(-1, empty.compareTo(list));
+		assertEquals(0, empty.compareTo(empty));
 
 		// with expression
 		PrologTerm expression = provider.parsePrologTerm("58+93*10");
-		assertEquals(empty.compareTo(expression), -1);
+		assertEquals(-1, empty.compareTo(expression));
 
 	}
 
