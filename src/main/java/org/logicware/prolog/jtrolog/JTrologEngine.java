@@ -345,15 +345,15 @@ public final class JTrologEngine extends AbstractEngine implements PrologEngine 
 				Class<? extends Library> c = library.getClass();
 				Method[] methods = c.getDeclaredMethods();
 				String regex = "\\.|\\?|#|[a-z][A-Za-z0-9_]*_[0-9]+";
-				for (int i = 0; i < methods.length; i++) {
-					String method = methods[i].getName();
-					if (method.matches(regex)) {
-						int j = method.lastIndexOf('_');
-						String f = method.substring(0, j);
-						int a = Integer.parseInt(method.substring(j + 1));
-						builtins.add(new PredicateIndicator(f, a));
-					}
-				}
+                            for (Method method1 : methods) {
+                                String method = method1.getName();
+                                if (method.matches(regex)) {
+                                    int j = method.lastIndexOf('_');
+                                    String f = method.substring(0, j);
+                                    int a = Integer.parseInt(method.substring(j + 1));
+                                    builtins.add(new PredicateIndicator(f, a));
+                                }
+                            }
 			}
 		}
 
@@ -363,16 +363,15 @@ public final class JTrologEngine extends AbstractEngine implements PrologEngine 
 			String predIndicator = (String) i.next();
 			try {
 				List<?> list = engine.find(predIndicator);
-				for (int j = 0; j < list.size(); j++) {
-					Object object = list.get(j);
-					if (object instanceof Clause) {
-						Clause clause = (Clause) object;
-						String functor = clause.head.name;
-						int arity = clause.head.arity;
-						PredicateIndicator p = new PredicateIndicator(functor, arity);
-						builtins.add(p);
-					}
-				}
+                            for (Object object : list) {
+                                if (object instanceof Clause) {
+                                    Clause clause = (Clause) object;
+                                    String functor = clause.head.name;
+                                    int arity = clause.head.arity;
+                                    PredicateIndicator p = new PredicateIndicator(functor, arity);
+                                    builtins.add(p);
+                                }
+                            }
 			} catch (PrologException e) {
 				LoggerUtils.error(getClass(), LoggerConstants.INDICATOR_NOT_FOUND + predIndicator, e);
 			}

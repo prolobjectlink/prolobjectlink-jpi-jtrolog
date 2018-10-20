@@ -52,9 +52,9 @@ public class JTrologQuery extends AbstractQuery implements PrologQuery {
 			if (term instanceof Struct) {
 				Struct struct = (Struct) term;
 				Var[] vars = struct.getVarList();
-				for (int i = 0; i < vars.length; i++) {
-					enumerateVariables(variables, vars[i]);
-				}
+                            for (Var var : vars) {
+                                enumerateVariables(variables, var);
+                            }
 			}
 		} else if (!vector.contains(term.toString())) {
 			vector.add(term.toString());
@@ -115,16 +115,15 @@ public class JTrologQuery extends AbstractQuery implements PrologQuery {
 
 	public Map<String, PrologTerm> oneVariablesSolution() {
 		Map<String, PrologTerm> map = new HashMap<String, PrologTerm>();
-		for (Iterator<String> i = variables.iterator(); i.hasNext();) {
-			String vName = i.next();
-			if (solution != null) {
-				Term vtTerm = solution.getBinding(vName);
-				if (vtTerm != null) {
-					PrologTerm pTerm = toTerm(vtTerm, PrologTerm.class);
-					map.put(vName, pTerm);
-				}
-			}
-		}
+            for (String vName : variables) {
+                if (solution != null) {
+                    Term vtTerm = solution.getBinding(vName);
+                    if (vtTerm != null) {
+                        PrologTerm pTerm = toTerm(vtTerm, PrologTerm.class);
+                        map.put(vName, pTerm);
+                    }
+                }
+            }
 		return map;
 	}
 
@@ -185,9 +184,7 @@ public class JTrologQuery extends AbstractQuery implements PrologQuery {
 			PrologTerm[][] allSolutions = new PrologTerm[n][m];
 			for (int i = 0; i < n; i++) {
 				array = all.get(i);
-				for (int j = 0; j < m; j++) {
-					allSolutions[i][j] = array[j];
-				}
+                            System.arraycopy(array, 0, allSolutions[i], 0, m);
 			}
 			return allSolutions;
 		}
@@ -247,9 +244,7 @@ public class JTrologQuery extends AbstractQuery implements PrologQuery {
 		PrologTerm[][] allSolutions = new PrologTerm[n][m];
 		for (int i = 0; i < n; i++) {
 			array = all.get(i);
-			for (int j = 0; j < m; j++) {
-				allSolutions[i][j] = array[j];
-			}
+                    System.arraycopy(array, 0, allSolutions[i], 0, m);
 		}
 		return allSolutions;
 	}
