@@ -23,6 +23,7 @@ import static org.logicware.prolog.PrologTermType.LIST_TYPE;
 
 import java.util.Iterator;
 
+import org.logicware.platform.AbstractIterator;
 import org.logicware.prolog.PrologList;
 import org.logicware.prolog.PrologProvider;
 import org.logicware.prolog.PrologTerm;
@@ -165,7 +166,7 @@ public class JTrologList extends JTrologTerm implements PrologList {
 		return a;
 	}
 
-	private class JTrologListIter implements Iterator<PrologTerm> {
+	private class JTrologListIter extends AbstractIterator<PrologTerm> implements Iterator<PrologTerm> {
 
 		private PrologTerm next;
 		private final Iterator<?> i;
@@ -185,10 +186,6 @@ public class JTrologList extends JTrologTerm implements PrologList {
 			PrologTerm lastReturned = next;
 			next = toTerm(i.next(), PrologTerm.class);
 			return lastReturned;
-		}
-
-		public void remove() {
-			i.remove();
 		}
 
 	}
