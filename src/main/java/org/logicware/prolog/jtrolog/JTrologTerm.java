@@ -341,7 +341,7 @@ public abstract class JTrologTerm extends AbstractTerm implements PrologTerm {
 		if (value == null) {
 			if (other.value != null)
 				return false;
-		} else if (!value.equals(other.value)) {
+		} else if (!Prolog.match(value, other.value)) {
 			return false;
 		}
 		return true;
