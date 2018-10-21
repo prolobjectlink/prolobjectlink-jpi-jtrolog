@@ -279,10 +279,10 @@ public class PrologEngineTest extends PrologBaseTest {
 		engine.assertz(provider.newStructure("gray", elephant));
 
 		// dark rules
-		z = provider.newVariable("Z", 2);
+		z = provider.newVariable("Z", 0);
 		engine.assertz(provider.newStructure("dark", z), provider.newStructure("black", z));
 
-		z = provider.newVariable("Z", 2);
+		z = provider.newVariable("Z", 0);
 		engine.assertz(provider.newStructure("dark", z), provider.newStructure("brown", z));
 
 		engine.persist("zoo.pl");
