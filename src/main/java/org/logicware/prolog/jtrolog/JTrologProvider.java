@@ -54,10 +54,6 @@ public class JTrologProvider extends AbstractProvider implements PrologProvider 
 		return false;
 	}
 
-	public boolean preserveQuotes() {
-		return true;
-	}
-
 	public PrologTerm prologNil() {
 		return new JTrologNil(this);
 	}
@@ -131,16 +127,6 @@ public class JTrologProvider extends AbstractProvider implements PrologProvider 
 
 	public PrologLong newLong(Number value) {
 		return new JTrologLong(this, value);
-	}
-
-	public PrologVariable newVariable() {
-		String message = "Use newVariable(int position)";
-		throw new UnsupportedOperationException(message);
-	}
-
-	public PrologVariable newVariable(String name) {
-		String message = "Use newVariable(String name, int position)";
-		throw new UnsupportedOperationException(message);
 	}
 
 	public PrologVariable newVariable(int position) {
