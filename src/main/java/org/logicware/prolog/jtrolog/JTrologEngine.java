@@ -19,12 +19,12 @@
  */
 package org.logicware.prolog.jtrolog;
 
-import static org.logicware.platform.logging.LoggerConstants.DONT_WORRY;
-import static org.logicware.platform.logging.LoggerConstants.FILE_NOT_FOUND;
-import static org.logicware.platform.logging.LoggerConstants.INDICATOR_NOT_FOUND;
-import static org.logicware.platform.logging.LoggerConstants.IO;
-import static org.logicware.platform.logging.LoggerConstants.RUNTIME_ERROR;
-import static org.logicware.platform.logging.LoggerConstants.SYNTAX_ERROR;
+import static org.logicware.logging.LoggerConstants.DONT_WORRY;
+import static org.logicware.logging.LoggerConstants.FILE_NOT_FOUND;
+import static org.logicware.logging.LoggerConstants.INDICATOR_NOT_FOUND;
+import static org.logicware.logging.LoggerConstants.IO;
+import static org.logicware.logging.LoggerConstants.RUNTIME_ERROR;
+import static org.logicware.logging.LoggerConstants.SYNTAX_ERROR;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -39,9 +39,9 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
-import org.logicware.platform.Licenses;
-import org.logicware.platform.logging.LoggerConstants;
-import org.logicware.platform.logging.LoggerUtils;
+import org.logicware.Licenses;
+import org.logicware.logging.LoggerConstants;
+import org.logicware.logging.LoggerUtils;
 import org.logicware.prolog.AbstractEngine;
 import org.logicware.prolog.OperatorEntry;
 import org.logicware.prolog.PredicateIndicator;
