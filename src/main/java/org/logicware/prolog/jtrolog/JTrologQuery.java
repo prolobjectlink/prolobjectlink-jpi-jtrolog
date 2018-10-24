@@ -44,17 +44,17 @@ import jTrolog.terms.Var;
 public class JTrologQuery extends AbstractQuery implements PrologQuery {
 
 	private Solution solution;
-	private final Prolog jtrolog;
-	private final List<String> variables = new ArrayList<String>();
+	private Prolog jtrolog;
+	private List<String> variables = new ArrayList<String>();
 
 	private void enumerateVariables(List<String> vector, Term term) {
 		if (!(term instanceof Var)) {
 			if (term instanceof Struct) {
 				Struct struct = (Struct) term;
 				Var[] vars = struct.getVarList();
-                            for (Var var : vars) {
-                                enumerateVariables(variables, var);
-                            }
+				for (Var var : vars) {
+					enumerateVariables(variables, var);
+				}
 			}
 		} else if (!vector.contains(term.toString())) {
 			vector.add(term.toString());
@@ -74,17 +74,19 @@ public class JTrologQuery extends AbstractQuery implements PrologQuery {
 
 	JTrologQuery(AbstractEngine engine, PrologTerm[] terms) {
 		super(engine);
-		jtrolog = engine.unwrap(JTrologEngine.class).engine;
-		enumerateVariables(variables, fromTerm(terms[terms.length - 1], Term.class));
-		for (int i = terms.length; i > 1; i--) {
-			enumerateVariables(variables, fromTerm(terms[i - 2], Term.class));
-		}
-		String str = Arrays.toString(terms).substring(1);
-		str = str.substring(0, str.length() - 1) + '.';
-		try {
-			this.solution = jtrolog.solve(str);
-		} catch (Throwable e) {
-			// do nothing
+		if (terms != null && terms.length > 0) {
+			jtrolog = engine.unwrap(JTrologEngine.class).engine;
+			enumerateVariables(variables, fromTerm(terms[terms.length - 1], Term.class));
+			for (int i = terms.length; i > 1; i--) {
+				enumerateVariables(variables, fromTerm(terms[i - 2], Term.class));
+			}
+			String str = Arrays.toString(terms).substring(1);
+			str = str.substring(0, str.length() - 1) + '.';
+			try {
+				this.solution = jtrolog.solve(str);
+			} catch (Throwable e) {
+				// do nothing
+			}
 		}
 	}
 
@@ -115,15 +117,15 @@ public class JTrologQuery extends AbstractQuery implements PrologQuery {
 
 	public Map<String, PrologTerm> oneVariablesSolution() {
 		Map<String, PrologTerm> map = new HashMap<String, PrologTerm>();
-            for (String vName : variables) {
-                if (solution != null) {
-                    Term vtTerm = solution.getBinding(vName);
-                    if (vtTerm != null) {
-                        PrologTerm pTerm = toTerm(vtTerm, PrologTerm.class);
-                        map.put(vName, pTerm);
-                    }
-                }
-            }
+		for (String vName : variables) {
+			if (solution != null) {
+				Term vtTerm = solution.getBinding(vName);
+				if (vtTerm != null) {
+					PrologTerm pTerm = toTerm(vtTerm, PrologTerm.class);
+					map.put(vName, pTerm);
+				}
+			}
+		}
 		return map;
 	}
 
@@ -184,7 +186,7 @@ public class JTrologQuery extends AbstractQuery implements PrologQuery {
 			PrologTerm[][] allSolutions = new PrologTerm[n][m];
 			for (int i = 0; i < n; i++) {
 				array = all.get(i);
-                            System.arraycopy(array, 0, allSolutions[i], 0, m);
+				System.arraycopy(array, 0, allSolutions[i], 0, m);
 			}
 			return allSolutions;
 		}
@@ -244,7 +246,7 @@ public class JTrologQuery extends AbstractQuery implements PrologQuery {
 		PrologTerm[][] allSolutions = new PrologTerm[n][m];
 		for (int i = 0; i < n; i++) {
 			array = all.get(i);
-                    System.arraycopy(array, 0, allSolutions[i], 0, m);
+			System.arraycopy(array, 0, allSolutions[i], 0, m);
 		}
 		return allSolutions;
 	}
