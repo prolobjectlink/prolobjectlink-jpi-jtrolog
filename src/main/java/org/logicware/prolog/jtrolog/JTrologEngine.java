@@ -300,8 +300,12 @@ public final class JTrologEngine extends AbstractEngine implements PrologEngine 
 		return new JTrologQuery(this, stringQuery);
 	}
 
-	public PrologQuery query(PrologTerm term,PrologTerm... terms) {
-		return new JTrologQuery(this, term,terms);
+	public PrologQuery query(PrologTerm[] terms) {
+		return new JTrologQuery(this, terms);
+	}
+
+	public PrologQuery query(PrologTerm term, PrologTerm... terms) {
+		return new JTrologQuery(this, term, terms);
 	}
 
 	public void operator(int priority, String specifier, String operator) {

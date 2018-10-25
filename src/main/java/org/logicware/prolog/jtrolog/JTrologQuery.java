@@ -72,6 +72,24 @@ public class JTrologQuery extends AbstractQuery implements PrologQuery {
 		}
 	}
 
+	JTrologQuery(AbstractEngine engine, PrologTerm[] terms) {
+		super(engine);
+		jtrolog = engine.unwrap(JTrologEngine.class).engine;
+		if (terms != null && terms.length > 0) {
+			enumerateVariables(variables, fromTerm(terms[terms.length - 1], Term.class));
+			for (int i = terms.length; i > 1; i--) {
+				enumerateVariables(variables, fromTerm(terms[i - 2], Term.class));
+			}
+			String str = Arrays.toString(terms).substring(1);
+			str = str.substring(0, str.length() - 1) + '.';
+			try {
+				this.solution = jtrolog.solve(str);
+			} catch (Throwable e) {
+				// do nothing
+			}
+		}
+	}
+
 	JTrologQuery(AbstractEngine engine, PrologTerm term, PrologTerm[] terms) {
 		super(engine);
 		String str = "" + term + "";
