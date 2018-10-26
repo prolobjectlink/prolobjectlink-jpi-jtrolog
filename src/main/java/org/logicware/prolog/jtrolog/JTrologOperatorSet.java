@@ -20,41 +20,25 @@
 package org.logicware.prolog.jtrolog;
 
 import java.util.AbstractSet;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
-import org.logicware.prolog.OperatorEntry;
+import org.logicware.prolog.PrologOperator;
 import org.logicware.prolog.PrologOperatorSet;
 
 import jTrolog.engine.Prolog;
-import jTrolog.terms.Int;
-import jTrolog.terms.Struct;
-import jTrolog.terms.StructAtom;
 
-final class JTrologOperatorSet extends AbstractSet<OperatorEntry> implements PrologOperatorSet {
+final class JTrologOperatorSet extends AbstractSet<PrologOperator> implements PrologOperatorSet {
 
-	protected final Set<OperatorEntry> operators;
+	protected final Set<PrologOperator> operators;
 
 	public JTrologOperatorSet() {
 		Prolog engine = Prolog.defaultMachine;
-		operators = new HashSet<OperatorEntry>();
-		Iterator<?> i = engine.getCurrentOperators();
-		while (i.hasNext()) {
-			Object object = i.next();
-			if (object instanceof Struct) {
-				Struct o = (Struct) object;
-				String name = ((StructAtom) o.getArg(2)).name;
-				int priority = ((Int) o.getArg(0)).intValue();
-				String specifier = ((StructAtom) o.getArg(1)).name;
-				OperatorEntry op = new OperatorEntry(priority, specifier, name);
-				operators.add(op);
-			}
-		}
+		operators = JTrologUtil.getOperatorSet(engine);
 	}
 
 	public boolean currentOp(String opreator) {
-		for (OperatorEntry operatorEntry : operators) {
+		for (PrologOperator operatorEntry : operators) {
 			if (operatorEntry.getOperator().equals(opreator)) {
 				return true;
 			}
@@ -63,7 +47,7 @@ final class JTrologOperatorSet extends AbstractSet<OperatorEntry> implements Pro
 	}
 
 	@Override
-	public Iterator<OperatorEntry> iterator() {
+	public Iterator<PrologOperator> iterator() {
 		return operators.iterator();
 	}
 

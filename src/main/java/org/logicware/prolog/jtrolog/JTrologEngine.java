@@ -60,7 +60,6 @@ import jTrolog.lib.IOLibrary;
 import jTrolog.lib.Library;
 import jTrolog.parser.Parser;
 import jTrolog.terms.Clause;
-import jTrolog.terms.Int;
 import jTrolog.terms.Struct;
 import jTrolog.terms.StructAtom;
 import jTrolog.terms.Term;
@@ -338,20 +337,7 @@ public final class JTrologEngine extends AbstractEngine implements PrologEngine 
 	}
 
 	public Set<PrologOperator> currentOperators() {
-		Set<PrologOperator> operators = new HashSet<PrologOperator>();
-		Iterator<?> i = engine.getCurrentOperators();
-		while (i.hasNext()) {
-			Object object = i.next();
-			if (object instanceof Struct) {
-				Struct o = (Struct) object;
-				String name = ((StructAtom) o.getArg(2)).name;
-				int priority = ((Int) o.getArg(0)).intValue();
-				String specifier = ((StructAtom) o.getArg(1)).name;
-				OperatorEntry op = new OperatorEntry(priority, specifier, name);
-				operators.add(op);
-			}
-		}
-		return operators;
+		return JTrologUtil.getOperatorSet(engine);
 	}
 
 	public Iterator<PrologClause> iterator() {
