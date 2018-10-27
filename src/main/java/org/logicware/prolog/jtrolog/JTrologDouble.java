@@ -88,7 +88,7 @@ public final class JTrologDouble extends JTrologTerm implements PrologDouble {
 	}
 
 	public boolean hasIndicator(String functor, int arity) {
-		throw new IndicatorError(this);
+		return false;
 	}
 
 }

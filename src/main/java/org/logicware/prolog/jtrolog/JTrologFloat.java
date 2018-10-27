@@ -88,7 +88,7 @@ public final class JTrologFloat extends JTrologTerm implements PrologFloat {
 	}
 
 	public boolean hasIndicator(String functor, int arity) {
-		throw new IndicatorError(this);
+		return false;
 	}
 
 }

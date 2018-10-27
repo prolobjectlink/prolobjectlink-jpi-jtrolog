@@ -88,7 +88,7 @@ public class JTrologLong extends JTrologTerm implements PrologLong {
 	}
 
 	public boolean hasIndicator(String functor, int arity) {
-		throw new IndicatorError(this);
+		return false;
 	}
 
 }
