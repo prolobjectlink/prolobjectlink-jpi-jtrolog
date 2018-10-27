@@ -23,7 +23,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
-import org.logicware.prolog.OperatorEntry;
+import org.logicware.prolog.AbstractOperator;
 import org.logicware.prolog.PrologOperator;
 
 import jTrolog.engine.Prolog;
@@ -43,7 +43,7 @@ final class JTrologUtil {
 				String name = ((StructAtom) o.getArg(2)).name;
 				int priority = ((Int) o.getArg(0)).intValue();
 				String specifier = ((StructAtom) o.getArg(1)).name;
-				OperatorEntry op = new OperatorEntry(priority, specifier, name);
+				AbstractOperator op = new JTrologOperator(priority, specifier, name);
 				operators.add(op);
 			}
 		}

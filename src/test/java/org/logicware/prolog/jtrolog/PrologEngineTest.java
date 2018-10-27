@@ -38,7 +38,6 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.logicware.Licenses;
-import org.logicware.prolog.OperatorEntry;
 import org.logicware.prolog.PredicateIndicator;
 import org.logicware.prolog.PrologAtom;
 import org.logicware.prolog.PrologEngine;
@@ -1072,7 +1071,7 @@ public class PrologEngineTest extends PrologBaseTest {
 				String name = ((StructAtom) o.getArg(2)).name;
 				int priority = ((Int) o.getArg(0)).intValue();
 				String specifier = ((StructAtom) o.getArg(1)).name;
-				OperatorEntry op = new OperatorEntry(priority, specifier, name);
+				PrologOperator op = new JTrologOperator(priority, specifier, name);
 				operators.add(op);
 			}
 		}

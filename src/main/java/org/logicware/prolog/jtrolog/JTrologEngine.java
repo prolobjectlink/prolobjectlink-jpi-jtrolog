@@ -43,7 +43,6 @@ import org.logicware.Licenses;
 import org.logicware.logging.LoggerConstants;
 import org.logicware.logging.LoggerUtils;
 import org.logicware.prolog.AbstractEngine;
-import org.logicware.prolog.OperatorEntry;
 import org.logicware.prolog.PredicateIndicator;
 import org.logicware.prolog.PrologClause;
 import org.logicware.prolog.PrologEngine;
@@ -333,7 +332,7 @@ public final class JTrologEngine extends AbstractEngine implements PrologEngine 
 	}
 
 	public boolean currentOperator(int priority, String specifier, String operator) {
-		return currentOperators().contains(new OperatorEntry(priority, specifier, operator));
+		return currentOperators().contains(new JTrologOperator(priority, specifier, operator));
 	}
 
 	public Set<PrologOperator> currentOperators() {
