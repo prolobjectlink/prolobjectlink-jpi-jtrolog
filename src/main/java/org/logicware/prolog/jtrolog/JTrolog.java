@@ -40,13 +40,13 @@ import jTrolog.parser.Parser;
 import jTrolog.terms.Struct;
 import jTrolog.terms.Term;
 
-public class JTrologProvider extends AbstractProvider implements PrologProvider {
+public class JTrolog extends AbstractProvider implements PrologProvider {
 
-	public JTrologProvider() {
+	public JTrolog() {
 		super(new JTrologConverter());
 	}
 
-	public JTrologProvider(PrologConverter<Term> converter) {
+	public JTrolog(PrologConverter<Term> converter) {
 		super(converter);
 	}
 

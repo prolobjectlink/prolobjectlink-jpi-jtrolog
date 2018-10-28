@@ -226,7 +226,7 @@ public class JTrologConverter extends AbstractConverter<Term> implements PrologC
 	}
 
 	public PrologProvider createProvider() {
-		return new JTrologProvider(this);
+		return new JTrolog(this);
 	}
 
 	@Override
