@@ -222,15 +222,15 @@ public class PrologDoubleTest extends PrologBaseTest {
 		assertTrue(dValue.unify(variable));
 
 		// with predicate
-		PrologStructure structure = provider.parsePrologStructure("some_predicate(a,b,c)");
+		PrologStructure structure = provider.parseStructure("some_predicate(a,b,c)");
 		assertFalse(dValue.unify(structure));
 
 		// with list
-		PrologList flattenedList = provider.parsePrologList("[a,b,c]");
+		PrologList flattenedList = provider.parseList("[a,b,c]");
 		assertFalse(dValue.unify(flattenedList));
 
 		// with expression
-		PrologTerm expression = provider.parsePrologTerm("58+93*10");
+		PrologTerm expression = provider.parseTerm("58+93*10");
 		assertFalse(dValue.unify(expression));
 
 	}
@@ -269,15 +269,15 @@ public class PrologDoubleTest extends PrologBaseTest {
 		assertEquals(1, dValue.compareTo(variable));
 
 		// with predicate
-		PrologStructure structure = provider.parsePrologStructure("some_predicate(a,b,c)");
+		PrologStructure structure = provider.parseStructure("some_predicate(a,b,c)");
 		assertEquals(-1, dValue.compareTo(structure));
 
 		// with list
-		PrologList flattenedList = provider.parsePrologList("[a,b,c]");
+		PrologList flattenedList = provider.parseList("[a,b,c]");
 		assertEquals(-1, dValue.compareTo(flattenedList));
 
 		// with expression
-		PrologTerm expression = provider.parsePrologTerm("58+93*10");
+		PrologTerm expression = provider.parseTerm("58+93*10");
 		assertEquals(-1, dValue.compareTo(expression));
 
 	}

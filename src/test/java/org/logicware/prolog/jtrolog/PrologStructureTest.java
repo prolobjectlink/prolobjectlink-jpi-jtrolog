@@ -25,6 +25,8 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.logicware.prolog.PrologTermType.STRUCTURE_TYPE;
 
+import java.util.HashMap;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -149,7 +151,7 @@ public class PrologStructureTest extends PrologBaseTest {
 
 		// with atom
 		PrologAtom atom = provider.newAtom("John Doe");
-		PrologStructure structure = provider.parsePrologStructure("some_predicate(a)");
+		PrologStructure structure = provider.parseStructure("some_predicate(a)");
 		assertFalse(structure.unify(atom));
 
 		// with integer
@@ -174,8 +176,8 @@ public class PrologStructureTest extends PrologBaseTest {
 		assertTrue(structure.unify(variable));
 
 		// with predicate
-		PrologStructure structure1 = provider.parsePrologStructure("some_predicate(X)");
-		PrologStructure structure2 = provider.parsePrologStructure("some_predicate(28)");
+		PrologStructure structure1 = provider.parseStructure("some_predicate(X)");
+		PrologStructure structure2 = provider.parseStructure("some_predicate(28)");
 		// true because are equals
 		assertTrue(structure.unify(structure));
 		// true because match and their arguments unify
@@ -184,15 +186,15 @@ public class PrologStructureTest extends PrologBaseTest {
 		assertFalse(structure.unify(structure2));
 
 		// with list
-		PrologList flattenList = provider.parsePrologList("['Some Literal']");
-		PrologList headTailList = provider.parsePrologList("['Some Literal'|[]]");
+		PrologList flattenList = provider.parseList("['Some Literal']");
+		PrologList headTailList = provider.parseList("['Some Literal'|[]]");
 		PrologTerm empty = provider.prologEmpty();
 		assertFalse(structure.unify(flattenList));
 		assertFalse(structure.unify(headTailList));
 		assertFalse(structure.unify(empty));
 
 		// with expression
-		PrologTerm expression = provider.parsePrologTerm("58+93*10");
+		PrologTerm expression = provider.parseTerm("58+93*10");
 		assertFalse(structure.unify(expression));
 
 	}
@@ -202,7 +204,7 @@ public class PrologStructureTest extends PrologBaseTest {
 
 		// with atom
 		PrologAtom atom = provider.newAtom("John Doe");
-		PrologStructure structure = provider.parsePrologStructure("some_predicate(a)");
+		PrologStructure structure = provider.parseStructure("some_predicate(a)");
 		assertEquals(1, structure.compareTo(atom));
 
 		// with integer
@@ -226,8 +228,8 @@ public class PrologStructureTest extends PrologBaseTest {
 		assertEquals(1, structure.compareTo(variable));
 
 		// with predicate
-		PrologStructure structure1 = provider.parsePrologStructure("some_predicate(X)");
-		PrologStructure structure2 = provider.parsePrologStructure("some_predicate(28)");
+		PrologStructure structure1 = provider.parseStructure("some_predicate(X)");
+		PrologStructure structure2 = provider.parseStructure("some_predicate(28)");
 		// true because are equals
 		assertEquals(0, structure.compareTo(structure));
 		// true because match and their arguments compareTo
@@ -236,16 +238,60 @@ public class PrologStructureTest extends PrologBaseTest {
 		assertEquals(1, structure.compareTo(structure2));
 
 		// with list
-		PrologList flattenList = provider.parsePrologList("['Some Literal']");
-		PrologList headTailList = provider.parsePrologList("['Some Literal'|[]]");
+		PrologList flattenList = provider.parseList("['Some Literal']");
+		PrologList headTailList = provider.parseList("['Some Literal'|[]]");
 		PrologTerm empty = provider.prologEmpty();
 		assertEquals(-1, structure.compareTo(flattenList));
 		assertEquals(-1, structure.compareTo(headTailList));
 		assertEquals(1, structure.compareTo(empty));
 
 		// with expression
-		PrologTerm expression = provider.parsePrologTerm("58+93*10");
+		PrologTerm expression = provider.parseTerm("58+93*10");
 		assertEquals(-1, structure.compareTo(expression));
+
+	}
+
+	@Test
+	public final void testMatch() {
+
+		// with atom
+		PrologAtom atom = provider.newAtom("John Doe");
+		PrologStructure structure = provider.parseStructure("some_predicate(a)");
+		assertEquals(new HashMap<String, PrologTerm>(), structure.match(atom));
+
+		// with integer
+		PrologInteger iValue = provider.newInteger(28);
+		assertEquals(new HashMap<String, PrologTerm>(), structure.match(iValue));
+
+		// with float
+		PrologFloat fValue = provider.newFloat(36.47);
+		assertEquals(new HashMap<String, PrologTerm>(), structure.match(fValue));
+
+		// with variable
+		HashMap<String, PrologTerm> substitution = new HashMap<String, PrologTerm>(1);
+		substitution.put("X", provider.parseStructure("some_predicate(a)"));
+		PrologVariable variable = provider.newVariable("X", 0);
+		assertEquals(substitution, structure.match(variable));
+
+		// with predicate
+		substitution = new HashMap<String, PrologTerm>(1);
+		substitution.put("X", provider.newAtom("a"));
+		PrologStructure structure1 = provider.parseStructure("some_predicate(X)");
+		PrologStructure structure2 = provider.parseStructure("some_predicate(28)");
+		assertEquals(new HashMap<String, PrologTerm>(), structure.match(structure));
+		assertEquals(substitution, structure.match(structure1));
+		assertEquals(new HashMap<String, PrologTerm>(), structure.match(structure2));
+
+		// with list
+		PrologList flattenList = provider.parseList("['Some Literal']");
+		PrologList headTailList = provider.parseList("['Some Literal'|[]]");
+		assertEquals(new HashMap<String, PrologTerm>(), structure.match(flattenList));
+		assertEquals(new HashMap<String, PrologTerm>(), structure.match(headTailList));
+		assertEquals(new HashMap<String, PrologTerm>(), structure.match(empty));
+
+		// with expression
+		PrologTerm expression = provider.parseTerm("58+93*10");
+		assertEquals(new HashMap<String, PrologTerm>(), structure.match(expression));
 
 	}
 

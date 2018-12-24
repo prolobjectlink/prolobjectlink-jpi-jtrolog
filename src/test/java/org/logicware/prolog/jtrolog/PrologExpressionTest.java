@@ -144,7 +144,7 @@ public class PrologExpressionTest extends PrologBaseTest {
 	@Test
 	public final void testUnify() {
 
-		PrologTerm expression = provider.parsePrologTerm("58+93*10");
+		PrologTerm expression = provider.parseTerm("58+93*10");
 
 		// with atom
 		PrologAtom atom = provider.newAtom("John Doe");
@@ -172,20 +172,20 @@ public class PrologExpressionTest extends PrologBaseTest {
 		assertTrue(expression.unify(variable));
 
 		// with predicate
-		PrologStructure structure = provider.parsePrologStructure("some_predicate(a)");
+		PrologStructure structure = provider.parseStructure("some_predicate(a)");
 		assertFalse(expression.unify(structure));
 
 		// with list
-		PrologList flattenList = provider.parsePrologList("['Some Literal']");
-		PrologList headTailList = provider.parsePrologList("['Some Literal'|[]]");
+		PrologList flattenList = provider.parseList("['Some Literal']");
+		PrologList headTailList = provider.parseList("['Some Literal'|[]]");
 		PrologTerm empty = provider.prologEmpty();
 		assertFalse(expression.unify(flattenList));
 		assertFalse(expression.unify(headTailList));
 		assertFalse(expression.unify(empty));
 
 		// with expression
-		PrologTerm expression1 = provider.parsePrologTerm("X+Y*Z");
-		PrologTerm expression2 = provider.parsePrologTerm("3.14+1.58*2.71");
+		PrologTerm expression1 = provider.parseTerm("X+Y*Z");
+		PrologTerm expression2 = provider.parseTerm("3.14+1.58*2.71");
 
 		// true because are equals
 		assertTrue(expression.unify(expression));
@@ -199,7 +199,7 @@ public class PrologExpressionTest extends PrologBaseTest {
 	@Test
 	public final void testCompareTo() {
 
-		PrologTerm expression = provider.parsePrologTerm("58+93*10");
+		PrologTerm expression = provider.parseTerm("58+93*10");
 
 		// with atom
 		PrologAtom atom = provider.newAtom("John Doe");
@@ -227,20 +227,20 @@ public class PrologExpressionTest extends PrologBaseTest {
 		assertEquals(1, expression.compareTo(variable));
 
 		// with predicate
-		PrologStructure structure = provider.parsePrologStructure("some_predicate(a)");
+		PrologStructure structure = provider.parseStructure("some_predicate(a)");
 		assertEquals(1, expression.compareTo(structure));
 
 		// with list
-		PrologList flattenList = provider.parsePrologList("['Some Literal']");
-		PrologList headTailList = provider.parsePrologList("['Some Literal'|[]]");
+		PrologList flattenList = provider.parseList("['Some Literal']");
+		PrologList headTailList = provider.parseList("['Some Literal'|[]]");
 		PrologTerm empty = provider.prologEmpty();
 		assertEquals(-1, expression.compareTo(flattenList));
 		assertEquals(-1, expression.compareTo(headTailList));
 		assertEquals(1, expression.compareTo(empty));
 
 		// with expression
-		PrologTerm expression1 = provider.parsePrologTerm("X+Y*Z");
-		PrologTerm expression2 = provider.parsePrologTerm("3.14+1.58*2.71");
+		PrologTerm expression1 = provider.parseTerm("X+Y*Z");
+		PrologTerm expression2 = provider.parseTerm("3.14+1.58*2.71");
 
 		// true because are equals
 		assertEquals(0, expression.compareTo(expression));

@@ -25,6 +25,8 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.logicware.prolog.PrologTermType.INTEGER_TYPE;
 
+import java.util.HashMap;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -180,7 +182,7 @@ public class PrologIntegerTest extends PrologBaseTest {
 	}
 
 	@Test
-	public void testUnify() {
+	public final void testUnify() {
 
 		// with atom
 		PrologInteger iValue = provider.newInteger(28);
@@ -216,20 +218,20 @@ public class PrologIntegerTest extends PrologBaseTest {
 		assertTrue(iValue.unify(variable));
 
 		// with predicate
-		PrologStructure structure = provider.parsePrologStructure("some_predicate(a,b,c)");
+		PrologStructure structure = provider.parseStructure("some_predicate(a,b,c)");
 		assertFalse(iValue.unify(structure));
 
 		// with list
-		PrologList list = provider.parsePrologList("[a,b,c]");
+		PrologList list = provider.parseList("[a,b,c]");
 		assertFalse(iValue.unify(list));
 
 		// with expression
-		PrologTerm expression = provider.parsePrologTerm("58+93*10");
+		PrologTerm expression = provider.parseTerm("58+93*10");
 		assertFalse(iValue.unify(expression));
 	}
 
 	@Test
-	public void testCompareTo() {
+	public final void testCompareTo() {
 
 		// with atom
 		PrologInteger iValue = provider.newInteger(28);
@@ -260,21 +262,60 @@ public class PrologIntegerTest extends PrologBaseTest {
 		assertEquals(-1, iValue.compareTo(dValue));
 
 		// with variable
-		PrologVariable variable = provider.newVariable("X",0);
+		PrologVariable variable = provider.newVariable("X", 0);
 		// true. case atom and variable
 		assertEquals(1, iValue.compareTo(variable));
 
 		// with predicate
-		PrologStructure structure = provider.parsePrologStructure("some_predicate(a,b,c)");
+		PrologStructure structure = provider.parseStructure("some_predicate(a,b,c)");
 		assertEquals(-1, iValue.compareTo(structure));
 
 		// with list
-		PrologList list = provider.parsePrologList("[a,b,c]");
+		PrologList list = provider.parseList("[a,b,c]");
 		assertEquals(-1, iValue.compareTo(list));
 
 		// with expression
-		PrologTerm expression = provider.parsePrologTerm("58+93*10");
+		PrologTerm expression = provider.parseTerm("58+93*10");
 		assertEquals(-1, iValue.compareTo(expression));
+	}
+
+	@Test
+	public final void testMatch() {
+
+		// with atom
+		PrologInteger iValue = provider.newInteger(28);
+		PrologAtom atom = provider.newAtom("John Doe");
+		assertEquals(new HashMap<String, PrologTerm>(), iValue.match(atom));
+
+		// with integer
+		PrologInteger iValue1 = provider.newInteger(36);
+		// true because are equals
+		assertEquals(new HashMap<String, PrologTerm>(), iValue.match(iValue));
+		// false because they are different
+		assertEquals(new HashMap<String, PrologTerm>(), iValue.match(iValue1));
+
+		// with float
+		PrologFloat fValue = provider.newFloat(36.47);
+		assertEquals(new HashMap<String, PrologTerm>(), iValue.match(fValue));
+
+		// with variable
+		HashMap<String, PrologTerm> substitution = new HashMap<String, PrologTerm>(1);
+		substitution.put("X", provider.newInteger(28));
+		PrologVariable variable = provider.newVariable("X", 0);
+		// true. case atom and variable
+		assertEquals(substitution, iValue.match(variable));
+
+		// with predicate
+		PrologStructure structure = provider.parseStructure("some_predicate(a,b,c)");
+		assertEquals(new HashMap<String, PrologTerm>(), iValue.match(structure));
+
+		// with list
+		PrologList list = provider.parseList("[a,b,c]");
+		assertEquals(new HashMap<String, PrologTerm>(), iValue.match(list));
+
+		// with expression
+		PrologTerm expression = provider.parseTerm("58+93*10");
+		assertEquals(new HashMap<String, PrologTerm>(), iValue.match(expression));
 	}
 
 }

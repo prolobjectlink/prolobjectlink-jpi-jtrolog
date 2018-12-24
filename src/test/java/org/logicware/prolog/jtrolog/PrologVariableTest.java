@@ -25,6 +25,8 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.logicware.prolog.PrologTermType.VARIABLE_TYPE;
 
+import java.util.HashMap;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -181,20 +183,20 @@ public class PrologVariableTest extends PrologBaseTest {
 
 		// with predicate with occurs check
 		variable = provider.newVariable("X", 0);
-		PrologStructure structure = provider.parsePrologStructure("some_predicate(a,b,c)");
+		PrologStructure structure = provider.parseStructure("some_predicate(a,b,c)");
 		assertTrue(variable.unify(structure));
-		structure = provider.parsePrologStructure("structure([X])");
+		structure = provider.parseStructure("structure([X])");
 		assertTrue(variable.unify(structure));
 
 		variable = provider.newVariable("X", 0);
-		structure = provider.parsePrologStructure("structure(A,b,C)");
+		structure = provider.parseStructure("structure(A,b,C)");
 		assertTrue(variable.unify(structure));
 
 		// with list
 		variable = provider.newVariable("X", 0);
 		PrologVariable z = provider.newVariable("Z", 0);
-		PrologList flattenList = provider.parsePrologList("[X]");
-		PrologList headTailList = provider.parsePrologList("[Y|[]]");
+		PrologList flattenList = provider.parseList("[X]");
+		PrologList headTailList = provider.parseList("[Y|[]]");
 		PrologTerm empty = provider.prologEmpty();
 		assertTrue(variable.unify(flattenList));
 		assertTrue(y.unify(headTailList));
@@ -238,24 +240,99 @@ public class PrologVariableTest extends PrologBaseTest {
 		// substitution
 
 		variable = provider.newVariable("X", 0);
-		PrologStructure structure = provider.parsePrologStructure("some_predicate(a,b,c)");
+		PrologStructure structure = provider.parseStructure("some_predicate(a,b,c)");
 		assertEquals(-1, variable.compareTo(structure));
-		structure = provider.parsePrologStructure("structure([X])");
+		structure = provider.parseStructure("structure([X])");
 		assertEquals(-1, variable.compareTo(structure));
 
 		variable = provider.newVariable("X", 0);
-		structure = provider.parsePrologStructure("structure(A,b,C)");
+		structure = provider.parseStructure("structure(A,b,C)");
 		assertEquals(-1, variable.compareTo(structure));
 
 		// with list
 		variable = provider.newVariable("X", 0);
 		PrologVariable z = provider.newVariable("Z", 0);
-		PrologList flattenList = provider.parsePrologList("[X]");
-		PrologList headTailList = provider.parsePrologList("[Y|[]]");
+		PrologList flattenList = provider.parseList("[X]");
+		PrologList headTailList = provider.parseList("[Y|[]]");
 		PrologTerm empty = provider.prologEmpty();
 		assertEquals(-1, variable.compareTo(flattenList));
 		assertEquals(-1, y.compareTo(headTailList));
 		assertEquals(-1, z.compareTo(empty));
+	}
+
+	@Test
+	public final void testMatch() {
+
+		HashMap<String, PrologTerm> substitution = new HashMap<String, PrologTerm>();
+
+		// with atom
+		substitution.put("X", provider.newAtom("John Smith"));
+		PrologVariable variable = provider.newVariable("X", 0);
+		PrologAtom atom = provider.newAtom("John Smith");
+		assertEquals(substitution, variable.match(atom));
+
+		// with integer
+		substitution = new HashMap<String, PrologTerm>();
+		substitution.put("X", provider.newInteger(28));
+		variable = provider.newVariable("X", 0);
+		PrologInteger iValue = provider.newInteger(28);
+		assertEquals(substitution, variable.match(iValue));
+
+		// with float
+		substitution = new HashMap<String, PrologTerm>();
+		substitution.put("X", provider.newFloat(36.47));
+		variable = provider.newVariable("X", 0);
+		PrologFloat fValue = provider.newFloat(36.47);
+		assertEquals(substitution, variable.match(fValue));
+
+		// with variable are equals
+		substitution = new HashMap<String, PrologTerm>();
+		assertEquals(substitution, variable.match(variable));
+
+		substitution = new HashMap<String, PrologTerm>();
+		substitution.put("Y", provider.newVariable("X", 0));
+		substitution.put("X", provider.newVariable("Y", 1));
+		variable = provider.newVariable("X", 0);
+		PrologVariable y = provider.newVariable("Y", 0);
+
+		// alphabetic substitution
+		assertEquals(substitution, variable.match(y));
+
+		// with predicate with occurs check
+		variable = provider.newVariable("X", 0);
+		substitution = new HashMap<String, PrologTerm>();
+		// Occurs check return empty substitution
+		// substitution.put("X", provider.parseStructure("structure(X)"));
+		PrologStructure structure = provider.parseStructure("structure(X)");
+		assertEquals(substitution, variable.match(structure));
+
+		substitution = new HashMap<String, PrologTerm>();
+		substitution.put("X", provider.parseStructure("structure(A,b,C)"));
+		variable = provider.newVariable("X", 0);
+		structure = provider.parseStructure("structure(A,b,C)");
+		assertEquals(substitution, variable.match(structure));
+
+		// with list
+		variable = provider.newVariable("X", 0);
+		PrologVariable z = provider.newVariable("Z", 0);
+		PrologList flattenList = provider.parseList("[X]");
+		PrologList headTailList = provider.parseList("[Y|[]]");
+		PrologTerm empty = provider.prologEmpty();
+
+		substitution = new HashMap<String, PrologTerm>(1);
+		// Occurs check return empty substitution
+		// substitution.put("X", provider.parseList("[X]"));
+		assertEquals(substitution, variable.match(flattenList));
+
+		substitution = new HashMap<String, PrologTerm>(1);
+		// Occurs check return empty substitution
+		// substitution.put("Y", provider.parseList("[Y|[]]"));
+		assertEquals(substitution, y.match(headTailList));
+
+		substitution = new HashMap<String, PrologTerm>(1);
+		substitution.put("Z", provider.prologEmpty());
+		assertEquals(substitution, z.match(empty));
+
 	}
 
 }

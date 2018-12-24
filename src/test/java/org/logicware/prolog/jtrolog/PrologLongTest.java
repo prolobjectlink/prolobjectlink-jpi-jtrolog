@@ -225,15 +225,15 @@ public class PrologLongTest extends PrologBaseTest {
 		assertTrue(lValue.unify(variable));
 
 		// with predicate
-		PrologStructure structure = provider.parsePrologStructure("some_predicate(a,b,c)");
+		PrologStructure structure = provider.parseStructure("some_predicate(a,b,c)");
 		assertFalse(lValue.unify(structure));
 
 		// with list
-		PrologList list = provider.parsePrologList("[a,b,c]");
+		PrologList list = provider.parseList("[a,b,c]");
 		assertFalse(lValue.unify(list));
 
 		// with expression
-		PrologTerm expression = provider.parsePrologTerm("58+93*10");
+		PrologTerm expression = provider.parseTerm("58+93*10");
 		assertFalse(lValue.unify(expression));
 	}
 
@@ -270,15 +270,15 @@ public class PrologLongTest extends PrologBaseTest {
 		assertEquals(1, lValue.compareTo(variable));
 
 		// with predicate
-		PrologStructure structure = provider.parsePrologStructure("some_predicate(a,b,c)");
+		PrologStructure structure = provider.parseStructure("some_predicate(a,b,c)");
 		assertEquals(-1, lValue.compareTo(structure));
 
 		// with list
-		PrologList list = provider.parsePrologList("[a,b,c]");
+		PrologList list = provider.parseList("[a,b,c]");
 		assertEquals(-1, lValue.compareTo(list));
 
 		// with expression
-		PrologTerm expression = provider.parsePrologTerm("58+93*10");
+		PrologTerm expression = provider.parseTerm("58+93*10");
 		assertEquals(-1, lValue.compareTo(expression));
 	}
 

@@ -49,6 +49,9 @@ public abstract class PrologBaseTest {
 
 	protected static final PrologProvider provider = Prolog.newProvider(JTrolog.class);
 
+	protected PrologTerm nil = provider.prologNil();
+	protected PrologTerm empty = provider.prologEmpty();
+
 	protected PrologVariable x = provider.newVariable("X", 0);
 	protected PrologVariable y = provider.newVariable("Y", 1);
 	protected PrologVariable z = provider.newVariable("Z", 2);

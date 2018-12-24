@@ -25,6 +25,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.logicware.prolog.PrologTermType.LIST_TYPE;
 
+import java.util.HashMap;
 import java.util.Iterator;
 
 import org.junit.After;
@@ -171,8 +172,8 @@ public class PrologListTest extends PrologBaseTest {
 	public final void testUnify() {
 
 		PrologTerm empty = provider.prologEmpty();
-		PrologList flattened = provider.parsePrologList("[a,b,c]");
-		PrologList headTail = provider.parsePrologList("[a|[b|[c|[]]]]");
+		PrologList flattened = provider.parseList("[a,b,c]");
+		PrologList headTail = provider.parseList("[a|[b|[c|[]]]]");
 
 		// with atom
 		PrologAtom atom = provider.newAtom("John Doe");
@@ -213,7 +214,7 @@ public class PrologListTest extends PrologBaseTest {
 		assertTrue(empty.unify(z));
 
 		// with predicate
-		PrologStructure structure = provider.parsePrologStructure("somepredicate(a,b,c)");
+		PrologStructure structure = provider.parseStructure("somepredicate(a,b,c)");
 		assertFalse(flattened.unify(structure));
 		assertFalse(headTail.unify(structure));
 		assertFalse(empty.unify(structure));
@@ -221,8 +222,8 @@ public class PrologListTest extends PrologBaseTest {
 		// with list
 		x = provider.newVariable("X", 0);
 
-		PrologList flattenList1 = provider.parsePrologList("[X,Y,Z]");
-		PrologList headTailList1 = provider.parsePrologList("[X|[Y|[Z]]]");
+		PrologList flattenList1 = provider.parseList("[X,Y,Z]");
+		PrologList headTailList1 = provider.parseList("[X|[Y|[Z]]]");
 
 		// true because are equals
 		assertTrue(flattened.unify(flattened));
@@ -245,8 +246,8 @@ public class PrologListTest extends PrologBaseTest {
 	public final void testCompareTo() {
 
 		PrologTerm empty = provider.prologEmpty();
-		PrologList flattened = provider.parsePrologList("[a,b,c]");
-		PrologList headTail = provider.parsePrologList("[a|[b|[c|[]]]]");
+		PrologList flattened = provider.parseList("[a,b,c]");
+		PrologList headTail = provider.parseList("[a|[b|[c|[]]]]");
 
 		// with atom
 		PrologAtom atom = provider.newAtom("John Doe");
@@ -287,14 +288,14 @@ public class PrologListTest extends PrologBaseTest {
 		assertEquals(1, empty.compareTo(z));
 
 		// with predicate
-		PrologStructure structure = provider.parsePrologStructure("somepredicate(a,b,c)");
+		PrologStructure structure = provider.parseStructure("somepredicate(a,b,c)");
 		assertEquals(flattened.compareTo(structure), -1);
 		assertEquals(headTail.compareTo(structure), -1);
 		assertEquals(empty.compareTo(structure), -1);
 
 		// with list
-		PrologList flattenList1 = provider.parsePrologList("[X,Y,Z]");
-		PrologList headTailList1 = provider.parsePrologList("[X|[Y|[Z]]]");
+		PrologList flattenList1 = provider.parseList("[X,Y,Z]");
+		PrologList headTailList1 = provider.parseList("[X|[Y|[Z]]]");
 
 		// true because are equals
 		assertEquals(0, flattened.compareTo(flattened));
@@ -311,6 +312,93 @@ public class PrologListTest extends PrologBaseTest {
 		// assertEquals(flattenList1.compareTo(headTailList1), 0);
 		assertEquals(1, flattened.compareTo(headTailList1));
 		assertEquals(-1, flattenList1.compareTo(headTail));
+
+	}
+
+	@Test
+	public final void testMatch() {
+
+		PrologList flattened = provider.parseList("[a,b,c]");
+		PrologList headTail = provider.parseList("[a|[b|[c|[]]]]");
+
+		// with atom
+		PrologAtom atom = provider.newAtom("John Doe");
+		assertEquals(new HashMap<String, PrologTerm>(), flattened.match(atom));
+		assertEquals(new HashMap<String, PrologTerm>(), headTail.match(atom));
+		assertEquals(new HashMap<String, PrologTerm>(), empty.match(atom));
+
+		// with integer
+		PrologInteger iValue = provider.newInteger(28);
+		assertEquals(new HashMap<String, PrologTerm>(), flattened.match(iValue));
+		assertEquals(new HashMap<String, PrologTerm>(), headTail.match(iValue));
+		assertEquals(new HashMap<String, PrologTerm>(), empty.match(iValue));
+
+		// with float
+		PrologFloat fValue = provider.newFloat(36.47);
+		assertEquals(new HashMap<String, PrologTerm>(), flattened.match(fValue));
+		assertEquals(new HashMap<String, PrologTerm>(), headTail.match(fValue));
+		assertEquals(new HashMap<String, PrologTerm>(), empty.match(fValue));
+
+		// with variable
+		PrologVariable x = provider.newVariable("X", 0);
+		PrologVariable y = provider.newVariable("Y", 1);
+		PrologVariable z = provider.newVariable("Z", 2);
+
+		HashMap<String, PrologTerm> substitution = new HashMap<String, PrologTerm>(1);
+		substitution.put("X", provider.parseList("[a,b,c]"));
+		assertEquals(substitution, flattened.match(x));
+
+		substitution = new HashMap<String, PrologTerm>(1);
+		substitution.put("Y", provider.parseList("[a|[b|[c|[]]]]"));
+		assertEquals(substitution, headTail.match(y));
+
+		substitution = new HashMap<String, PrologTerm>(1);
+		substitution.put("Z", provider.prologEmpty());
+		assertEquals(substitution, empty.match(z));
+
+		// with predicate
+		PrologStructure structure = provider.parseStructure("somepredicate(a,b,c)");
+		assertEquals(new HashMap<String, PrologTerm>(), flattened.match(structure));
+		assertEquals(new HashMap<String, PrologTerm>(), headTail.match(structure));
+		assertEquals(new HashMap<String, PrologTerm>(), empty.match(structure));
+
+		// with list
+		PrologList flattenList1 = provider.parseList("[X,Y,Z]");
+		PrologList headTailList1 = provider.parseList("[X|[Y|[Z|[]]]]");
+
+		// true because are equals
+		assertEquals(new HashMap<String, PrologTerm>(), flattened.match(flattened));
+		assertEquals(new HashMap<String, PrologTerm>(), headTail.match(headTail));
+		assertEquals(new HashMap<String, PrologTerm>(), empty.match(empty));
+
+		// true because their terms unify
+
+		substitution = new HashMap<String, PrologTerm>(3);
+		substitution.put("X", provider.newAtom("a"));
+		substitution.put("Y", provider.newAtom("b"));
+		substitution.put("Z", provider.newAtom("c"));
+
+		assertEquals(substitution, flattened.match(flattenList1));
+		assertEquals(substitution, flattenList1.match(headTail));
+
+		substitution = new HashMap<String, PrologTerm>(3);
+		substitution.put("X", provider.newAtom("a"));
+		substitution.put("Y", provider.newAtom("b"));
+		substitution.put("Z", provider.newAtom("c"));
+
+		assertEquals(substitution, headTail.match(headTailList1));
+		assertEquals(substitution, flattened.match(headTailList1));
+
+		// testing different list type that unify
+		assertEquals(new HashMap<String, PrologTerm>(), flattened.match(headTail));
+
+		substitution = new HashMap<String, PrologTerm>(3);
+		// Occurs check return empty substitution
+		// substitution.put("X", provider.newVariable("X", 0));
+		// substitution.put("Y", provider.newVariable("Y", 1));
+		// substitution.put("Z", provider.parseList("[Z]"));
+
+		assertEquals(substitution, flattenList1.match(headTailList1));
 
 	}
 

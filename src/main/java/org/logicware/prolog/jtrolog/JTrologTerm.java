@@ -34,7 +34,11 @@ import static org.logicware.prolog.PrologTermType.STRUCTURE_TYPE;
 import static org.logicware.prolog.PrologTermType.TRUE_TYPE;
 import static org.logicware.prolog.PrologTermType.VARIABLE_TYPE;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 
 import org.logicware.prolog.AbstractTerm;
 import org.logicware.prolog.NumberExpectedError;
@@ -43,6 +47,8 @@ import org.logicware.prolog.PrologProvider;
 import org.logicware.prolog.PrologTerm;
 
 import jTrolog.engine.Prolog;
+import jTrolog.engine.Solution;
+import jTrolog.parser.Parser;
 import jTrolog.terms.Double;
 import jTrolog.terms.Float;
 import jTrolog.terms.Int;
@@ -86,6 +92,20 @@ public abstract class JTrologTerm extends AbstractTerm implements PrologTerm {
 	protected final void checkNumberType(PrologTerm term) {
 		if (!term.isNumber()) {
 			throw new NumberExpectedError(term);
+		}
+	}
+
+	private void enumerateVariables(List<String> vector, Term term) {
+		if (!(term instanceof Var)) {
+			if (term instanceof Struct) {
+				Struct struct = (Struct) term;
+				Var[] vars = struct.getVarList();
+				for (Var var : vars) {
+					enumerateVariables(vector, var);
+				}
+			}
+		} else if (!vector.contains(term.toString())) {
+			vector.add(term.toString());
 		}
 	}
 
@@ -178,6 +198,28 @@ public abstract class JTrologTerm extends AbstractTerm implements PrologTerm {
 	public final boolean unify(PrologTerm term) {
 		Term otherTerm = fromTerm(term, Term.class);
 		return Prolog.match(value, otherTerm);
+	}
+
+	public final Map<String, PrologTerm> match(PrologTerm term) {
+		Map<String, PrologTerm> map = new HashMap<String, PrologTerm>();
+		try {
+			List<String> vector = new ArrayList<String>();
+			String q = "unify(" + value + "," + term + ").";
+			enumerateVariables(vector, new Parser(q).nextTerm(false));
+			Solution solution = new Prolog().solve(q);
+			for (String vName : vector) {
+				if (solution != null) {
+					Term vtTerm = solution.getBinding(vName);
+					if (vtTerm != null) {
+						PrologTerm pTerm = toTerm(vtTerm, PrologTerm.class);
+						map.put(vName, pTerm);
+					}
+				}
+			}
+		} catch (Throwable e) {
+			// do nothing
+		}
+		return map;
 	}
 
 	public final int compareTo(PrologTerm term) {
@@ -333,14 +375,16 @@ public abstract class JTrologTerm extends AbstractTerm implements PrologTerm {
 			return true;
 		if (obj == null)
 			return false;
-		if (getClass() != obj.getClass())
+		if (!(obj instanceof JTrologTerm))
 			return false;
 		JTrologTerm other = (JTrologTerm) obj;
-		if (type != other.type)
-			return false;
+//		if (type != other.type)
+//			return false;
 		if (value == null) {
 			if (other.value != null)
 				return false;
+		} else if (value.toString().equals(other.value.toString())) {
+			return true;
 		} else if (!Prolog.match(value, other.value)) {
 			return false;
 		}

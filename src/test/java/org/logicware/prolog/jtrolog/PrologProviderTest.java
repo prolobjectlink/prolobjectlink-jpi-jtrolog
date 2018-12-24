@@ -171,45 +171,45 @@ public class PrologProviderTest extends PrologBaseTest {
 	@Test
 	public final void testParseTerm() {
 
-		assertEquals(provider.prologCut(), provider.parsePrologTerm("!"));
-		assertEquals(provider.prologNil(), provider.parsePrologTerm("nil"));
-		assertEquals(provider.prologTrue(), provider.parsePrologTerm("true"));
-		assertEquals(provider.prologFalse(), provider.parsePrologTerm("false"));
-		assertEquals(provider.prologFail(), provider.parsePrologTerm("fail"));
-		assertEquals(provider.prologEmpty(), provider.parsePrologTerm("[]"));
+		assertEquals(provider.prologCut(), provider.parseTerm("!"));
+		assertEquals(provider.prologNil(), provider.parseTerm("nil"));
+		assertEquals(provider.prologTrue(), provider.parseTerm("true"));
+		assertEquals(provider.prologFalse(), provider.parseTerm("false"));
+		assertEquals(provider.prologFail(), provider.parseTerm("fail"));
+		assertEquals(provider.prologEmpty(), provider.parseTerm("[]"));
 
-		PrologAtom atom = (PrologAtom) provider.parsePrologTerm("an_atom");
+		PrologAtom atom = (PrologAtom) provider.parseTerm("an_atom");
 		assertEquals(provider.newAtom("an_atom"), atom);
 
 		// be careful this engine no atom is well formed if not use quotes
-		PrologAtom complex_atom = (PrologAtom) provider.parsePrologTerm("'an complex atom'");
+		PrologAtom complex_atom = (PrologAtom) provider.parseTerm("'an complex atom'");
 		assertEquals(provider.newAtom("an complex atom"), complex_atom);
 
 		// IPrologFloat f = (IPrologFloat) factory.parseTerm("3.14");
 		// assertEquals(new FloatAdapter(3.14), f);
 
-		PrologDouble d = (PrologDouble) provider.parsePrologTerm("3.14");
+		PrologDouble d = (PrologDouble) provider.parseTerm("3.14");
 		assertEquals(provider.newDouble(3.14), d);
 
-		PrologList list = (PrologList) provider.parsePrologTerm("[0,1,2,3,4,5,6,7,8,9]");
+		PrologList list = (PrologList) provider.parseTerm("[0,1,2,3,4,5,6,7,8,9]");
 		assertEquals(provider.newList(new PrologTerm[] { zero, one, two, three, four, five, six, seven, eight, nine }),
 				list);
 
-		PrologStructure structure = (PrologStructure) provider.parsePrologTerm("digits(0,1,2,3,4,5,6,7,8,9)");
+		PrologStructure structure = (PrologStructure) provider.parseTerm("digits(0,1,2,3,4,5,6,7,8,9)");
 		assertEquals(provider.newStructure("digits", zero, one, two, three, four, five, six, seven, eight, nine),
 				structure);
 
 		PrologStructure complex_structure = (PrologStructure) provider
-				.parsePrologTerm("'digits structure'(0,1,2,3,4,5,6,7,8,9)");
+				.parseTerm("'digits structure'(0,1,2,3,4,5,6,7,8,9)");
 		assertEquals(
 				provider.newStructure("digits structure", zero, one, two, three, four, five, six, seven, eight, nine),
 				complex_structure);
 
 		//
-		PrologTerm employeeStructure = provider.parsePrologTerm("employee(Name,Dpto,Scale)");
+		PrologTerm employeeStructure = provider.parseTerm("employee(Name,Dpto,Scale)");
 		assertEquals(provider.newStructure(employee, name, dpto, scale), employeeStructure);
 
-		PrologTerm expression = provider.parsePrologTerm("X+Y");
+		PrologTerm expression = provider.parseTerm("X+Y");
 		assertEquals(provider.newStructure(x, "+", y), expression);
 
 	}
@@ -225,16 +225,16 @@ public class PrologProviderTest extends PrologBaseTest {
 
 		PrologTerm[] structures = new PrologTerm[] { employeeStructure, departmentStructure, salaryStructure,
 				expression };
-		assertArrayEquals(structures, provider.parsePrologTerms(
+		assertArrayEquals(structures, provider.parseTerms(
 				"employee(Name,Dpto,Scale),department(Dpto,DepartmentName),salary(Scale,Money),Money < 2000"));
 
 		assertArrayEquals(new PrologTerm[] { provider.newStructure(employee, name, dpto, scale) },
-				provider.parsePrologTerms("employee(Name,Dpto,Scale)"));
-		assertArrayEquals(new PrologTerm[] { name }, provider.parsePrologTerms("','(Name,Dpto)"));
+				provider.parseTerms("employee(Name,Dpto,Scale)"));
+		assertArrayEquals(new PrologTerm[] { name }, provider.parseTerms("','(Name,Dpto)"));
 		assertArrayEquals(new PrologTerm[] { provider.newStructure("','", name) },
-				provider.parsePrologTerms("','(Name)"));
-		assertArrayEquals(new PrologTerm[0], provider.parsePrologTerms("15"));
-		assertArrayEquals(new PrologTerm[0], provider.parsePrologTerms(""));
+				provider.parseTerms("','(Name)"));
+		assertArrayEquals(new PrologTerm[0], provider.parseTerms("15"));
+		assertArrayEquals(new PrologTerm[0], provider.parseTerms(""));
 
 	}
 

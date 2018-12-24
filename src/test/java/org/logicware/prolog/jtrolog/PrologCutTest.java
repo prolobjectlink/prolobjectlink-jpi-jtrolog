@@ -169,16 +169,16 @@ public class PrologCutTest extends PrologBaseTest {
 		assertTrue(cut.unify(variable));
 
 		// with predicate
-		PrologStructure structure = provider.parsePrologStructure("some_predicate(a,b,c)");
+		PrologStructure structure = provider.parseStructure("some_predicate(a,b,c)");
 		assertFalse(cut.unify(structure));
 
 		// with list
-		PrologList list = provider.parsePrologList("[a,b,c]");
+		PrologList list = provider.parseList("[a,b,c]");
 		assertFalse(cut.unify(list));
 		assertTrue(cut.unify(cut));
 
 		// with expression
-		PrologTerm expression = provider.parsePrologTerm("58+93*10");
+		PrologTerm expression = provider.parseTerm("58+93*10");
 		assertFalse(cut.unify(expression));
 
 	}
@@ -212,16 +212,16 @@ public class PrologCutTest extends PrologBaseTest {
 		assertEquals(1, cut.compareTo(variable));
 
 		// with predicate
-		PrologStructure structure = provider.parsePrologStructure("some_predicate(a,b,c)");
+		PrologStructure structure = provider.parseStructure("some_predicate(a,b,c)");
 		assertEquals(-1, cut.compareTo(structure));
 
 		// with list
-		PrologList list = provider.parsePrologList("[a,b,c]");
+		PrologList list = provider.parseList("[a,b,c]");
 		assertEquals(-1, cut.compareTo(list));
 		assertEquals(0, cut.compareTo(cut));
 
 		// with expression
-		PrologTerm expression = provider.parsePrologTerm("58+93*10");
+		PrologTerm expression = provider.parseTerm("58+93*10");
 		assertEquals(-1, cut.compareTo(expression));
 
 	}

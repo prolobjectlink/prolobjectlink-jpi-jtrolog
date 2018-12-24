@@ -170,16 +170,16 @@ public class PrologFailTest extends PrologBaseTest {
 		assertTrue(fail.unify(variable));
 
 		// with predicate
-		PrologStructure structure = provider.parsePrologStructure("some_predicate(a,b,c)");
+		PrologStructure structure = provider.parseStructure("some_predicate(a,b,c)");
 		assertFalse(fail.unify(structure));
 
 		// with list
-		PrologList list = provider.parsePrologList("[a,b,c]");
+		PrologList list = provider.parseList("[a,b,c]");
 		assertFalse(fail.unify(list));
 		assertTrue(fail.unify(fail));
 
 		// with expression
-		PrologTerm expression = provider.parsePrologTerm("58+93*10");
+		PrologTerm expression = provider.parseTerm("58+93*10");
 		assertFalse(fail.unify(expression));
 
 	}
@@ -213,16 +213,16 @@ public class PrologFailTest extends PrologBaseTest {
 		assertEquals(1, fail.compareTo(variable));
 
 		// with predicate
-		PrologStructure structure = provider.parsePrologStructure("some_predicate(a,b,c)");
+		PrologStructure structure = provider.parseStructure("some_predicate(a,b,c)");
 		assertEquals(fail.compareTo(structure), -1);
 
 		// with list
-		PrologList list = provider.parsePrologList("[a,b,c]");
+		PrologList list = provider.parseList("[a,b,c]");
 		assertEquals(-1, fail.compareTo(list));
 		assertEquals(0, fail.compareTo(fail));
 
 		// with expression
-		PrologTerm expression = provider.parsePrologTerm("58+93*10");
+		PrologTerm expression = provider.parseTerm("58+93*10");
 		assertEquals(-1, fail.compareTo(expression));
 
 	}
