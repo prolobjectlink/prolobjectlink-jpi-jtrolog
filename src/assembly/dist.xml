@@ -55,6 +55,12 @@
 			<outputDirectory>etc</outputDirectory>
 		</fileSet>
 
+		<!-- prolog folder -->
+		<fileSet>
+			<directory>${project.basedir}/jlp</directory>
+			<outputDirectory>jlp</outputDirectory>
+		</fileSet>
+
 		<!-- logs folder -->
 		<fileSet>
 			<directory>${project.basedir}/log</directory>
