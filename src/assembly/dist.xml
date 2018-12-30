@@ -57,8 +57,8 @@
 
 		<!-- prolog folder -->
 		<fileSet>
-			<directory>${project.basedir}/jlp</directory>
-			<outputDirectory>jlp</outputDirectory>
+			<directory>${project.basedir}/opt</directory>
+			<outputDirectory>opt</outputDirectory>
 		</fileSet>
 
 		<!-- logs folder -->
