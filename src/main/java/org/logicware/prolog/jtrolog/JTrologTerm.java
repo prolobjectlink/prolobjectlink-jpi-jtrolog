@@ -378,8 +378,6 @@ public abstract class JTrologTerm extends AbstractTerm implements PrologTerm {
 		if (!(obj instanceof JTrologTerm))
 			return false;
 		JTrologTerm other = (JTrologTerm) obj;
-//		if (type != other.type)
-//			return false;
 		if (value == null) {
 			if (other.value != null)
 				return false;
