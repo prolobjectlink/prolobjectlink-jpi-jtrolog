@@ -231,8 +231,7 @@ public class PrologProviderTest extends PrologBaseTest {
 		assertArrayEquals(new PrologTerm[] { provider.newStructure(employee, name, dpto, scale) },
 				provider.parseTerms("employee(Name,Dpto,Scale)"));
 		assertArrayEquals(new PrologTerm[] { name }, provider.parseTerms("','(Name,Dpto)"));
-		assertArrayEquals(new PrologTerm[] { provider.newStructure("','", name) },
-				provider.parseTerms("','(Name)"));
+		assertArrayEquals(new PrologTerm[] { provider.newStructure("','", name) }, provider.parseTerms("','(Name)"));
 		assertArrayEquals(new PrologTerm[0], provider.parseTerms("15"));
 		assertArrayEquals(new PrologTerm[0], provider.parseTerms(""));
 

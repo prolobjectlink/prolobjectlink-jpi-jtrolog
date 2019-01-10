@@ -23,10 +23,10 @@ import static org.logicware.prolog.PrologTermType.LIST_TYPE;
 
 import java.util.Iterator;
 
-import org.logicware.AbstractIterator;
 import org.logicware.prolog.PrologList;
 import org.logicware.prolog.PrologProvider;
 import org.logicware.prolog.PrologTerm;
+import org.worklogic.AbstractIterator;
 
 import jTrolog.terms.Struct;
 import jTrolog.terms.Term;

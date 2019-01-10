@@ -209,7 +209,7 @@ public class PrologFailTest extends PrologBaseTest {
 		assertEquals(1, fail.compareTo(dValue));
 
 		// with variable
-		PrologVariable variable = provider.newVariable("X",0);
+		PrologVariable variable = provider.newVariable("X", 0);
 		assertEquals(1, fail.compareTo(variable));
 
 		// with predicate

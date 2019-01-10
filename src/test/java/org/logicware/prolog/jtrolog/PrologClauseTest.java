@@ -164,7 +164,7 @@ public class PrologClauseTest extends PrologBaseTest {
 
 		assertFalse(fact.isRule());
 		assertTrue(rule.isRule());
-		
+
 	}
 
 	@Test

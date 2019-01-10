@@ -22,15 +22,16 @@ package org.logicware.prolog.jtrolog;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.logicware.prolog.Prolog;
 import org.logicware.prolog.PrologAtom;
 import org.logicware.prolog.PrologDouble;
-import org.logicware.prolog.Prolog;
 import org.logicware.prolog.PrologFloat;
 import org.logicware.prolog.PrologInteger;
 import org.logicware.prolog.PrologProvider;
 import org.logicware.prolog.PrologTerm;
 import org.logicware.prolog.PrologVariable;
 
+/** @author Jose Zalacain @since 1.0 */
 public abstract class PrologBaseTest {
 
 	protected String male = "male";
