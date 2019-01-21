@@ -41,7 +41,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.logicware.prolog.AbstractTerm;
-import org.logicware.prolog.NumberExpectedError;
 import org.logicware.prolog.PrologNumber;
 import org.logicware.prolog.PrologProvider;
 import org.logicware.prolog.PrologTerm;
@@ -88,12 +87,6 @@ public abstract class JTrologTerm extends AbstractTerm implements PrologTerm {
 	protected JTrologTerm(int type, PrologProvider provider, String name, int n) {
 		this(type, provider, new Var(name, n));
 		this.vIndex = n;
-	}
-
-	protected final void checkNumberType(PrologTerm term) {
-		if (!term.isNumber()) {
-			throw new NumberExpectedError(term);
-		}
 	}
 
 	private void enumerateVariables(List<String> vector, Term term) {
