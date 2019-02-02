@@ -237,7 +237,7 @@
 						<manifest>
 							<addClasspath>true</addClasspath>
 							<mainClass>
-								org.logicware.prolog.jtrolog.JTrologConsole
+								org.prolobjectlink.prolog.jtrolog.JTrologConsole
 							</mainClass>
 						</manifest>
 						<manifestEntries>
