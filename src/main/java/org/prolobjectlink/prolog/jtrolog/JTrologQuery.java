@@ -349,7 +349,7 @@ public class JTrologQuery extends AbstractQuery implements PrologQuery {
 		if (getClass() != obj.getClass())
 			return false;
 		JTrologQuery other = (JTrologQuery) obj;
-		if (!Objects.equals(solution, other.solution))
+		if (!Prolog.match(solution.getSolution(), other.solution.getSolution()))
 			return false;
 		return Objects.equals(variables, other.variables);
 	}
