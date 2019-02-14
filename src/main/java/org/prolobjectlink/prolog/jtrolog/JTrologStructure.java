@@ -37,7 +37,7 @@ public class JTrologStructure extends JTrologTerm implements PrologStructure {
 		super(STRUCTURE_TYPE, provider);
 		Term[] terms = new Term[arguments.length];
 		for (int i = 0; i < arguments.length; i++) {
-			terms[i] = unwrap(arguments[i], JTrologTerm.class).value;
+			terms[i] = ((JTrologTerm) arguments[i]).value;
 		}
 		value = new Struct(functor, terms);
 	}
@@ -48,8 +48,8 @@ public class JTrologStructure extends JTrologTerm implements PrologStructure {
 
 	protected JTrologStructure(PrologProvider provider, PrologTerm left, String operator, PrologTerm right) {
 		super(STRUCTURE_TYPE, provider);
-		Term leftOperand = left.unwrap(JTrologTerm.class).value;
-		Term rightOperand = right.unwrap(JTrologTerm.class).value;
+		Term leftOperand = ((JTrologTerm) left).value;
+		Term rightOperand = ((JTrologTerm) right).value;
 		value = new Struct(operator, new Term[] { leftOperand, rightOperand });
 	}
 

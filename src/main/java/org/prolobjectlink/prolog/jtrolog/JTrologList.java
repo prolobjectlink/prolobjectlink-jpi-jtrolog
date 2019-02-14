@@ -25,7 +25,7 @@ import static org.prolobjectlink.prolog.PrologTermType.LIST_TYPE;
 
 import java.util.Iterator;
 
-import org.prolobjectlink.AbstractIterator;
+import org.prolobjectlink.prolog.AbstractIterator;
 import org.prolobjectlink.prolog.PrologList;
 import org.prolobjectlink.prolog.PrologProvider;
 import org.prolobjectlink.prolog.PrologTerm;
@@ -69,14 +69,14 @@ public class JTrologList extends JTrologTerm implements PrologList {
 			int length = arguments.length;
 			if (length > 0) {
 				if (arguments[length - 1].isEmptyList()) {
-					value = unwrap(arguments[length - 1], JTrologTerm.class).value;
+					value = ((JTrologTerm) arguments[length - 1]).value;
 					for (int i = length - 2; i >= 0; --i) {
-						value = new Struct(".", new Term[] { unwrap(arguments[i], JTrologTerm.class).value, value });
+						value = new Struct(".", new Term[] { ((JTrologTerm) arguments[i]).value, value });
 					}
 				} else {
 					value = Term.emptyList;
 					for (int i = length - 1; i >= 0; --i) {
-						value = new Struct(".", new Term[] { unwrap(arguments[i], JTrologTerm.class).value, value });
+						value = new Struct(".", new Term[] { ((JTrologTerm) arguments[i]).value, value });
 					}
 				}
 			} else {
@@ -89,8 +89,8 @@ public class JTrologList extends JTrologTerm implements PrologList {
 
 	protected JTrologList(PrologProvider provider, PrologTerm head, PrologTerm tail) {
 		super(LIST_TYPE, provider);
-		Term h = unwrap(head, JTrologTerm.class).value;
-		Term t = unwrap(tail, JTrologTerm.class).value;
+		Term h = ((JTrologTerm) head).value;
+		Term t = ((JTrologTerm) tail).value;
 		value = new Struct(".", new Term[] { h, t });
 	}
 
@@ -104,9 +104,9 @@ public class JTrologList extends JTrologTerm implements PrologList {
 
 	protected JTrologList(PrologProvider provider, PrologTerm[] arguments, PrologTerm tail) {
 		super(LIST_TYPE, provider);
-		value = unwrap(tail, JTrologTerm.class).value;
+		value = ((JTrologTerm) tail).value;
 		for (int i = arguments.length - 1; i >= 0; --i) {
-			value = new Struct(".", new Term[] { unwrap(arguments[i], JTrologTerm.class).value, value });
+			value = new Struct(".", new Term[] { ((JTrologTerm) arguments[i]).value, value });
 		}
 	}
 

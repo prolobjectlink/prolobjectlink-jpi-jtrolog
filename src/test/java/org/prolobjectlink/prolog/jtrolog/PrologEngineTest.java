@@ -49,8 +49,6 @@ import org.prolobjectlink.prolog.PrologQuery;
 import org.prolobjectlink.prolog.PrologStructure;
 import org.prolobjectlink.prolog.PrologTerm;
 import org.prolobjectlink.prolog.PrologVariable;
-import org.prolobjectlink.prolog.jtrolog.JTrologEngine;
-import org.prolobjectlink.prolog.jtrolog.JTrologOperator;
 
 import jTrolog.engine.Prolog;
 import jTrolog.errors.PrologException;
@@ -1042,11 +1040,11 @@ public class PrologEngineTest extends PrologBaseTest {
 		}
 
 		// user defined predicates
-		Iterator<?> i = engine.unwrap(JTrologEngine.class).engine.dynamicPredicateIndicators();
+		Iterator<?> i = ((JTrologEngine) engine).engine.dynamicPredicateIndicators();
 		while (i.hasNext()) {
 			String predIndicator = (String) i.next();
 			try {
-				List<?> list = engine.unwrap(JTrologEngine.class).engine.find(predIndicator);
+				List<?> list = ((JTrologEngine) engine).engine.find(predIndicator);
 				for (int j = 0; j < list.size(); j++) {
 					Object object = list.get(j);
 					if (object instanceof Clause) {
