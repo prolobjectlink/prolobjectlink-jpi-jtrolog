@@ -51,7 +51,7 @@ public abstract class PrologBaseTest {
 	protected String employee = "employee";
 	protected String department = "department";
 
-	protected static final PrologProvider provider = Prolog.newProvider(JTrolog.class);
+	protected static final PrologProvider provider = Prolog.getProvider(JTrolog.class);
 
 	protected PrologTerm nil = provider.prologNil();
 	protected PrologTerm empty = provider.prologEmpty();
