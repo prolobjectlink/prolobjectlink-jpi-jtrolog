@@ -32,6 +32,7 @@ import org.prolobjectlink.prolog.PrologEngine;
 import org.prolobjectlink.prolog.PrologFloat;
 import org.prolobjectlink.prolog.PrologInteger;
 import org.prolobjectlink.prolog.PrologList;
+import org.prolobjectlink.prolog.PrologLogger;
 import org.prolobjectlink.prolog.PrologLong;
 import org.prolobjectlink.prolog.PrologProvider;
 import org.prolobjectlink.prolog.PrologStructure;
@@ -44,6 +45,8 @@ import jTrolog.terms.Term;
 
 public class JTrolog extends AbstractProvider implements PrologProvider {
 
+	private static final PrologLogger logger = new JTrologLogger();
+	
 	public JTrolog() {
 		super(new JTrologConverter());
 	}
@@ -170,6 +173,10 @@ public class JTrolog extends AbstractProvider implements PrologProvider {
 
 	public PrologTerm newStructure(PrologTerm left, String operator, PrologTerm right) {
 		return new JTrologStructure(this, left, operator, right);
+	}
+
+	public PrologLogger getLogger() {
+		return logger;
 	}
 
 	@Override
