@@ -21,7 +21,6 @@ package org.prolobjectlink.prolog.jtrolog;
  * #L%
  */
 
-
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -107,9 +106,8 @@ public class PrologQueryIteratorTest extends PrologBaseTest {
 		assertEquals(Arrays.asList(administration, fourThousandFiveHundred, eight, petersen, five),
 				new ArrayList<PrologTerm>(i.next()));
 		assertEquals(Arrays.asList(board, fourThousand, seven, cohn, one), new ArrayList<PrologTerm>(i.next()));
-//		assertThrows(NoSuchElementException.class, i.next());
+		assertEquals(Arrays.asList(board, fiveThousand, nine, duffy, one), new ArrayList<PrologTerm>(i.next()));
 		assertFalse(i.hasNext());
-
 	}
 
 }
