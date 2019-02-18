@@ -31,7 +31,7 @@ import java.util.Objects;
 
 import org.prolobjectlink.prolog.AbstractEngine;
 import org.prolobjectlink.prolog.AbstractQuery;
-import org.prolobjectlink.prolog.LoggerConstants;
+import org.prolobjectlink.prolog.PrologLogger;
 import org.prolobjectlink.prolog.PrologQuery;
 import org.prolobjectlink.prolog.PrologTerm;
 
@@ -158,7 +158,7 @@ public class JTrologQuery extends AbstractQuery implements PrologQuery {
 				return array;
 			}
 		} catch (Throwable e) {
-			getLogger().error(getClass(), LoggerConstants.NON_SOLUTION, e);
+			getLogger().error(getClass(), PrologLogger.NON_SOLUTION, e);
 		}
 		return array;
 	}
@@ -172,7 +172,7 @@ public class JTrologQuery extends AbstractQuery implements PrologQuery {
 			}
 			return map;
 		} catch (Throwable e) {
-			getLogger().error(getClass(), LoggerConstants.NON_SOLUTION, e);
+			getLogger().error(getClass(), PrologLogger.NON_SOLUTION, e);
 		}
 		return new HashMap<String, PrologTerm>(0);
 	}
@@ -199,7 +199,7 @@ public class JTrologQuery extends AbstractQuery implements PrologQuery {
 						all.add(array);
 					}
 				} catch (Throwable e) {
-					getLogger().error(getClass(), LoggerConstants.NON_SOLUTION, e);
+					getLogger().error(getClass(), PrologLogger.NON_SOLUTION, e);
 				}
 
 			}
@@ -228,7 +228,7 @@ public class JTrologQuery extends AbstractQuery implements PrologQuery {
 					solutionMap = oneVariablesSolution();
 					solutionMaps[index++] = solutionMap;
 				} catch (Throwable e) {
-					getLogger().error(getClass(), LoggerConstants.NON_SOLUTION, e);
+					getLogger().error(getClass(), PrologLogger.NON_SOLUTION, e);
 				}
 			}
 			return solutionMaps;
@@ -259,7 +259,7 @@ public class JTrologQuery extends AbstractQuery implements PrologQuery {
 					all.add(array);
 				}
 			} catch (Throwable e) {
-				getLogger().error(getClass(), LoggerConstants.NON_SOLUTION, e);
+				getLogger().error(getClass(), PrologLogger.NON_SOLUTION, e);
 			}
 
 		}
@@ -288,7 +288,7 @@ public class JTrologQuery extends AbstractQuery implements PrologQuery {
 					allVariables.add(varMap);
 				}
 			} catch (Throwable e) {
-				getLogger().error(getClass(), LoggerConstants.NON_SOLUTION, e);
+				getLogger().error(getClass(), PrologLogger.NON_SOLUTION, e);
 			}
 		}
 
@@ -316,7 +316,7 @@ public class JTrologQuery extends AbstractQuery implements PrologQuery {
 					all.add(varMap);
 				}
 			} catch (Throwable e) {
-				getLogger().error(getClass(), LoggerConstants.NON_SOLUTION, e);
+				getLogger().error(getClass(), PrologLogger.NON_SOLUTION, e);
 			}
 		}
 

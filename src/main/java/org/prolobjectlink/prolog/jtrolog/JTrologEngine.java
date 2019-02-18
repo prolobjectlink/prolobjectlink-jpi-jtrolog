@@ -21,12 +21,12 @@
  */
 package org.prolobjectlink.prolog.jtrolog;
 
-import static org.prolobjectlink.prolog.LoggerConstants.DONT_WORRY;
-import static org.prolobjectlink.prolog.LoggerConstants.FILE_NOT_FOUND;
-import static org.prolobjectlink.prolog.LoggerConstants.INDICATOR_NOT_FOUND;
-import static org.prolobjectlink.prolog.LoggerConstants.IO;
-import static org.prolobjectlink.prolog.LoggerConstants.RUNTIME_ERROR;
-import static org.prolobjectlink.prolog.LoggerConstants.SYNTAX_ERROR;
+import static org.prolobjectlink.prolog.PrologLogger.DONT_WORRY;
+import static org.prolobjectlink.prolog.PrologLogger.FILE_NOT_FOUND;
+import static org.prolobjectlink.prolog.PrologLogger.INDICATOR_NOT_FOUND;
+import static org.prolobjectlink.prolog.PrologLogger.IO;
+import static org.prolobjectlink.prolog.PrologLogger.RUNTIME_ERROR;
+import static org.prolobjectlink.prolog.PrologLogger.SYNTAX_ERROR;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -43,11 +43,11 @@ import java.util.Set;
 
 import org.prolobjectlink.prolog.AbstractEngine;
 import org.prolobjectlink.prolog.Licenses;
-import org.prolobjectlink.prolog.LoggerConstants;
 import org.prolobjectlink.prolog.PredicateIndicator;
 import org.prolobjectlink.prolog.PrologClause;
 import org.prolobjectlink.prolog.PrologEngine;
 import org.prolobjectlink.prolog.PrologIndicator;
+import org.prolobjectlink.prolog.PrologLogger;
 import org.prolobjectlink.prolog.PrologOperator;
 import org.prolobjectlink.prolog.PrologProvider;
 import org.prolobjectlink.prolog.PrologQuery;
@@ -324,7 +324,7 @@ public final class JTrologEngine extends AbstractEngine implements PrologEngine 
 					return true;
 				}
 			} catch (PrologException e) {
-				getLogger().error(getClass(), LoggerConstants.INDICATOR_NOT_FOUND + key, e);
+				getLogger().error(getClass(), PrologLogger.INDICATOR_NOT_FOUND + key, e);
 			}
 		}
 
@@ -369,7 +369,7 @@ public final class JTrologEngine extends AbstractEngine implements PrologEngine 
 				List<?> list = engine.find(predIndicator);
 				counter += list.size();
 			} catch (PrologException e) {
-				getLogger().error(getClass(), LoggerConstants.INDICATOR_NOT_FOUND + predIndicator, e);
+				getLogger().error(getClass(), PrologLogger.INDICATOR_NOT_FOUND + predIndicator, e);
 			}
 		}
 		return counter;
@@ -392,7 +392,7 @@ public final class JTrologEngine extends AbstractEngine implements PrologEngine 
 					}
 				}
 			} catch (PrologException e) {
-				getLogger().error(getClass(), LoggerConstants.INDICATOR_NOT_FOUND + predIndicator, e);
+				getLogger().error(getClass(), PrologLogger.INDICATOR_NOT_FOUND + predIndicator, e);
 			}
 		}
 		return predicates;
