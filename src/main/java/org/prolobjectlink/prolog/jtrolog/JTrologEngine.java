@@ -34,6 +34,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Method;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -458,6 +459,10 @@ public final class JTrologEngine extends AbstractEngine implements PrologEngine 
 		if (engine != null) {
 			engine.clearTheory();
 		}
+	}
+
+	public final List<String> verify() {
+		return Arrays.asList("OK");
 	}
 
 }
