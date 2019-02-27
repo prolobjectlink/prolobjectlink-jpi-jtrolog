@@ -27,7 +27,6 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 import org.prolobjectlink.prolog.AbstractEngine;
 import org.prolobjectlink.prolog.AbstractQuery;
@@ -336,8 +335,8 @@ public class JTrologQuery extends AbstractQuery implements PrologQuery {
 	public int hashCode() {
 		final int prime = 31;
 		int result = super.hashCode();
-		result = prime * result + Objects.hashCode(solution);
-		result = prime * result + Objects.hashCode(variables);
+		result = prime * result + solution.hashCode();
+		result = prime * result + variables.hashCode();
 		return result;
 	}
 
@@ -352,7 +351,7 @@ public class JTrologQuery extends AbstractQuery implements PrologQuery {
 		JTrologQuery other = (JTrologQuery) obj;
 		if (!Prolog.match(solution.getSolution(), other.solution.getSolution()))
 			return false;
-		return Objects.equals(variables, other.variables);
+		return variables.equals(other.variables);
 	}
 
 }
