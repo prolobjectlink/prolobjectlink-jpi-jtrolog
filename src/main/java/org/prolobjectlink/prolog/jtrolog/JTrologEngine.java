@@ -44,7 +44,6 @@ import java.util.Set;
 
 import org.prolobjectlink.prolog.AbstractEngine;
 import org.prolobjectlink.prolog.Licenses;
-import org.prolobjectlink.prolog.PredicateIndicator;
 import org.prolobjectlink.prolog.PrologClause;
 import org.prolobjectlink.prolog.PrologEngine;
 import org.prolobjectlink.prolog.PrologIndicator;
@@ -388,7 +387,7 @@ public final class JTrologEngine extends AbstractEngine implements PrologEngine 
 						Clause clause = (Clause) object;
 						String functor = clause.head.name;
 						int arity = clause.head.arity;
-						PredicateIndicator p = new PredicateIndicator(functor, arity);
+						JTrologIndicator p = new JTrologIndicator(functor, arity);
 						predicates.add(p);
 					}
 				}
@@ -415,7 +414,7 @@ public final class JTrologEngine extends AbstractEngine implements PrologEngine 
 						int j = method.lastIndexOf('_');
 						String f = method.substring(0, j);
 						int a = Integer.parseInt(method.substring(j + 1));
-						builtins.add(new PredicateIndicator(f, a));
+						builtins.add(new JTrologIndicator(f, a));
 					}
 				}
 			}

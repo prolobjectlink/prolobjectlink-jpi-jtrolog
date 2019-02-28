@@ -40,7 +40,6 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.prolobjectlink.prolog.Licenses;
-import org.prolobjectlink.prolog.PredicateIndicator;
 import org.prolobjectlink.prolog.PrologAtom;
 import org.prolobjectlink.prolog.PrologEngine;
 import org.prolobjectlink.prolog.PrologIndicator;
@@ -1033,7 +1032,7 @@ public class PrologEngineTest extends PrologBaseTest {
 						int j = method.lastIndexOf('_');
 						String f = method.substring(0, j);
 						int a = Integer.parseInt(method.substring(j + 1));
-						builtins.add(new PredicateIndicator(f, a));
+						builtins.add(new JTrologIndicator(f, a));
 					}
 				}
 			}
@@ -1051,7 +1050,7 @@ public class PrologEngineTest extends PrologBaseTest {
 						Clause clause = (Clause) object;
 						String functor = clause.head.name;
 						int arity = clause.head.arity;
-						PredicateIndicator p = new PredicateIndicator(functor, arity);
+						JTrologIndicator p = new JTrologIndicator(functor, arity);
 						builtins.add(p);
 					}
 				}
