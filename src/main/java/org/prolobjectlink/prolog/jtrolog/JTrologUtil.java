@@ -33,6 +33,11 @@ import jTrolog.terms.Int;
 import jTrolog.terms.Struct;
 import jTrolog.terms.StructAtom;
 
+/**
+ * 
+ * @author Jose Zalacain
+ * @since 1.0
+ */
 final class JTrologUtil {
 
 	static Set<PrologOperator> getOperatorSet(Prolog engine) {

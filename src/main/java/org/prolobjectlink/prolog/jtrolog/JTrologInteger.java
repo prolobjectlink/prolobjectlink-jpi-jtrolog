@@ -35,6 +35,11 @@ import org.prolobjectlink.prolog.PrologTerm;
 
 import jTrolog.terms.Int;
 
+/**
+ * 
+ * @author Jose Zalacain
+ * @since 1.0
+ */
 public class JTrologInteger extends JTrologTerm implements PrologInteger {
 
 	JTrologInteger(PrologProvider provider, Number value) {

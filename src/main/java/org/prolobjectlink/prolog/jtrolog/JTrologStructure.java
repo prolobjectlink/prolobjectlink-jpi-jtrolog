@@ -31,6 +31,11 @@ import jTrolog.parser.Parser;
 import jTrolog.terms.Struct;
 import jTrolog.terms.Term;
 
+/**
+ * 
+ * @author Jose Zalacain
+ * @since 1.0
+ */
 public class JTrologStructure extends JTrologTerm implements PrologStructure {
 
 	protected JTrologStructure(PrologProvider provider, String functor, PrologTerm... arguments) {

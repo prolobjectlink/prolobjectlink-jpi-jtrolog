@@ -43,6 +43,11 @@ import jTrolog.parser.Parser;
 import jTrolog.terms.Struct;
 import jTrolog.terms.Term;
 
+/**
+ * 
+ * @author Jose Zalacain
+ * @since 1.0
+ */
 public class JTrolog extends AbstractProvider implements PrologProvider {
 
 	private static final PrologLogger logger = new JTrologLogger();

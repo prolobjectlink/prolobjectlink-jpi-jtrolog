@@ -35,6 +35,11 @@ import org.prolobjectlink.prolog.PrologTerm;
 
 import jTrolog.terms.Float;
 
+/**
+ * 
+ * @author Jose Zalacain
+ * @since 1.0
+ */
 public final class JTrologFloat extends JTrologTerm implements PrologFloat {
 
 	JTrologFloat(PrologProvider provider, Number value) {

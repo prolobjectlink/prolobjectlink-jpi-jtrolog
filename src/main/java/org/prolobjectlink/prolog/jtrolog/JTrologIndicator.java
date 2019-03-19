@@ -24,6 +24,11 @@ package org.prolobjectlink.prolog.jtrolog;
 import org.prolobjectlink.prolog.AbstractIndicator;
 import org.prolobjectlink.prolog.PrologIndicator;
 
+/**
+ * 
+ * @author Jose Zalacain
+ * @since 1.0
+ */
 public final class JTrologIndicator extends AbstractIndicator implements PrologIndicator {
 
 	public JTrologIndicator(String functor, int arity) {

@@ -33,6 +33,11 @@ import org.prolobjectlink.prolog.PrologTerm;
 import jTrolog.terms.Struct;
 import jTrolog.terms.Term;
 
+/**
+ * 
+ * @author Jose Zalacain
+ * @since 1.0
+ */
 public class JTrologList extends JTrologTerm implements PrologList {
 
 	protected JTrologList(PrologProvider provider) {

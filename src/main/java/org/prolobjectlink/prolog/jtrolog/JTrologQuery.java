@@ -41,6 +41,11 @@ import jTrolog.terms.Struct;
 import jTrolog.terms.Term;
 import jTrolog.terms.Var;
 
+/**
+ * 
+ * @author Jose Zalacain
+ * @since 1.0
+ */
 public class JTrologQuery extends AbstractQuery implements PrologQuery {
 
 	private Solution solution;

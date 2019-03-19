@@ -34,6 +34,11 @@ import org.prolobjectlink.prolog.PrologVariable;
 import jTrolog.terms.Term;
 import jTrolog.terms.Var;
 
+/**
+ * 
+ * @author Jose Zalacain
+ * @since 1.0
+ */
 public class JTrologVariable extends JTrologTerm implements PrologVariable {
 
 	private String name;

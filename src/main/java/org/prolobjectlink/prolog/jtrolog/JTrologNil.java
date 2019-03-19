@@ -28,6 +28,11 @@ import org.prolobjectlink.prolog.PrologTerm;
 
 import jTrolog.terms.StructAtom;
 
+/**
+ * 
+ * @author Jose Zalacain
+ * @since 1.0
+ */
 public final class JTrologNil extends JTrologTerm implements PrologTerm {
 
 	protected JTrologNil(PrologProvider provider) {

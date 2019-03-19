@@ -35,6 +35,11 @@ import org.prolobjectlink.prolog.PrologTerm;
 
 import jTrolog.terms.Double;
 
+/**
+ * 
+ * @author Jose Zalacain
+ * @since 1.0
+ */
 public final class JTrologDouble extends JTrologTerm implements PrologDouble {
 
 	JTrologDouble(PrologProvider provider, Number value) {

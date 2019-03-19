@@ -60,7 +60,12 @@ import jTrolog.terms.StructAtom;
 import jTrolog.terms.Term;
 import jTrolog.terms.Var;
 
-/** @author Jose Zalacain @since 1.0 */
+
+/**
+ * 
+ * @author Jose Zalacain
+ * @since 1.0
+ */
 public abstract class JTrologTerm extends AbstractTerm implements PrologTerm {
 
 	// variable index

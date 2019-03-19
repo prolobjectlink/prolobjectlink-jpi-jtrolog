@@ -35,6 +35,11 @@ import org.prolobjectlink.prolog.PrologTerm;
 
 import jTrolog.terms.Long;
 
+/**
+ * 
+ * @author Jose Zalacain
+ * @since 1.0
+ */
 public class JTrologLong extends JTrologTerm implements PrologLong {
 
 	JTrologLong(PrologProvider provider, Number value) {

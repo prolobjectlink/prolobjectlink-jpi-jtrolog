@@ -24,6 +24,11 @@ package org.prolobjectlink.prolog.jtrolog;
 import org.prolobjectlink.prolog.AbstractOperator;
 import org.prolobjectlink.prolog.PrologOperator;
 
+/**
+ * 
+ * @author Jose Zalacain
+ * @since 1.0
+ */
 public final class JTrologOperator extends AbstractOperator implements PrologOperator {
 
 	public JTrologOperator(int priority, String specifier, String operator) {

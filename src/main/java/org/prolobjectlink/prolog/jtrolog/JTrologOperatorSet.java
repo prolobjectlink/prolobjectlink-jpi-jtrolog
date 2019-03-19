@@ -30,6 +30,11 @@ import org.prolobjectlink.prolog.PrologOperatorSet;
 
 import jTrolog.engine.Prolog;
 
+/**
+ * 
+ * @author Jose Zalacain
+ * @since 1.0
+ */
 final class JTrologOperatorSet extends AbstractSet<PrologOperator> implements PrologOperatorSet {
 
 	protected final Set<PrologOperator> operators;

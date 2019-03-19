@@ -61,6 +61,11 @@ import jTrolog.terms.StructAtom;
 import jTrolog.terms.Term;
 import jTrolog.terms.Var;
 
+/**
+ * 
+ * @author Jose Zalacain
+ * @since 1.0
+ */
 public class JTrologConverter extends AbstractConverter<Term> implements PrologConverter<Term> {
 
 	protected static final JTrologOperatorSet OPERATORS = new JTrologOperatorSet();
