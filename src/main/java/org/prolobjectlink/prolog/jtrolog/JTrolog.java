@@ -46,7 +46,7 @@ import jTrolog.terms.Term;
 public class JTrolog extends AbstractProvider implements PrologProvider {
 
 	private static final PrologLogger logger = new JTrologLogger();
-	
+
 	public JTrolog() {
 		super(new JTrologConverter());
 	}
@@ -81,6 +81,10 @@ public class JTrolog extends AbstractProvider implements PrologProvider {
 
 	public PrologTerm prologEmpty() {
 		return new JTrologEmpty(this);
+	}
+
+	public PrologTerm prologInclude(String file) {
+		return newStructure("include", newAtom(file));
 	}
 
 	// engine
