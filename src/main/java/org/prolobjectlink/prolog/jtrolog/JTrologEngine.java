@@ -74,10 +74,6 @@ public final class JTrologEngine extends AbstractEngine implements PrologEngine 
 
 	final Prolog engine;
 
-	protected JTrologEngine(PrologProvider provider) {
-		this(provider, new Prolog());
-	}
-
 	protected JTrologEngine(PrologProvider provider, Prolog engine) {
 		super(provider);
 		this.engine = engine;

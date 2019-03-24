@@ -39,6 +39,7 @@ import org.prolobjectlink.prolog.PrologStructure;
 import org.prolobjectlink.prolog.PrologTerm;
 import org.prolobjectlink.prolog.PrologVariable;
 
+import jTrolog.engine.Prolog;
 import jTrolog.parser.Parser;
 import jTrolog.terms.Struct;
 import jTrolog.terms.Term;
@@ -95,7 +96,8 @@ public class JTrolog extends AbstractProvider implements PrologProvider {
 	// engine
 
 	public PrologEngine newEngine() {
-		return new JTrologEngine(this);
+		Prolog prolog = new Prolog();
+		return new JTrologEngine(this, prolog);
 	}
 
 	// parser helpers
