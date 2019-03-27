@@ -48,7 +48,7 @@ public class PrologBinaryTest extends PrologBaseTest {
 	}
 
 	@Test
-	public final void test() throws FileNotFoundException, IOException {
+	public final void pllink() throws FileNotFoundException, IOException {
 
 		// files existence
 		File bat = new File("bin/pllink.bat");
@@ -116,6 +116,65 @@ public class PrologBinaryTest extends PrologBaseTest {
 			}
 		}
 
+	}
+
+	@Test
+	public final void install() throws FileNotFoundException, IOException {
+
+		// files existence
+		File bat = new File("bin/pllink.bat");
+		File sh = new File("bin/pllink.sh");
+		assertTrue(bat.exists());
+		assertTrue(sh.exists());
+
+		String line = null;
+		StringBuilder b = null;
+		FileReader reader = null;
+		BufferedReader buffer = null;
+
+		try {
+			reader = new FileReader(bat);
+			buffer = new BufferedReader(reader);
+			line = buffer.readLine();
+			b = new StringBuilder();
+			while (line != null) {
+				b.append(line);
+				line = buffer.readLine();
+			}
+
+			assertTrue(b.toString().contains(JTrologConsole.class.getName()));
+
+			reader = new FileReader(sh);
+			buffer = new BufferedReader(reader);
+			line = buffer.readLine();
+			b = new StringBuilder();
+			while (line != null) {
+				b.append(line);
+				line = buffer.readLine();
+			}
+
+			assertTrue(b.toString().contains(JTrologConsole.class.getName()));
+
+		} catch (FileNotFoundException e) {
+			provider.getLogger().error(getClass(), FILE_NOT_FOUND, e);
+		} catch (IOException e) {
+			provider.getLogger().error(getClass(), IO, e);
+		} finally {
+			if (reader != null) {
+				try {
+					reader.close();
+				} catch (IOException e) {
+					provider.getLogger().error(getClass(), IO, e);
+				}
+			}
+			if (buffer != null) {
+				try {
+					buffer.close();
+				} catch (IOException e) {
+					provider.getLogger().error(getClass(), IO, e);
+				}
+			}
+		}
 	}
 
 }
