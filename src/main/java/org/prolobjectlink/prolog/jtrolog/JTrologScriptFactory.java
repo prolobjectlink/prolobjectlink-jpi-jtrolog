@@ -24,9 +24,9 @@ package org.prolobjectlink.prolog.jtrolog;
 import javax.script.ScriptEngineFactory;
 
 import org.prolobjectlink.prolog.PrologEngine;
-import org.prolobjectlink.prolog.PrologScriptFactory;
+import org.prolobjectlink.prolog.PrologScriptEngineFactory;
 
-public final class JTrologScriptFactory extends PrologScriptFactory implements ScriptEngineFactory {
+public final class JTrologScriptFactory extends PrologScriptEngineFactory implements ScriptEngineFactory {
 
 	public JTrologScriptFactory(PrologEngine engine) {
 		super(engine);

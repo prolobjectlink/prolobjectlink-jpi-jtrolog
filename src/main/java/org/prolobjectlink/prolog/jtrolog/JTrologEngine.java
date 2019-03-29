@@ -54,7 +54,7 @@ import org.prolobjectlink.prolog.PrologOperator;
 import org.prolobjectlink.prolog.PrologProgrammer;
 import org.prolobjectlink.prolog.PrologProvider;
 import org.prolobjectlink.prolog.PrologQuery;
-import org.prolobjectlink.prolog.PrologScript;
+import org.prolobjectlink.prolog.PrologScriptEngine;
 import org.prolobjectlink.prolog.PrologTerm;
 
 import jTrolog.engine.Prolog;
@@ -366,7 +366,7 @@ public final class JTrologEngine extends AbstractEngine implements PrologEngine 
 	}
 
 	public ScriptEngine getPrologScript() {
-		return new PrologScript(new JTrologScriptFactory(this));
+		return new PrologScriptEngine(new JTrologScriptFactory(this));
 	}
 
 	public int getProgramSize() {

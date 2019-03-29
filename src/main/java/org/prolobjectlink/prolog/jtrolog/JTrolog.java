@@ -24,6 +24,8 @@ package org.prolobjectlink.prolog.jtrolog;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.script.ScriptEngineFactory;
+
 import org.prolobjectlink.prolog.AbstractProvider;
 import org.prolobjectlink.prolog.PrologAtom;
 import org.prolobjectlink.prolog.PrologConverter;
@@ -184,6 +186,10 @@ public class JTrolog extends AbstractProvider implements PrologProvider {
 
 	public PrologTerm newStructure(PrologTerm left, String operator, PrologTerm right) {
 		return new JTrologStructure(this, left, operator, right);
+	}
+
+	public ScriptEngineFactory getScriptFactory() {
+		return new JTrologScriptFactory(newEngine());
 	}
 
 	public PrologLogger getLogger() {
