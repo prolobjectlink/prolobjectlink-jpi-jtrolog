@@ -42,6 +42,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
+import javax.script.ScriptEngine;
+
 import org.prolobjectlink.prolog.AbstractEngine;
 import org.prolobjectlink.prolog.Licenses;
 import org.prolobjectlink.prolog.PrologClause;
@@ -52,6 +54,7 @@ import org.prolobjectlink.prolog.PrologOperator;
 import org.prolobjectlink.prolog.PrologProgrammer;
 import org.prolobjectlink.prolog.PrologProvider;
 import org.prolobjectlink.prolog.PrologQuery;
+import org.prolobjectlink.prolog.PrologScript;
 import org.prolobjectlink.prolog.PrologTerm;
 
 import jTrolog.engine.Prolog;
@@ -360,6 +363,10 @@ public final class JTrologEngine extends AbstractEngine implements PrologEngine 
 			}
 		}
 		return new PrologProgramIterator(cls);
+	}
+
+	public ScriptEngine getPrologScript() {
+		return new PrologScript(new JTrologScriptFactory(this));
 	}
 
 	public int getProgramSize() {
