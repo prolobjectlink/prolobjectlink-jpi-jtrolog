@@ -51,7 +51,6 @@ import org.prolobjectlink.prolog.PrologEngine;
 import org.prolobjectlink.prolog.PrologIndicator;
 import org.prolobjectlink.prolog.PrologLogger;
 import org.prolobjectlink.prolog.PrologOperator;
-import org.prolobjectlink.prolog.PrologProgrammer;
 import org.prolobjectlink.prolog.PrologProvider;
 import org.prolobjectlink.prolog.PrologQuery;
 import org.prolobjectlink.prolog.PrologScriptEngine;
@@ -429,10 +428,6 @@ public final class JTrologEngine extends AbstractEngine implements PrologEngine 
 			}
 		}
 		return builtins;
-	}
-
-	public PrologProgrammer getProgrammer() {
-		return new JTrologProgrammer(provider);
 	}
 
 	public String getLicense() {
