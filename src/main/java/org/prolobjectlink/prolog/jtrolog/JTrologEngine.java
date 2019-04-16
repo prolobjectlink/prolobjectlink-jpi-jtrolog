@@ -72,7 +72,7 @@ import jTrolog.terms.Term;
  * @author Jose Zalacain
  * @since 1.0
  */
-public final class JTrologEngine extends AbstractEngine implements PrologEngine {
+public class JTrologEngine extends AbstractEngine implements PrologEngine {
 
 	final Prolog engine;
 
