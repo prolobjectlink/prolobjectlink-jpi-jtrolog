@@ -365,7 +365,7 @@ public class JTrologEngine extends AbstractEngine implements PrologEngine {
 	}
 
 	public ScriptEngine getPrologScript() {
-		return new PrologScriptEngine(new JTrologScriptFactory(this));
+		return new PrologScriptEngine(new JTrologScriptFactory(this), this);
 	}
 
 	public int getProgramSize() {

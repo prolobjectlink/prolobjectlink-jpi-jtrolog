@@ -28,6 +28,10 @@ import org.prolobjectlink.prolog.PrologScriptEngineFactory;
 
 public final class JTrologScriptFactory extends PrologScriptEngineFactory implements ScriptEngineFactory {
 
+	public JTrologScriptFactory() {
+		super(new JTrolog().newEngine());
+	}
+
 	public JTrologScriptFactory(PrologEngine engine) {
 		super(engine);
 	}
