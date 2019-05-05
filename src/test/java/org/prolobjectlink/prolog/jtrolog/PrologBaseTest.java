@@ -34,7 +34,6 @@ import org.prolobjectlink.prolog.PrologInteger;
 import org.prolobjectlink.prolog.PrologProvider;
 import org.prolobjectlink.prolog.PrologTerm;
 import org.prolobjectlink.prolog.PrologVariable;
-import org.prolobjectlink.prolog.jtrolog.JTrolog;
 
 /** @author Jose Zalacain @since 1.0 */
 public abstract class PrologBaseTest {

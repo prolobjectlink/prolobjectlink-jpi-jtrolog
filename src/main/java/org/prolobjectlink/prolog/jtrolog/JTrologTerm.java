@@ -36,11 +36,8 @@ import static org.prolobjectlink.prolog.PrologTermType.STRUCTURE_TYPE;
 import static org.prolobjectlink.prolog.PrologTermType.TRUE_TYPE;
 import static org.prolobjectlink.prolog.PrologTermType.VARIABLE_TYPE;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 
 import org.prolobjectlink.prolog.AbstractTerm;
 import org.prolobjectlink.prolog.PrologNumber;
@@ -48,8 +45,6 @@ import org.prolobjectlink.prolog.PrologProvider;
 import org.prolobjectlink.prolog.PrologTerm;
 
 import jTrolog.engine.Prolog;
-import jTrolog.engine.Solution;
-import jTrolog.parser.Parser;
 import jTrolog.terms.Double;
 import jTrolog.terms.Float;
 import jTrolog.terms.Int;
@@ -59,7 +54,6 @@ import jTrolog.terms.Struct;
 import jTrolog.terms.StructAtom;
 import jTrolog.terms.Term;
 import jTrolog.terms.Var;
-
 
 /**
  * 
@@ -199,28 +193,6 @@ public abstract class JTrologTerm extends AbstractTerm implements PrologTerm {
 	public final boolean unify(PrologTerm term) {
 		Term otherTerm = fromTerm(term, Term.class);
 		return Prolog.match(value, otherTerm);
-	}
-
-	public final Map<String, PrologTerm> match(PrologTerm term) {
-		Map<String, PrologTerm> map = new HashMap<String, PrologTerm>();
-		try {
-			List<String> vector = new ArrayList<String>();
-			String q = "unify(" + value + "," + term + ").";
-			enumerateVariables(vector, new Parser(q).nextTerm(false));
-			Solution solution = new Prolog().solve(q);
-			for (String vName : vector) {
-				if (solution != null) {
-					Term vtTerm = solution.getBinding(vName);
-					if (vtTerm != null) {
-						PrologTerm pTerm = toTerm(vtTerm, PrologTerm.class);
-						map.put(vName, pTerm);
-					}
-				}
-			}
-		} catch (Throwable e) {
-			// do nothing
-		}
-		return map;
 	}
 
 	public final int compareTo(PrologTerm term) {
