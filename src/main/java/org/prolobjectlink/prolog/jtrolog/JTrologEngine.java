@@ -435,11 +435,11 @@ public class JTrologEngine extends AbstractEngine implements PrologEngine {
 	}
 
 	public String getVersion() {
-		return Prolog.VERSION;
+		return JTrolog.VERSION;
 	}
 
 	public String getName() {
-		return "jTrolog";
+		return JTrolog.NAME;
 	}
 
 	@Override
