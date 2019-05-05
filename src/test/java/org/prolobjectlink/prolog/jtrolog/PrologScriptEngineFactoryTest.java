@@ -1,6 +1,6 @@
 /*-
  * #%L
- * prolobjectlink-jpi-tuprolog
+ * prolobjectlink-jpi-jtrolog
  * %%
  * Copyright (C) 2012 - 2019 Prolobjectlink Project
  * %%
@@ -33,7 +33,7 @@ import org.junit.Test;
 
 public class PrologScriptEngineFactoryTest extends PrologBaseTest {
 
-	private ScriptEngineFactory sef = provider.getScriptFactory();
+	private ScriptEngineFactory sef = manager.getEngineByName(provider.getName()).getFactory();
 
 	@Test
 	public void testGetEngineName() {
