@@ -47,7 +47,7 @@ public final class JTrologFloat extends JTrologTerm implements PrologFloat {
 	}
 
 	public PrologInteger getPrologInteger() {
-		return new JTrologInteger(provider, getIntValue());
+		return new JTrologInteger(provider, getIntegerValue());
 	}
 
 	public PrologFloat getPrologFloat() {
@@ -70,7 +70,7 @@ public final class JTrologFloat extends JTrologTerm implements PrologFloat {
 		return ((Float) value).doubleValue();
 	}
 
-	public int getIntValue() {
+	public int getIntegerValue() {
 		return ((Float) value).intValue();
 	}
 

@@ -157,8 +157,8 @@ public class PrologConverterTest extends PrologBaseTest {
 		assertEquals(six, converter.toTerm(new Int(6)));
 		assertEquals(x, converter.toTerm(new Var("X", 1)));
 		assertEquals(cat, converter.toTerm(new StructAtom("cat")));
-		assertEquals(pi, converter.toTerm(new Double(3.14159)));
-		assertEquals(euler, converter.toTerm(new Float(2.71828F)));
+		assertEquals(pi, converter.toTerm(new Double(Math.PI)));
+		assertEquals(euler, converter.toTerm(new Float((float) Math.E)));
 		assertEquals(provider.prologEmpty(), converter.toTerm(Term.emptyList));
 		assertEquals(provider.newLong(1000000000), converter.toTerm(new Long(1000000000)));
 		assertEquals(provider.newStructure(salary, one, thousand),
@@ -279,8 +279,8 @@ public class PrologConverterTest extends PrologBaseTest {
 		assertEquals(six, converter.toTerm(new Int(6), PrologInteger.class));
 		assertEquals(x, converter.toTerm(new Var("X", 1), PrologVariable.class));
 		assertEquals(cat, converter.toTerm(new StructAtom("cat"), PrologAtom.class));
-		assertEquals(pi, converter.toTerm(new Double(3.14159), PrologDouble.class));
-		assertEquals(euler, converter.toTerm(new Float(2.71828F), PrologFloat.class));
+		assertEquals(pi, converter.toTerm(new Double(Math.PI), PrologDouble.class));
+		assertEquals(euler, converter.toTerm(new Float((float) Math.E), PrologFloat.class));
 		assertEquals(provider.prologEmpty(), converter.toTerm(Term.emptyList, PrologTerm.class));
 		assertEquals(provider.newLong(1000000000), converter.toTerm(new Long(1000000000), PrologLong.class));
 		assertEquals(provider.newStructure(salary, one, thousand),
@@ -305,8 +305,8 @@ public class PrologConverterTest extends PrologBaseTest {
 		assertEquals(six, converter.toTerm(new Int(6), PrologTerm.class));
 		assertEquals(x, converter.toTerm(new Var("X", 1), PrologTerm.class));
 		assertEquals(cat, converter.toTerm(new StructAtom("cat"), PrologTerm.class));
-		assertEquals(pi, converter.toTerm(new Double(3.14159), PrologTerm.class));
-		assertEquals(euler, converter.toTerm(new Float(2.71828F), PrologTerm.class));
+		assertEquals(pi, converter.toTerm(new Double(Math.PI), PrologTerm.class));
+		assertEquals(euler, converter.toTerm(new Float((float) Math.E), PrologTerm.class));
 		assertEquals(provider.prologEmpty(), converter.toTerm(Term.emptyList, PrologTerm.class));
 		assertEquals(provider.newLong(1000000000), converter.toTerm(new Long(1000000000), PrologTerm.class));
 		assertEquals(provider.newStructure(salary, one, thousand),
@@ -428,8 +428,8 @@ public class PrologConverterTest extends PrologBaseTest {
 		assertEquals(new Int(6), converter.fromTerm(six));
 		assertEquals(new Var("X", 1), converter.fromTerm(x));
 		assertEquals(new StructAtom("cat"), converter.fromTerm(cat));
-		assertEquals(new Double(3.14159), converter.fromTerm(pi));
-		assertEquals(new Float(2.71828F), converter.fromTerm(euler));
+		assertEquals(new Double(Math.PI), converter.fromTerm(pi));
+		assertEquals(new Float((float) Math.E), converter.fromTerm(euler));
 		assertEquals(Term.emptyList, converter.fromTerm(provider.prologEmpty()));
 		assertEquals(new Long(1000000000), converter.fromTerm(provider.newLong(1000000000)));
 		assertEquals(new Struct(salary, new Term[] { new Int(1), new Int(1000) }),
@@ -477,8 +477,8 @@ public class PrologConverterTest extends PrologBaseTest {
 		assertEquals(new Int(6), converter.fromTerm(six, Int.class));
 		assertEquals(new Var("X", 1), converter.fromTerm(x, Var.class));
 		assertEquals(new StructAtom("cat"), converter.fromTerm(cat, StructAtom.class));
-		assertEquals(new Double(3.14159), converter.fromTerm(pi, Double.class));
-		assertEquals(new Float(2.71828F), converter.fromTerm(euler, Float.class));
+		assertEquals(new Double(Math.PI), converter.fromTerm(pi, Double.class));
+		assertEquals(new Float((float) Math.E), converter.fromTerm(euler, Float.class));
 		assertEquals(Term.emptyList, converter.fromTerm(provider.prologEmpty(), Term.class));
 		assertEquals(new Long(1000000000), converter.fromTerm(provider.newLong(1000000000), Long.class));
 		assertEquals(new Struct(salary, new Term[] { new Int(1), new Int(1000) }),
@@ -499,8 +499,8 @@ public class PrologConverterTest extends PrologBaseTest {
 		assertEquals(new Int(6), converter.fromTerm(six, Term.class));
 		assertEquals(new Var("X", 1), converter.fromTerm(x, Term.class));
 		assertEquals(new StructAtom("cat"), converter.fromTerm(cat, Term.class));
-		assertEquals(new Double(3.14159), converter.fromTerm(pi, Term.class));
-		assertEquals(new Float(2.71828F), converter.fromTerm(euler, Term.class));
+		assertEquals(new Double(Math.PI), converter.fromTerm(pi, Term.class));
+		assertEquals(new Float((float) Math.E), converter.fromTerm(euler, Term.class));
 		assertEquals(Term.emptyList, converter.fromTerm(provider.prologEmpty(), Term.class));
 		assertEquals(new Long(1000000000), converter.fromTerm(provider.newLong(1000000000), Term.class));
 		assertEquals(new Struct(salary, new Term[] { new Int(1), new Int(1000) }),

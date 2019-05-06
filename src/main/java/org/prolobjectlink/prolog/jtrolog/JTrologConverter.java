@@ -171,7 +171,7 @@ public class JTrologConverter extends AbstractConverter<Term> implements PrologC
 		case FLOAT_TYPE:
 			return new Float(((PrologFloat) term).getFloatValue());
 		case INTEGER_TYPE:
-			return new Int(((PrologInteger) term).getIntValue());
+			return new Int(((PrologInteger) term).getIntegerValue());
 		case DOUBLE_TYPE:
 			return new Double(((PrologDouble) term).getDoubleValue());
 		case LONG_TYPE:

@@ -28,11 +28,13 @@ import static org.prolobjectlink.prolog.PrologLogger.IO;
 import static org.prolobjectlink.prolog.PrologLogger.RUNTIME_ERROR;
 import static org.prolobjectlink.prolog.PrologLogger.SYNTAX_ERROR;
 
+import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.Reader;
 import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.Collection;
@@ -115,6 +117,24 @@ public class JTrologEngine extends AbstractEngine implements PrologEngine {
 			getLogger().error(getClass(), SYNTAX_ERROR + path, e);
 		} catch (IOException e) {
 			getLogger().warn(getClass(), IO + path, e);
+		}
+	}
+
+	public void include(Reader reader) {
+		BufferedReader bfr = new BufferedReader(reader);
+		StringBuilder script = new StringBuilder();
+		try {
+			String line = bfr.readLine();
+			while (line != null) {
+				script.append(line);
+				script.append("\n");
+				line = bfr.readLine();
+			}
+			engine.addTheory("" + script + "");
+		} catch (PrologException e) {
+			getLogger().error(getClass(), SYNTAX_ERROR + script, e);
+		} catch (IOException e) {
+			getLogger().warn(getClass(), IO + script, e);
 		}
 	}
 

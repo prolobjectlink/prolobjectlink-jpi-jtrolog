@@ -125,7 +125,7 @@ public class PrologProviderTest extends PrologBaseTest {
 		PrologInteger integer = provider.newInteger(100);
 		assertEquals(INTEGER_TYPE, integer.getType());
 		assertEquals(provider.newInteger(100), integer);
-		assertEquals(100, integer.getIntValue());
+		assertEquals(100, integer.getIntegerValue());
 	}
 
 	@Test
