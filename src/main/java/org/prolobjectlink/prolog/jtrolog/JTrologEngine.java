@@ -44,8 +44,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
-import javax.script.ScriptEngine;
-
 import org.prolobjectlink.prolog.AbstractEngine;
 import org.prolobjectlink.prolog.Licenses;
 import org.prolobjectlink.prolog.PrologClause;
@@ -55,7 +53,6 @@ import org.prolobjectlink.prolog.PrologLogger;
 import org.prolobjectlink.prolog.PrologOperator;
 import org.prolobjectlink.prolog.PrologProvider;
 import org.prolobjectlink.prolog.PrologQuery;
-import org.prolobjectlink.prolog.PrologScriptEngine;
 import org.prolobjectlink.prolog.PrologTerm;
 
 import jTrolog.engine.Prolog;
@@ -88,23 +85,9 @@ public class JTrologEngine extends AbstractEngine implements PrologEngine {
 		include(path);
 	}
 
-	public void persist(String path) {
-		FileWriter writer = null;
-		try {
-			writer = new FileWriter(path);
-			writer.write(engine.getTheory());
-		} catch (IOException e) {
-			getLogger().warn(getClass(), IO + path, e);
-			getLogger().info(getClass(), DONT_WORRY + path);
-		} finally {
-			if (writer != null) {
-				try {
-					writer.close();
-				} catch (IOException e) {
-					getLogger().warn(getClass(), IO + path, e);
-				}
-			}
-		}
+	public void consult(Reader reader) {
+		engine.clearTheory();
+		include(reader);
 	}
 
 	public void include(String path) {
@@ -135,6 +118,25 @@ public class JTrologEngine extends AbstractEngine implements PrologEngine {
 			getLogger().error(getClass(), SYNTAX_ERROR + script, e);
 		} catch (IOException e) {
 			getLogger().warn(getClass(), IO + script, e);
+		}
+	}
+
+	public void persist(String path) {
+		FileWriter writer = null;
+		try {
+			writer = new FileWriter(path);
+			writer.write(engine.getTheory());
+		} catch (IOException e) {
+			getLogger().warn(getClass(), IO + path, e);
+			getLogger().info(getClass(), DONT_WORRY + path);
+		} finally {
+			if (writer != null) {
+				try {
+					writer.close();
+				} catch (IOException e) {
+					getLogger().warn(getClass(), IO + path, e);
+				}
+			}
 		}
 	}
 
@@ -382,10 +384,6 @@ public class JTrologEngine extends AbstractEngine implements PrologEngine {
 			}
 		}
 		return new PrologProgramIterator(cls);
-	}
-
-	public ScriptEngine getPrologScript() {
-		return new PrologScriptEngine(new JTrologScriptFactory(this), this);
 	}
 
 	public int getProgramSize() {

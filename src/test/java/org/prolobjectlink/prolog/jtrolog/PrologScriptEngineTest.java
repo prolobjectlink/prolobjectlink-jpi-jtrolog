@@ -1,22 +1,22 @@
 /*-
  * #%L
- * prolobjectlink-jpi-jtrolog
+ * prolobjectlink-jpi-jlog
  * %%
  * Copyright (C) 2012 - 2019 Prolobjectlink Project
  * %%
  * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Lesser General Public License as
- * published by the Free Software Foundation, either version 2.1 of the
+ * it under the terms of the GNU General Public License as
+ * published by the Free Software Foundation, either version 2 of the
  * License, or (at your option) any later version.
  * 
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Lesser Public License for more details.
+ * GNU General Public License for more details.
  * 
- * You should have received a copy of the GNU General Lesser Public
+ * You should have received a copy of the GNU General Public
  * License along with this program.  If not, see
- * <http://www.gnu.org/licenses/lgpl-2.1.html>.
+ * <http://www.gnu.org/licenses/gpl-2.0.html>.
  * #L%
  */
 package org.prolobjectlink.prolog.jtrolog;
@@ -63,7 +63,7 @@ public class PrologScriptEngineTest extends PrologBaseTest {
 	@Test
 	public void testGetContext() throws ScriptException {
 		assertEquals(true, engine.eval("?- X is 5+3."));
-		assertEquals(provider.newInteger(8), engine.get("X"));
+		assertEquals(8, engine.get("X"));
 		assertNotNull(engine.getContext());
 	}
 
@@ -71,7 +71,7 @@ public class PrologScriptEngineTest extends PrologBaseTest {
 	public void testGetBindingsInt() throws ScriptException {
 		assertEquals(0, engine.getBindings(ScriptContext.ENGINE_SCOPE).size());
 		assertEquals(true, engine.eval("?- X is 5+3."));
-		assertEquals(provider.newInteger(8), engine.get("X"));
+		assertEquals(8, engine.get("X"));
 		assertEquals(1, engine.getBindings(ScriptContext.ENGINE_SCOPE).size());
 	}
 
@@ -91,51 +91,51 @@ public class PrologScriptEngineTest extends PrologBaseTest {
 	@Test
 	public void testGetString() throws ScriptException {
 		assertEquals(true, engine.eval("?- X is 5+3."));
-		assertEquals(provider.newInteger(8), engine.get("X"));
+		assertEquals(8, engine.get("X"));
 	}
 
 	@Test
 	public void testEvalStringScriptContext() throws ScriptException {
 		assertEquals(true, engine.eval("?- X is 5+3.", engine.getContext()));
-		assertEquals(provider.newInteger(8), engine.get("X"));
+		assertEquals(8, engine.get("X"));
 	}
 
 	@Test
 	public void testEvalReaderScriptContext() throws ScriptException {
 		assertEquals(true, engine.eval(new StringReader("?- X is 5+3."), engine.getContext()));
-		assertEquals(provider.newInteger(8), engine.get("X"));
+		assertEquals(8, engine.get("X"));
 	}
 
 	@Test
 	public void testEvalReaderBindings() throws ScriptException {
 		assertEquals(true, engine.eval(new StringReader("?- X is 5+3."), bindings));
-		assertEquals(provider.newInteger(8), engine.get("X"));
+		assertEquals(8, engine.get("X"));
 	}
 
 	@Test
 	public void testEvalStringBindings() throws ScriptException {
 		assertEquals(0, engine.getBindings(ScriptContext.ENGINE_SCOPE).size());
 		assertEquals(true, engine.eval("?- X is 5+3."));
-		assertEquals(provider.newInteger(8), engine.get("X"));
+		assertEquals(8, engine.get("X"));
 		assertEquals(1, engine.getBindings(ScriptContext.ENGINE_SCOPE).size());
 	}
 
 	@Test
 	public void testEvalReader() throws ScriptException {
 		assertEquals(true, engine.eval(new StringReader("?- X is 5+3.")));
-		assertEquals(provider.newInteger(8), engine.get("X"));
+		assertEquals(8, engine.get("X"));
 	}
 
 	@Test
 	public void testEvalString() throws ScriptException {
 		assertEquals(true, engine.eval("?- X is 5+3."));
-		assertEquals(provider.newInteger(8), engine.get("X"));
+		assertEquals(8, engine.get("X"));
 	}
 
 	@Test
 	public void testGetScriptContextBindings() throws ScriptException {
 		assertEquals(true, engine.eval("?- X is 5+3."));
-		assertEquals(provider.newInteger(8), engine.get("X"));
+		assertEquals(8, engine.get("X"));
 		assertNotNull(engine.getContext());
 	}
 

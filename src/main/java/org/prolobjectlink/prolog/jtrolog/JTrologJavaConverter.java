@@ -21,18 +21,14 @@
  */
 package org.prolobjectlink.prolog.jtrolog;
 
-import javax.script.ScriptEngineFactory;
+import org.prolobjectlink.prolog.AbstractJavaConverter;
+import org.prolobjectlink.prolog.PrologJavaConverter;
+import org.prolobjectlink.prolog.PrologProvider;
 
-import org.prolobjectlink.prolog.PrologScriptEngineFactory;
+public class JTrologJavaConverter extends AbstractJavaConverter implements PrologJavaConverter {
 
-public final class JTrologScriptFactory extends PrologScriptEngineFactory implements ScriptEngineFactory {
-
-	public JTrologScriptFactory() {
-		super(new JTrolog().newEngine());
-	}
-
-	public String getMethodCallSyntax(String obj, String m, String... args) {
-		throw new UnsupportedOperationException("getMethodCallSyntax(String obj, String m, String... args)");
+	public JTrologJavaConverter(PrologProvider provider) {
+		super(provider);
 	}
 
 }
