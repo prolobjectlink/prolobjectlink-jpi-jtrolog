@@ -40,7 +40,7 @@ import jTrolog.terms.Int;
  * @author Jose Zalacain
  * @since 1.0
  */
-public class JTrologInteger extends JTrologTerm implements PrologInteger {
+final class JTrologInteger extends JTrologTerm implements PrologInteger {
 
 	JTrologInteger(PrologProvider provider, Number value) {
 		super(INTEGER_TYPE, provider, new Int(value.intValue()));

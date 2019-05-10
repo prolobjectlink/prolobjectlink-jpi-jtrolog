@@ -33,7 +33,7 @@ import jTrolog.terms.StructAtom;
  * @author Jose Zalacain
  * @since 1.0
  */
-public final class JTrologFail extends JTrologTerm implements PrologTerm {
+final class JTrologFail extends JTrologTerm implements PrologTerm {
 
 	JTrologFail(PrologProvider provider) {
 		super(FAIL_TYPE, provider, new StructAtom("fail"));

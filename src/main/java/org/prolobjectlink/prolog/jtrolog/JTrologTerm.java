@@ -37,7 +37,6 @@ import static org.prolobjectlink.prolog.PrologTermType.TRUE_TYPE;
 import static org.prolobjectlink.prolog.PrologTermType.VARIABLE_TYPE;
 
 import java.util.Iterator;
-import java.util.List;
 
 import org.prolobjectlink.prolog.AbstractTerm;
 import org.prolobjectlink.prolog.PrologNumber;
@@ -60,14 +59,13 @@ import jTrolog.terms.Var;
  * @author Jose Zalacain
  * @since 1.0
  */
-public abstract class JTrologTerm extends AbstractTerm implements PrologTerm {
+abstract class JTrologTerm extends AbstractTerm implements PrologTerm {
 
 	// variable index
 	protected int vIndex;
 	protected Term value;
 
 	static final JTrologOperatorSet ops = new JTrologOperatorSet();
-	static final String SIMPLE_ATOM_REGEX = "\\.|\\?|#|[a-z][A-Za-z0-9_]*";
 
 	protected JTrologTerm(int type, PrologProvider provider) {
 		super(type, provider);
@@ -88,20 +86,6 @@ public abstract class JTrologTerm extends AbstractTerm implements PrologTerm {
 	protected JTrologTerm(int type, PrologProvider provider, String name, int n) {
 		this(type, provider, new Var(name, n));
 		this.vIndex = n;
-	}
-
-	private void enumerateVariables(List<String> vector, Term term) {
-		if (!(term instanceof Var)) {
-			if (term instanceof Struct) {
-				Struct struct = (Struct) term;
-				Var[] vars = struct.getVarList();
-				for (Var var : vars) {
-					enumerateVariables(vector, var);
-				}
-			}
-		} else if (!vector.contains(term.toString())) {
-			vector.add(term.toString());
-		}
 	}
 
 	public final boolean isAtom() {

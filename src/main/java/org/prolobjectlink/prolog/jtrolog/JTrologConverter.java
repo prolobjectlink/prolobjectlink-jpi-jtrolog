@@ -66,9 +66,9 @@ import jTrolog.terms.Var;
  * @author Jose Zalacain
  * @since 1.0
  */
-public class JTrologConverter extends AbstractConverter<Term> implements PrologConverter<Term> {
+final class JTrologConverter extends AbstractConverter<Term> implements PrologConverter<Term> {
 
-	protected static final JTrologOperatorSet OPERATORS = new JTrologOperatorSet();
+	private static final JTrologOperatorSet OPERATORS = new JTrologOperatorSet();
 
 	public PrologTerm toTerm(Term prologTerm) {
 		if (prologTerm.equals(Term.TRUE)) {

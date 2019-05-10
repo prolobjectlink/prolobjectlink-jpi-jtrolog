@@ -33,7 +33,7 @@ import jTrolog.terms.Term;
  * @author Jose Zalacain
  * @since 1.0
  */
-public final class JTrologTrue extends JTrologTerm implements PrologTerm {
+final class JTrologTrue extends JTrologTerm implements PrologTerm {
 
 	JTrologTrue(PrologProvider provider) {
 		super(TRUE_TYPE, provider, Term.TRUE);

@@ -40,7 +40,7 @@ import jTrolog.terms.Long;
  * @author Jose Zalacain
  * @since 1.0
  */
-public class JTrologLong extends JTrologTerm implements PrologLong {
+class JTrologLong extends JTrologTerm implements PrologLong {
 
 	JTrologLong(PrologProvider provider, Number value) {
 		super(LONG_TYPE, provider, new Long(value.longValue()));

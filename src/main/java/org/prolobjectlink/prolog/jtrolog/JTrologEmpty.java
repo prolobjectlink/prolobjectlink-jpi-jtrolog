@@ -32,7 +32,7 @@ import jTrolog.terms.Struct;
  * @author Jose Zalacain
  * @since 1.0
  */
-public class JTrologEmpty extends JTrologList implements PrologList {
+final class JTrologEmpty extends JTrologList implements PrologList {
 
 	JTrologEmpty(PrologProvider provider) {
 		super(provider);

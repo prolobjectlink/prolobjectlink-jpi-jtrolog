@@ -40,7 +40,7 @@ import jTrolog.terms.Float;
  * @author Jose Zalacain
  * @since 1.0
  */
-public final class JTrologFloat extends JTrologTerm implements PrologFloat {
+final class JTrologFloat extends JTrologTerm implements PrologFloat {
 
 	JTrologFloat(PrologProvider provider, Number value) {
 		super(FLOAT_TYPE, provider, new Float(value.floatValue()));

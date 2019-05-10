@@ -33,9 +33,9 @@ import jTrolog.terms.StructAtom;
  * @author Jose Zalacain
  * @since 1.0
  */
-public final class JTrologNil extends JTrologTerm implements PrologTerm {
+final class JTrologNil extends JTrologTerm implements PrologTerm {
 
-	protected JTrologNil(PrologProvider provider) {
+	JTrologNil(PrologProvider provider) {
 		super(NIL_TYPE, provider, new StructAtom("nil"));
 	}
 

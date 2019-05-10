@@ -21,7 +21,6 @@
  */
 package org.prolobjectlink.prolog.jtrolog;
 
-import static org.prolobjectlink.prolog.PrologTermType.ATOM_TYPE;
 import static org.prolobjectlink.prolog.PrologTermType.VARIABLE_TYPE;
 
 import org.prolobjectlink.prolog.ArityError;
@@ -31,7 +30,6 @@ import org.prolobjectlink.prolog.PrologProvider;
 import org.prolobjectlink.prolog.PrologTerm;
 import org.prolobjectlink.prolog.PrologVariable;
 
-import jTrolog.terms.Term;
 import jTrolog.terms.Var;
 
 /**
@@ -39,20 +37,16 @@ import jTrolog.terms.Var;
  * @author Jose Zalacain
  * @since 1.0
  */
-public class JTrologVariable extends JTrologTerm implements PrologVariable {
+final class JTrologVariable extends JTrologTerm implements PrologVariable {
 
 	private String name;
 
-	protected JTrologVariable(PrologProvider provider, Term var) {
-		super(ATOM_TYPE, provider, var);
-	}
-
-	protected JTrologVariable(PrologProvider provider, int n) {
+	JTrologVariable(PrologProvider provider, int n) {
 		this(provider, "_", n);
 		this.name = "_";
 	}
 
-	protected JTrologVariable(PrologProvider provider, String name, int n) {
+	JTrologVariable(PrologProvider provider, String name, int n) {
 		super(VARIABLE_TYPE, provider, name, n);
 		this.name = name;
 	}

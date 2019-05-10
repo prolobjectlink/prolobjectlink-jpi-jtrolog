@@ -29,9 +29,9 @@ import org.prolobjectlink.prolog.PrologIndicator;
  * @author Jose Zalacain
  * @since 1.0
  */
-public final class JTrologIndicator extends AbstractIndicator implements PrologIndicator {
+final class JTrologIndicator extends AbstractIndicator implements PrologIndicator {
 
-	public JTrologIndicator(String functor, int arity) {
+	JTrologIndicator(String functor, int arity) {
 		super(functor, arity);
 	}
 

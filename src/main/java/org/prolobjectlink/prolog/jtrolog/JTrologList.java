@@ -38,7 +38,7 @@ import jTrolog.terms.Term;
  * @author Jose Zalacain
  * @since 1.0
  */
-public class JTrologList extends JTrologTerm implements PrologList {
+class JTrologList extends JTrologTerm implements PrologList {
 
 	protected JTrologList(PrologProvider provider) {
 		super(LIST_TYPE, provider, Term.emptyList);
@@ -97,14 +97,6 @@ public class JTrologList extends JTrologTerm implements PrologList {
 		Term h = ((JTrologTerm) head).value;
 		Term t = ((JTrologTerm) tail).value;
 		value = new Struct(".", new Term[] { h, t });
-	}
-
-	protected JTrologList(PrologProvider provider, Term[] arguments, Term tail) {
-		super(LIST_TYPE, provider);
-		value = tail;
-		for (int i = arguments.length - 1; i >= 0; --i) {
-			value = new Struct(".", new Term[] { arguments[i], value });
-		}
 	}
 
 	protected JTrologList(PrologProvider provider, PrologTerm[] arguments, PrologTerm tail) {

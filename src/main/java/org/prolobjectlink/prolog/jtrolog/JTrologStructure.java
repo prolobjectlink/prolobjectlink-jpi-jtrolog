@@ -36,9 +36,9 @@ import jTrolog.terms.Term;
  * @author Jose Zalacain
  * @since 1.0
  */
-public class JTrologStructure extends JTrologTerm implements PrologStructure {
+class JTrologStructure extends JTrologTerm implements PrologStructure {
 
-	protected JTrologStructure(PrologProvider provider, String functor, PrologTerm... arguments) {
+	JTrologStructure(PrologProvider provider, String functor, PrologTerm... arguments) {
 		super(STRUCTURE_TYPE, provider);
 		Term[] terms = new Term[arguments.length];
 		for (int i = 0; i < arguments.length; i++) {
@@ -47,18 +47,18 @@ public class JTrologStructure extends JTrologTerm implements PrologStructure {
 		value = new Struct(functor, terms);
 	}
 
-	protected JTrologStructure(PrologProvider provider, String functor, Term... arguments) {
+	JTrologStructure(PrologProvider provider, String functor, Term... arguments) {
 		super(STRUCTURE_TYPE, provider, new Struct(functor, arguments));
 	}
 
-	protected JTrologStructure(PrologProvider provider, PrologTerm left, String operator, PrologTerm right) {
+	JTrologStructure(PrologProvider provider, PrologTerm left, String operator, PrologTerm right) {
 		super(STRUCTURE_TYPE, provider);
 		Term leftOperand = ((JTrologTerm) left).value;
 		Term rightOperand = ((JTrologTerm) right).value;
 		value = new Struct(operator, new Term[] { leftOperand, rightOperand });
 	}
 
-	protected JTrologStructure(PrologProvider provider, Term left, String functor, Term right) {
+	JTrologStructure(PrologProvider provider, Term left, String functor, Term right) {
 		super(STRUCTURE_TYPE, provider, new Struct(functor, new Term[] { left, right }));
 	}
 

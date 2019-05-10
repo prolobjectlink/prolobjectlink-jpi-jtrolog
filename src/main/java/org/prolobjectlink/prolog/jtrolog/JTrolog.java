@@ -53,14 +53,14 @@ import jTrolog.terms.Term;
 public class JTrolog extends AbstractProvider implements PrologProvider {
 
 	private static final PrologLogger logger = new JTrologLogger();
-	public static final String VERSION = Prolog.VERSION;
-	public static final String NAME = "jTrolog";
+	static final String VERSION = Prolog.VERSION;
+	static final String NAME = "jTrolog";
 
 	public JTrolog() {
 		super(new JTrologConverter());
 	}
 
-	public JTrolog(PrologConverter<Term> converter) {
+	JTrolog(PrologConverter<Term> converter) {
 		super(converter);
 	}
 

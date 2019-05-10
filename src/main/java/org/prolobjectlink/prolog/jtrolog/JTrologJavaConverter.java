@@ -25,9 +25,9 @@ import org.prolobjectlink.prolog.AbstractJavaConverter;
 import org.prolobjectlink.prolog.PrologJavaConverter;
 import org.prolobjectlink.prolog.PrologProvider;
 
-public class JTrologJavaConverter extends AbstractJavaConverter implements PrologJavaConverter {
+final class JTrologJavaConverter extends AbstractJavaConverter implements PrologJavaConverter {
 
-	public JTrologJavaConverter(PrologProvider provider) {
+	JTrologJavaConverter(PrologProvider provider) {
 		super(provider);
 	}
 

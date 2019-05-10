@@ -37,9 +37,9 @@ import jTrolog.engine.Prolog;
  */
 final class JTrologOperatorSet extends AbstractSet<PrologOperator> implements PrologOperatorSet {
 
-	protected final Set<PrologOperator> operators;
+	private final Set<PrologOperator> operators;
 
-	public JTrologOperatorSet() {
+	JTrologOperatorSet() {
 		Prolog engine = Prolog.defaultMachine;
 		operators = JTrologUtil.getOperatorSet(engine);
 	}

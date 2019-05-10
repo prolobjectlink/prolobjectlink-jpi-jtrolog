@@ -40,7 +40,7 @@ import jTrolog.terms.Double;
  * @author Jose Zalacain
  * @since 1.0
  */
-public final class JTrologDouble extends JTrologTerm implements PrologDouble {
+final class JTrologDouble extends JTrologTerm implements PrologDouble {
 
 	JTrologDouble(PrologProvider provider, Number value) {
 		super(DOUBLE_TYPE, provider, new Double(value.doubleValue()));

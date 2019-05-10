@@ -33,9 +33,9 @@ import jTrolog.terms.Term;
  * @author Jose Zalacain
  * @since 1.0
  */
-public final class JTrologFalse extends JTrologTerm implements PrologTerm {
+final class JTrologFalse extends JTrologTerm implements PrologTerm {
 
-	protected JTrologFalse(PrologProvider provider) {
+	JTrologFalse(PrologProvider provider) {
 		super(FALSE_TYPE, provider, Term.FALSE);
 	}
 
