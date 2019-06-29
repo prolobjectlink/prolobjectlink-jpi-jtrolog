@@ -98,4 +98,16 @@ class JTrologStructure extends JTrologTerm implements PrologStructure {
 		return getFunctor().equals(functor) && getArity() == arity;
 	}
 
+	public final PrologTerm getRight() {
+		return getArgument(1);
+	}
+
+	public final PrologTerm getLeft() {
+		return getArgument(0);
+	}
+
+	public final String getOperator() {
+		return getFunctor();
+	}
+
 }

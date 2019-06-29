@@ -31,9 +31,9 @@ import static org.prolobjectlink.prolog.PrologLogger.SYNTAX_ERROR;
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.PrintWriter;
 import java.io.Reader;
 import java.lang.reflect.Method;
 import java.util.Arrays;
@@ -122,20 +122,16 @@ public class JTrologEngine extends AbstractEngine implements PrologEngine {
 	}
 
 	public void persist(String path) {
-		FileWriter writer = null;
+		PrintWriter writer = null;
 		try {
-			writer = new FileWriter(path);
+			writer = new PrintWriter(path);
 			writer.write(engine.getTheory());
 		} catch (IOException e) {
 			getLogger().warn(getClass(), IO + path, e);
 			getLogger().info(getClass(), DONT_WORRY + path);
 		} finally {
 			if (writer != null) {
-				try {
-					writer.close();
-				} catch (IOException e) {
-					getLogger().warn(getClass(), IO + path, e);
-				}
+				writer.close();
 			}
 		}
 	}

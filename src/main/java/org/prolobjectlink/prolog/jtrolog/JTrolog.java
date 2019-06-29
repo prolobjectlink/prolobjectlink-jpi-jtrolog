@@ -103,6 +103,12 @@ public class JTrolog extends AbstractProvider implements PrologProvider {
 		return new JTrologEngine(this, prolog);
 	}
 
+	public PrologEngine newEngine(String path) {
+		PrologEngine engine = newEngine();
+		engine.consult(path);
+		return engine;
+	}
+
 	// parser helpers
 
 	public PrologTerm parseTerm(String term) {

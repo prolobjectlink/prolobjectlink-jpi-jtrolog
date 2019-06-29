@@ -24,7 +24,6 @@ package org.prolobjectlink.prolog.jtrolog;
 import static org.prolobjectlink.prolog.PrologTermType.ATOM_TYPE;
 import static org.prolobjectlink.prolog.PrologTermType.CUT_TYPE;
 import static org.prolobjectlink.prolog.PrologTermType.DOUBLE_TYPE;
-import static org.prolobjectlink.prolog.PrologTermType.EMPTY_TYPE;
 import static org.prolobjectlink.prolog.PrologTermType.FAIL_TYPE;
 import static org.prolobjectlink.prolog.PrologTermType.FALSE_TYPE;
 import static org.prolobjectlink.prolog.PrologTermType.FLOAT_TYPE;
@@ -164,8 +163,6 @@ final class JTrologConverter extends AbstractConverter<Term> implements PrologCo
 			return Term.TRUE;
 		case FALSE_TYPE:
 			return Term.FALSE;
-		case EMPTY_TYPE:
-			return Term.emptyList;
 		case ATOM_TYPE:
 			return new StructAtom(removeQuoted(((PrologAtom) term).getStringValue()));
 		case FLOAT_TYPE:
