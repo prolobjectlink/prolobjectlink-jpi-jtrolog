@@ -59,8 +59,17 @@
 
 		<repositories>
     <repository>
-      <id>ossrh</id>
+      <id>ossrh-jpi</id>
       <url>https://oss.sonatype.org/service/local/repositories/central_bundles-18411/content/</url>
+      <releases>
+        <enabled>true</enabled>
+      </releases>
+      <snapshots>
+        <enabled>true</enabled>
+      </snapshots>
+    </repository>
+			<id>ossrh-jtrolog</id>
+      <url>https://oss.sonatype.org/service/local/repositories/central_bundles-18431/content/</url>
       <releases>
         <enabled>true</enabled>
       </releases>
