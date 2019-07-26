@@ -13,8 +13,7 @@ before_install:
   - export M2_HOME=$PWD/apache-maven-3.5.0
   - export PATH=$M2_HOME/bin:$PATH
   - echo "MAVEN_OPTS='-Dmaven.repo.local=$HOME/.m2/repository -Xmx1g -Dorg.slf4j.simpleLogger.showDateTime=true -Dorg.slf4j.simpleLogger.dateTimeFormat=HH:mm:ss:SSS'" > ~/.mavenrc
-  - wget https://github.com/ljcoomber/otc-trade-parser/blob/master/lib/jTrolog2_1.jar
-  - mvn install:install-file -Dfile=jTrolog2_1.jar -DgroupId=org.prolobjectlink -DartifactId=prolobjectlink-jtrolog -Dversion=1.0.0 -Dpackaging=jar
+  
 install:
   -
 
