@@ -70,7 +70,7 @@
     </repository>
 			<repository>
 			<id>ossrh-jtrolog</id>
-      <url>https://oss.sonatype.org/service/local/repositories/central_bundles-18431/content/</url>
+      <url>https://oss.sonatype.org/service/local/repositories/central_bundles-18436/content/</url>
       <releases>
         <enabled>true</enabled>
       </releases>
