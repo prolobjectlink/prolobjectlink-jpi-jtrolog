@@ -169,6 +169,34 @@ abstract class JTrologTerm extends AbstractTerm implements PrologTerm {
 		return isList() || isStructure();
 	}
 
+	public final boolean isTrueType() {
+		return false;
+	}
+
+	public final boolean isFalseType() {
+		return false;
+	}
+
+	public final boolean isNullType() {
+		return false;
+	}
+
+	public final boolean isVoidType() {
+		return false;
+	}
+
+	public final boolean isObjectType() {
+		return false;
+	}
+
+	public final boolean isReference() {
+		return false;
+	}
+
+	public final Object getObject() {
+		return null;
+	}
+
 	public final PrologTerm getTerm() {
 		return this;
 	}
