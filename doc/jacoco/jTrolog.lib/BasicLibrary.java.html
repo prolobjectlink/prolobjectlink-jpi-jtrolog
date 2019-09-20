@@ -1,0 +1,1092 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>BasicLibrary.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">prolobjectlink-jpi-jtrolog</a> &gt; <a href="index.source.html" class="el_package">jTrolog.lib</a> &gt; <span class="el_source">BasicLibrary.java</span></div><h1>BasicLibrary.java</h1><pre class="source lang-java linenums">/*
+ * #%L
+ * prolobjectlink-jpi-jtrolog
+ * %%
+ * Copyright (C) 2012 - 2018 WorkLogic Project
+ * %%
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation, either version 2.1 of the
+ * License, or (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Lesser Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Lesser Public
+ * License along with this program.  If not, see
+ * &lt;http://www.gnu.org/licenses/lgpl-2.1.html&gt;.
+ * #L%
+ */
+/*
+ * tuProlog - Copyright (C) 2001-2007 aliCE team at deis.unibo.it
+ *
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation; either
+ * version 2.1 of the License, or (at your option) any later version.
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ */
+package jTrolog.lib;
+
+import jTrolog.engine.BindingsTable;
+import jTrolog.errors.InvalidLibraryException;
+import jTrolog.errors.PrologException;
+import jTrolog.parser.Parser;
+import jTrolog.terms.EvaluableTerm;
+import jTrolog.terms.Float;
+import jTrolog.terms.Int;
+import jTrolog.terms.IteratorAsTerm;
+import jTrolog.terms.Long;
+import jTrolog.terms.Number;
+import jTrolog.terms.Struct;
+import jTrolog.terms.StructAtom;
+import jTrolog.terms.Term;
+import jTrolog.terms.Var;
+import jTrolog.terms.WrapStruct;
+import jTrolog.terms.WrapVar;
+
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.LinkedList;
+
+/**
+ * This class defines a set of basic built-in predicates for the tuProlog engine
+ * 
+ * Library/Theory dependency: none
+ * 
+ * 
+ * 
+ */
+@SuppressWarnings({ &quot;rawtypes&quot;, &quot;unchecked&quot;,&quot;serial&quot; })
+<span class="fc" id="L72">public class BasicLibrary extends Library {</span>
+
+	//
+	// meta-predicates
+	//
+
+	/**
+	 * sets a new theory provided as a text
+	 */
+	public boolean set_theory_1(BindingsTable bt, Term th) {
+<span class="nc bnc" id="L82" title="All 2 branches missed.">		if (!atom_1(bt, th))</span>
+<span class="nc" id="L83">			return false;</span>
+		try {
+<span class="nc" id="L85">			engine.clearTheory();</span>
+<span class="nc" id="L86">			engine.addTheory(((Struct) th).name);</span>
+<span class="nc" id="L87">			return true;</span>
+<span class="nc" id="L88">		} catch (PrologException e) {</span>
+<span class="nc" id="L89">			System.err.println(&quot;invalid theory:&quot; + e.getMessage());</span>
+<span class="nc" id="L90">			return false;</span>
+		}
+	}
+
+	/**
+	 * adds a new theory provided as a text
+	 */
+	public boolean add_theory_1(BindingsTable bt, Term th) throws PrologException {
+<span class="nc bnc" id="L98" title="All 2 branches missed.">		if (!atom_1(bt, th))</span>
+<span class="nc" id="L99">			return false;</span>
+<span class="nc" id="L100">		((Library) this).engine.addTheory(((Struct) th).name);</span>
+<span class="nc" id="L101">		return true;</span>
+	}
+
+	/** gets current theory text */
+	public boolean get_theory_1(BindingsTable bt, Term arg) {
+<span class="nc" id="L106">		return bt.unify(arg, new StructAtom(engine.getTheory()));</span>
+	}
+
+	public boolean load_library_2(BindingsTable bt, Struct className, Term libName) throws InvalidLibraryException {
+<span class="nc" id="L110">		Library lib = engine.loadLibrary(Parser.removeApices(className.name));</span>
+<span class="nc" id="L111">		return bt.unify(libName, new StructAtom(lib.getName()));</span>
+	}
+
+	public boolean get_operators_list_1(BindingsTable bt, Struct argument) {
+<span class="nc" id="L115">		LinkedList result = new LinkedList();</span>
+<span class="nc bnc" id="L116" title="All 2 branches missed.">		for (Iterator it = engine.getCurrentOperators(); it.hasNext();)</span>
+<span class="nc" id="L117">			result.add((it.next()));</span>
+<span class="nc bnc" id="L118" title="All 2 branches missed.">		if (result.isEmpty())</span>
+<span class="nc" id="L119">			return bt.unify(argument, Term.emptyList);</span>
+<span class="nc" id="L120">		result.add(Term.emptyList);</span>
+<span class="nc" id="L121">		return bt.unify(argument, bt.createStructList(result));</span>
+	}
+
+	public boolean warning_0(BindingsTable bt) {
+<span class="nc" id="L125">		engine.resetWarningList();</span>
+<span class="nc" id="L126">		return true;</span>
+	}
+
+	public boolean nowarning_0(BindingsTable bt) {
+<span class="nc" id="L130">		engine.resetWarningList();</span>
+<span class="nc" id="L131">		return true;</span>
+	}
+
+	//
+	// term type inspection
+	//
+
+	public static boolean constant_1(BindingsTable bt, Term t) {
+<span class="nc" id="L139">		return atomic_1(bt, t);</span>
+	}
+
+	public static boolean number_1(BindingsTable bt, Term t) {
+<span class="nc" id="L143">		return t instanceof Number;</span>
+	}
+
+	public static boolean integer_1(BindingsTable bt, Term t) {
+<span class="nc" id="L147">		return t instanceof Int;</span>
+	}
+
+	public static boolean float_1(BindingsTable bt, Term t) {
+<span class="nc" id="L151">		return t instanceof Float;</span>
+	}
+
+	public static boolean atom_1(BindingsTable bt, Term t) {
+<span class="nc" id="L155">		return t instanceof StructAtom;</span>
+	}
+
+	public static boolean compound_1(BindingsTable bt, Term t) {
+<span class="nc bnc" id="L159" title="All 4 branches missed.">		return t instanceof Struct &amp;&amp; !(t instanceof StructAtom);</span>
+	}
+
+	public static boolean list_1(BindingsTable bt, Term t) throws PrologException {
+<span class="nc bnc" id="L163" title="All 2 branches missed.">		if (t instanceof Var)</span>
+<span class="nc" id="L164">			throw new PrologException(&quot;instantiation_error&quot;);</span>
+<span class="nc bnc" id="L165" title="All 2 branches missed.">		if (t.equals(Term.emptyList))</span>
+<span class="nc" id="L166">			return true;</span>
+<span class="nc bnc" id="L167" title="All 2 branches missed.">		if (!(t instanceof Struct))</span>
+<span class="nc" id="L168">			return false;</span>
+<span class="nc" id="L169">		final Struct s = (Struct) t;</span>
+<span class="nc bnc" id="L170" title="All 2 branches missed.">		if (s.predicateIndicator != Parser.listSignature)</span>
+<span class="nc" id="L171">			return false;</span>
+		// iterate the list to find the last element and run isList on that last
+		// element
+<span class="nc" id="L174">		Term last = null;</span>
+<span class="nc bnc" id="L175" title="All 2 branches missed.">		for (Iterator it = Struct.iterator(s); it.hasNext(); last = (Term) it.next())</span>
+			;
+<span class="nc" id="L177">		return list_1(bt, bt.resolve(last));</span>
+	}
+
+	public boolean var_1(BindingsTable bt, Term t) {
+<span class="nc" id="L181">		return t instanceof Var;</span>
+	}
+
+	public boolean nonvar_1(BindingsTable bt, Term t) {
+<span class="nc bnc" id="L185" title="All 2 branches missed.">		return !(t instanceof Var);</span>
+	}
+
+	public static boolean atomic_1(BindingsTable bt, Term t) {
+<span class="nc bnc" id="L189" title="All 4 branches missed.">		return t instanceof Number || t instanceof StructAtom;</span>
+	}
+
+	public static boolean ground_1(BindingsTable bt, Term t) {
+<span class="nc bnc" id="L193" title="All 2 branches missed.">		if (t instanceof Var)</span>
+<span class="nc" id="L194">			return false;</span>
+<span class="nc bnc" id="L195" title="All 4 branches missed.">		if (t instanceof Number || t instanceof StructAtom)</span>
+<span class="nc" id="L196">			return true;</span>
+		// compound and thus wrapped struct
+<span class="nc" id="L198">		WrapStruct wrapStruct = ((WrapStruct) t);</span>
+<span class="nc" id="L199">		Var[] childVars = wrapStruct.getVarList();</span>
+<span class="nc bnc" id="L200" title="All 2 branches missed.">		if (childVars == null)</span>
+<span class="nc" id="L201">			return false; // todo no WrapStruct should have null as childVars.</span>
+							// Should find out when and why null is returned
+							// here..
+<span class="nc" id="L204">		int ctx = wrapStruct.getContext();</span>
+<span class="nc bnc" id="L205" title="All 2 branches missed.">		for (int i = 0; i &lt; childVars.length; i++) {</span>
+<span class="nc bnc" id="L206" title="All 2 branches missed.">			if (!ground_1(bt, bt.resolve(new WrapVar(childVars[i], ctx))))</span>
+<span class="nc" id="L207">				return false;</span>
+		}
+<span class="nc" id="L209">		return true;</span>
+	}
+
+	public boolean $arg_3(BindingsTable bt, Int n, Struct term, Term arg) throws PrologException {
+<span class="nc bnc" id="L213" title="All 2 branches missed.">		if (!BasicLibrary.compound_1(bt, term))</span>
+<span class="nc" id="L214">			throw new PrologException(&quot;type_error(compound, &quot; + term + &quot;)&quot;);</span>
+<span class="nc bnc" id="L215" title="All 2 branches missed.">		if (n.intValue() &lt; 0)</span>
+<span class="nc" id="L216">			throw new PrologException(&quot;domain_error(not_less_than_zero, &quot; + n + &quot;)&quot;);</span>
+
+<span class="nc bnc" id="L218" title="All 4 branches missed.">		if (n.intValue() == 0 || n.intValue() &gt; term.arity)</span>
+<span class="nc" id="L219">			return false;</span>
+
+<span class="nc" id="L221">		Term nthArg = term.getArg(n.intValue() - 1);</span>
+<span class="nc" id="L222">		return bt.unify(arg, nthArg);</span>
+	}
+
+	public boolean $functor_3(BindingsTable bt, Term term, Term name, Term arity) throws PrologException {
+<span class="nc" id="L226">		Int maxArity = (Int) engine.getFlagValue(&quot;max_arity&quot;);</span>
+
+<span class="nc bnc" id="L228" title="All 2 branches missed.">		if (term instanceof Var) {</span>
+<span class="nc bnc" id="L229" title="All 4 branches missed.">			if (name instanceof Var || arity instanceof Var)</span>
+<span class="nc" id="L230">				throw new PrologException(&quot;instantiation_error&quot;);</span>
+
+<span class="nc bnc" id="L232" title="All 2 branches missed.">			if (!BasicLibrary.atomic_1(bt, name))</span>
+<span class="nc" id="L233">				throw new PrologException(&quot;type_error(atomic, &quot; + name + &quot;)&quot;);</span>
+
+<span class="nc bnc" id="L235" title="All 2 branches missed.">			if (!(arity instanceof Int))</span>
+<span class="nc" id="L236">				throw new PrologException(&quot;type_error(integer, &quot; + arity + &quot;)&quot;);</span>
+
+<span class="nc bnc" id="L238" title="All 2 branches missed.">			if (((Int) arity).longValue() &gt; maxArity.intValue())</span>
+<span class="nc" id="L239">				throw new PrologException(&quot;representation_error(max_arity)&quot;);</span>
+
+<span class="nc bnc" id="L241" title="All 2 branches missed.">			if (((Int) arity).intValue() &lt; 0)</span>
+<span class="nc" id="L242">				throw new PrologException(&quot;domain_error(not_less_than_zero, &quot; + arity + &quot;)&quot;);</span>
+
+<span class="nc bnc" id="L244" title="All 4 branches missed.">			if (!BasicLibrary.atom_1(bt, name) &amp;&amp; ((Int) arity).intValue() &gt; 0)</span>
+<span class="nc" id="L245">				throw new PrologException(&quot;type_error(atom, &quot; + name + &quot;)&quot;);</span>
+
+<span class="nc bnc" id="L247" title="All 4 branches missed.">			if (BasicLibrary.atomic_1(bt, name) &amp;&amp; ((Int) arity).intValue() == 0)</span>
+<span class="nc" id="L248">				return bt.unify(term, name);</span>
+
+<span class="nc" id="L250">			Struct newList = (WrapStruct) bt.wrapWithID(Parser.createListContainingAnyVars(((Int) arity).intValue() + 1));</span>
+<span class="nc" id="L251">			bt.unify(newList.getArg(0), name);</span>
+<span class="nc" id="L252">			return $tofromlist_2(bt, term, newList);</span>
+		}
+
+<span class="nc bnc" id="L255" title="All 2 branches missed.">		if (BasicLibrary.atomic_1(bt, term))</span>
+<span class="nc bnc" id="L256" title="All 4 branches missed.">			return bt.unify(term, name) &amp;&amp; bt.unify(arity, new Int(0));</span>
+
+<span class="nc bnc" id="L258" title="All 2 branches missed.">		if (BasicLibrary.compound_1(bt, term)) {</span>
+<span class="nc" id="L259">			StructAtom a = new StructAtom(((Struct) term).name);</span>
+<span class="nc bnc" id="L260" title="All 4 branches missed.">			return bt.unify(name, a) &amp;&amp; bt.unify(arity, new Int(((Struct) term).arity));</span>
+		}
+<span class="nc" id="L262">		return false;</span>
+	}
+
+	public boolean $tofromlist_2(BindingsTable bt, Term structIn, Term listIn) throws PrologException {
+<span class="nc bnc" id="L266" title="All 4 branches missed.">		if (structIn instanceof Number || structIn instanceof StructAtom) {</span>
+<span class="nc" id="L267">			Struct newList = (WrapStruct) bt.wrapWithID(Parser.createListContainingAnyVars(1));</span>
+<span class="nc" id="L268">			bt.unify(newList.getArg(0), structIn);</span>
+<span class="nc" id="L269">			return bt.unify(newList, listIn);</span>
+		}
+<span class="nc bnc" id="L271" title="All 2 branches missed.">		if (structIn instanceof Struct) {</span>
+<span class="nc" id="L272">			Struct struct = (Struct) structIn;</span>
+<span class="nc" id="L273">			WrapStruct medium = (WrapStruct) bt.wrapWithID(Parser.createListContainingAnyVars(struct.arity + 1));</span>
+<span class="nc" id="L274">			Iterator it = bt.structListIterator(medium, false);</span>
+			// unify the name of the struct with the first in the medium list
+<span class="nc" id="L276">			bt.unify((Term) it.next(), new StructAtom(struct.name));</span>
+			// unify the children of the Struct with the rest of the medium list
+<span class="nc bnc" id="L278" title="All 2 branches missed.">			for (int i = 0; i &lt; struct.arity; i++)</span>
+<span class="nc" id="L279">				bt.unify((Var) it.next(), struct.getArg(i));</span>
+			// try to unify the medium list generated from the struct with
+			// listIn
+<span class="nc" id="L282">			return bt.unify(medium, listIn);</span>
+		}
+<span class="nc bnc" id="L284" title="All 2 branches missed.">		if (structIn instanceof Var) {</span>
+<span class="nc bnc" id="L285" title="All 2 branches missed.">			if (listIn instanceof Var)</span>
+<span class="nc" id="L286">				throw new PrologException(&quot;instantiation_error&quot;);</span>
+<span class="nc bnc" id="L287" title="All 2 branches missed.">			if (!list_1(bt, listIn))</span>
+<span class="nc" id="L288">				throw new PrologException(&quot;type_error(list, &quot; + listIn + &quot;)&quot;);</span>
+<span class="nc bnc" id="L289" title="All 2 branches missed.">			if (listIn.equals(Term.emptyList))</span>
+<span class="nc" id="L290">				throw new PrologException(&quot;domain_error(non_empty_list, &quot; + listIn + &quot;)&quot;);</span>
+<span class="nc" id="L291">			Struct list = (Struct) listIn;</span>
+
+<span class="nc" id="L293">			Term head = bt.resolve(list.getArg(0));</span>
+<span class="nc bnc" id="L294" title="All 2 branches missed.">			if (head instanceof Var)</span>
+<span class="nc" id="L295">				throw new PrologException(&quot;instantiation_error&quot;);</span>
+<span class="nc bnc" id="L296" title="All 2 branches missed.">			if (!BasicLibrary.atom_1(bt, head))</span>
+<span class="nc" id="L297">				throw new PrologException(&quot;type_error(atom, &quot; + head + &quot;)&quot;);</span>
+
+<span class="nc" id="L299">			Term tail = bt.resolve(list.getArg(1));</span>
+<span class="nc bnc" id="L300" title="All 2 branches missed.">			if (tail instanceof Struct) {</span>
+<span class="nc" id="L301">				LinkedList terms = new LinkedList();</span>
+<span class="nc bnc" id="L302" title="All 2 branches missed.">				for (Iterator it = bt.structListIterator((Struct) tail, true); it.hasNext();)</span>
+<span class="nc" id="L303">					terms.add(it.next());</span>
+<span class="nc bnc" id="L304" title="All 2 branches missed.">				if (terms.isEmpty())</span>
+<span class="nc" id="L305">					return bt.unify(structIn, head);</span>
+<span class="nc bnc" id="L306" title="All 2 branches missed.">				if (terms.size() &gt; ((Int) engine.getFlagValue(&quot;max_arity&quot;)).intValue())</span>
+<span class="nc" id="L307">					throw new PrologException(&quot;representation_error(max_arity)&quot;);</span>
+
+<span class="nc" id="L309">				Term[] argValuesToBeLinked = (Term[]) terms.toArray(new Term[0]);</span>
+<span class="nc" id="L310">				Term[] variableArgs = new Term[argValuesToBeLinked.length];</span>
+<span class="nc bnc" id="L311" title="All 2 branches missed.">				for (int i = 0; i &lt; argValuesToBeLinked.length; i++)</span>
+<span class="nc" id="L312">					variableArgs[i] = new Var(&quot;_&quot;, i + 1);</span>
+<span class="nc" id="L313">				WrapStruct wrapStructRes = (WrapStruct) bt.wrapWithID(new Struct(head.toString(), variableArgs));</span>
+<span class="nc bnc" id="L314" title="All 2 branches missed.">				for (int i = 0; i &lt; argValuesToBeLinked.length; i++)</span>
+<span class="nc" id="L315">					bt.unify(wrapStructRes.getArg(i), argValuesToBeLinked[i]);</span>
+<span class="nc" id="L316">				return bt.unify(structIn, wrapStructRes);</span>
+			} else {
+<span class="nc" id="L318">				Struct newStruct = new Struct(head.toString(), new Term[] { new Var(&quot;_&quot;, 1) });</span>
+<span class="nc" id="L319">				WrapStruct wrapStructRes = (WrapStruct) bt.wrapWithID(newStruct);</span>
+<span class="nc" id="L320">				bt.unify(wrapStructRes.getArg(0), tail);</span>
+<span class="nc" id="L321">				return bt.unify(structIn, wrapStructRes);</span>
+			}
+		}
+<span class="nc" id="L324">		return false;</span>
+	}
+
+	public boolean current_time_1(BindingsTable bt, Term time) throws Throwable {
+<span class="nc" id="L328">		return bt.unify(time, new Long(System.currentTimeMillis()));</span>
+	}
+
+	//
+	// term/espression comparison
+	//
+
+	public Term eval_1(BindingsTable bt, EvaluableTerm structIn) throws Throwable {
+<span class="nc" id="L336">		return bt.evalExpression(engine, structIn);</span>
+	}
+
+	public boolean is_2(BindingsTable bt, Term structIn, EvaluableTerm listIn) throws Throwable {
+<span class="fc" id="L340">		return bt.unify(structIn, bt.evalExpression(engine, listIn));</span>
+	}
+
+	public boolean expression_equality_2(BindingsTable bt, EvaluableTerm structIn, EvaluableTerm listIn) throws Throwable {
+<span class="nc" id="L344">		Number val1 = bt.evalExpression(engine, structIn);</span>
+<span class="nc" id="L345">		Number val2 = bt.evalExpression(engine, listIn);</span>
+<span class="nc bnc" id="L346" title="All 4 branches missed.">		if (val1 instanceof Float || val2 instanceof Float)</span>
+<span class="nc bnc" id="L347" title="All 2 branches missed.">			return Number.compareDoubleValues(val1, val2) == 0;</span>
+<span class="nc" id="L348">		return val1.equals(val2);</span>
+	}
+
+	public boolean expression_greater_than_2(BindingsTable bt, EvaluableTerm structIn, EvaluableTerm listIn) throws Throwable {
+<span class="fc" id="L352">		Number num0 = bt.evalExpression(engine, structIn);</span>
+<span class="fc" id="L353">		Number num1 = bt.evalExpression(engine, listIn);</span>
+<span class="pc bpc" id="L354" title="2 of 4 branches missed.">		if (num0 instanceof Float || num1 instanceof jTrolog.terms.Float)</span>
+<span class="nc bnc" id="L355" title="All 2 branches missed.">			return Number.compareDoubleValues(num0, num1) &gt; 0;</span>
+<span class="pc bpc" id="L356" title="1 of 2 branches missed.">		return num0.intValue() &gt; num1.intValue();</span>
+	}
+
+	public boolean expression_less_or_equal_than_2(BindingsTable bt, EvaluableTerm structIn, EvaluableTerm listIn) throws Throwable {
+<span class="nc bnc" id="L360" title="All 2 branches missed.">		return !expression_greater_than_2(bt, structIn, listIn);</span>
+	}
+
+	public boolean expression_less_than_2(BindingsTable bt, EvaluableTerm structIn, EvaluableTerm listIn) throws Throwable {
+<span class="nc bnc" id="L364" title="All 2 branches missed.">		return !expression_greater_or_equal_than_2(bt, structIn, listIn);</span>
+	}
+
+	public boolean expression_greater_or_equal_than_2(BindingsTable bt, EvaluableTerm structIn, EvaluableTerm listIn) throws Throwable {
+<span class="nc bnc" id="L368" title="All 4 branches missed.">		return expression_greater_than_2(bt, structIn, listIn) || expression_equality_2(bt, structIn, listIn);</span>
+	}
+
+	public static boolean term_equality_2(BindingsTable bt, Term structIn, Term listIn) {
+<span class="pc bpc" id="L372" title="1 of 2 branches missed.">		if (structIn instanceof Var) {</span>
+<span class="nc bnc" id="L373" title="All 2 branches missed.">			if (!(listIn instanceof Var))</span>
+<span class="nc" id="L374">				return false;</span>
+<span class="nc" id="L375">			Var v = (Var) listIn;</span>
+<span class="nc bnc" id="L376" title="All 4 branches missed.">			if (((Var) structIn).isAnonymous() &amp;&amp; v.isAnonymous())</span>
+<span class="nc" id="L377">				return false;</span>
+<span class="nc" id="L378">			return v.equals(structIn);</span>
+		}
+<span class="pc bpc" id="L380" title="1 of 2 branches missed.">		if (structIn instanceof Number) {</span>
+<span class="pc bpc" id="L381" title="1 of 2 branches missed.">			if (!(listIn instanceof Number))</span>
+<span class="nc" id="L382">				return false;</span>
+<span class="fc" id="L383">			return number_equality_2((Number) structIn, (Number) listIn);</span>
+		}
+
+<span class="nc bnc" id="L386" title="All 2 branches missed.">		if (structIn instanceof Struct) {</span>
+<span class="nc bnc" id="L387" title="All 2 branches missed.">			if (!(listIn instanceof Struct))</span>
+<span class="nc" id="L388">				return false;</span>
+
+<span class="nc" id="L390">			Struct ts = (Struct) listIn;</span>
+<span class="nc bnc" id="L391" title="All 4 branches missed.">			if (((Struct) structIn).arity != ts.arity || !((Struct) structIn).name.equals(ts.name))</span>
+<span class="nc" id="L392">				return false;</span>
+
+<span class="nc bnc" id="L394" title="All 2 branches missed.">			for (int i = 0; i &lt; ((Struct) structIn).arity; i++) {</span>
+<span class="nc bnc" id="L395" title="All 2 branches missed.">				if (!term_equality_2(null, ((Struct) structIn).getArg(i), ts.getArg(i)))</span>
+<span class="nc" id="L396">					return false;</span>
+			}
+<span class="nc" id="L398">			return true;</span>
+		}
+<span class="nc" id="L400">		return false;</span>
+	}
+
+	public static boolean number_equality_2(Number listIn, Number structIn) {
+<span class="fc bfc" id="L404" title="All 4 branches covered.">		if (listIn instanceof Int &amp;&amp; structIn instanceof Int)</span>
+<span class="fc bfc" id="L405" title="All 2 branches covered.">			return structIn.longValue() == listIn.longValue();</span>
+<span class="fc bfc" id="L406" title="All 4 branches covered.">		else if (listIn instanceof Float &amp;&amp; structIn instanceof Float)</span>
+<span class="fc bfc" id="L407" title="All 2 branches covered.">			return Number.compareDoubleValues(structIn, listIn) == 0;</span>
+<span class="fc" id="L408">		return false;</span>
+	}
+
+	public static boolean term_greater_than_2(BindingsTable bt, Term structIn, Term listIn) {
+<span class="nc bnc" id="L412" title="All 2 branches missed.">		if (structIn instanceof Var) {</span>
+<span class="nc bnc" id="L413" title="All 2 branches missed.">			if (!(listIn instanceof Var))</span>
+<span class="nc" id="L414">				return false;</span>
+<span class="nc bnc" id="L415" title="All 2 branches missed.">			return structIn.toString().hashCode() &gt; listIn.toString().hashCode();</span>
+		}
+
+<span class="nc bnc" id="L418" title="All 2 branches missed.">		if (structIn instanceof Struct) {</span>
+<span class="nc bnc" id="L419" title="All 2 branches missed.">			if (listIn instanceof Struct) {</span>
+<span class="nc" id="L420">				Struct ts = (Struct) listIn;</span>
+<span class="nc" id="L421">				int tarity = ts.arity;</span>
+<span class="nc bnc" id="L422" title="All 2 branches missed.">				if (((Struct) structIn).arity &lt; tarity)</span>
+<span class="nc" id="L423">					return false;</span>
+<span class="nc bnc" id="L424" title="All 2 branches missed.">				if (((Struct) structIn).arity == tarity) {</span>
+<span class="nc bnc" id="L425" title="All 2 branches missed.">					if (((Struct) structIn).name.equals(ts.name)) {</span>
+<span class="nc bnc" id="L426" title="All 2 branches missed.">						for (int i = 0; i &lt; ((Struct) structIn).arity; i++) {</span>
+<span class="nc bnc" id="L427" title="All 2 branches missed.">							if (term_greater_than_2(null, ((Struct) structIn).getArg(i), ts.getArg(i)))</span>
+<span class="nc" id="L428">								return true;</span>
+<span class="nc bnc" id="L429" title="All 2 branches missed.">							if (!term_equality_2(null, ((Struct) structIn).getArg(i), ts.getArg(i)))</span>
+<span class="nc" id="L430">								return false;</span>
+						}
+					}
+<span class="nc bnc" id="L433" title="All 2 branches missed.">					if (((Struct) structIn).name.compareTo(ts.name) &lt;= 0)</span>
+<span class="nc" id="L434">						return false;</span>
+				}
+			}
+<span class="nc" id="L437">			return true;</span>
+		}
+<span class="nc bnc" id="L439" title="All 2 branches missed.">		if (structIn instanceof Number) {</span>
+<span class="nc bnc" id="L440" title="All 2 branches missed.">			if (listIn instanceof Var)</span>
+<span class="nc" id="L441">				return true;</span>
+<span class="nc bnc" id="L442" title="All 2 branches missed.">			if (listIn instanceof Struct)</span>
+<span class="nc" id="L443">				return false;</span>
+<span class="nc bnc" id="L444" title="All 2 branches missed.">			if (!(listIn instanceof Number))</span>
+<span class="nc" id="L445">				return false;</span>
+
+<span class="nc" id="L447">			Number n2 = ((Number) listIn);</span>
+<span class="nc" id="L448">			Number n1 = ((Number) structIn);</span>
+<span class="nc bnc" id="L449" title="All 4 branches missed.">			if (n1 instanceof Float || n2 instanceof Float)</span>
+<span class="nc bnc" id="L450" title="All 2 branches missed.">				return Number.compareDoubleValues(n1, n2) &gt; 0;</span>
+<span class="nc bnc" id="L451" title="All 2 branches missed.">			return n1.longValue() &gt; n2.longValue();</span>
+		}
+<span class="nc" id="L453">		return false; // such as implementation specific NullTerm etc.</span>
+	}
+
+	public static boolean term_less_than_2(BindingsTable bt, Term structIn, Term listIn) {
+<span class="nc bnc" id="L457" title="All 4 branches missed.">		return !term_greater_than_2(null, structIn, listIn) &amp;&amp; !term_equality_2(null, structIn, listIn);</span>
+	}
+
+	public Term expression_plus_1(BindingsTable bt, EvaluableTerm structIn) throws Throwable {
+<span class="nc" id="L461">		return bt.evalExpression(engine, structIn);</span>
+	}
+
+	public Term expression_minus_1(BindingsTable bt, EvaluableTerm listIn) throws Throwable {
+<span class="nc" id="L465">		Number val0 = bt.evalExpression(engine, listIn);</span>
+<span class="nc bnc" id="L466" title="All 2 branches missed.">		if (val0 instanceof jTrolog.terms.Long)</span>
+<span class="nc" id="L467">			return new jTrolog.terms.Long(val0.longValue() * -1);</span>
+<span class="nc bnc" id="L468" title="All 2 branches missed.">		if (val0 instanceof Int)</span>
+<span class="nc" id="L469">			return new Int(val0.intValue() * -1);</span>
+<span class="nc bnc" id="L470" title="All 2 branches missed.">		if (val0 instanceof jTrolog.terms.Double)</span>
+<span class="nc" id="L471">			return new jTrolog.terms.Double(val0.doubleValue() * -1);</span>
+<span class="nc bnc" id="L472" title="All 2 branches missed.">		if (val0 instanceof jTrolog.terms.Float)</span>
+<span class="nc" id="L473">			return new jTrolog.terms.Float(val0.floatValue() * -1);</span>
+<span class="nc" id="L474">		return null;</span>
+	}
+
+	public Term expression_bitwise_not_1(BindingsTable bt, EvaluableTerm structIn) throws Throwable {
+<span class="nc" id="L478">		Number val = bt.evalExpression(engine, structIn);</span>
+<span class="nc bnc" id="L479" title="All 2 branches missed.">		if (!(val instanceof Int))</span>
+<span class="nc" id="L480">			throw new PrologException(&quot;type_error(integer, &quot; + val + &quot;)&quot;);</span>
+<span class="nc" id="L481">		return new Int(~val.intValue());</span>
+	}
+
+	public Term expression_plus_2(BindingsTable bt, EvaluableTerm structIn, EvaluableTerm listIn) throws Throwable {
+<span class="fc" id="L485">		Number val0 = bt.evalExpression(engine, structIn);</span>
+<span class="fc" id="L486">		Number val1 = bt.evalExpression(engine, listIn);</span>
+<span class="pc bpc" id="L487" title="2 of 4 branches missed.">		if (val0 instanceof Float || val1 instanceof Float)</span>
+<span class="nc" id="L488">			return new jTrolog.terms.Double(val0.doubleValue() + val1.doubleValue());</span>
+<span class="fc" id="L489">		return Number.getIntegerNumber(val0.longValue() + val1.longValue());</span>
+	}
+
+	public Term expression_minus_2(BindingsTable bt, EvaluableTerm structIn, EvaluableTerm listIn) throws Throwable {
+<span class="fc" id="L493">		Number val0 = bt.evalExpression(engine, structIn);</span>
+<span class="fc" id="L494">		Number val1 = bt.evalExpression(engine, listIn);</span>
+<span class="pc bpc" id="L495" title="2 of 4 branches missed.">		if (val0 instanceof Float || val1 instanceof Float)</span>
+<span class="nc" id="L496">			return new jTrolog.terms.Double(val0.doubleValue() - val1.doubleValue());</span>
+<span class="fc" id="L497">		return Number.getIntegerNumber(val0.longValue() - val1.longValue());</span>
+	}
+
+	public Term expression_multiply_2(BindingsTable bt, EvaluableTerm structIn, EvaluableTerm listIn) throws Throwable {
+<span class="fc" id="L501">		Number val0 = bt.evalExpression(engine, structIn);</span>
+<span class="fc" id="L502">		Number val1 = bt.evalExpression(engine, listIn);</span>
+<span class="pc bpc" id="L503" title="2 of 4 branches missed.">		if (val0 instanceof Float || val1 instanceof Float)</span>
+<span class="nc" id="L504">			return new jTrolog.terms.Double(val0.doubleValue() * val1.doubleValue());</span>
+<span class="fc" id="L505">		return Number.getIntegerNumber(val0.longValue() * val1.longValue());</span>
+	}
+
+	public Term expression_div_2(BindingsTable bt, EvaluableTerm structIn, EvaluableTerm listIn) throws Throwable {
+<span class="nc" id="L509">		Number val0 = bt.evalExpression(engine, structIn);</span>
+<span class="nc" id="L510">		Number val1 = bt.evalExpression(engine, listIn);</span>
+<span class="nc bnc" id="L511" title="All 4 branches missed.">		if (val0 instanceof Float || val1 instanceof Float)</span>
+<span class="nc" id="L512">			return new jTrolog.terms.Double(val0.doubleValue() / val1.doubleValue());</span>
+<span class="nc" id="L513">		return Number.getIntegerNumber((long) (val0.doubleValue() / val1.doubleValue()));</span>
+	}
+
+	public Term expression_integer_div_2(BindingsTable bt, EvaluableTerm structIn, EvaluableTerm listIn) throws Throwable {
+<span class="nc" id="L517">		return Number.getIntegerNumber(bt.evalExpression(engine, structIn).longValue() / bt.evalExpression(engine, listIn).longValue());</span>
+	}
+
+	public Term expression_pow_2(BindingsTable bt, EvaluableTerm structIn, EvaluableTerm listIn) throws Throwable {
+<span class="nc" id="L521">		double val = Math.pow(bt.evalExpression(engine, structIn).doubleValue(), bt.evalExpression(engine, listIn).doubleValue());</span>
+<span class="nc" id="L522">		return new jTrolog.terms.Double(val);</span>
+	}
+
+	public Term expression_bitwise_shift_right_2(BindingsTable bt, EvaluableTerm structIn, EvaluableTerm listIn) throws Throwable {
+<span class="nc" id="L526">		return new Int(bt.evalExpression(engine, structIn).intValue() &gt;&gt; bt.evalExpression(engine, listIn).intValue());</span>
+	}
+
+	public Term expression_bitwise_shift_left_2(BindingsTable bt, EvaluableTerm structIn, EvaluableTerm listIn) throws Throwable {
+<span class="nc" id="L530">		return new Int(bt.evalExpression(engine, structIn).intValue() &lt;&lt; bt.evalExpression(engine, listIn).intValue());</span>
+	}
+
+	public Term expression_bitwise_and_2(BindingsTable bt, EvaluableTerm structIn, EvaluableTerm listIn) throws Throwable {
+<span class="nc" id="L534">		return new Int(bt.evalExpression(engine, structIn).intValue() &amp; bt.evalExpression(engine, listIn).intValue());</span>
+	}
+
+	public Term expression_bitwise_or_2(BindingsTable bt, EvaluableTerm structIn, EvaluableTerm listIn) throws Throwable {
+<span class="nc" id="L538">		return new Int(bt.evalExpression(engine, structIn).intValue() | bt.evalExpression(engine, listIn).intValue());</span>
+	}
+
+	//
+	// text/atom manipulation predicates
+	//
+
+	/**
+	 * bidirectional text/term conversion.
+	 */
+	public boolean text_term_2(BindingsTable bt, Term structIn, Term listIn) {
+<span class="nc bnc" id="L549" title="All 2 branches missed.">		if (!ground_1(bt, structIn))</span>
+<span class="nc" id="L550">			return bt.unify(structIn, new StructAtom(listIn.toString()));</span>
+<span class="nc" id="L551">		Term result = new Parser(Parser.removeApices(structIn.toString()), engine).nextTerm(false);</span>
+<span class="nc" id="L552">		return bt.unify(listIn, result);</span>
+	}
+
+	public boolean text_concat_3(BindingsTable bt, Term source1, Term source2, Term dest) {
+<span class="nc bnc" id="L556" title="All 4 branches missed.">		if (!atom_1(bt, source1) || !atom_1(bt, source2))</span>
+<span class="nc" id="L557">			return false;</span>
+<span class="nc" id="L558">		return bt.unify(dest, new StructAtom(((Struct) source1).name + ((Struct) source2).name));</span>
+	}
+
+	public boolean num_atom_2(BindingsTable bt, Term structIn, Term listIn) {
+<span class="nc bnc" id="L562" title="All 2 branches missed.">		if (listIn instanceof Var) {</span>
+<span class="nc bnc" id="L563" title="All 2 branches missed.">			if (structIn instanceof Number)</span>
+<span class="nc" id="L564">				return bt.unify(listIn, new StructAtom(structIn.toString()));</span>
+<span class="nc" id="L565">			return false;</span>
+		}
+<span class="nc bnc" id="L567" title="All 2 branches missed.">		if (!atom_1(bt, listIn))</span>
+<span class="nc" id="L568">			return false;</span>
+<span class="nc" id="L569">		Number num = Parser.parseNumber(Parser.removeApices(((Struct) listIn).name).trim());</span>
+<span class="nc" id="L570">		return bt.unify(structIn, num);</span>
+	}
+
+	public String getTheory() {
+<span class="fc" id="L574">		return</span>
+		//
+		// operators defined by the BasicLibrary theory
+		//
+		&quot;':-'(op( 1200, fx,   ':-')). \n&quot;
+				+ &quot;:- op( 1200, xfx,  ':-'). \n&quot;
+				+ &quot;:- op( 1200, fx,   '?-'). \n&quot;
+				+ &quot;:- op( 1100, xfy,  ';'). \n&quot;
+				+ &quot;:- op( 1050, xfy,  '-&gt;'). \n&quot;
+				+ &quot;:- op( 1000, xfy,  ','). \n&quot;
+				+ &quot;:- op(  900, fy,   '\\+'). \n&quot;
+				+ &quot;:- op(  900, fy,   'not'). \n&quot;
+				+
+				//
+				&quot;:- op(  700, xfx,  '='). \n&quot;
+				+ &quot;:- op(  700, xfx,  '\\='). \n&quot;
+				+ &quot;:- op(  700, xfx,  '=='). \n&quot;
+				+ &quot;:- op(  700, xfx,  '\\=='). \n&quot;
+				+
+				//
+				&quot;:- op(  700, xfx,  '@&gt;'). \n&quot;
+				+ &quot;:- op(  700, xfx,  '@&lt;'). \n&quot;
+				+ &quot;:- op(  700, xfx,  '@=&lt;'). \n&quot;
+				+ &quot;:- op(  700, xfx,  '@&gt;='). \n&quot;
+				+ &quot;:- op(  700, xfx,  '=:='). \n&quot;
+				+ &quot;:- op(  700, xfx,  '=\\='). \n&quot;
+				+ &quot;:- op(  700, xfx,  '&gt;'). \n&quot;
+				+ &quot;:- op(  700, xfx,  '&lt;'). \n&quot;
+				+ &quot;:- op(  700, xfx,  '=&lt;'). \n&quot;
+				+ &quot;:- op(  700, xfx,  '&gt;='). \n&quot;
+				+
+				//
+				&quot;:- op(  700, xfx,  'is'). \n&quot;
+				+ &quot;:- op(  700, xfx,  '=..'). \n&quot;
+				+ &quot;:- op(  500, yfx,  '+'). \n&quot;
+				+ &quot;:- op(  500, yfx,  '-'). \n&quot;
+				+ &quot;:- op(  500, yfx,  '/\\'). \n&quot;
+				+ &quot;:- op(  500, yfx,  '\\/'). \n&quot;
+				+ &quot;:- op(  400, yfx,  '*'). \n&quot;
+				+ &quot;:- op(  400, yfx,  '/'). \n&quot;
+				+ &quot;:- op(  400, yfx,  '//'). \n&quot;
+				+ &quot;:- op(  400, yfx,  '&gt;&gt;'). \n&quot;
+				+ &quot;:- op(  400, yfx,  '&lt;&lt;'). \n&quot;
+				+ &quot;:- op(  400, yfx,  'rem'). \n&quot;
+				+ &quot;:- op(  400, yfx,  'mod'). \n&quot;
+				+ &quot;:- op(  200, xfx,  '**'). \n&quot;
+				+ &quot;:- op(  200, xfy,  '^'). \n&quot;
+				+ &quot;:- op(  200, fy,   '\\'). \n&quot;
+				+ &quot;:- op(  200, fy,   '-'). \n&quot;
+				+
+				//
+				// flag management
+				//
+				&quot;current_prolog_flag(Name,Value) :- get_prolog_flag(Name,Value),!.\n&quot;
+				+ &quot;current_prolog_flag(Name,Value) :- flag_list(L), member(flag(Name,Value),L).\n&quot;
+				+
+				//
+				// expression/term comparison
+				//
+				&quot;'=\\='(X,Y):- not expression_equality(X,Y). \n&quot;
+				+ &quot;'\\=='(X,Y):- not term_equality(X,Y).\n&quot;
+				+ &quot;'@&gt;='(X,Y):- not term_less_than(X,Y).\n&quot;
+				+ &quot;'@=&lt;'(X,Y):- not term_greater_than(X,Y).\n&quot;
+				+
+				//
+				// meta-predicates
+				//
+				&quot;clause(H,B) :- var(H),!, '$instantiation_error'. &quot;
+				+ &quot;clause(H,B) :- number(H),!, '$type_error'(callable, H). &quot;
+				+ &quot;clause(H,B) :- number(B),!, '$type_error'(callable, B). &quot;
+				+ &quot;clause(H,B) :- '$find'(H,L), member((':-'(H,B)),L). &quot;
+				+
+
+				&quot;current_predicate(PI) :- PI = Name/Arity, &quot;
+				+ &quot;'$all_dynamic_predicate_indicators'(Iterator), &quot;
+				+ &quot;has_next(Iterator), &quot;
+				+ &quot;'$current_pred_impl'(Name, Arity, Iterator). &quot;
+				+
+
+				&quot;has_next(Iterator) :- not('$has_next'(Iterator)), !, fail. &quot;
+				+ &quot;has_next(Iterator) :- true. &quot;
+				+ &quot;has_next(Iterator) :- has_next(Iterator). &quot;
+				+
+				//
+				&quot;C -&gt; T ; B :- C, !, T. \n&quot;
+				+ &quot;C -&gt; T ; B :- !, B. \n&quot;
+				+ &quot;C -&gt; T :- C, !, T. \n&quot;
+				+ &quot;A ; B :- A. \n                                                                                          &quot;
+				+ &quot;A ; B :- B. \n                                                                                          &quot;
+				+ &quot;unify_with_occurs_check(X,Y) :- X=Y.\n                                                                     &quot;
+				+ // todo, every check now has with_occurs_check, and
+					// with_occurs must be shut down manually..
+				&quot;current_op(Pri,Type,Name):-get_operators_list(L),member(op(Pri,Type,Name),L).\n                          &quot;
+				+ &quot;once(X) :- X.                                                                                  &quot;
+				+ &quot;repeat. \n                                                                                              &quot;
+				+ &quot;repeat        :- repeat. \n                                                                             &quot;
+				+ &quot;'\\+'(P):- not(P). \n                                                                                             &quot;
+				+ &quot;not(G) :- call(G),!,fail. \n                                                                     &quot;
+				+ &quot;not(_). \n                                                                                              &quot;
+				+
+				//
+				// All solutions predicates
+				//
+				&quot;findall(Template, Goal, Instances) :- \n&quot;
+				+ &quot;new_record_key(Key), \n&quot;
+				+ &quot;findall_impl(Template, Goal, Key, L), \n&quot;
+				+ &quot;Instances = L. \n&quot;
+				+ &quot;findall_impl(Template, Goal, Key, _) :- \n&quot;
+				+ &quot;call(Goal), \n&quot;
+				+ &quot;copy(Template, CL), \n&quot;
+				+ &quot;record(Key, CL), \n&quot;
+				+ &quot;fail. \n&quot;
+				+ &quot;findall_impl(_, _, Key, Instances) :- &quot;
+				+ &quot;recorded(Key, Instances), &quot;
+				+ &quot;erase(Key). \n&quot;
+				+
+
+				&quot;bagof(Template, Goal, Instances) :- \n&quot;
+				+ &quot;free_variables_set(Goal, Template, Set), \n&quot;
+				+ &quot;Witness =.. [witness | Set], \n&quot;
+				+ &quot;iterated_goal_term(Goal, G), \n&quot;
+				+ &quot;findall(Witness + Template, G, S), \n&quot;
+				+ &quot;'$bagof_impl_a'(Witness, S, Instances). \n&quot;
+				+
+
+				&quot;'$bagof_impl_a'(_, [], _) :- !, fail. \n&quot;
+				+ &quot;'$bagof_impl_a'(WitnessIn, BigSet, Instances) :- &quot;
+				+ &quot;'$stripBagList'(WitnessIn, BigSet, Matches, RemainderSet, Variant), &quot;
+				+ &quot;'$bagof_impl_b'(WitnessIn, Instances, RemainderSet, Variant, Matches). &quot;
+				+
+
+				&quot;'$bagof_impl_b'(WitnessIn, Instances, _, Variant, Matches) :- WitnessIn = Variant, Instances = Matches. \n&quot;
+				+ // first success?
+				&quot;'$bagof_impl_b'(WitnessIn, Instances, RemainderSet, _, _) :- '$bagof_impl_a'(WitnessIn, RemainderSet, Instances). \n&quot;
+				+ // get the next from remainding bag
+					//
+					//
+					//
+					// &quot;bagof(Template, Goal, Instances) :- &quot; +
+					// &quot;free_variables_set(Goal, Template, Set), &quot; +
+					// &quot;Witness =.. [witness | Set], &quot; +
+					// &quot;iterated_goal_term(Goal, G), &quot; +
+					// &quot;findall(Witness + Template, G, S), &quot; +
+					// &quot;new_record_key(SetKey), &quot; +
+					// &quot;record(SetKey, S), &quot; +
+					// &quot;bagof_impl_x(Witness, SetKey, Instances). &quot; +
+					//
+					// &quot;bagof_impl_x(_, SetKey, _) :- &quot; +
+					// &quot;recorded(SetKey, []), &quot; +
+					// &quot;!, &quot; +
+					// &quot;fail. \n&quot; +
+					// &quot;bagof_impl_x(Witness, SetKey, Instances) :- &quot; +
+					// &quot;recorded(SetKey, List), &quot; +
+					// &quot;split_list(Witness, List, Instances, Rest), &quot; +
+					// &quot;erase(SetKey), &quot; +
+					// &quot;record(SetKey, Rest). \n&quot; +
+					// &quot;bagof_impl_x(Witness, SetKey, Instances) :- bagof_impl_x(Witness, SetKey, Instances). &quot;
+					// +
+					//
+					// &quot;split_list(Witness, [WW + TT | List], [TT | Instances], Rest) :- variant2(Witness, WW), !, split_list(Witness, List, Instances, Rest). &quot;
+					// +
+					// &quot;split_list(Witness, [H | List], Instances, [H | Rest]) :- split_list(Witness, List, Instances, Rest). &quot;
+					// +
+					// &quot;split_list(_, [], [], []). &quot; +
+					//
+				&quot;setof(Template, Goal, Instances) :- \n&quot;
+				+ &quot;bagof(Template, Goal, List), \n&quot;
+				+ &quot;quicksort(List, '@&lt;', OrderedList), \n&quot;
+				+ &quot;no_duplicates(OrderedList, Instances). \n&quot;
+				+
+
+				// &quot;free_variables_set(T, V, FV) :- \n&quot; +
+				// &quot;variable_set(T, VST), \n&quot; +
+				// &quot;existential_variables(T, EVST), \n&quot; +
+				// &quot;variable_set(V, VSV), \n&quot; +
+				// &quot;list_remove(VST, EVST, V1), &quot; +
+				// &quot;list_remove(V1, VSV, V2), &quot; +
+				// &quot;FV = V2. \n&quot; +
+				//
+				// &quot;list_remove([],L2,[]). \n                                                                                    &quot;
+				// +
+				// &quot;list_remove([E|T1], L2, L3):- member(E, L2), !, list_remove(T1,L2,L3). \n                                                         &quot;
+				// +
+				// &quot;list_remove([E|T1], L2, [E|T3]):- list_remove(T1,L2,T3). \n                                                         &quot;
+				// +
+				//
+				&quot;free_variables_set(Term, WithRespectTo, Set) :- \n&quot;
+				+ &quot;variable_set(Term, VS), \n&quot;
+				+ &quot;variable_set(WithRespectTo, VS1), \n&quot;
+				+ &quot;existential_variables(Term, EVS1), \n&quot;
+				+ &quot;'$list_diff'(VS, VS1, T), \n&quot;
+				+ &quot;'$list_diff'(T, EVS1, T2), \n&quot;
+				+ &quot;Set =T2. \n&quot;
+				+
+
+				&quot;existential_variables(Term, []) :- var(Term), !. \n&quot;
+				+ &quot;existential_variables(Term, []) :- atomic(Term), !. \n&quot;
+				+ &quot;existential_variables(V ^ G, EVS) :- variable_set(V, VS), \n&quot;
+				+ &quot;existential_variables(G, ExistentialVars), \n&quot;
+				+ &quot;append(VS, ExistentialVars, EVS). \n&quot;
+				+ &quot;existential_variables(_, []). \n&quot;
+				+
+
+				&quot;iterated_goal_term(_ ^ SubGoal, Goal) :- iterated_goal_term(SubGoal, Goal). \n&quot;
+				+ &quot;iterated_goal_term(G, G). \n&quot;
+				+
+
+				// intersect not tested
+				&quot;intersect([H|A],B,[H|C]) :- member(H,B), !, intersect(A,B,C). &quot;
+				+ &quot;intersect([H|T],B,C) :- intersect(T,B,C). &quot;
+				+ &quot;intersect([],[],[]). &quot;
+				+
+
+				&quot;diff(A,B,C) :- diff_impl(A,B,A2,C). &quot;
+				+ &quot;diff_impl([H|A],B,A2,C) :- member(H,B), !, diff_impl(A,B,A2,C). &quot;
+				+ &quot;diff_impl([H|A],B,A2,[H|C]) :- diff_impl(A,B,A2,C). &quot;
+				+ &quot;diff_impl([],[H|B],A2,C) :- member(H,A2), !, diff_impl([],B,A2,C). &quot;
+				+ &quot;diff_impl([],[H|B],A2,[H|C]) :- diff_impl([],B,A2,C). &quot;
+				+ &quot;diff_impl([],[],[],[]). &quot;
+				+
+
+				&quot;no_duplicates([], []). \n&quot;
+				+ &quot;no_duplicates([H | T], L) :- member(H, T), !, no_duplicates(T, L). \n&quot;
+				+ &quot;no_duplicates([H | T], [H | L]) :- no_duplicates(T, L). \n&quot;
+				+
+				//
+				// theory management predicates
+				//
+				&quot;retract(Rule) :- Rule = ':-'(Head, Body), !, clause(Head, Body), '$retract'(Rule). \n&quot;
+				+ &quot;retract(Fact) :- clause(Fact, true), '$retract'(Fact). \n&quot;
+				+
+
+				&quot;retractall(Head) :- findall(Head, clause(Head, _), L), '$retract_clause_list'(L), !. \n&quot;
+				+ &quot;'$retract_clause_list'([]). \n&quot;
+				+ &quot;'$retract_clause_list'([E | T]) :- !, '$retract'(E), '$retract_clause_list'(T). \n&quot;
+				+
+				//
+				// auxiliary predicates
+				//
+				&quot;member(E,[E|_]). \n                                                                                     &quot;
+				+ &quot;member(E,[_|L]):- member(E,L). \n                                                                       &quot; + &quot;length(L, S) :- number(S), S &gt;= 0, !, lengthN(L, S), !. \n&quot;
+				+ &quot;length(L, S) :- var(S), lengthX(L, S). \n&quot; + &quot;lengthN([],0). \n&quot; + &quot;lengthN(_, N) :- nonvar(N), N &lt; 0, !, fail. \n&quot; + &quot;lengthN([_|L], N) :- lengthN(L,M), N is M + 1. \n&quot;
+				+ &quot;lengthX([],0). \n&quot; + &quot;lengthX([_|L], N) :- lengthX(L,M), N is M + 1. \n&quot;
+				+ &quot;append([],L2,L2). \n                                                                                    &quot;
+				+ &quot;append([E|T1],L2,[E|T2]):- append(T1,L2,T2). \n                                                         &quot;
+				+ &quot;reverse(L1,L2):- reverse0(L1,[],L2). \n                                                                 &quot;
+				+ &quot;reverse0([],Acc,Acc). \n                                                                                &quot;
+				+ &quot;reverse0([H|T],Acc,Y):- reverse0(T,[H|Acc],Y). \n                                                       &quot;
+				+ &quot;delete(E,[],[]). \n                                                                                     &quot;
+				+ &quot;delete2(E,[E|T],L):- !,delete(E,T,L). \n                                                                 &quot;
+				+ &quot;delete(E,[H|T],[H|L]):- delete2(E,T,L). \n                                                               &quot;
+				+ &quot;element(1,[E|L],E):- !. \n                                                                              &quot;
+				+ &quot;element(N,_,_):- N &lt; 0, !, fail. \n                                                                     &quot;
+				+ &quot;element(N,[_|L],E):- M is N - 1,element(M,L,E). \n                                                      &quot; +
+
+				&quot;quicksort([],Pred,[]).                             \n&quot; + &quot;quicksort([X|Tail],Pred,Sorted):-                  \n&quot; + &quot;   split(X,Tail,Pred,Small,Big),                   \n&quot;
+				+ &quot;   quicksort(Small,Pred,SortedSmall),              \n&quot; + &quot;   quicksort(Big,Pred,SortedBig),                  \n&quot; + &quot;   append(SortedSmall,[X|SortedBig],Sorted).       \n&quot;
+				+ &quot;split(_,[],_,[],[]).                               \n&quot; + &quot;split(X,[Y|Tail],Pred,Small,[Y|Big]):-             \n&quot; + &quot;   Predicate =..[Pred,X,Y],                        \n&quot;
+				+ &quot;   call(Predicate),!,                              \n&quot; + &quot;   split(X,Tail,Pred,Small,Big).                   \n&quot; + &quot;split(X,[Y|Tail],Pred,[Y|Small],Big):-             \n&quot;
+				+ &quot;   split(X,Tail,Pred,Small,Big).                   \n&quot;;
+	}
+
+	// Internal Java predicates which are part of the bagof/3 and setof/3
+	// algorithm
+
+	public boolean $has_next_1(BindingsTable bt, IteratorAsTerm iterator) {
+<span class="nc" id="L840">		return iterator.hasNext();</span>
+	}
+
+	public boolean $all_dynamic_predicate_indicators_1(BindingsTable bt, Term iterator) throws PrologException {
+<span class="nc bnc" id="L844" title="All 2 branches missed.">		if (iterator instanceof Var) {</span>
+<span class="nc" id="L845">			Term iteratorTerm = new IteratorAsTerm(engine.dynamicPredicateIndicators());</span>
+<span class="nc" id="L846">			return bt.unify(iterator, iteratorTerm);</span>
+		}
+<span class="nc bnc" id="L848" title="All 2 branches missed.">		if (iterator instanceof IteratorAsTerm)</span>
+<span class="nc" id="L849">			return ((IteratorAsTerm) iterator).hasNext();</span>
+<span class="nc" id="L850">		throw new PrologException(&quot;$all_dynamic_predicate_indicators has a bug. contact ivar.&quot;);</span>
+	}
+
+	public boolean $current_pred_impl_3(BindingsTable bt, Term name, Term arity, IteratorAsTerm allDynamicPIs) {
+<span class="nc" id="L854">		String nextDynamicPI = (String) allDynamicPIs.next();</span>
+<span class="nc" id="L855">		String[] pred = nextDynamicPI.split(&quot;/&quot;);</span>
+<span class="nc bnc" id="L856" title="All 2 branches missed.">		if (!bt.unify(name, new StructAtom(pred[0])))</span>
+<span class="nc" id="L857">			return false;</span>
+<span class="nc" id="L858">		return bt.unify(arity, new Int(pred[1]));</span>
+	}
+
+	// &quot;variable_set(T, [T]) :- var(T), !. \n&quot; +
+	// &quot;variable_set(T, []) :- atomic(T), !. \n&quot; +
+	// &quot;variable_set(T, List) :- T =.. [_|Args], variable_set_arguments(Args, List). \n&quot;
+	// +
+	//
+	// &quot;variable_set_arguments([], []). \n&quot; +
+	// &quot;variable_set_arguments([H|T], List) :- &quot; +
+	// &quot;variable_set(H, SubList1), &quot; +
+	// &quot;variable_set_arguments(T, SubList2), &quot; +
+	// &quot;append(SubList1, SubList2, List). \n&quot; +
+	public boolean variable_set_2(BindingsTable bt, Term withVars, Term varList) {
+<span class="nc bnc" id="L872" title="All 4 branches missed.">		if (withVars instanceof Number || withVars instanceof StructAtom)</span>
+<span class="nc" id="L873">			return bt.unify(Term.emptyList, varList);</span>
+<span class="nc" id="L874">		LinkedList l = new LinkedList();</span>
+<span class="nc bnc" id="L875" title="All 2 branches missed.">		if (withVars instanceof Var)</span>
+<span class="nc" id="L876">			l.add(withVars);</span>
+		else
+<span class="nc" id="L878">			l.addAll(Arrays.asList(((Struct) withVars).getVarList()));</span>
+<span class="nc" id="L879">		l.add(Term.emptyList);</span>
+<span class="nc" id="L880">		return bt.unify(bt.createStructList(l), varList);</span>
+	}
+
+	// internal variable / data base map
+<span class="fc" id="L884">	private HashMap map = new HashMap();</span>
+
+	public boolean new_record_key_1(BindingsTable bt, Var key) {
+<span class="nc" id="L887">		Long newKey = new Long(key.hashCode());</span>
+<span class="nc" id="L888">		return bt.unify(key, newKey);</span>
+	}
+
+	public boolean record_2(BindingsTable bt, Number key, Term unit) {
+<span class="nc" id="L892">		LinkedList appendStorage = (LinkedList) map.get(key.toString());</span>
+<span class="nc bnc" id="L893" title="All 2 branches missed.">		if (appendStorage == null)</span>
+<span class="nc" id="L894">			appendStorage = new LinkedList();</span>
+<span class="nc" id="L895">		appendStorage.add(BindingsTable.unWrap(unit));</span>
+<span class="nc" id="L896">		map.put(key.toString(), appendStorage);</span>
+<span class="nc" id="L897">		return true;</span>
+	}
+
+	public boolean erase_2(BindingsTable bt, Number key, Term list) {
+<span class="nc" id="L901">		LinkedList appendStorage = (LinkedList) map.remove(key.toString());</span>
+<span class="nc bnc" id="L902" title="All 2 branches missed.">		if (appendStorage == null)</span>
+<span class="nc" id="L903">			return bt.unify(list, Term.emptyList);</span>
+<span class="nc" id="L904">		appendStorage.add(Term.emptyList);</span>
+<span class="nc" id="L905">		return bt.unify(list, bt.createStructList(appendStorage));</span>
+	}
+
+	public boolean recorded_2(BindingsTable bt, Number key, Term list) {
+<span class="nc" id="L909">		LinkedList appendStorage = (LinkedList) map.get(key.toString());</span>
+<span class="nc bnc" id="L910" title="All 2 branches missed.">		if (appendStorage == null)</span>
+<span class="nc" id="L911">			return bt.unify(list, Term.emptyList);</span>
+<span class="nc" id="L912">		appendStorage.add(Term.emptyList);</span>
+<span class="nc" id="L913">		return bt.unify(list, bt.createStructList(appendStorage));</span>
+	}
+
+	public boolean erase_1(BindingsTable bt, Number key) {
+<span class="nc" id="L917">		map.remove(key.toString());</span>
+<span class="nc" id="L918">		return true;</span>
+	}
+
+	// internal variable / data base map
+
+	public boolean $stripBagList_5(BindingsTable bt, Struct witnessIn, Struct a_and_bSet, Term aSet, Term bSet, Term variant) throws PrologException {
+<span class="nc" id="L924">		LinkedList results = new LinkedList();</span>
+<span class="nc" id="L925">		LinkedList remains = new LinkedList();</span>
+
+<span class="nc bnc" id="L927" title="All 2 branches missed.">		int wrapID = witnessIn instanceof WrapStruct ? ((WrapStruct) witnessIn).context : bt.getUniqueExecutionCtxID();</span>
+<span class="nc" id="L928">		witnessIn = (Struct) BindingsTable.wrapWithID(bt.variant(witnessIn), wrapID);</span>
+
+		// 1a. get a variant of the first witness+template from the inputList
+<span class="nc" id="L931">		Iterator it = bt.structListIterator(a_and_bSet, true);</span>
+<span class="nc" id="L932">		Struct w_t = (Struct) it.next();</span>
+
+		// 1b. the witness branch of the first result will be used to match
+		// other results with identical witnesses
+<span class="nc" id="L936">		Struct witness1 = (Struct) variant(witnessIn, w_t.getArg(0));</span>
+<span class="nc" id="L937">		bt.unify(w_t.getArg(0), witness1);</span>
+
+		// 1c. unify first witness with Variant output and add to result
+<span class="nc" id="L940">		bt.unify(variant, witness1);</span>
+<span class="nc" id="L941">		results.add(BindingsTable.unWrap(w_t.getArg(1)));</span>
+
+		// 2. iterate the rest of the input list and
+		// put all matching witnesses from bigset into result and the rest in
+		// remainder
+<span class="nc bnc" id="L946" title="All 2 branches missed.">		while (it.hasNext()) {</span>
+<span class="nc" id="L947">			w_t = (Struct) it.next();</span>
+<span class="nc" id="L948">			Struct witness2 = (Struct) variant(witness1, w_t.getArg(0));</span>
+<span class="nc bnc" id="L949" title="All 2 branches missed.">			if (term_equality_2(null, witness1, witness2)) {</span>
+<span class="nc" id="L950">				bt.unify(w_t.getArg(0), witness1);</span>
+<span class="nc" id="L951">				results.add(BindingsTable.unWrap(w_t.getArg(1)));</span>
+			} else {
+<span class="nc" id="L953">				remains.add(BindingsTable.unWrap(w_t));</span>
+			}
+<span class="nc" id="L955">		}</span>
+
+		// 3. unify the results lists and remains list with aSet and bSet
+<span class="nc bnc" id="L958" title="All 2 branches missed.">		if (remains.isEmpty()) {</span>
+<span class="nc" id="L959">			bt.unify(bSet, Term.emptyList);</span>
+		} else {
+<span class="nc" id="L961">			remains.add(Term.emptyList);</span>
+<span class="nc" id="L962">			bt.unify(bSet, BindingsTable.wrapWithID(Parser.createStructList(remains), wrapID));</span>
+		}
+<span class="nc" id="L964">		results.add(Term.emptyList);</span>
+<span class="nc" id="L965">		return bt.unify(aSet, BindingsTable.wrapWithID(Parser.createStructList(results), wrapID));</span>
+	}
+
+	// todo not finished.. Just a hack to see if things roughly work
+	// todo bug in the bag_of predicate..
+	// todo I think the fault lies with variant..
+	// todo I think variant constructs a Struct with Variables from various
+	// contexts..
+	private static Term variant(Term former, Term latter) {
+<span class="nc bnc" id="L974" title="All 2 branches missed.">		if (BasicLibrary.atomic_1(null, latter))</span>
+<span class="nc" id="L975">			return latter;</span>
+<span class="nc bnc" id="L976" title="All 2 branches missed.">		if (latter instanceof Var) {</span>
+<span class="nc bnc" id="L977" title="All 2 branches missed.">			if (former instanceof Var)</span>
+<span class="nc" id="L978">				return former;</span>
+<span class="nc" id="L979">			throw new RuntimeException(&quot;h�&quot;);</span>
+		}
+<span class="nc bnc" id="L981" title="All 2 branches missed.">		if (latter instanceof Struct) {</span>
+<span class="nc bnc" id="L982" title="All 2 branches missed.">			if (former instanceof Var)</span>
+<span class="nc" id="L983">				return latter;</span>
+<span class="nc bnc" id="L984" title="All 2 branches missed.">			if (!(former instanceof Struct))</span>
+<span class="nc" id="L985">				throw new RuntimeException(&quot;h�2&quot;);</span>
+<span class="nc" id="L986">			final Struct sFormer = (Struct) former;</span>
+<span class="nc" id="L987">			final Struct sLatter = (Struct) latter;</span>
+<span class="nc bnc" id="L988" title="All 2 branches missed.">			if (sFormer.predicateIndicator != sLatter.predicateIndicator)</span>
+<span class="nc" id="L989">				throw new RuntimeException(&quot;h�3&quot;);</span>
+<span class="nc" id="L990">			Term[] newChildren = new Term[sLatter.arity];</span>
+<span class="nc bnc" id="L991" title="All 2 branches missed.">			for (int i = 0; i &lt; sFormer.arity; i++)</span>
+<span class="nc" id="L992">				newChildren[i] = variant(BindingsTable.unWrap(sFormer.getArg(i)), BindingsTable.unWrap(sLatter.getArg(i))); // todo</span>
+																															// this
+																															// is
+																															// just
+																															// a
+																															// hack.
+																															// I
+																															// don't
+																															// think
+																															// it
+																															// works
+																															// at
+																															// all,
+																															// this
+																															// needs
+																															// to
+																															// be
+																															// fixed
+<span class="nc" id="L1010">			return BindingsTable.wrapWithID(new Struct(sLatter.name, newChildren), ((WrapStruct) former).context); // todo</span>
+																													// bug
+																													// in
+																													// context
+																													// setting
+																													// here..
+		}
+<span class="nc" id="L1017">		throw new RuntimeException(&quot;h�4&quot;);</span>
+	}
+
+	public boolean $list_diff_3(BindingsTable bt, Struct main, Struct retract, Var diff) throws PrologException {
+<span class="nc bnc" id="L1021" title="All 2 branches missed.">		if (retract.equals(Term.emptyList))</span>
+<span class="nc" id="L1022">			return bt.unify(diff, main);</span>
+<span class="nc" id="L1023">		LinkedList resultList = new LinkedList();</span>
+<span class="nc bnc" id="L1024" title="All 2 branches missed.">		outer: for (Iterator it = bt.structListIterator(main, true); it.hasNext();) {</span>
+<span class="nc" id="L1025">			Term child = (Term) it.next();</span>
+<span class="nc bnc" id="L1026" title="All 2 branches missed.">			for (Iterator it2 = bt.structListIterator(retract, true); it2.hasNext();) {</span>
+<span class="nc" id="L1027">				Term child2 = (Term) it2.next();</span>
+<span class="nc bnc" id="L1028" title="All 2 branches missed.">				if (BasicLibrary.term_equality_2(null, child, child2))</span>
+<span class="nc" id="L1029">					continue outer;</span>
+<span class="nc" id="L1030">			}</span>
+<span class="nc" id="L1031">			resultList.add(child);</span>
+<span class="nc" id="L1032">		}</span>
+<span class="nc bnc" id="L1033" title="All 2 branches missed.">		if (resultList.isEmpty())</span>
+<span class="nc" id="L1034">			return bt.unify(diff, Term.emptyList);</span>
+<span class="nc" id="L1035">		resultList.add(Term.emptyList);</span>
+<span class="nc" id="L1036">		return bt.unify(diff, bt.createStructList(resultList));</span>
+	}
+
+	/**
+	 * Defines a map for synonyms for primitives. String primitive name -&gt;
+	 * String[]{synonym name, another synonym name, ..}.
+	 */
+	public String[] getSynonym(String primitive) {
+<span class="fc bfc" id="L1044" title="All 2 branches covered.">		if (primitive.equals(&quot;expression_plus&quot;))</span>
+<span class="fc" id="L1045">			return new String[] { &quot;+&quot; };</span>
+<span class="fc bfc" id="L1046" title="All 2 branches covered.">		if (primitive.equals(&quot;expression_minus&quot;))</span>
+<span class="fc" id="L1047">			return new String[] { &quot;-&quot; };</span>
+<span class="fc bfc" id="L1048" title="All 2 branches covered.">		if (primitive.equals(&quot;expression_multiply&quot;))</span>
+<span class="fc" id="L1049">			return new String[] { &quot;*&quot; };</span>
+<span class="fc bfc" id="L1050" title="All 2 branches covered.">		if (primitive.equals(&quot;expression_div&quot;))</span>
+<span class="fc" id="L1051">			return new String[] { &quot;/&quot; };</span>
+<span class="fc bfc" id="L1052" title="All 2 branches covered.">		if (primitive.equals(&quot;expression_pow&quot;))</span>
+<span class="fc" id="L1053">			return new String[] { &quot;**&quot; };</span>
+<span class="fc bfc" id="L1054" title="All 2 branches covered.">		if (primitive.equals(&quot;expression_bitwise_shift_right&quot;))</span>
+<span class="fc" id="L1055">			return new String[] { &quot;&gt;&gt;&quot; };</span>
+<span class="fc bfc" id="L1056" title="All 2 branches covered.">		if (primitive.equals(&quot;expression_bitwise_shift_left&quot;))</span>
+<span class="fc" id="L1057">			return new String[] { &quot;&lt;&lt;&quot; };</span>
+<span class="fc bfc" id="L1058" title="All 2 branches covered.">		if (primitive.equals(&quot;expression_bitwise_and&quot;))</span>
+<span class="fc" id="L1059">			return new String[] { &quot;/\\&quot; };</span>
+<span class="fc bfc" id="L1060" title="All 2 branches covered.">		if (primitive.equals(&quot;expression_bitwise_or&quot;))</span>
+<span class="fc" id="L1061">			return new String[] { &quot;\\/&quot; };</span>
+<span class="fc bfc" id="L1062" title="All 2 branches covered.">		if (primitive.equals(&quot;expression_integer_div&quot;))</span>
+<span class="fc" id="L1063">			return new String[] { &quot;//&quot; };</span>
+<span class="fc bfc" id="L1064" title="All 2 branches covered.">		if (primitive.equals(&quot;expression_bitwise_not&quot;))</span>
+<span class="fc" id="L1065">			return new String[] { &quot;\\&quot; };</span>
+<span class="fc bfc" id="L1066" title="All 2 branches covered.">		if (primitive.equals(&quot;$functor&quot;))</span>
+<span class="fc" id="L1067">			return new String[] { &quot;functor&quot; };</span>
+<span class="fc bfc" id="L1068" title="All 2 branches covered.">		if (primitive.equals(&quot;$arg&quot;))</span>
+<span class="fc" id="L1069">			return new String[] { &quot;arg&quot; };</span>
+<span class="fc bfc" id="L1070" title="All 2 branches covered.">		if (primitive.equals(&quot;$tofromlist&quot;))</span>
+<span class="fc" id="L1071">			return new String[] { &quot;=..&quot; };</span>
+<span class="fc bfc" id="L1072" title="All 2 branches covered.">		if (primitive.equals(&quot;expression_equality&quot;))</span>
+<span class="fc" id="L1073">			return new String[] { &quot;=:=&quot; };</span>
+<span class="fc bfc" id="L1074" title="All 2 branches covered.">		if (primitive.equals(&quot;expression_greater_than&quot;))</span>
+<span class="fc" id="L1075">			return new String[] { &quot;&gt;&quot; };</span>
+<span class="fc bfc" id="L1076" title="All 2 branches covered.">		if (primitive.equals(&quot;expression_less_than&quot;))</span>
+<span class="fc" id="L1077">			return new String[] { &quot;&lt;&quot; };</span>
+<span class="fc bfc" id="L1078" title="All 2 branches covered.">		if (primitive.equals(&quot;expression_greater_or_equal_than&quot;))</span>
+<span class="fc" id="L1079">			return new String[] { &quot;&gt;=&quot; };</span>
+<span class="fc bfc" id="L1080" title="All 2 branches covered.">		if (primitive.equals(&quot;expression_less_or_equal_than&quot;))</span>
+<span class="fc" id="L1081">			return new String[] { &quot;=&lt;&quot; };</span>
+<span class="fc bfc" id="L1082" title="All 2 branches covered.">		if (primitive.equals(&quot;term_equality&quot;))</span>
+<span class="fc" id="L1083">			return new String[] { &quot;==&quot; };</span>
+<span class="fc bfc" id="L1084" title="All 2 branches covered.">		if (primitive.equals(&quot;term_greater_than&quot;))</span>
+<span class="fc" id="L1085">			return new String[] { &quot;@&gt;&quot; };</span>
+<span class="fc bfc" id="L1086" title="All 2 branches covered.">		if (primitive.equals(&quot;term_less_than&quot;))</span>
+<span class="fc" id="L1087">			return new String[] { &quot;@&lt;&quot; };</span>
+<span class="fc" id="L1088">		return null;</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

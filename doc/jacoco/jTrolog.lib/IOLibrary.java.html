@@ -1,0 +1,276 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>IOLibrary.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">prolobjectlink-jpi-jtrolog</a> &gt; <a href="index.source.html" class="el_package">jTrolog.lib</a> &gt; <span class="el_source">IOLibrary.java</span></div><h1>IOLibrary.java</h1><pre class="source lang-java linenums">/*
+ * #%L
+ * prolobjectlink-jpi-jtrolog
+ * %%
+ * Copyright (C) 2012 - 2018 WorkLogic Project
+ * %%
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation, either version 2.1 of the
+ * License, or (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Lesser Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Lesser Public
+ * License along with this program.  If not, see
+ * &lt;http://www.gnu.org/licenses/lgpl-2.1.html&gt;.
+ * #L%
+ */
+/*
+ * tuProlog - Copyright (C) 2001-2002  aliCE team at deis.unibo.it
+ *
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation; either
+ * version 2.1 of the License, or (at your option) any later version.
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ */
+package jTrolog.lib;
+
+import jTrolog.engine.*;
+import jTrolog.terms.*;
+import jTrolog.terms.Double;
+import jTrolog.terms.Number;
+import jTrolog.parser.Parser;
+
+import java.io.*;
+import java.util.HashMap;
+import java.util.Random;
+
+/**
+ * This class provides basic I/O predicates.
+ * 
+ * @author ivar.orstavik@hist.no
+ */
+@SuppressWarnings({ &quot;rawtypes&quot;, &quot;unchecked&quot;,&quot;serial&quot; })
+public class IOLibrary extends Library {
+
+	private HashMap streams;
+
+	private String in;
+	private String out;
+
+<span class="fc" id="L64">	private Random gen = new Random();</span>
+
+<span class="fc" id="L66">	public IOLibrary() {</span>
+<span class="fc" id="L67">		streams = new HashMap();</span>
+<span class="fc" id="L68">		in = &quot;stdin&quot;;</span>
+<span class="fc" id="L69">		out = &quot;stdout&quot;;</span>
+<span class="fc" id="L70">	}</span>
+
+	public boolean see_1(BindingsTable bt, Term arg0) throws Exception {
+<span class="nc bnc" id="L73" title="All 2 branches missed.">		if (!BasicLibrary.atom_1(bt, arg0))</span>
+<span class="nc" id="L74">			return false;</span>
+
+<span class="nc" id="L76">		String requested = ((Struct) arg0).name;</span>
+		// 1. close already open stream if seeing a new input, then rename
+		// current in
+<span class="nc bnc" id="L79" title="All 2 branches missed.">		if (!requested.equals(in)) {</span>
+<span class="nc" id="L80">			InputStream inputStream = getInputStream(in);</span>
+<span class="nc bnc" id="L81" title="All 2 branches missed.">			if (inputStream != null)</span>
+<span class="nc" id="L82">				inputStream.close();</span>
+<span class="nc" id="L83">			in = requested;</span>
+		}
+
+		// 2. if the requested stream is not already open, then open it
+<span class="nc" id="L87">		InputStream newIn = getInputStream(in);</span>
+<span class="nc bnc" id="L88" title="All 2 branches missed.">		if (newIn == null) {</span>
+<span class="nc" id="L89">			newIn = new FileInputStream(in);</span>
+<span class="nc" id="L90">			streams.put(in, newIn);</span>
+		}
+<span class="nc" id="L92">		return true;</span>
+	}
+
+	public boolean seen_0(BindingsTable bt) throws Exception {
+<span class="nc" id="L96">		InputStream inputStream = getInputStream(in);</span>
+<span class="nc bnc" id="L97" title="All 2 branches missed.">		if (inputStream != null)</span>
+<span class="nc" id="L98">			inputStream.close();</span>
+<span class="nc" id="L99">		in = &quot;stdin&quot;;</span>
+<span class="nc" id="L100">		return true;</span>
+	}
+
+	public boolean seeing_1(BindingsTable bt, Term t) {
+<span class="nc" id="L104">		return bt.unify(t, new StructAtom(in));</span>
+	}
+
+	public boolean tell_1(BindingsTable bt, Term arg0) throws Exception {
+<span class="nc bnc" id="L108" title="All 2 branches missed.">		if (!BasicLibrary.atom_1(bt, arg0))</span>
+<span class="nc" id="L109">			return false;</span>
+
+<span class="nc" id="L111">		String requested = ((Struct) arg0).name;</span>
+		// 1. close already open stream if seeing a new input, then rename
+		// current in
+<span class="nc bnc" id="L114" title="All 2 branches missed.">		if (!requested.equals(out)) {</span>
+<span class="nc" id="L115">			OutputStream inputStream = getOutputStream(out);</span>
+<span class="nc bnc" id="L116" title="All 2 branches missed.">			if (inputStream != null)</span>
+<span class="nc" id="L117">				inputStream.close();</span>
+<span class="nc" id="L118">			out = requested;</span>
+		}
+
+		// 2. if the requested stream is not already open, then open it
+<span class="nc" id="L122">		OutputStream newOut = getOutputStream(out);</span>
+<span class="nc bnc" id="L123" title="All 2 branches missed.">		if (newOut == null) {</span>
+<span class="nc" id="L124">			newOut = new FileOutputStream(out);</span>
+<span class="nc" id="L125">			streams.put(out, newOut);</span>
+		}
+<span class="nc" id="L127">		return true;</span>
+	}
+
+	public boolean told_0(BindingsTable bt) throws Exception {
+<span class="nc" id="L131">		OutputStream outputStream = getOutputStream(out);</span>
+<span class="nc bnc" id="L132" title="All 2 branches missed.">		if (outputStream != null)</span>
+<span class="nc" id="L133">			outputStream.close();</span>
+<span class="nc" id="L134">		out = &quot;stdout&quot;;</span>
+<span class="nc" id="L135">		return true;</span>
+	}
+
+	public boolean telling_1(BindingsTable bt, Term arg0) {
+<span class="nc" id="L139">		return bt.unify(arg0, new StructAtom(out));</span>
+	}
+
+	public boolean put_1(BindingsTable bt, Term arg0) throws Exception {
+<span class="nc bnc" id="L143" title="All 2 branches missed.">		if (!BasicLibrary.atom_1(bt, arg0))</span>
+<span class="nc" id="L144">			return false;</span>
+
+<span class="nc" id="L146">		String ch = ((Struct) arg0).name;</span>
+<span class="nc bnc" id="L147" title="All 2 branches missed.">		if (ch.length() &gt; 1)</span>
+<span class="nc" id="L148">			return false;</span>
+<span class="nc" id="L149">		getOutputStream(out).write((byte) ch.charAt(0));</span>
+<span class="nc" id="L150">		return true;</span>
+	}
+
+	public boolean get0_1(BindingsTable bt, Term arg0) throws Exception {
+<span class="nc" id="L154">		int ch = getInputStream(in).read();</span>
+<span class="nc bnc" id="L155" title="All 2 branches missed.">		Term a1 = ch == -1 ? (Term) new Int(-1) : (Term) new StructAtom(Character.toString((char) ch));</span>
+<span class="nc" id="L156">		return bt.unify(arg0, a1);</span>
+	}
+
+	public boolean get_1(BindingsTable bt, Term arg0) throws Exception {
+<span class="nc" id="L160">		InputStream inputStream = getInputStream(in);</span>
+		int ch;
+		do {
+<span class="nc" id="L163">			ch = inputStream.read();</span>
+<span class="nc bnc" id="L164" title="All 4 branches missed.">		} while (ch &lt; 0x20 &amp;&amp; ch &gt;= 0);</span>
+<span class="nc bnc" id="L165" title="All 2 branches missed.">		Term a1 = ch == -1 ? (Term) new Int(-1) : (Term) new StructAtom(Character.toString((char) ch));</span>
+<span class="nc" id="L166">		return bt.unify(arg0, a1);</span>
+	}
+
+	public boolean tab_1(BindingsTable bt, Int arg) throws Exception {
+<span class="nc" id="L170">		int n = arg.intValue();</span>
+<span class="nc" id="L171">		OutputStream outputStream = getOutputStream(out);</span>
+<span class="nc bnc" id="L172" title="All 2 branches missed.">		for (int i = 0; i &lt; n; i++)</span>
+<span class="nc" id="L173">			outputStream.write(0x20);</span>
+<span class="nc" id="L174">		return true;</span>
+	}
+
+	public boolean read_1(BindingsTable bt, Term arg0) throws Exception {
+<span class="nc" id="L178">		InputStream inputStream = getInputStream(in);</span>
+<span class="nc" id="L179">		StringBuffer res = new StringBuffer();</span>
+<span class="nc" id="L180">		boolean single_quotes = false;</span>
+<span class="nc" id="L181">		boolean double_quotes = false;</span>
+		do {
+<span class="nc" id="L183">			int ch = inputStream.read();</span>
+<span class="nc bnc" id="L184" title="All 2 branches missed.">			if (ch == -1)</span>
+<span class="nc" id="L185">				break;</span>
+<span class="nc bnc" id="L186" title="All 2 branches missed.">			else if (ch == '\'')</span>
+<span class="nc bnc" id="L187" title="All 2 branches missed.">				single_quotes = !single_quotes;</span>
+<span class="nc bnc" id="L188" title="All 2 branches missed.">			else if (ch == '\&quot;')</span>
+<span class="nc bnc" id="L189" title="All 2 branches missed.">				double_quotes = !double_quotes;</span>
+<span class="nc bnc" id="L190" title="All 6 branches missed.">			else if (ch == '.' &amp;&amp; !(single_quotes || double_quotes))</span>
+<span class="nc" id="L191">				break;</span>
+<span class="nc" id="L192">			res.append((char) ch);</span>
+<span class="nc" id="L193">		} while (true);</span>
+<span class="nc" id="L194">		Term result = new Parser(res.toString(), ((Library) this).engine).nextTerm(false);</span>
+<span class="nc" id="L195">		return bt.unify(arg0, result);</span>
+	}
+
+	public boolean write_1(BindingsTable bt, Term arg0) throws Exception {
+<span class="nc" id="L199">		OutputStream outputStream = getOutputStream(out);</span>
+<span class="nc" id="L200">		outputStream.write(arg0.toString().getBytes());</span>
+<span class="nc" id="L201">		return true;</span>
+	}
+
+	public boolean print_1(BindingsTable bt, Term arg0) throws Exception {
+<span class="nc" id="L205">		OutputStream outputStream = getOutputStream(out);</span>
+<span class="nc" id="L206">		outputStream.write(Parser.removeApices(arg0.toString()).getBytes());</span>
+<span class="nc" id="L207">		return true;</span>
+	}
+
+	public boolean nl_0(BindingsTable bt) throws Exception {
+<span class="nc" id="L211">		OutputStream outputStream = getOutputStream(out);</span>
+<span class="nc" id="L212">		outputStream.write('\n');</span>
+<span class="nc" id="L213">		return true;</span>
+	}
+
+	/**
+	 * reads a source text from a file.
+	 * &lt;p/&gt;
+	 * It's useful used with agent predicate: text_from_file(File,Source),
+	 * agent(Source).
+	 */
+	public boolean text_from_file_2(BindingsTable bt, Term file_name, Term text) throws IOException {
+<span class="nc" id="L223">		StringBuffer res = new StringBuffer();</span>
+		BufferedReader in;
+<span class="nc" id="L225">		Object possibleInput = streams.get(Parser.removeApices(file_name.toString()));</span>
+<span class="nc bnc" id="L226" title="All 2 branches missed.">		if (possibleInput instanceof InputStream) {</span>
+<span class="nc" id="L227">			in = new BufferedReader(new InputStreamReader((InputStream) possibleInput));</span>
+		} else {
+<span class="nc" id="L229">			in = new BufferedReader(new FileReader(&quot;infilename&quot;));</span>
+		}
+		String str;
+<span class="nc bnc" id="L232" title="All 2 branches missed.">		while ((str = in.readLine()) != null)</span>
+<span class="nc" id="L233">			res.append(str);</span>
+<span class="nc" id="L234">		in.close();</span>
+
+<span class="nc" id="L236">		return bt.unify(text, new StructAtom(res.toString()));</span>
+	}
+
+	// miscellanea
+
+	public boolean rand_float_1(BindingsTable bt, Term t) {
+<span class="nc" id="L242">		return bt.unify(t, new Double(gen.nextFloat()));</span>
+	}
+
+	public boolean rand_int_2(BindingsTable bt, Number argNum, Term num) {
+<span class="nc" id="L246">		return bt.unify(num, new Int(gen.nextInt(argNum.intValue())));</span>
+	}
+
+	public String getTheory() {
+<span class="fc" id="L250">		return &quot;consult(File) :- text_from_file(File,Text), add_theory(Text).\n&quot; + &quot;reconsult(File) :- text_from_file(File,Text), set_theory(Text).\n&quot;</span>
+				+ &quot;solve_file(File,Goal) :- text_from_file(File,Text),text_term(Text,Goal),call(Goal).\n&quot;;
+	}
+
+	public static String readStream(InputStream is) throws IOException {
+<span class="fc" id="L255">		BufferedReader br = new BufferedReader(new InputStreamReader(is));</span>
+<span class="fc" id="L256">		StringBuilder sb = new StringBuilder();</span>
+		String line;
+<span class="fc bfc" id="L258" title="All 2 branches covered.">		while ((line = br.readLine()) != null)</span>
+<span class="fc" id="L259">			sb.append(line).append(&quot;\n&quot;);</span>
+<span class="fc" id="L260">		br.close();</span>
+<span class="fc" id="L261">		return sb.toString();</span>
+	}
+
+	private OutputStream getOutputStream(String out) {
+<span class="nc bnc" id="L265" title="All 2 branches missed.">		if (&quot;stdout&quot;.equals(out))</span>
+<span class="nc" id="L266">			return ((Library) this).engine.getPrintStream();</span>
+<span class="nc" id="L267">		return (OutputStream) streams.get(out);</span>
+	}
+
+	private InputStream getInputStream(String in) {
+<span class="nc bnc" id="L271" title="All 2 branches missed.">		if (&quot;stdout&quot;.equals(in))</span>
+<span class="nc" id="L272">			return System.in;</span>
+<span class="nc" id="L273">		return (InputStream) streams.get(in);</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

@@ -1,0 +1,692 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>Prolog.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">prolobjectlink-jpi-jtrolog</a> &gt; <a href="index.source.html" class="el_package">jTrolog.engine</a> &gt; <span class="el_source">Prolog.java</span></div><h1>Prolog.java</h1><pre class="source lang-java linenums">/*
+ * #%L
+ * prolobjectlink-jpi-jtrolog
+ * %%
+ * Copyright (C) 2012 - 2018 WorkLogic Project
+ * %%
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation, either version 2.1 of the
+ * License, or (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Lesser Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Lesser Public
+ * License along with this program.  If not, see
+ * &lt;http://www.gnu.org/licenses/lgpl-2.1.html&gt;.
+ * #L%
+ */
+/*
+ * tuProlog - Copyright (C) 2001-2002  aliCE team at deis.unibo.it
+ *
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation; either
+ * version 2.1 of the License, or (at your option) any later version.
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ */
+package jTrolog.engine;
+
+import jTrolog.errors.*;
+import jTrolog.lib.BasicLibrary;
+import jTrolog.lib.Library;
+import jTrolog.lib.BuiltIn;
+import jTrolog.parser.Parser;
+import jTrolog.terms.*;
+import jTrolog.terms.Number;
+
+import java.io.Serializable;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.PrintStream;
+import java.io.IOException;
+import java.util.*;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+
+/**
+ * The class representing a jTrolog Prolog machine.
+ */
+@SuppressWarnings({ &quot;rawtypes&quot;, &quot;unchecked&quot;,&quot;serial&quot;, &quot;unused&quot; })
+public class Prolog implements Serializable {
+
+	public static final String VERSION = &quot;2.1&quot;;// jTrolog version
+	public static final int OP_LOW = 1;
+	public static final int OP_HIGH = 1200;
+
+	private LibraryAndTheoryManager libraryAndTheoryManager; // Rule and Fact
+																// Database
+																// Manager
+	private OperatorTable opTable; // Table mapping operators
+
+<span class="fc" id="L73">	private PrintStream currentPS = System.out; // the current printstream</span>
+	private Struct currentQuery; // the last query
+	private Engine currentEngine; // the last initialized engine
+<span class="fc" id="L76">	public static final Prolog defaultMachine = new DefaultProlog();</span>
+	public static final int FX = 0;
+	public static final int FY = 1;
+	public static final int XFX = 2;
+	public static final int XFY = 3;
+	public static final int YFX = 4;
+	public static final int XF = 5;
+	public static final int YF = 6;
+
+	/**
+	 * Builds a prolog engine with default libraries: BasicLibrary, ISOLibrary,
+	 * IOLibrary
+	 */
+	public Prolog() {
+<span class="fc" id="L90">		this(new String[] { &quot;jTrolog.lib.BasicLibrary&quot;, &quot;jTrolog.lib.ISOLibrary&quot;, &quot;jTrolog.lib.IOLibrary&quot; });</span>
+<span class="fc" id="L91">	}</span>
+
+	/**
+	 * Builds a prolog engine with default libraries: BasicLibrary, ISOLibrary,
+	 * IOLibrary + the extraLib
+	 * 
+	 * @param extraLib
+	 *            additional library to be loaded
+	 */
+	public Prolog(String extraLib) {
+<span class="nc" id="L101">		this();</span>
+		try {
+<span class="nc" id="L103">			loadLibrary(extraLib);</span>
+<span class="nc" id="L104">		} catch (InvalidLibraryException e) {</span>
+<span class="nc" id="L105">			warn(e.toString());</span>
+<span class="nc" id="L106">		}</span>
+<span class="nc" id="L107">	}</span>
+
+	/**
+	 * Builds a prolog engine using _only_ the specified libraries as parameters
+	 * 
+	 * @param libNames
+	 *            the (class) names of the libraries to be loaded
+	 */
+<span class="fc" id="L115">	public Prolog(String[] libNames) {</span>
+<span class="fc" id="L116">		opTable = new OperatorTable();</span>
+<span class="fc" id="L117">		libraryAndTheoryManager = new LibraryAndTheoryManager(this);</span>
+		try {
+<span class="fc" id="L119">			loadLibrary(new BuiltIn(this));</span>
+<span class="nc" id="L120">		} catch (InvalidLibraryException e) {</span>
+<span class="nc" id="L121">			warn(e.toString());</span>
+<span class="fc" id="L122">		}</span>
+
+<span class="pc bpc" id="L124" title="1 of 2 branches missed.">		if (libNames == null)</span>
+<span class="nc" id="L125">			return;</span>
+<span class="fc bfc" id="L126" title="All 2 branches covered.">		for (int i = 0; i &lt; libNames.length; i++) {</span>
+			try {
+<span class="fc" id="L128">				loadLibrary(libNames[i]);</span>
+<span class="fc" id="L129">			} catch (InvalidLibraryException e) {</span>
+<span class="fc" id="L130">				warn(e.toString());</span>
+<span class="fc" id="L131">			}</span>
+		}
+<span class="fc" id="L133">	}</span>
+
+	/**
+	 * Starts a command line interface with jTrolog Prolog engine. Builtin-,
+	 * Basic-, ISO- and IO-Libraries are loaded. In the future, args could be
+	 * made to look for URLs with theories?
+	 */
+	public static void main(String[] args) throws IOException {
+<span class="nc" id="L141">		Prolog vm = new Prolog();</span>
+<span class="nc" id="L142">		System.out.println(&quot;jTrolog - Java Trondheim Prolog - v.2.1&quot;);</span>
+<span class="nc" id="L143">		System.out.print(&quot;?- &quot;);</span>
+<span class="nc" id="L144">		BufferedReader consoleIn = new BufferedReader(new InputStreamReader(System.in));</span>
+<span class="nc" id="L145">		String input = &quot;&quot;;</span>
+		String tmp;
+<span class="nc bnc" id="L147" title="All 2 branches missed.">		while ((tmp = consoleIn.readLine()) != null) {</span>
+<span class="nc" id="L148">			input += tmp;</span>
+			try {
+<span class="nc bnc" id="L150" title="All 2 branches missed.">				if (input.trim().endsWith(&quot;.&quot;)) {</span>
+<span class="nc" id="L151">					Solution x = vm.solve(input);</span>
+<span class="nc" id="L152">					System.out.println(&quot;\nresult: &quot; + x);</span>
+<span class="nc" id="L153">					System.out.println(x.bindingsToString());</span>
+<span class="nc bnc" id="L154" title="All 2 branches missed.">				} else if (input.trim().length() == 0) {</span>
+<span class="nc" id="L155">					Solution x = vm.solveNext();</span>
+<span class="nc" id="L156">					System.out.println(&quot;\nresult: &quot; + x);</span>
+<span class="nc" id="L157">					System.out.println(x.bindingsToString());</span>
+				}
+<span class="nc" id="L159">			} catch (Throwable throwable) {</span>
+<span class="nc" id="L160">				System.out.println(&quot;Prolog error (but don't be alarmed):\n&quot; + throwable.getMessage());</span>
+			} finally {
+<span class="nc" id="L162">				input = &quot;&quot;;</span>
+<span class="nc" id="L163">				System.out.print(&quot;?- &quot;);</span>
+<span class="nc" id="L164">			}</span>
+		}
+<span class="nc" id="L166">	}</span>
+
+	/*******************************************************************************************************************
+	 * The Rule and Fact Database System The Library System
+	 */
+	public void assertZ(Clause toBeAsserted) throws PrologException {
+<span class="fc" id="L172">		String index = toBeAsserted.head.predicateIndicator;</span>
+<span class="pc bpc" id="L173" title="1 of 2 branches missed.">		if (staticDBContainsPredicate(index))</span>
+<span class="nc" id="L174">			throw new PrologException(&quot;permission_error(modify, static_procedure, &quot; + index + &quot;)&quot;);</span>
+<span class="fc" id="L175">		libraryAndTheoryManager.assertZ(toBeAsserted, index);</span>
+<span class="fc" id="L176">	}</span>
+
+	public void assertA(Clause toBeAsserted) throws PrologException {
+<span class="fc" id="L179">		String index = toBeAsserted.head.predicateIndicator;</span>
+<span class="pc bpc" id="L180" title="1 of 2 branches missed.">		if (staticDBContainsPredicate(index))</span>
+<span class="nc" id="L181">			throw new PrologException(&quot;permission_error(modify, static_procedure, &quot; + index + &quot;)&quot;);</span>
+<span class="fc" id="L182">		libraryAndTheoryManager.assertA(toBeAsserted, index);</span>
+<span class="fc" id="L183">	}</span>
+
+	public Struct retract(Struct sarg0) throws PrologException {
+<span class="fc" id="L186">		String index = ((Struct) sarg0.getArg(0)).predicateIndicator;</span>
+<span class="pc bpc" id="L187" title="1 of 2 branches missed.">		if (staticDBContainsPredicate(index))</span>
+<span class="nc" id="L188">			throw new PrologException(&quot;permission_error(modify, static_procedure, &quot; + index + &quot;)&quot;);</span>
+<span class="fc" id="L189">		Struct struct = libraryAndTheoryManager.retract(sarg0, index);</span>
+<span class="pc bpc" id="L190" title="1 of 2 branches missed.">		if (struct != null)</span>
+<span class="fc" id="L191">			warn(&quot;DELETE: &quot; + struct + &quot;\n&quot;);</span>
+<span class="fc" id="L192">		return struct;</span>
+	}
+
+	private boolean staticDBContainsPredicate(String key) {
+<span class="pc bpc" id="L196" title="2 of 4 branches missed.">		return libraryAndTheoryManager.isLibraryRule(key) || hasPrimitive(key);</span>
+	}
+
+	public void abolish(String predicateIndicator) throws PrologException {
+<span class="pc bpc" id="L200" title="1 of 2 branches missed.">		if (staticDBContainsPredicate(predicateIndicator))</span>
+<span class="nc" id="L201">			throw new PrologException(&quot;permission_error(modify, static_procedure, &quot; + predicateIndicator + &quot;)&quot;);</span>
+<span class="fc" id="L202">		List l = libraryAndTheoryManager.abolish(predicateIndicator);</span>
+<span class="fc" id="L203">	}</span>
+
+	public void setDynamicPredicateIndicator(String predicateIndicator) throws PrologException {
+<span class="nc bnc" id="L206" title="All 2 branches missed.">		if (staticDBContainsPredicate(predicateIndicator))</span>
+<span class="nc" id="L207">			throw new PrologException(&quot;permission_error(modify, static_procedure, &quot; + predicateIndicator + &quot;)&quot;);</span>
+<span class="nc" id="L208">		libraryAndTheoryManager.setDynamic(predicateIndicator);</span>
+<span class="nc" id="L209">	}</span>
+
+	public List find(String predIndicator) throws PrologException {
+<span class="fc" id="L212">		List rulesFromDatabase = libraryAndTheoryManager.find(predIndicator);</span>
+<span class="pc bpc" id="L213" title="1 of 2 branches missed.">		if (rulesFromDatabase == null)</span>
+<span class="nc" id="L214">			throw new PrologException(&quot;The predicate &quot; + predIndicator + &quot; is unknown.&quot;);</span>
+<span class="fc" id="L215">		return rulesFromDatabase;</span>
+	}
+
+	public Iterator dynamicPredicateIndicators() {
+<span class="fc" id="L219">		return libraryAndTheoryManager.dynamicPredicateIndicators();</span>
+	}
+
+	/**
+	 * clears all dynamic predicates and sets the new newTheory
+	 * 
+	 * @deprecated use clearTheory() + addTheory(newTheory) instead
+	 * @param newTheory
+	 *            to be set
+	 * @throws PrologException
+	 *             if newTheory is not valid
+	 */
+	public void setTheory(String newTheory) throws PrologException {
+<span class="nc" id="L232">		libraryAndTheoryManager.clear();</span>
+<span class="nc" id="L233">		addTheory(newTheory);</span>
+<span class="nc" id="L234">	}</span>
+
+	/**
+	 * removes all dynamic predicates
+	 */
+	public void clearTheory() {
+<span class="fc" id="L240">		libraryAndTheoryManager.clear();</span>
+<span class="fc" id="L241">	}</span>
+
+	/**
+	 * @param theory
+	 *            to be added to the existing set of theories in the database.
+	 * @throws PrologException
+	 *             if the new theory is not valid
+	 */
+	public void addTheory(String theory) throws PrologException {
+<span class="fc" id="L250">		libraryAndTheoryManager.consult(theory);</span>
+<span class="fc" id="L251">	}</span>
+
+	/**
+	 * @return the current theory in the Prolog machine (only dynamic)
+	 */
+	public String getTheory() {
+<span class="fc" id="L257">		return libraryAndTheoryManager.getTheory(true);</span>
+	}
+
+	/**
+	 * @return the last theory to be consulted or attempted consulted as text
+	 */
+	public String getLastConsultedTheory() {
+<span class="nc" id="L264">		return libraryAndTheoryManager.getLastConsultedTheory();</span>
+	}
+
+	/**
+	 * Loads a library. If a library with the same name is already present, a
+	 * warning event is notified. Then, the current instance of that library is
+	 * discarded, and the new instance gets loaded.
+	 * 
+	 * @param className
+	 *            of the Java class containing the Library to be loaded
+	 * @return the reference to the Library just loaded
+	 * @throws InvalidLibraryException
+	 *             if name is not a valid library
+	 */
+	public synchronized Library loadLibrary(String className) throws InvalidLibraryException {
+		try {
+<span class="fc" id="L280">			return loadLibrary((Library) Class.forName(className).newInstance());</span>
+<span class="fc" id="L281">		} catch (Exception e) {</span>
+<span class="fc" id="L282">			throw new InvalidLibraryException(className);</span>
+		}
+	}
+
+	/**
+	 * Loads a specific instance of a library If a library of the same class is
+	 * already present, a warning event is notified. Then, the current instance
+	 * of that library is discarded, and the new instance gets loaded.
+	 * 
+	 * @param lib
+	 *            the (Java class) name of the library to be loaded
+	 * @throws InvalidLibraryException
+	 *             if name is not a valid library
+	 */
+	public Library loadLibrary(Library lib) throws InvalidLibraryException {
+<span class="fc" id="L297">		String name = lib.getName();</span>
+<span class="pc bpc" id="L298" title="1 of 2 branches missed.">		if (getLibrary(name) != null)</span>
+<span class="nc" id="L299">			throw new InvalidLibraryException(&quot;library &quot; + name + &quot; already loaded.&quot;);</span>
+
+<span class="fc" id="L301">		lib.setEngine(this);</span>
+
+<span class="fc" id="L303">		addPrimitives(lib);</span>
+		try {
+<span class="fc" id="L305">			return libraryAndTheoryManager.consultLib(lib);</span>
+<span class="nc" id="L306">		} catch (PrologException e) {</span>
+<span class="nc" id="L307">			throw new InvalidLibraryException(lib.getName(), e);</span>
+		}
+	}
+
+	/**
+	 * @param name
+	 *            of the library to be unloaded
+	 * @throws InvalidLibraryException
+	 *             if no loaded Library has the given name
+	 */
+	public void unloadLibrary(String name) throws InvalidLibraryException {
+<span class="nc" id="L318">		Library library = getLibrary(name);</span>
+<span class="nc bnc" id="L319" title="All 2 branches missed.">		if (library == null)</span>
+<span class="nc" id="L320">			throw new InvalidLibraryException(name);</span>
+<span class="nc" id="L321">		Library unloaded = libraryAndTheoryManager.unconsultLib(library);</span>
+<span class="nc" id="L322">		removePrimitives(unloaded);</span>
+<span class="nc" id="L323">	}</span>
+
+	public Library getLibrary(String name) {
+<span class="fc" id="L326">		return libraryAndTheoryManager.getLibrary(name);</span>
+	}
+
+	/**
+	 * @return the names of the libraries currently loaded
+	 */
+	public Iterator getCurrentLibraries() {
+<span class="fc" id="L333">		return libraryAndTheoryManager.getCurrentLibraries();</span>
+	}
+
+	/**
+	 * @param ps
+	 *            the engine printstream.
+	 */
+	public void setPrintStream(PrintStream ps) {
+<span class="nc" id="L341">		currentPS = ps;</span>
+<span class="nc" id="L342">	}</span>
+
+	/**
+	 * @return the engine printstream.
+	 */
+	public PrintStream getPrintStream() {
+<span class="nc" id="L348">		return currentPS;</span>
+	}
+
+	/*******************************************************************************************************************
+	 * The Operator System
+	 */
+
+	/**
+	 * Gets the list of the operators currently defined
+	 * 
+	 * @return the list of the operators
+	 */
+	public synchronized Iterator getCurrentOperators() {
+<span class="fc" id="L361">		return opTable.getAllOperators();</span>
+	}
+
+	public int getOperatorPriority(String name, int type) {
+<span class="fc" id="L365">		return opTable.getOperatorPriority(name, type);</span>
+	}
+
+	public void opNew(String name, int type, int i) {
+<span class="fc" id="L369">		opTable.addOperator(name, type, i);</span>
+<span class="fc" id="L370">	}</span>
+
+	public void opNew(String name, String type, int i) {
+<span class="fc bfc" id="L373" title="All 2 branches covered.">		if (type.equalsIgnoreCase(&quot;fx&quot;))</span>
+<span class="fc" id="L374">			opTable.addOperator(name, FX, i);</span>
+<span class="fc bfc" id="L375" title="All 2 branches covered.">		if (type.equalsIgnoreCase(&quot;fy&quot;))</span>
+<span class="fc" id="L376">			opTable.addOperator(name, FY, i);</span>
+<span class="fc bfc" id="L377" title="All 2 branches covered.">		if (type.equalsIgnoreCase(&quot;xfx&quot;))</span>
+<span class="fc" id="L378">			opTable.addOperator(name, XFX, i);</span>
+<span class="fc bfc" id="L379" title="All 2 branches covered.">		if (type.equalsIgnoreCase(&quot;xfy&quot;))</span>
+<span class="fc" id="L380">			opTable.addOperator(name, XFY, i);</span>
+<span class="fc bfc" id="L381" title="All 2 branches covered.">		if (type.equalsIgnoreCase(&quot;yfx&quot;))</span>
+<span class="fc" id="L382">			opTable.addOperator(name, YFX, i);</span>
+<span class="pc bpc" id="L383" title="1 of 2 branches missed.">		if (type.equalsIgnoreCase(&quot;yf&quot;))</span>
+<span class="nc" id="L384">			opTable.addOperator(name, YF, i);</span>
+<span class="pc bpc" id="L385" title="1 of 2 branches missed.">		if (type.equalsIgnoreCase(&quot;xf&quot;))</span>
+<span class="nc" id="L386">			opTable.addOperator(name, XF, i);</span>
+
+<span class="fc" id="L388">	}</span>
+
+	/*******************************************************************************************************************
+	 * To solve, that is the problem
+	 */
+
+	/**
+	 * Solves a query
+	 * 
+	 * @param st
+	 *            the string representing the goal to be demonstrated
+	 * @return the result of the demonstration
+	 * @see SolutionManager
+	 */
+	public synchronized Solution solve(String st) throws Throwable {
+<span class="fc" id="L403">		Parser p = new Parser(st, this);</span>
+<span class="fc" id="L404">		Term t = p.nextTerm(true);</span>
+<span class="pc bpc" id="L405" title="1 of 2 branches missed.">		if (!(t instanceof Struct)) // Var or Number is considered true, since</span>
+									// they are not false?
+<span class="nc" id="L407">			return new Solution(t);</span>
+
+		try {
+<span class="fc" id="L410">			Struct g = (Struct) t;</span>
+<span class="pc bpc" id="L411" title="1 of 2 branches missed.">			if (getPrimitiveExp(g) != null)</span>
+<span class="nc" id="L412">				return new Solution(new BindingsTable().evalExpression(this, g));</span>
+<span class="fc" id="L413">			return solve(g);</span>
+<span class="nc" id="L414">		} catch (InvocationTargetException e) {</span>
+<span class="nc" id="L415">			Throwable cause = e;</span>
+<span class="nc bnc" id="L416" title="All 2 branches missed.">			while (cause instanceof InvocationTargetException)</span>
+<span class="nc" id="L417">				cause = cause.getCause();</span>
+<span class="nc" id="L418">			throw cause;</span>
+		}
+	}
+
+	/**
+	 * Solves a query
+	 * 
+	 * @param g
+	 *            the term representing the goal to be demonstrated
+	 * @return the result of the demonstration
+	 * @see SolutionManager
+	 */
+	public synchronized Solution solve(Struct g) throws Throwable {
+<span class="fc" id="L431">		onSolveBegin(g);</span>
+<span class="fc" id="L432">		currentQuery = (Struct) BuiltIn.convertTermToClauseBody(g);</span>
+<span class="fc" id="L433">		currentEngine = new Engine(this, BuiltIn.convertTermToClauseBody2(currentQuery));</span>
+<span class="fc" id="L434">		BindingsTable result = currentEngine.runFirst();</span>
+<span class="fc" id="L435">		onSolveEnd();</span>
+<span class="fc" id="L436">		return SolutionManager.prepareSolution(currentQuery, result);</span>
+	}
+
+	/**
+	 * Gets next solution
+	 * 
+	 * @return the result of the demonstration
+	 * @throws NoMorePrologSolutions
+	 *             if no more solutions are present
+	 * @see SolutionManager
+	 */
+	public synchronized Solution solveNext() throws Throwable {
+<span class="pc bpc" id="L448" title="2 of 4 branches missed.">		if (currentEngine == null || !currentEngine.hasAlternatives())</span>
+<span class="nc" id="L449">			throw new NoMorePrologSolutions();</span>
+<span class="fc" id="L450">		BindingsTable result = currentEngine.run(Engine.BACK);</span>
+<span class="fc" id="L451">		onSolveEnd();</span>
+<span class="fc" id="L452">		return SolutionManager.prepareSolution(currentQuery, result);</span>
+	}
+
+	public synchronized void onSolveBegin(Term g) {
+<span class="fc bfc" id="L456" title="All 2 branches covered.">		for (Iterator it = getCurrentLibraries(); it.hasNext();)</span>
+<span class="fc" id="L457">			((Library) it.next()).onSolveBegin(g);</span>
+<span class="fc" id="L458">	}</span>
+
+	public synchronized void onSolveEnd() {
+<span class="fc bfc" id="L461" title="All 2 branches covered.">		for (Iterator it = getCurrentLibraries(); it.hasNext();)</span>
+<span class="fc" id="L462">			((Library) it.next()).onSolveEnd();</span>
+<span class="fc" id="L463">	}</span>
+
+	/**
+	 * Asks for the presence of open alternatives to be explored in current
+	 * demostration process.
+	 * 
+	 * @return true if open alternatives are present
+	 */
+	public synchronized boolean hasOpenAlternatives() throws Throwable {
+<span class="fc" id="L472">		return currentEngine.hasAlternatives();</span>
+	}
+
+	/**
+	 * Matches the structure of the two original terms. OBS: Variables in the
+	 * original terms are not resolved. If this is desired, then the terms
+	 * passed in should be clonedAndResolved first.
+	 * &lt;p/&gt;
+	 * OBS2: no unification of variables is made.
+	 * 
+	 * @param t0
+	 *            first term to be matched
+	 * @param t1
+	 *            second term to be matched
+	 * @return true if the structure of the two terms match
+	 */
+	public static synchronized boolean match(Term t0, Term t1) {
+<span class="fc bfc" id="L489" title="All 4 branches covered.">		if (t0 instanceof Var || t1 instanceof Var)</span>
+<span class="fc" id="L490">			return true;</span>
+
+<span class="fc bfc" id="L492" title="All 4 branches covered.">		if (t0 instanceof Number &amp;&amp; t1 instanceof jTrolog.terms.Number)</span>
+<span class="fc" id="L493">			return BasicLibrary.number_equality_2((Number) t0, (Number) t1);</span>
+
+<span class="fc bfc" id="L495" title="All 4 branches covered.">		if (t0 instanceof StructAtom &amp;&amp; t1 instanceof StructAtom)</span>
+<span class="fc" id="L496">			return t0.equals(t1);</span>
+
+<span class="fc bfc" id="L498" title="All 4 branches covered.">		if (t0 instanceof Struct &amp;&amp; t1 instanceof Struct) {</span>
+<span class="fc" id="L499">			Struct s0 = (Struct) t0;</span>
+<span class="fc" id="L500">			Struct s1 = (Struct) t1;</span>
+<span class="fc bfc" id="L501" title="All 2 branches covered.">			if (s0.arity != s1.arity)</span>
+<span class="fc" id="L502">				return false;</span>
+<span class="fc bfc" id="L503" title="All 2 branches covered.">			for (int i = 0; i &lt; s1.arity; i++) {</span>
+<span class="fc bfc" id="L504" title="All 2 branches covered.">				if (!match(s0.getArg(i), s1.getArg(i)))</span>
+<span class="fc" id="L505">					return false;</span>
+			}
+<span class="fc" id="L507">			return true;</span>
+		}
+<span class="fc" id="L509">		return false;</span>
+	}
+
+	/*******************************************************************************************************************
+	 * The Primitives system
+	 */
+<span class="fc" id="L515">	private HashMap directives = new HashMap();</span>
+<span class="fc" id="L516">	private HashMap expressions = new HashMap();</span>
+
+	public boolean hasPrimitive(String predicateIndiciator) {
+<span class="fc bfc" id="L519" title="All 4 branches covered.">		return directives.containsKey(predicateIndiciator) || expressions.containsKey(predicateIndiciator);</span>
+	}
+
+	public boolean hasPrimitiveExp(String predicateIndiciator) {
+<span class="fc" id="L523">		return expressions.containsKey(predicateIndiciator);</span>
+	}
+
+	/**
+	 * @return the primitive matching the predicate indicator signature of the
+	 *         struct passed as argument.
+	 */
+	final PrimitiveInfo getPrimitive(Struct struct) {
+<span class="fc" id="L531">		return (PrimitiveInfo) directives.get(struct.predicateIndicator);</span>
+	}
+
+	final PrimitiveInfo getPrimitiveExp(Struct struct) {
+<span class="fc" id="L535">		return (PrimitiveInfo) expressions.get(struct.predicateIndicator);</span>
+	}
+
+	private void addPrimitives(Library src) {
+<span class="fc" id="L539">		List prims = getPrimitives(src);</span>
+<span class="fc bfc" id="L540" title="All 2 branches covered.">		for (int i = 0; i &lt; prims.size(); i++) {</span>
+<span class="fc" id="L541">			PrimitiveInfo p = (PrimitiveInfo) prims.get(i);</span>
+<span class="fc bfc" id="L542" title="All 2 branches covered.">			if (p.method.getReturnType() == Term.class)</span>
+<span class="fc" id="L543">				expressions.put(p.key, p);</span>
+			else
+<span class="fc" id="L545">				directives.put(p.key, p);</span>
+		}
+<span class="fc" id="L547">	}</span>
+
+	private void removePrimitives(Library src) {
+<span class="nc" id="L550">		List prims = getPrimitives(src);</span>
+<span class="nc bnc" id="L551" title="All 2 branches missed.">		for (int i = 0; i &lt; prims.size(); i++) {</span>
+<span class="nc" id="L552">			PrimitiveInfo p = (PrimitiveInfo) prims.get(i);</span>
+<span class="nc" id="L553">			directives.remove(p.key);</span>
+<span class="nc" id="L554">			expressions.remove(p.key);</span>
+		}
+<span class="nc" id="L556">	}</span>
+
+	/**
+	 * 1. Every method in the library that matches the following criteria: -
+	 * return type either boolean, void or Term, - the first parameter is
+	 * BindingsTable, and - the method name ends with &quot;_N&quot; where N = number of
+	 * parameters - 1. are added as Primitives to the Prolog machine that loads
+	 * the Library.
+	 * 
+	 * 2. For each primitive added, the getSynomym(name) is also queried. For
+	 * each synonyms, a copy of the primitive is added to the machine using the
+	 * synonym name.
+	 * 
+	 * @param library
+	 *            that is scanned for primitives
+	 * @return a list of PrimitiveInfo
+	 */
+	private static List getPrimitives(Library library) {
+<span class="fc" id="L574">		ArrayList result = new ArrayList();</span>
+
+<span class="fc" id="L576">		Method[] mlist = library.getClass().getMethods();</span>
+<span class="fc bfc" id="L577" title="All 2 branches covered.">		methodLoop: for (int i = 0; i &lt; mlist.length; i++) {</span>
+<span class="fc" id="L578">			Method m = mlist[i];</span>
+<span class="fc" id="L579">			String mName = m.getName();</span>
+<span class="fc" id="L580">			Class[] params = m.getParameterTypes();</span>
+
+<span class="fc" id="L582">			Class retType = m.getReturnType();</span>
+<span class="fc bfc" id="L583" title="All 6 branches covered.">			if (!(retType == boolean.class || retType == Term.class || retType == void.class))</span>
+<span class="fc" id="L584">				continue;</span>
+
+<span class="fc" id="L586">			int index = mName.lastIndexOf('_');</span>
+<span class="fc bfc" id="L587" title="All 2 branches covered.">			if (index == -1)</span>
+<span class="fc" id="L588">				continue;</span>
+
+			// retrieve and check arg number
+<span class="fc" id="L591">			int arity = Integer.parseInt(mName.substring(index + 1, mName.length()));</span>
+<span class="fc bfc" id="L592" title="All 2 branches covered.">			if (params.length - 1 != arity)</span>
+<span class="fc" id="L593">				continue;</span>
+
+<span class="fc bfc" id="L595" title="All 2 branches covered.">			for (int j = 1; j &lt; arity; j++) {</span>
+<span class="pc bpc" id="L596" title="1 of 2 branches missed.">				if (!Term.class.isAssignableFrom(params[j]))</span>
+<span class="nc" id="L597">					continue methodLoop;</span>
+			}
+
+<span class="fc" id="L600">			String rawName = mName.substring(0, index);</span>
+<span class="fc" id="L601">			result.add(new PrimitiveInfo(library, m, rawName, arity));</span>
+
+			// adding synonyms
+<span class="fc" id="L604">			String[] synonyms = library.getSynonym(rawName);</span>
+<span class="fc bfc" id="L605" title="All 2 branches covered.">			if (synonyms != null) {</span>
+<span class="fc bfc" id="L606" title="All 2 branches covered.">				for (int j = 0; j &lt; synonyms.length; j++)</span>
+<span class="fc" id="L607">					result.add(new PrimitiveInfo(library, m, synonyms[j], arity));</span>
+			}
+		}
+<span class="fc" id="L610">		return result;</span>
+	}
+
+	/*******************************************************************************************************************
+	 * The Warning system
+	 */
+<span class="fc" id="L616">	List warnings = new LinkedList();</span>
+
+	public synchronized void resetWarningList() {
+<span class="nc" id="L619">		warnings.clear();</span>
+<span class="nc" id="L620">	}</span>
+
+	public List getAndResetWarnings() {
+<span class="nc" id="L623">		List tmp = warnings;</span>
+<span class="nc" id="L624">		warnings = new LinkedList();</span>
+<span class="nc" id="L625">		return tmp;</span>
+	}
+
+	/**
+	 * @param m
+	 *            adds the warning message to the warnings list
+	 */
+	public void warn(String m) {
+<span class="fc" id="L633">		warnings.add(m);</span>
+<span class="fc" id="L634">	}</span>
+
+	/*******************************************************************************************************************
+	 * The Flag system
+	 */
+<span class="fc" id="L639">	private HashMap flags = new HashMap();</span>
+
+	public void defineFlag(String name, Struct valueList, Term defValue, boolean modifiable) {
+<span class="fc" id="L642">		flags.put(name, new Flag(name, valueList, defValue, modifiable));</span>
+<span class="fc" id="L643">	}</span>
+
+	public Flag getFlag(String name) {
+<span class="nc" id="L646">		return (Flag) flags.get(name);</span>
+	}
+
+	public Term getFlagValue(String name) {
+<span class="fc" id="L650">		Flag flag = (Flag) flags.get(name);</span>
+<span class="fc bfc" id="L651" title="All 2 branches covered.">		return flag == null ? null : flag.getValue();</span>
+	}
+
+	public Term getPrologFlagList() {
+<span class="nc" id="L655">		Struct flist = Term.emptyList;</span>
+<span class="nc bnc" id="L656" title="All 2 branches missed.">		for (Iterator it = flags.values().iterator(); it.hasNext();) {</span>
+<span class="nc" id="L657">			Flag fl = (Flag) it.next();</span>
+<span class="nc" id="L658">			Term at0 = new Struct(&quot;flag&quot;, new Term[] { new StructAtom(fl.getName()), fl.getValue() });</span>
+<span class="nc" id="L659">			flist = new Struct(&quot;.&quot;, new Term[] { at0, flist });</span>
+<span class="nc" id="L660">		}</span>
+<span class="nc" id="L661">		return flist;</span>
+	}
+
+	public static boolean evalPrimitive(PrimitiveInfo prim, Object[] primitive_args) throws Throwable {
+<span class="fc" id="L665">		Method method = prim.method;</span>
+		try {
+<span class="fc bfc" id="L667" title="All 2 branches covered.">			if (method.getReturnType() == void.class) {</span>
+<span class="fc" id="L668">				method.invoke(prim.source, primitive_args);</span>
+<span class="fc" id="L669">				return true;</span>
+			}
+<span class="fc" id="L671">			return ((Boolean) method.invoke(prim.source, primitive_args)).booleanValue();</span>
+<span class="nc" id="L672">		} catch (IllegalArgumentException e) {</span>
+<span class="nc" id="L673">			Class[] expectedArgs = method.getParameterTypes();</span>
+<span class="nc bnc" id="L674" title="All 2 branches missed.">			for (int i = 1; i &lt; primitive_args.length; i++) {</span>
+<span class="nc" id="L675">				Term actual = (Term) primitive_args[i];</span>
+<span class="nc" id="L676">				Class expectedClass = expectedArgs[i];</span>
+<span class="nc bnc" id="L677" title="All 2 branches missed.">				if (expectedClass.isAssignableFrom(actual.getClass()))</span>
+<span class="nc" id="L678">					continue; // nothing wrong with this one, check next param</span>
+<span class="nc bnc" id="L679" title="All 2 branches missed.">				if (actual instanceof Var)</span>
+<span class="nc" id="L680">					throw new PrologException(&quot;instantiation_error&quot;); // expected</span>
+																		// anything
+																		// but a
+																		// Var
+<span class="nc" id="L684">				String expected = expectedClass.getName();</span>
+<span class="nc" id="L685">				expected = expected.substring(expected.lastIndexOf('.') + 1);</span>
+<span class="nc" id="L686">				throw new PrologException(&quot;type_error(&quot; + expected + &quot;, &quot; + actual + &quot;)&quot;);</span>
+			}
+<span class="nc" id="L688">			throw new PrologException(&quot;WTF: Bug in system.&quot;);</span>
+		}
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

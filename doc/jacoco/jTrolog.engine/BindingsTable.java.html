@@ -1,0 +1,616 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>BindingsTable.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">prolobjectlink-jpi-jtrolog</a> &gt; <a href="index.source.html" class="el_package">jTrolog.engine</a> &gt; <span class="el_source">BindingsTable.java</span></div><h1>BindingsTable.java</h1><pre class="source lang-java linenums">/*
+ * #%L
+ * prolobjectlink-jpi-jtrolog
+ * %%
+ * Copyright (C) 2012 - 2018 WorkLogic Project
+ * %%
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation, either version 2.1 of the
+ * License, or (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Lesser Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Lesser Public
+ * License along with this program.  If not, see
+ * &lt;http://www.gnu.org/licenses/lgpl-2.1.html&gt;.
+ * #L%
+ */
+package jTrolog.engine;
+
+import jTrolog.errors.PrologException;
+import jTrolog.lib.BasicLibrary;
+import jTrolog.parser.Parser;
+import jTrolog.terms.Double;
+import jTrolog.terms.EvaluableTerm;
+import jTrolog.terms.Number;
+import jTrolog.terms.Struct;
+import jTrolog.terms.StructAtom;
+import jTrolog.terms.Term;
+import jTrolog.terms.Var;
+import jTrolog.terms.WrapStruct;
+import jTrolog.terms.WrapVar;
+import jTrolog.terms.Wrapper;
+
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.NoSuchElementException;
+
+/**
+ * Keeps track of what variables are bound to what Terms and at which
+ * ChoicePoint this connection was made.
+ * 
+ * now, the BindingsTable never receives anything that is not Wrapped. All
+ * Structs sent in are wrapped as a mfck. the unifyBranch is now possible to run
+ * without generating new objects when the getArg is called.
+ * 
+ * all the methods that add vars and get vars from the bidnings table is now
+ * given both Var and context (and link term and its context) a problem is that
+ * the stackMap needs to be subsumed into the bindings table since it needs to
+ * retract the links done by a current owner. I don't think I can remove the
+ * current owner as a separate map since it provides a rollback function. What I
+ * can do is stringToStructList WrapVars for it only and then move these into
+ * and out of the bindingsMap
+ * 
+ * @author janerist@stud.ntnu.no
+ * @author ivar.orstavik@hist.no
+ */
+@SuppressWarnings({ &quot;rawtypes&quot;, &quot;unchecked&quot; })
+<span class="fc" id="L63">public class BindingsTable {</span>
+
+<span class="fc" id="L65">	private int currentExecCtx = 0;</span>
+
+<span class="fc" id="L67">	private LinkTable links = new LinkTable();</span>
+
+<span class="fc" id="L69">	int uniqueExecutionCtxID = 1;</span>
+<span class="fc" id="L70">	int[] firstInCtx = new int[10000];</span>
+<span class="fc" id="L71">	private GarbageCan gc = new GarbageCan(links);</span>
+
+	public int getUniqueExecutionCtxID() {
+<span class="pc bpc" id="L74" title="1 of 2 branches missed.">		if (links.getWidth() == uniqueExecutionCtxID)</span>
+<span class="nc" id="L75">			links.doubleWidth(uniqueExecutionCtxID * 2);</span>
+<span class="fc" id="L76">		return uniqueExecutionCtxID++;</span>
+	}
+
+	public void expandLinkTable(int newSize) {
+<span class="fc" id="L80">		gc.doubleTrashCanWidth(newSize);</span>
+<span class="fc" id="L81">	}</span>
+
+	final void collectGarbage(final int execCtx) {
+<span class="fc" id="L84">		uniqueExecutionCtxID = firstInCtx[execCtx];</span>
+<span class="fc" id="L85">		currentExecCtx = execCtx;</span>
+<span class="fc" id="L86">		gc.collectGarbageLinks(execCtx);</span>
+<span class="fc" id="L87">	}</span>
+
+	final void collectGarbageSmall() {
+<span class="fc" id="L90">		uniqueExecutionCtxID--;</span>
+<span class="fc" id="L91">		gc.collectGarbageLinks(currentExecCtx);</span>
+<span class="fc" id="L92">	}</span>
+
+	final void setCurrentExecCtx(final int execCtx) {
+<span class="fc" id="L95">		currentExecCtx = execCtx;</span>
+<span class="pc bpc" id="L96" title="1 of 2 branches missed.">		if (execCtx &gt;= firstInCtx.length)</span>
+<span class="nc" id="L97">			firstInCtx = LinkTable.expandArray(firstInCtx, execCtx * 2);</span>
+<span class="fc" id="L98">		firstInCtx[execCtx] = uniqueExecutionCtxID;</span>
+<span class="fc" id="L99">	}</span>
+
+	// todo 1. perhaps it would be smart to keep track of the left and right
+	// terms/ctxs that the unification process works on.
+	// todo if this is done, then whenever a unification fails, one could
+	// display exactly what two terms did not match.
+	// todo but this is perhaps better done in the Engine, since one here might
+	// like to view the entire terms..
+	public boolean unify(Term t0, Term t1) {
+<span class="fc bfc" id="L108" title="All 2 branches covered.">		int oneCtx = t0 instanceof Wrapper ? ((Wrapper) t0).getContext() : 0;</span>
+<span class="pc bpc" id="L109" title="1 of 2 branches missed.">		int twoCtx = t1 instanceof Wrapper ? ((Wrapper) t1).getContext() : 0;</span>
+<span class="fc" id="L110">		return unifyBranch(unWrap(t0), unWrap(t1), oneCtx, twoCtx);</span>
+	}
+
+	// ca. 500
+
+	/**
+	 * @param one
+	 * @param two
+	 * @param oneCtx
+	 * @param twoCtx
+	 * @return true if the two terms are unified, false otherwise
+	 */
+	boolean unifyBranch(Term one, Term two, int oneCtx, int twoCtx) {
+<span class="fc bfc" id="L123" title="All 2 branches covered.">		while (one.type == Term.VAR) {</span>
+<span class="fc" id="L124">			Var vOne = (Var) one;</span>
+			// if the two varaiables are equal, then return true
+<span class="pc bpc" id="L126" title="1 of 4 branches missed.">			if (oneCtx == twoCtx &amp;&amp; vOne.equals(two)) // if (oneCtx == twoCtx &amp;&amp;</span>
+														// two instanceof Var &amp;&amp;
+														// vOne.nrInStruct ==
+														// ((Var)
+														// two).nrInStruct )
+<span class="nc" id="L131">				return true;</span>
+			// else, if the left variable is not bound, bind it
+<span class="fc" id="L133">			final int vNr = vOne.nrInStruct;</span>
+<span class="fc" id="L134">			Term link = links.getTerm(vNr, oneCtx);</span>
+<span class="fc bfc" id="L135" title="All 2 branches covered.">			if (link == null)</span>
+<span class="fc" id="L136">				return setLink(vNr, oneCtx, two, twoCtx);</span>
+			// else, Var one is bound. If it is bound to a Var, then the loop
+			// will continue updating the on Var, else it will continue down the
+			// method
+<span class="fc" id="L140">			oneCtx = links.getCtx(vNr, oneCtx);</span>
+<span class="fc" id="L141">			one = link;</span>
+<span class="fc" id="L142">		}</span>
+<span class="fc bfc" id="L143" title="All 2 branches covered.">		while (two.type == Term.VAR) {</span>
+<span class="fc" id="L144">			final int vNr = ((Var) two).nrInStruct;</span>
+<span class="fc" id="L145">			Term link = links.getTerm(vNr, twoCtx);</span>
+<span class="pc bpc" id="L146" title="1 of 2 branches missed.">			if (link == null)</span>
+<span class="fc" id="L147">				return setLink(vNr, twoCtx, one, oneCtx); // var two is unbound,</span>
+															// bind it against
+															// one
+<span class="nc" id="L150">			twoCtx = links.getCtx(vNr, twoCtx);</span>
+<span class="nc" id="L151">			two = link;</span>
+<span class="nc" id="L152">		}</span>
+		// from now on, neither branch is a Var
+<span class="pc bpc" id="L154" title="1 of 4 branches missed.">		if (one.type &gt;= Term.STRUCT &amp;&amp; two.type &gt;= Term.STRUCT) {</span>
+<span class="fc" id="L155">			Struct a = (Struct) one;</span>
+<span class="fc" id="L156">			Struct b = (Struct) two;</span>
+<span class="fc bfc" id="L157" title="All 2 branches covered.">			if (a.predicateIndicator != b.predicateIndicator)</span>
+<span class="fc" id="L158">				return false;</span>
+<span class="fc bfc" id="L159" title="All 2 branches covered.">			for (int c = 0; c &lt; a.arity; c++)</span>
+<span class="fc bfc" id="L160" title="All 2 branches covered.">				if (!unifyBranch(a.getArg(c), b.getArg(c), oneCtx, twoCtx))</span>
+<span class="fc" id="L161">					return false;</span>
+<span class="fc" id="L162">			return true;</span>
+		}
+<span class="pc bpc" id="L164" title="2 of 6 branches missed.">		return one.type == Term.NUMBER &amp;&amp; two.type == Term.NUMBER &amp;&amp; BasicLibrary.number_equality_2((Number) one, (Number) two);</span>
+	}
+
+	// ca. 500
+
+	// this method calls an almost entirely iterative method
+	boolean unifyBranchTwo(Term one, Term two, int oneCtx, int twoCtx) {
+<span class="nc" id="L171">		return unifyTrees(one.pos, two.pos, one.prePost, one.tree, two.tree, two.prePost, oneCtx, twoCtx);</span>
+	}
+
+	private boolean unifyTrees(int i, int j, int[] prePostA, Term[] treeA, Term[] treeB, int[] prePostB, int oneCtx, int twoCtx) {
+<span class="nc bnc" id="L175" title="All 4 branches missed.">		bb: for (int stopValue = prePostA[i]; i &lt; prePostA.length &amp;&amp; prePostA[i] &lt;= stopValue; i++, j++) {</span>
+<span class="nc" id="L176">			Term one = treeA[i], two = treeB[j];</span>
+<span class="nc" id="L177">			int tmpCtx1 = oneCtx;</span>
+<span class="nc" id="L178">			int tmpCtx2 = twoCtx;</span>
+<span class="nc" id="L179">			boolean mustMakeNewStackLevel = false;</span>
+
+<span class="nc bnc" id="L181" title="All 2 branches missed.">			if (one.type == Term.VAR) {// instanceof Var){</span>
+<span class="nc bnc" id="L182" title="All 2 branches missed.">				while (one.type == Term.VAR) {// instanceof Var) {</span>
+<span class="nc" id="L183">					Var vOne = (Var) one;</span>
+					// if the two varaiables are equal, then return true
+<span class="nc bnc" id="L185" title="All 4 branches missed.">					if (tmpCtx1 == twoCtx &amp;&amp; vOne.equals(two))</span>
+<span class="nc" id="L186">						continue bb;</span>
+					// else, if the left variable is not bound, bind it
+<span class="nc" id="L188">					Term link = links.getTerm(vOne.nrInStruct, tmpCtx1);</span>
+<span class="nc bnc" id="L189" title="All 2 branches missed.">					if (link == null) {</span>
+<span class="nc bnc" id="L190" title="All 2 branches missed.">						if (!setLink(vOne.nrInStruct, tmpCtx1, two, twoCtx))</span>
+<span class="nc" id="L191">							return false;</span>
+<span class="nc bnc" id="L192" title="All 2 branches missed.">						if (two.type == Term.STRUCT)// instanceof Struct &amp;&amp;</span>
+													// ((Struct) two).arity &gt;0)
+													// //we must increment j to
+													// skip two's children
+<span class="nc bnc" id="L196" title="All 4 branches missed.">							for (int postStop = prePostB[j]; j &lt; prePostB.length - 1 &amp;&amp; prePostB[j + 1] &lt; postStop; j++)</span>
+								;
+						continue bb;
+					}
+					// else, Var one is bound. If it is bound to a Var, then the
+					// loop will continue updating the on Var, else it will
+					// continue down the method
+<span class="nc" id="L203">					tmpCtx1 = links.getCtx(vOne.nrInStruct, tmpCtx1);</span>
+<span class="nc" id="L204">					one = link;</span>
+<span class="nc" id="L205">				}</span>
+<span class="nc bnc" id="L206" title="All 2 branches missed.">				if (one.type == Term.STRUCT)// instanceof Struct &amp;&amp; ((Struct)</span>
+											// one).arity &gt; 0) //todo we don't
+											// need to mustMakeNewStackLevel
+											// when the node har no children.
+<span class="nc" id="L210">					mustMakeNewStackLevel = true;</span>
+			}
+
+<span class="nc bnc" id="L213" title="All 2 branches missed.">			if (two.type == Term.VAR) {// instanceof Var){</span>
+<span class="nc bnc" id="L214" title="All 2 branches missed.">				while (two.type == Term.VAR) {// instanceof Var){</span>
+<span class="nc" id="L215">					Var vTwo = (Var) two;</span>
+<span class="nc" id="L216">					Term link = links.getTerm(vTwo.nrInStruct, tmpCtx2);</span>
+<span class="nc bnc" id="L217" title="All 2 branches missed.">					if (link == null) {</span>
+<span class="nc bnc" id="L218" title="All 2 branches missed.">						if (!setLink(vTwo.nrInStruct, tmpCtx2, one, tmpCtx1))</span>
+<span class="nc" id="L219">							return false; // var two is unbound, bind it against</span>
+											// on
+<span class="nc bnc" id="L221" title="All 2 branches missed.">						if (one.type == Term.STRUCT)// instanceof Struct &amp;&amp;</span>
+													// ((Struct) one).arity &gt;0)
+													// //we must increment i to
+													// skip one's children
+<span class="nc bnc" id="L225" title="All 4 branches missed.">							for (int postStop = prePostA[i]; i &lt; prePostA.length - 1 &amp;&amp; prePostA[i + 1] &lt; postStop; i++)</span>
+								;
+						continue bb;
+					}
+<span class="nc" id="L229">					tmpCtx2 = links.getCtx(vTwo.nrInStruct, tmpCtx2);</span>
+<span class="nc" id="L230">					two = link;</span>
+<span class="nc" id="L231">				}</span>
+<span class="nc bnc" id="L232" title="All 2 branches missed.">				if (two.type == Term.STRUCT)// instanceof Struct &amp;&amp; ((Struct)</span>
+											// two).arity &gt; 0)
+<span class="nc" id="L234">					mustMakeNewStackLevel = true;</span>
+			}
+
+			// todo we need to mustMakeNewStackLevel here because the ctx id
+			// changes,
+			// todo the prePost and values arrays changes.
+			// todo however these values only become relevant for the next
+			// check, so Atoms and Numbers do NOT mustMakeNewStackLevel
+<span class="nc bnc" id="L242" title="All 2 branches missed.">			if (mustMakeNewStackLevel) {</span>
+<span class="nc bnc" id="L243" title="All 2 branches missed.">				if (!unifyBranch(one, two, tmpCtx1, tmpCtx2))</span>
+<span class="nc" id="L244">					return false;</span>
+				// we must increment i to skip one's and/or two's children
+<span class="nc bnc" id="L246" title="All 2 branches missed.">				if (one.type == Term.STRUCT)// instanceof Struct &amp;&amp; ((Struct)</span>
+											// one).arity &gt;0)
+<span class="nc bnc" id="L248" title="All 4 branches missed.">					for (int postStop = prePostA[i]; i &lt; prePostA.length - 1 &amp;&amp; prePostA[i + 1] &lt; postStop; i++)</span>
+						;
+<span class="nc bnc" id="L250" title="All 2 branches missed.">				if (two.type == Term.STRUCT)// instanceof Struct &amp;&amp; ((Struct)</span>
+											// two).arity &gt;0)
+<span class="nc bnc" id="L252" title="All 4 branches missed.">					for (int postStop = prePostB[j]; j &lt; prePostB.length - 1 &amp;&amp; prePostB[j + 1] &lt; postStop; j++)</span>
+						;
+<span class="nc bnc" id="L254" title="All 4 branches missed.">			} else if (one.type &gt;= Term.STRUCT &amp;&amp; two.type &gt;= Term.STRUCT) {// instanceof</span>
+																			// Struct
+																			// &amp;&amp;
+																			// two
+																			// instanceof
+																			// Struct)
+																			// {
+<span class="nc bnc" id="L261" title="All 2 branches missed.">				if (((Struct) one).predicateIndicator != ((Struct) two).predicateIndicator)</span>
+<span class="nc" id="L262">					return false;</span>
+<span class="nc bnc" id="L263" title="All 4 branches missed.">			} else if (one.type == Term.NUMBER &amp;&amp; two.type == Term.NUMBER) {// instanceof</span>
+																			// Number
+																			// &amp;&amp;
+																			// two
+																			// instanceof
+																			// Number){
+<span class="nc bnc" id="L269" title="All 2 branches missed.">				if (!BasicLibrary.number_equality_2((Number) one, (Number) two))</span>
+<span class="nc" id="L270">					return false;</span>
+			} else
+<span class="nc" id="L272">				return false;</span>
+		}
+<span class="nc" id="L274">		return true;</span>
+	}
+
+	@SuppressWarnings(&quot;unused&quot;)
+	private static int leftMostChildsPost(int i, int[] aPrePostArr) {
+		int temp;
+<span class="nc" id="L280">		int min = aPrePostArr[i];</span>
+<span class="nc bnc" id="L281" title="All 4 branches missed.">		while (i++ &lt; aPrePostArr.length &amp;&amp; min &gt; (temp = aPrePostArr[i]))</span>
+<span class="nc" id="L282">			min = temp;</span>
+<span class="nc" id="L283">		return min;</span>
+	}
+
+	public Term wrapWithID(Term t) {
+<span class="nc" id="L287">		return wrapWithID(t, getUniqueExecutionCtxID());</span>
+	}
+
+	public static Term wrapWithID(Term t, int renameVarID) {
+<span class="pc bpc" id="L291" title="1 of 2 branches missed.">		if (t instanceof Wrapper)</span>
+<span class="nc" id="L292">			return t;</span>
+<span class="fc bfc" id="L293" title="All 2 branches covered.">		if (t instanceof Var)</span>
+<span class="fc" id="L294">			return new WrapVar((Var) t, renameVarID);</span>
+<span class="fc bfc" id="L295" title="All 4 branches covered.">		if (t instanceof Struct &amp;&amp; !(t instanceof StructAtom))</span>
+<span class="fc" id="L296">			return new WrapStruct((Struct) t, renameVarID);</span>
+<span class="fc" id="L297">		return t;</span>
+	}
+
+	public static Term unWrap(Term l) {
+<span class="fc bfc" id="L301" title="All 2 branches covered.">		return l instanceof Wrapper ? ((Wrapper) l).getBasis() : l;</span>
+	}
+
+	/**
+	 * Adds a link. The key of the link is an ID calculated from the Variable
+	 * (its position in the root parent Struct) and its context The link is
+	 * stored in three different maps: 1. a map of the link to the Term it is
+	 * linked to 2. a map of the link to the context number of the Term it is
+	 * linked to 3. to facilitate garbage collection of unused links, a map
+	 * linking the context in which the binding takes place to a list of links
+	 * that are bound at this execution context is also updated
+	 * 
+	 * @param vNr
+	 * @param vCtx
+	 * @param link
+	 * @param linkCtx
+	 * @return true always
+	 */
+	private boolean setLink(final int vNr, final int vCtx, final Term link, final int linkCtx) {
+		// Most applications can probably turn off
+		// checkForInternalOccurencesOfVarInTerm without any consequenses by
+		// commenting out the if clause below.
+		// Removing this will likely result in approx 20% speed-up. But do so
+		// only when you know your application do not need this check.
+//	----&gt;	if (checkForInternalOccurencesOfVarInTerm(vNr, vCtx, link, linkCtx))
+//	----&gt;		return false;
+<span class="fc" id="L327">		links.put(vNr, vCtx, link, linkCtx);</span>
+<span class="fc" id="L328">		gc.addToTrashCan(vNr, vCtx, currentExecCtx);</span>
+<span class="fc" id="L329">		return true;</span>
+	}
+
+	/**
+	 * todo don't search, sort? this now only gets in the original terms and the
+	 * context int as values
+	 * 
+	 * @param varBeingChecked
+	 * @param beingCheckedsContext
+	 * @param t
+	 * @param tCtx
+	 */
+	@SuppressWarnings(&quot;unused&quot;)
+	private boolean checkForInternalOccurencesOfVarInTerm(int varBeingChecked, int beingCheckedsContext, Term t, int tCtx) {
+<span class="nc bnc" id="L343" title="All 2 branches missed.">		while (t.type == Term.VAR) {</span>
+<span class="nc" id="L344">			final int vNr = ((Var) t).nrInStruct;</span>
+<span class="nc bnc" id="L345" title="All 4 branches missed.">			if (beingCheckedsContext == tCtx &amp;&amp; varBeingChecked == vNr)</span>
+<span class="nc" id="L346">				return true;</span>
+<span class="nc" id="L347">			Term link = links.getTerm(vNr, tCtx);</span>
+<span class="nc bnc" id="L348" title="All 6 branches missed.">			if (link == null || link.type == Term.NUMBER || link.type == Term.ATOM)</span>
+<span class="nc" id="L349">				return false;</span>
+<span class="nc" id="L350">			t = link;</span>
+<span class="nc" id="L351">			tCtx = links.getCtx(vNr, tCtx);</span>
+			// if the Var was linked to a Var, the loop will run once more
+			// else t is a Struct and 'if (t instanceof Struct)' below will kick
+			// into action
+<span class="nc" id="L355">		}</span>
+<span class="nc bnc" id="L356" title="All 2 branches missed.">		if (t.type == Term.STRUCT) {</span>
+<span class="nc" id="L357">			Var[] varList = ((Struct) t).getVarList();</span>
+<span class="nc bnc" id="L358" title="All 2 branches missed.">			if (varList == null)</span>
+<span class="nc" id="L359">				return false;</span>
+<span class="nc bnc" id="L360" title="All 2 branches missed.">			boolean sameCtx = beingCheckedsContext == tCtx;</span>
+<span class="nc bnc" id="L361" title="All 2 branches missed.">			for (int i = 0; i &lt; varList.length; i++) {</span>
+<span class="nc" id="L362">				Var v = varList[i];</span>
+<span class="nc bnc" id="L363" title="All 4 branches missed.">				if (sameCtx &amp;&amp; varBeingChecked == v.nrInStruct)</span>
+<span class="nc" id="L364">					return true;</span>
+<span class="nc" id="L365">				Term link = links.getTerm(v.nrInStruct, tCtx);</span>
+<span class="nc bnc" id="L366" title="All 6 branches missed.">				if (link == null || link.type == Term.NUMBER || link.type == Term.ATOM)</span>
+<span class="nc" id="L367">					continue;</span>
+<span class="nc" id="L368">				int linkCtx = links.getCtx(v.nrInStruct, tCtx);</span>
+<span class="nc" id="L369">				return checkForInternalOccurencesOfVarInTerm(varBeingChecked, beingCheckedsContext, link, linkCtx);</span>
+			}
+		}
+<span class="nc" id="L372">		return false;</span>
+	}
+
+	/**
+	 * 
+	 * @param owner
+	 * @return // * @deprecated no longer supported. should be implemented anew
+	 *         if needed in f.ex. GUI or debugger.
+	 */
+	int[][] getKeysForCp(int owner) {
+<span class="nc" id="L382">		return gc.getGarbageLinks(owner);</span>
+	}
+
+	/**
+	 * @param prolog
+	 * @param expression
+	 * @return result of the evaluation as a Number
+	 * @throws jTrolog.errors.PrologException
+	 *             instantiation error if one of the Variables to be evaluated
+	 *             is not instantiated type_error(Evaluable, other) if a part in
+	 *             the evaluable Term is not evaluable
+	 * @throws Throwable
+	 *             any other exception that might be thrown by parts of the
+	 *             expression to be evaluated
+	 */
+	public Number evalExpression(Prolog prolog, EvaluableTerm expression) throws PrologException, Throwable {
+<span class="fc bfc" id="L398" title="All 2 branches covered.">		if (expression instanceof Number)</span>
+<span class="fc" id="L399">			return (Number) expression;</span>
+
+<span class="fc" id="L401">		Term child = null;</span>
+		try {
+<span class="fc" id="L403">			Struct struct = (Struct) expression;</span>
+			// chp 9 defines separate behavior for _evaluation_ of float/1
+			// (casting of Int) that should only accept Numbers,
+			// as opposed to the execution of float/1 that accepts Term.
+<span class="pc bpc" id="L407" title="1 of 2 branches missed.">			if (struct.predicateIndicator == Parser.floatSignature) {</span>
+<span class="nc" id="L408">				child = resolve(struct.getArg(0));</span>
+<span class="nc" id="L409">				Number result = evalExpression(prolog, (EvaluableTerm) child);</span>
+<span class="nc" id="L410">				return new Double(result.doubleValue());</span>
+			}
+
+<span class="fc" id="L413">			PrimitiveInfo prim = prolog.getPrimitiveExp(struct);</span>
+<span class="pc bpc" id="L414" title="1 of 2 branches missed.">			if (prim == null)</span>
+<span class="nc" id="L415">				throw new PrologException(&quot;type_error(Evaluable, &quot; + struct.predicateIndicator + &quot;)&quot;);</span>
+
+			// we have an expression that might be evaluable
+<span class="fc" id="L418">			Object[] primitive_args = new Object[struct.arity + 1];</span>
+<span class="fc" id="L419">			primitive_args[0] = this;</span>
+<span class="fc bfc" id="L420" title="All 2 branches covered.">			for (int i = 0; i &lt; primitive_args.length - 1; i++) {</span>
+<span class="fc" id="L421">				child = resolve(struct.getArg(i));</span>
+<span class="fc" id="L422">				primitive_args[i + 1] = evalExpression(prolog, (EvaluableTerm) child);</span>
+			}
+<span class="fc" id="L424">			return (Number) prim.method.invoke(prim.source, primitive_args);</span>
+<span class="nc" id="L425">		} catch (ClassCastException e) {</span>
+<span class="nc bnc" id="L426" title="All 2 branches missed.">			if (child instanceof Var)</span>
+<span class="nc" id="L427">				throw new PrologException(&quot;instantiation_error&quot;);</span>
+<span class="nc" id="L428">			throw new PrologException(&quot;type_error(Evaluable, &quot; + child + &quot;)&quot;);</span>
+		}
+	}
+
+	Object[] resolveArgs(Struct unresolved, int ctx) {
+<span class="fc" id="L433">		Object[] primitive_args = new Object[unresolved.arity + 1];</span>
+<span class="fc" id="L434">		primitive_args[0] = this;</span>
+<span class="fc bfc" id="L435" title="All 2 branches covered.">		for (int i = 0; i &lt; unresolved.arity; i++) {</span>
+<span class="fc" id="L436">			final Term arg = unresolved.getArg(i);</span>
+<span class="fc" id="L437">			Term link = resolveFaster(arg, ctx);</span>
+<span class="fc bfc" id="L438" title="All 2 branches covered.">			if (secondOutOfFasterResolve == Integer.MAX_VALUE)</span>
+<span class="fc" id="L439">				primitive_args[i + 1] = wrapWithID(arg, ctx);</span>
+			else
+<span class="fc" id="L441">				primitive_args[i + 1] = wrapWithID(link, secondOutOfFasterResolve);</span>
+		}
+<span class="fc" id="L443">		return primitive_args;</span>
+	}
+
+	public Term resolve(Term term) {
+<span class="fc bfc" id="L447" title="All 2 branches covered.">		if (term instanceof WrapVar) {</span>
+<span class="fc" id="L448">			final WrapVar wrapVar = ((WrapVar) term);</span>
+<span class="fc" id="L449">			Term link = resolveFaster(wrapVar.getBasis(), wrapVar.getContext());</span>
+<span class="pc bpc" id="L450" title="1 of 2 branches missed.">			return secondOutOfFasterResolve == Integer.MAX_VALUE ? term : wrapWithID(link, secondOutOfFasterResolve);</span>
+		}
+<span class="fc" id="L452">		return term;</span>
+	}
+
+	int secondOutOfFasterResolve;
+
+	public Term resolveFaster(Term term, int ctx) {
+<span class="fc" id="L458">		secondOutOfFasterResolve = Integer.MAX_VALUE;</span>
+<span class="fc bfc" id="L459" title="All 2 branches covered.">		while (term instanceof Var) {</span>
+<span class="fc" id="L460">			int vNr = ((Var) term).nrInStruct;</span>
+<span class="fc" id="L461">			Term link = links.getTerm(vNr, ctx);</span>
+<span class="fc bfc" id="L462" title="All 2 branches covered.">			if (link == null)</span>
+<span class="fc" id="L463">				break;</span>
+<span class="fc" id="L464">			term = link;</span>
+<span class="fc" id="L465">			ctx = secondOutOfFasterResolve = links.getCtx(vNr, ctx);</span>
+<span class="fc" id="L466">		}</span>
+<span class="fc" id="L467">		return term;</span>
+	}
+
+	public Iterator structListIterator(Struct origin, boolean skipLastEmptyList) throws PrologException {
+<span class="nc bnc" id="L471" title="All 2 branches missed.">		if (origin.equals(Term.emptyList))</span>
+<span class="nc" id="L472">			return Term.iterator;</span>
+<span class="nc bnc" id="L473" title="All 2 branches missed.">		if (origin.predicateIndicator != Parser.listSignature)</span>
+<span class="nc" id="L474">			throw new PrologException(&quot;type_error(list, &quot; + origin + &quot;)&quot;);</span>
+<span class="nc" id="L475">		return new StructListIterator(origin, skipLastEmptyList);</span>
+	}
+
+	public Struct createStructList(Collection complete) {
+<span class="nc bnc" id="L479" title="All 2 branches missed.">		if (complete.isEmpty())</span>
+<span class="nc" id="L480">			return Term.emptyList;</span>
+<span class="nc" id="L481">		Struct res = (WrapStruct) wrapWithID(Parser.createListContainingAnyVars(complete.size() - 1));</span>
+<span class="nc" id="L482">		Iterator toBeLinked = complete.iterator();</span>
+		try {
+<span class="nc bnc" id="L484" title="All 2 branches missed.">			for (Iterator it = structListIterator(res, true); it.hasNext();) {</span>
+<span class="nc" id="L485">				Var child = (Var) it.next();</span>
+<span class="nc" id="L486">				Term link = (Term) toBeLinked.next();</span>
+<span class="nc" id="L487">				unify(child, link);</span>
+<span class="nc" id="L488">			}</span>
+<span class="nc" id="L489">		} catch (PrologException e) {</span>
+<span class="nc" id="L490">			throw new RuntimeException(&quot;error in iterating a Struct list&quot;);</span>
+<span class="nc" id="L491">		}</span>
+<span class="nc" id="L492">		return res;</span>
+	}
+
+	private class StructListIterator implements Iterator {
+
+		Iterator currentListIterator;
+		Term cache;
+		boolean includeLastEmptyList;
+
+<span class="nc" id="L501">		StructListIterator(Struct origin, boolean skipLastEmptyList) {</span>
+<span class="nc bnc" id="L502" title="All 2 branches missed.">			this.includeLastEmptyList = !skipLastEmptyList;</span>
+<span class="nc" id="L503">			currentListIterator = Struct.iterator(origin);</span>
+<span class="nc" id="L504">		}</span>
+
+		public boolean hasNext() {
+<span class="nc bnc" id="L507" title="All 2 branches missed.">			if (cache != null)</span>
+<span class="nc" id="L508">				return true;</span>
+<span class="nc bnc" id="L509" title="All 2 branches missed.">			if (!currentListIterator.hasNext())</span>
+<span class="nc" id="L510">				return false;</span>
+<span class="nc" id="L511">			cache = (Term) currentListIterator.next();</span>
+<span class="nc" id="L512">			cache = resolve(cache);</span>
+
+<span class="nc bnc" id="L514" title="All 2 branches missed.">			if (currentListIterator.hasNext())</span>
+<span class="nc" id="L515">				return true;</span>
+
+<span class="nc bnc" id="L517" title="All 2 branches missed.">			if (cache.equals(Term.emptyList)) {</span>
+<span class="nc bnc" id="L518" title="All 2 branches missed.">				if (includeLastEmptyList)</span>
+<span class="nc" id="L519">					return true;</span>
+<span class="nc" id="L520">				cache = null;</span>
+<span class="nc" id="L521">				return false;</span>
+			}
+
+<span class="nc bnc" id="L524" title="All 4 branches missed.">			if (!(cache instanceof Struct &amp;&amp; ((Struct) cache).predicateIndicator == Parser.listSignature))</span>
+<span class="nc" id="L525">				return true;</span>
+
+<span class="nc" id="L527">			currentListIterator = Struct.iterator((Struct) cache);</span>
+<span class="nc" id="L528">			cache = null;</span>
+<span class="nc" id="L529">			return hasNext();</span>
+		}
+
+		public Object next() {
+<span class="nc bnc" id="L533" title="All 2 branches missed.">			if (cache == null)</span>
+<span class="nc" id="L534">				hasNext();</span>
+<span class="nc bnc" id="L535" title="All 2 branches missed.">			if (cache == null)</span>
+<span class="nc" id="L536">				throw new NoSuchElementException();</span>
+<span class="nc" id="L537">			Term temp = cache;</span>
+<span class="nc" id="L538">			cache = null;</span>
+<span class="nc" id="L539">			return temp;</span>
+		}
+
+		public void remove() {
+<span class="nc" id="L543">			throw new UnsupportedOperationException();</span>
+		}
+	}
+
+	// todo override toString();
+
+	/**
+	 * See 7.1.6.1 Variants of a term in the ISO spec this method resolves all
+	 * the terms children. Not sure if this is in line with the spec.
+	 * 
+	 * @param original
+	 *            such as - f(X,Y,X) - g(A,B) - P + Q
+	 * @return a variant of the original such as - f(_1, _2, _1) - g(_1, _2) -
+	 *         _1 + _2
+	 */
+	public Term variant(Term original) {
+<span class="nc" id="L559">		return new Copier(original).getFlatVariant();</span>
+	}
+
+	public Term flatCopy(Term original, int keepCtx) {
+<span class="fc" id="L563">		return new Copier(BindingsTable.wrapWithID(original, keepCtx), keepCtx).getFlatCopy();</span>
+	}
+
+	private class Copier {
+<span class="pc" id="L567">		HashMap varTable = new HashMap();</span>
+		Term original;
+		Term copy;
+<span class="pc" id="L570">		private int keepOriginals = -1;</span>
+
+<span class="nc" id="L572">		public Copier(Term root) {</span>
+<span class="nc" id="L573">			original = root;</span>
+<span class="nc" id="L574">		}</span>
+
+<span class="fc" id="L576">		public Copier(Term root, int ctxToKeep) {</span>
+<span class="fc" id="L577">			original = root;</span>
+<span class="fc" id="L578">			keepOriginals = ctxToKeep;</span>
+<span class="fc" id="L579">		}</span>
+
+		private Term copyRecursive(Term original) {
+<span class="fc bfc" id="L582" title="All 4 branches covered.">			if (original instanceof StructAtom || original instanceof Number)</span>
+<span class="fc" id="L583">				return original;</span>
+<span class="fc bfc" id="L584" title="All 2 branches covered.">			if (original instanceof Var) {</span>
+<span class="fc" id="L585">				Term link = resolve(original);</span>
+<span class="pc bpc" id="L586" title="1 of 2 branches missed.">				if (link != original)</span>
+<span class="fc" id="L587">					return copyRecursive(link);</span>
+<span class="nc bnc" id="L588" title="All 4 branches missed.">				if (link instanceof Wrapper &amp;&amp; ((Wrapper) link).getContext() == keepOriginals)</span>
+<span class="nc" id="L589">					return ((Wrapper) link).getBasis();</span>
+<span class="nc" id="L590">				Var copyVar = (Var) varTable.get(link);</span>
+<span class="nc bnc" id="L591" title="All 2 branches missed.">				if (copyVar == null)</span>
+<span class="nc" id="L592">					varTable.put(link, copyVar = new Var(&quot;_&quot;, varTable.size() + 1));</span>
+<span class="nc" id="L593">				return copyVar;</span>
+			}
+<span class="fc" id="L595">			Struct sOrig = (Struct) original;</span>
+<span class="fc" id="L596">			Term[] clonedElements = new Term[sOrig.arity];</span>
+<span class="fc bfc" id="L597" title="All 2 branches covered.">			for (int i = 0; i &lt; clonedElements.length; i++)</span>
+<span class="fc" id="L598">				clonedElements[i] = copyRecursive(sOrig.getArg(i));</span>
+<span class="fc" id="L599">			return new Struct(sOrig.name, clonedElements, sOrig.getOperatorType());</span>
+		}
+
+		public Term getFlatVariant() {
+<span class="nc bnc" id="L603" title="All 2 branches missed.">			if (copy != null)</span>
+<span class="nc" id="L604">				return copy;</span>
+<span class="nc" id="L605">			return copy = copyRecursive(this.original);</span>
+		}
+
+		public Term getFlatCopy() {
+<span class="pc bpc" id="L609" title="1 of 2 branches missed.">			if (copy != null)</span>
+<span class="nc" id="L610">				return copy;</span>
+<span class="fc" id="L611">			return copy = copyRecursive(this.original);</span>
+		}
+
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>LinkTable.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">prolobjectlink-jpi-jtrolog</a> &gt; <a href="index.source.html" class="el_package">jTrolog.engine</a> &gt; <span class="el_source">LinkTable.java</span></div><h1>LinkTable.java</h1><pre class="source lang-java linenums">/*
+ * #%L
+ * prolobjectlink-jpi-jtrolog
+ * %%
+ * Copyright (C) 2012 - 2018 WorkLogic Project
+ * %%
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation, either version 2.1 of the
+ * License, or (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Lesser Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Lesser Public
+ * License along with this program.  If not, see
+ * &lt;http://www.gnu.org/licenses/lgpl-2.1.html&gt;.
+ * #L%
+ */
+package jTrolog.engine;
+
+import jTrolog.terms.Term;
+
+/**
+ * @author ivar.orstavik@hist.no
+ */
+class LinkTable {
+
+<span class="fc" id="L31">	private int depth = 8;</span>
+<span class="fc" id="L32">	private int width = Engine.STARTUP_STACK_SIZE;</span>
+
+	// Links are stored in a set of two dimensional arrays.
+	// The terms and their ctx id are stored as individual dimensions.
+	// The negative duplicates are used for terms with ctx id that are generated
+	// by library methods.
+<span class="fc" id="L38">	private Term[][] linkToTerm = new Term[depth][width];</span>
+<span class="fc" id="L39">	private int[][] linkToCtx = new int[depth][width];</span>
+
+<span class="fc" id="L41">	LinkTable() {</span>
+<span class="fc bfc" id="L42" title="All 2 branches covered.">		for (int i = 0; i &lt; depth; i++) {</span>
+<span class="fc" id="L43">			linkToTerm[i] = new Term[width];</span>
+<span class="fc" id="L44">			linkToCtx[i] = new int[width];</span>
+		}
+<span class="fc" id="L46">	}</span>
+
+	final Term getTerm(final int vNr, final int vCtx) {
+<span class="pc bpc" id="L49" title="2 of 4 branches missed.">		return vNr &gt;= depth || vCtx &gt;= width ? null : linkToTerm[vNr][vCtx];</span>
+	}
+
+	final int getCtx(final int vNr, final int vCtx) {
+<span class="fc" id="L53">		return linkToCtx[vNr][vCtx];</span>
+	}
+
+	final void put(final int vNr, int vCtx, final Term link, final int linkCtx) {
+<span class="pc bpc" id="L57" title="1 of 2 branches missed.">		if (vNr &gt;= depth)</span>
+<span class="nc" id="L58">			expandLinkTableDepth(vNr * 2);</span>
+
+		// mark vNr and vCtx under the given execCtx
+<span class="fc" id="L61">		linkToTerm[vNr][vCtx] = link;</span>
+<span class="fc" id="L62">		linkToCtx[vNr][vCtx] = linkCtx;</span>
+<span class="fc" id="L63">	}</span>
+
+	private void expandLinkTableDepth(final int newSize) {
+<span class="nc" id="L66">		linkToTerm = LinkTable.expandMap(linkToTerm, newSize);</span>
+<span class="nc" id="L67">		linkToCtx = LinkTable.expandMap(linkToCtx, newSize);</span>
+<span class="nc bnc" id="L68" title="All 2 branches missed.">		for (int i = depth; i &lt; newSize; i++) {</span>
+<span class="nc" id="L69">			linkToTerm[i] = new Term[width];</span>
+<span class="nc" id="L70">			linkToCtx[i] = new int[width];</span>
+		}
+<span class="nc" id="L72">		depth = newSize;</span>
+<span class="nc" id="L73">	}</span>
+
+	final void reset(int vNr, int vCtx) {
+<span class="fc" id="L76">		linkToTerm[vNr][vCtx] = null;</span>
+<span class="fc" id="L77">		linkToCtx[vNr][vCtx] = 0;</span>
+<span class="fc" id="L78">	}</span>
+
+	final void doubleWidth(final int newSize) {
+<span class="nc bnc" id="L81" title="All 2 branches missed.">		for (int i = 0; i &lt; depth; i++) {</span>
+<span class="nc" id="L82">			linkToTerm[i] = LinkTable.expandArray(linkToTerm[i], newSize);</span>
+<span class="nc" id="L83">			linkToCtx[i] = LinkTable.expandArray(linkToCtx[i], newSize);</span>
+		}
+<span class="nc" id="L85">		width = newSize;</span>
+<span class="nc" id="L86">	}</span>
+
+	public int getWidth() {
+<span class="fc" id="L89">		return width;</span>
+	}
+
+	static int[][] expandMap(final int[][] array, final int newSize) {
+<span class="nc" id="L93">		int[][] newArray = new int[newSize][];</span>
+<span class="nc" id="L94">		System.arraycopy(array, 0, newArray, 0, array.length);</span>
+<span class="nc" id="L95">		return newArray;</span>
+	}
+
+	static int[] expandArray(int[] array, final int newSize) {
+<span class="fc" id="L99">		int[] newArray = new int[newSize];</span>
+<span class="fc" id="L100">		System.arraycopy(array, 0, newArray, 0, array.length);</span>
+<span class="fc" id="L101">		return newArray;</span>
+	}
+
+	static Term[][] expandMap(final Term[][] array, final int newSize) {
+<span class="nc" id="L105">		Term[][] newArray = new Term[newSize][];</span>
+<span class="nc" id="L106">		System.arraycopy(array, 0, newArray, 0, array.length);</span>
+<span class="nc" id="L107">		return newArray;</span>
+	}
+
+	static Term[] expandArray(Term[] array, final int newSize) {
+<span class="nc" id="L111">		Term[] newArray = new Term[newSize];</span>
+<span class="nc" id="L112">		System.arraycopy(array, 0, newArray, 0, array.length);</span>
+<span class="nc" id="L113">		return newArray;</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

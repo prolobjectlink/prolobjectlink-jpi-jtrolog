@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>LibraryAndTheoryManager.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">prolobjectlink-jpi-jtrolog</a> &gt; <a href="index.source.html" class="el_package">jTrolog.engine</a> &gt; <span class="el_source">LibraryAndTheoryManager.java</span></div><h1>LibraryAndTheoryManager.java</h1><pre class="source lang-java linenums">/*
+ * #%L
+ * prolobjectlink-jpi-jtrolog
+ * %%
+ * Copyright (C) 2012 - 2018 WorkLogic Project
+ * %%
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation, either version 2.1 of the
+ * License, or (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Lesser Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Lesser Public
+ * License along with this program.  If not, see
+ * &lt;http://www.gnu.org/licenses/lgpl-2.1.html&gt;.
+ * #L%
+ */
+package jTrolog.engine;
+
+import jTrolog.errors.PrologException;
+import jTrolog.parser.Parser;
+import jTrolog.lib.Library;
+import jTrolog.lib.BuiltIn;
+import jTrolog.terms.Struct;
+import jTrolog.terms.Term;
+import jTrolog.terms.Clause;
+
+import java.io.Serializable;
+import java.util.*;
+import java.lang.reflect.InvocationTargetException;
+
+/**
+ * This class defines the Library and Theory Manager who manages the libraries
+ * and clauses/theory often referred to as the Prolog database. The theory (as a
+ * set of clauses) are stored in the ClauseDatabase which in essence is a
+ * HashMap grouped by functor/arity.
+ * &lt;p/&gt;
+ * The LibraryAndTheoryManager functions logically, as prescribed by ISO
+ * Standard 7.5.4 section. The effects of assertions and retractions shall not
+ * be undone if the program subsequently backtracks over the assert or retract
+ * call, as prescribed by ISO Standard 7.7.9 section.
+ * &lt;p/&gt;
+ * To use the LibraryAndTheoryManager one should primarily use the methods
+ * assertA, assertZ, consult, retract, abolish and find.
+ * &lt;p/&gt;
+ * &lt;p/&gt;
+ * rewritten by:
+ * 
+ * @author ivar.orstavik@hist.no
+ */
+@SuppressWarnings({ &quot;rawtypes&quot;, &quot;unchecked&quot;,&quot;serial&quot; })
+class LibraryAndTheoryManager implements Serializable {
+
+	private ClauseDatabase dynamicDBase;
+	private ClauseDatabase allLibraryRules;
+
+	private LinkedHashMap librariesToRules;
+
+	private Prolog engine;
+	String lastConsultedTheory;
+
+<span class="fc" id="L66">	LibraryAndTheoryManager(Prolog vm) {</span>
+<span class="fc" id="L67">		dynamicDBase = new ClauseDatabase();</span>
+<span class="fc" id="L68">		librariesToRules = new LinkedHashMap();</span>
+<span class="fc" id="L69">		allLibraryRules = new ClauseDatabase();</span>
+<span class="fc" id="L70">		lastConsultedTheory = &quot;&quot;;</span>
+<span class="fc" id="L71">		engine = vm;</span>
+<span class="fc" id="L72">	}</span>
+
+	/**
+	 * inserting of a clause at the head of the dbase
+	 */
+	void assertA(Clause clause, String index) throws PrologException {
+<span class="fc" id="L78">		dynamicDBase.addFirst(index, clause);</span>
+<span class="fc" id="L79">	}</span>
+
+	/**
+	 * inserting of a clause at the end of the dbase
+	 */
+	void assertZ(Clause clause, String index) throws PrologException {
+<span class="fc" id="L85">		dynamicDBase.addLast(index, clause);</span>
+<span class="fc" id="L86">	}</span>
+
+	/**
+	 * removing from dbase the first clause with head unifying with clause (m if
+	 * a free substitution index and t is the first free timestamp)
+	 */
+	Struct retract(Struct clause, String index) throws PrologException {
+<span class="fc" id="L93">		LinkedList family = (LinkedList) dynamicDBase.get(index);</span>
+<span class="pc bpc" id="L94" title="1 of 2 branches missed.">		if (family == null)</span>
+<span class="nc" id="L95">			return null;</span>
+<span class="pc bpc" id="L96" title="1 of 2 branches missed.">		for (Iterator it = family.iterator(); it.hasNext();) {</span>
+<span class="fc" id="L97">			Clause d = (Clause) it.next();</span>
+<span class="fc bfc" id="L98" title="All 2 branches covered.">			if (Prolog.match(clause, d.original)) {</span>
+<span class="fc" id="L99">				it.remove();</span>
+<span class="fc" id="L100">				return d.original;</span>
+			}
+<span class="fc" id="L102">		}</span>
+<span class="nc" id="L103">		return null;</span>
+	}
+
+	/**
+	 * removes all clauses matching the given signature from the dynamic dbase
+	 */
+	List abolish(String index) throws PrologException {
+<span class="fc" id="L110">		return dynamicDBase.abolish(index);</span>
+	}
+
+	/**
+	 * registers a predicate indicator as known
+	 */
+	public void setDynamic(String index) {
+<span class="nc" id="L117">		LinkedList family = (LinkedList) dynamicDBase.get(index);</span>
+<span class="nc bnc" id="L118" title="All 2 branches missed.">		if (family != null)</span>
+<span class="nc" id="L119">			return;</span>
+<span class="nc" id="L120">		dynamicDBase.addFirst(index, Term.emptyList);</span>
+<span class="nc" id="L121">		family = (LinkedList) dynamicDBase.get(index);</span>
+<span class="nc bnc" id="L122" title="All 2 branches missed.">		for (Iterator it = family.iterator(); it.hasNext();) {</span>
+<span class="nc" id="L123">			it.next();</span>
+<span class="nc" id="L124">			it.remove();</span>
+		}
+<span class="nc" id="L126">	}</span>
+
+	/**
+	 * Returns a family of clauses with functor and arity equals to the functor
+	 * and arity of the term passed as a parameter
+	 */
+	List find(String predIndicator) throws PrologException {
+<span class="fc" id="L133">		List dynamics = dynamicDBase.getPredicatesIterator(predIndicator);</span>
+<span class="fc bfc" id="L134" title="All 2 branches covered.">		return dynamics != null ? dynamics : allLibraryRules.getPredicatesIterator(predIndicator);</span>
+	}
+
+	/**
+	 * Consults a theory.
+	 * 
+	 * @param theory
+	 *            theory to add
+	 * @throws PrologException
+	 */
+	void consult(String theory) throws PrologException {
+<span class="fc" id="L145">		lastConsultedTheory = theory;</span>
+		// iterate all clauses in theory and assert them
+<span class="fc bfc" id="L147" title="All 2 branches covered.">		for (Iterator it = new Parser(theory, engine).iterator(); it.hasNext();) {</span>
+<span class="fc" id="L148">			Struct d = (Struct) it.next();</span>
+<span class="pc bpc" id="L149" title="1 of 2 branches missed.">			if (runDirective(d))</span>
+<span class="nc" id="L150">				continue;</span>
+			// d = BuiltIn.convertTermToClause(d);
+<span class="fc" id="L152">			Clause cl = BuiltIn.convertTermToClause(d);</span>
+<span class="fc" id="L153">			assertZ(cl, cl.head.predicateIndicator);</span>
+<span class="fc" id="L154">		}</span>
+<span class="fc" id="L155">	}</span>
+
+	/**
+	 * Clears the clause dbase.
+	 */
+	void clear() {
+<span class="fc" id="L161">		dynamicDBase.clear();</span>
+<span class="fc" id="L162">	}</span>
+
+	private boolean runDirective(Struct c) {
+<span class="fc bfc" id="L165" title="All 2 branches covered.">		if (c.predicateIndicator != Parser.singleClauseSignature)</span>
+<span class="fc" id="L166">			return false;</span>
+<span class="fc" id="L167">		Term dir = c.getArg(0);</span>
+<span class="pc bpc" id="L168" title="1 of 2 branches missed.">		if (!(dir instanceof Struct))</span>
+<span class="nc" id="L169">			return false;</span>
+		try {
+			try {
+<span class="fc" id="L172">				PrimitiveInfo directive = engine.getPrimitive((Struct) dir);</span>
+<span class="pc bpc" id="L173" title="1 of 2 branches missed.">				if (directive == null)</span>
+<span class="nc" id="L174">					engine.warn(&quot;The directive &quot; + ((Struct) dir).predicateIndicator + &quot; is unknown.&quot;);</span>
+				else {
+<span class="fc" id="L176">					Object[] args = new Object[((Struct) dir).arity + 1];</span>
+<span class="fc" id="L177">					args[0] = new BindingsTable();</span>
+<span class="fc bfc" id="L178" title="All 2 branches covered.">					for (int i = 0; i &lt; ((Struct) dir).arity; i++)</span>
+<span class="fc" id="L179">						args[i + 1] = ((Struct) dir).getArg(i);</span>
+<span class="fc" id="L180">					Prolog.evalPrimitive(directive, args);</span>
+				}
+<span class="nc" id="L182">			} catch (InvocationTargetException e) {</span>
+<span class="nc" id="L183">				Throwable cause = e;</span>
+<span class="nc bnc" id="L184" title="All 2 branches missed.">				while (cause instanceof InvocationTargetException)</span>
+<span class="nc" id="L185">					cause = cause.getCause();</span>
+<span class="nc" id="L186">				throw cause;</span>
+<span class="fc" id="L187">			}</span>
+<span class="nc" id="L188">		} catch (Throwable cause) {</span>
+<span class="nc" id="L189">			engine.warn(&quot;An exception has been thrown during the execution of the &quot; + ((Struct) dir).predicateIndicator + &quot; directive.\n&quot; + cause.getMessage());</span>
+<span class="fc" id="L190">		}</span>
+<span class="fc" id="L191">		return true;</span>
+	}
+
+	/**
+	 * Gets current theory
+	 * 
+	 * @param onlyDynamic
+	 *            if true, fetches only dynamic clauses
+	 */
+	public String getTheory(boolean onlyDynamic) {
+<span class="pc bpc" id="L201" title="1 of 2 branches missed.">		if (onlyDynamic)</span>
+<span class="fc" id="L202">			return dynamicDBase.toString();</span>
+<span class="nc" id="L203">		return dynamicDBase.toString() + &quot;\n\n&quot; + allLibraryRules.toString();</span>
+	}
+
+	/**
+	 * Gets last consulted theory
+	 * 
+	 * @return last theory
+	 */
+	String getLastConsultedTheory() {
+<span class="nc" id="L212">		return lastConsultedTheory;</span>
+	}
+
+	boolean isLibraryRule(String key) {
+<span class="fc" id="L216">		return allLibraryRules.containsKey(key);</span>
+	}
+
+	/**
+	 * do not use remove on this one. Will stringToStructList problems
+	 * 
+	 * @return an iterator of all the dynamic predicate indicators in the
+	 *         Database.
+	 */
+	Iterator dynamicPredicateIndicators() {
+<span class="fc" id="L226">		return dynamicDBase.keySet().iterator();</span>
+	}
+
+	Library consultLib(Library lib) throws PrologException {
+
+<span class="fc" id="L231">		ClauseDatabase theoryAssociated = new ClauseDatabase();</span>
+<span class="fc bfc" id="L232" title="All 2 branches covered.">		for (Iterator it = new Parser(lib.getTheory(), engine).iterator(); it.hasNext();) {</span>
+<span class="fc" id="L233">			Struct d = (Struct) it.next();</span>
+<span class="fc bfc" id="L234" title="All 2 branches covered.">			if (runDirective(d))</span>
+<span class="fc" id="L235">				continue;</span>
+<span class="fc" id="L236">			Clause cl = BuiltIn.convertTermToClause(d);</span>
+<span class="fc" id="L237">			theoryAssociated.addLast(cl.head.predicateIndicator, cl);</span>
+<span class="fc" id="L238">			allLibraryRules.addLast(cl.head.predicateIndicator, cl);</span>
+<span class="fc" id="L239">		}</span>
+<span class="fc" id="L240">		librariesToRules.put(lib, theoryAssociated);</span>
+<span class="fc" id="L241">		return lib;</span>
+	}
+
+	Library unconsultLib(Library lib) {
+<span class="nc" id="L245">		lib.dismiss();</span>
+<span class="nc" id="L246">		ClauseDatabase removed = (ClauseDatabase) librariesToRules.remove(lib);</span>
+<span class="nc bnc" id="L247" title="All 2 branches missed.">		for (Iterator it = removed.keySet().iterator(); it.hasNext();) {</span>
+<span class="nc" id="L248">			String predInfo = (String) it.next();</span>
+<span class="nc" id="L249">			List toBeRemoved = (List) removed.get(predInfo);</span>
+<span class="nc" id="L250">			List parentList = allLibraryRules.getPredicates(predInfo);</span>
+<span class="nc bnc" id="L251" title="All 2 branches missed.">			for (int i = 0; i &lt; toBeRemoved.size(); i++)</span>
+<span class="nc" id="L252">				parentList.remove(toBeRemoved.get(i));</span>
+<span class="nc" id="L253">		}</span>
+<span class="nc" id="L254">		return lib;</span>
+	}
+
+	Library getLibrary(String name) {
+<span class="fc bfc" id="L258" title="All 2 branches covered.">		for (Iterator it = getCurrentLibraries(); it.hasNext();) {</span>
+<span class="fc" id="L259">			Library lib = (Library) it.next();</span>
+<span class="pc bpc" id="L260" title="1 of 2 branches missed.">			if (name.equals(lib.getName()))</span>
+<span class="nc" id="L261">				return lib;</span>
+<span class="fc" id="L262">		}</span>
+<span class="fc" id="L263">		return null;</span>
+	}
+
+	/**
+	 * @return the names of the libraries currently loaded
+	 */
+	Iterator getCurrentLibraries() {
+<span class="fc" id="L270">		return librariesToRules.keySet().iterator();</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

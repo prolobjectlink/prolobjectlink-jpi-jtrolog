@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>JTrolog.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">prolobjectlink-jpi-jtrolog</a> &gt; <a href="index.source.html" class="el_package">org.prolobjectlink.prolog.jtrolog</a> &gt; <span class="el_source">JTrolog.java</span></div><h1>JTrolog.java</h1><pre class="source lang-java linenums">/*
+ * #%L
+ * prolobjectlink-jpi-jtrolog
+ * %%
+ * Copyright (C) 2019 Prolobjectlink Project
+ * %%
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation, either version 2.1 of the
+ * License, or (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Lesser Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Lesser Public
+ * License along with this program.  If not, see
+ * &lt;http://www.gnu.org/licenses/lgpl-2.1.html&gt;.
+ * #L%
+ */
+package org.prolobjectlink.prolog.jtrolog;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.prolobjectlink.prolog.AbstractProvider;
+import org.prolobjectlink.prolog.PrologAtom;
+import org.prolobjectlink.prolog.PrologConverter;
+import org.prolobjectlink.prolog.PrologDouble;
+import org.prolobjectlink.prolog.PrologEngine;
+import org.prolobjectlink.prolog.PrologFloat;
+import org.prolobjectlink.prolog.PrologInteger;
+import org.prolobjectlink.prolog.PrologJavaConverter;
+import org.prolobjectlink.prolog.PrologList;
+import org.prolobjectlink.prolog.PrologLogger;
+import org.prolobjectlink.prolog.PrologLong;
+import org.prolobjectlink.prolog.PrologProvider;
+import org.prolobjectlink.prolog.PrologStructure;
+import org.prolobjectlink.prolog.PrologTerm;
+import org.prolobjectlink.prolog.PrologVariable;
+
+import jTrolog.engine.Prolog;
+import jTrolog.parser.Parser;
+import jTrolog.terms.Struct;
+import jTrolog.terms.Term;
+
+/**
+ * 
+ * @author Jose Zalacain
+ * @since 1.0
+ */
+public class JTrolog extends AbstractProvider implements PrologProvider {
+
+<span class="fc" id="L55">	private static final PrologLogger logger = new JTrologLogger();</span>
+	static final String VERSION = Prolog.VERSION;
+	static final String NAME = &quot;jTrolog&quot;;
+
+	public JTrolog() {
+<span class="fc" id="L60">		super(new JTrologConverter());</span>
+<span class="fc" id="L61">	}</span>
+
+	JTrolog(PrologConverter&lt;Term&gt; converter) {
+<span class="fc" id="L64">		super(converter);</span>
+<span class="fc" id="L65">	}</span>
+
+	public boolean isCompliant() {
+<span class="nc" id="L68">		return false;</span>
+	}
+
+	public PrologTerm prologNil() {
+<span class="fc" id="L72">		return new JTrologNil(this);</span>
+	}
+
+	public PrologTerm prologCut() {
+<span class="fc" id="L76">		return new JTrologCut(this);</span>
+	}
+
+	public PrologTerm prologFail() {
+<span class="fc" id="L80">		return new JTrologFail(this);</span>
+	}
+
+	public PrologTerm prologTrue() {
+<span class="fc" id="L84">		return new JTrologTrue(this);</span>
+	}
+
+	public PrologTerm prologFalse() {
+<span class="fc" id="L88">		return new JTrologFalse(this);</span>
+	}
+
+	public PrologTerm prologEmpty() {
+<span class="fc" id="L92">		return new JTrologEmpty(this);</span>
+	}
+
+	public PrologTerm prologInclude(String file) {
+<span class="nc" id="L96">		return newStructure(&quot;include&quot;, newAtom(file));</span>
+	}
+
+	// engine
+
+	public PrologEngine newEngine() {
+<span class="fc" id="L102">		Prolog prolog = new Prolog();</span>
+<span class="fc" id="L103">		return new JTrologEngine(this, prolog);</span>
+	}
+
+	public PrologEngine newEngine(String path) {
+<span class="nc" id="L107">		PrologEngine engine = newEngine();</span>
+<span class="nc" id="L108">		engine.consult(path);</span>
+<span class="nc" id="L109">		return engine;</span>
+	}
+
+	// parser helpers
+
+	public PrologTerm parseTerm(String term) {
+<span class="fc" id="L115">		return toTerm(new Parser(term).nextTerm(false), PrologTerm.class);</span>
+	}
+
+	public PrologTerm[] parseTerms(String stringTerms) {
+<span class="fc" id="L119">		List&lt;PrologTerm&gt; list = new ArrayList&lt;PrologTerm&gt;();</span>
+<span class="fc" id="L120">		Parser parser = new Parser(stringTerms);</span>
+<span class="fc" id="L121">		Term term = parser.nextTerm(false);</span>
+<span class="fc bfc" id="L122" title="All 2 branches covered.">		while (term instanceof Struct) {</span>
+<span class="fc" id="L123">			Struct struct = (Struct) term;</span>
+<span class="fc bfc" id="L124" title="All 4 branches covered.">			if (struct.name.equals(&quot;,&quot;) &amp;&amp; struct.arity == 2) {</span>
+<span class="fc" id="L125">				list.add(toTerm(struct.getArg(0), PrologTerm.class));</span>
+<span class="fc" id="L126">				term = struct.getArg(1);</span>
+			} else {
+<span class="fc" id="L128">				list.add(toTerm(term, PrologTerm.class));</span>
+<span class="fc" id="L129">				term = parser.nextTerm(false);</span>
+			}
+<span class="fc" id="L131">		}</span>
+<span class="fc" id="L132">		return list.toArray(new PrologTerm[0]);</span>
+	}
+
+	// terms
+
+	public PrologAtom newAtom(String functor) {
+<span class="fc" id="L138">		return new JTrologAtom(this, functor);</span>
+	}
+
+	public PrologFloat newFloat(Number value) {
+<span class="fc" id="L142">		return new JTrologFloat(this, value);</span>
+	}
+
+	public PrologDouble newDouble(Number value) {
+<span class="fc" id="L146">		return new JTrologDouble(this, value);</span>
+	}
+
+	public PrologInteger newInteger(Number value) {
+<span class="fc" id="L150">		return new JTrologInteger(this, value);</span>
+	}
+
+	public PrologLong newLong(Number value) {
+<span class="fc" id="L154">		return new JTrologLong(this, value);</span>
+	}
+
+	public PrologVariable newVariable(int position) {
+<span class="pc bpc" id="L158" title="1 of 2 branches missed.">		if (position &lt; 0) {</span>
+<span class="nc" id="L159">			throw new IllegalArgumentException(&quot;Not allowed negative position&quot;);</span>
+		}
+<span class="fc" id="L161">		return new JTrologVariable(this, position + 1);</span>
+	}
+
+	public PrologVariable newVariable(String name, int position) {
+<span class="pc bpc" id="L165" title="1 of 2 branches missed.">		if (position &lt; 0) {</span>
+<span class="nc" id="L166">			throw new IllegalArgumentException(&quot;Not allowed negative position&quot;);</span>
+		}
+<span class="fc" id="L168">		return new JTrologVariable(this, name, position + 1);</span>
+	}
+
+	public PrologList newList() {
+<span class="nc" id="L172">		return new JTrologEmpty(this);</span>
+	}
+
+	public PrologList newList(PrologTerm[] arguments) {
+<span class="pc bpc" id="L176" title="2 of 4 branches missed.">		if (arguments != null &amp;&amp; arguments.length &gt; 0) {</span>
+<span class="fc" id="L177">			return new JTrologList(this, arguments);</span>
+		}
+<span class="nc" id="L179">		return new JTrologEmpty(this);</span>
+	}
+
+	public PrologList newList(PrologTerm head, PrologTerm tail) {
+<span class="nc" id="L183">		return new JTrologList(this, head, tail);</span>
+	}
+
+	public PrologList newList(PrologTerm[] arguments, PrologTerm tail) {
+<span class="nc" id="L187">		return new JTrologList(this, arguments, tail);</span>
+	}
+
+	public PrologStructure newStructure(String functor, PrologTerm... arguments) {
+<span class="fc" id="L191">		return new JTrologStructure(this, functor, arguments);</span>
+	}
+
+	public PrologTerm newStructure(PrologTerm left, String operator, PrologTerm right) {
+<span class="fc" id="L195">		return new JTrologStructure(this, left, operator, right);</span>
+	}
+
+	public PrologTerm newReference(Object reference) {
+<span class="nc" id="L199">		throw new UnsupportedOperationException(&quot;newReference(Object reference)&quot;);</span>
+	}
+
+	public PrologJavaConverter getJavaConverter() {
+<span class="fc" id="L203">		return new JTrologJavaConverter(this);</span>
+	}
+
+	public PrologLogger getLogger() {
+<span class="nc" id="L207">		return logger;</span>
+	}
+
+	@Override
+	public String toString() {
+<span class="nc" id="L212">		return &quot;TuPrologProvider [converter=&quot; + converter + &quot;]&quot;;</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

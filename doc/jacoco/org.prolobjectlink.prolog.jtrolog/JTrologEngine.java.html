@@ -1,0 +1,490 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>JTrologEngine.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">prolobjectlink-jpi-jtrolog</a> &gt; <a href="index.source.html" class="el_package">org.prolobjectlink.prolog.jtrolog</a> &gt; <span class="el_source">JTrologEngine.java</span></div><h1>JTrologEngine.java</h1><pre class="source lang-java linenums">/*
+ * #%L
+ * prolobjectlink-jpi-jtrolog
+ * %%
+ * Copyright (C) 2019 Prolobjectlink Project
+ * %%
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation, either version 2.1 of the
+ * License, or (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Lesser Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Lesser Public
+ * License along with this program.  If not, see
+ * &lt;http://www.gnu.org/licenses/lgpl-2.1.html&gt;.
+ * #L%
+ */
+package org.prolobjectlink.prolog.jtrolog;
+
+import static org.prolobjectlink.prolog.PrologLogger.DONT_WORRY;
+import static org.prolobjectlink.prolog.PrologLogger.FILE_NOT_FOUND;
+import static org.prolobjectlink.prolog.PrologLogger.INDICATOR_NOT_FOUND;
+import static org.prolobjectlink.prolog.PrologLogger.IO;
+import static org.prolobjectlink.prolog.PrologLogger.RUNTIME_ERROR;
+import static org.prolobjectlink.prolog.PrologLogger.SYNTAX_ERROR;
+
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.PrintWriter;
+import java.io.Reader;
+import java.lang.reflect.Method;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Set;
+
+import org.prolobjectlink.prolog.AbstractEngine;
+import org.prolobjectlink.prolog.Licenses;
+import org.prolobjectlink.prolog.PrologClause;
+import org.prolobjectlink.prolog.PrologEngine;
+import org.prolobjectlink.prolog.PrologIndicator;
+import org.prolobjectlink.prolog.PrologLogger;
+import org.prolobjectlink.prolog.PrologOperator;
+import org.prolobjectlink.prolog.PrologProvider;
+import org.prolobjectlink.prolog.PrologQuery;
+import org.prolobjectlink.prolog.PrologTerm;
+
+import jTrolog.engine.Prolog;
+import jTrolog.errors.PrologException;
+import jTrolog.lib.BuiltIn;
+import jTrolog.lib.IOLibrary;
+import jTrolog.lib.Library;
+import jTrolog.parser.Parser;
+import jTrolog.terms.Clause;
+import jTrolog.terms.Struct;
+import jTrolog.terms.StructAtom;
+import jTrolog.terms.Term;
+
+/**
+ * 
+ * @author Jose Zalacain
+ * @since 1.0
+ */
+public class JTrologEngine extends AbstractEngine implements PrologEngine {
+
+	final Prolog engine;
+
+	protected JTrologEngine(PrologProvider provider, Prolog engine) {
+<span class="fc" id="L79">		super(provider);</span>
+<span class="fc" id="L80">		this.engine = engine;</span>
+<span class="fc" id="L81">	}</span>
+
+	public void consult(String path) {
+<span class="fc" id="L84">		engine.clearTheory();</span>
+<span class="fc" id="L85">		include(path);</span>
+<span class="fc" id="L86">	}</span>
+
+	public void consult(Reader reader) {
+<span class="nc" id="L89">		engine.clearTheory();</span>
+<span class="nc" id="L90">		include(reader);</span>
+<span class="nc" id="L91">	}</span>
+
+	public void include(String path) {
+		try {
+<span class="fc" id="L95">			InputStream is = new FileInputStream(path);</span>
+<span class="fc" id="L96">			engine.addTheory(IOLibrary.readStream(is));</span>
+<span class="nc" id="L97">		} catch (FileNotFoundException e) {</span>
+<span class="nc" id="L98">			getLogger().warn(getClass(), FILE_NOT_FOUND + path, e);</span>
+<span class="nc" id="L99">		} catch (PrologException e) {</span>
+<span class="nc" id="L100">			getLogger().error(getClass(), SYNTAX_ERROR + path, e);</span>
+<span class="nc" id="L101">		} catch (IOException e) {</span>
+<span class="nc" id="L102">			getLogger().warn(getClass(), IO + path, e);</span>
+<span class="pc" id="L103">		}</span>
+<span class="fc" id="L104">	}</span>
+
+	public void include(Reader reader) {
+<span class="fc" id="L107">		BufferedReader bfr = new BufferedReader(reader);</span>
+<span class="fc" id="L108">		StringBuilder script = new StringBuilder();</span>
+		try {
+<span class="fc" id="L110">			String line = bfr.readLine();</span>
+<span class="fc bfc" id="L111" title="All 2 branches covered.">			while (line != null) {</span>
+<span class="fc" id="L112">				script.append(line);</span>
+<span class="fc" id="L113">				script.append(&quot;\n&quot;);</span>
+<span class="fc" id="L114">				line = bfr.readLine();</span>
+			}
+<span class="fc" id="L116">			engine.addTheory(&quot;&quot; + script + &quot;&quot;);</span>
+<span class="nc" id="L117">		} catch (PrologException e) {</span>
+<span class="nc" id="L118">			getLogger().error(getClass(), SYNTAX_ERROR + script, e);</span>
+<span class="nc" id="L119">		} catch (IOException e) {</span>
+<span class="nc" id="L120">			getLogger().warn(getClass(), IO + script, e);</span>
+<span class="pc" id="L121">		}</span>
+<span class="fc" id="L122">	}</span>
+
+	public void persist(String path) {
+<span class="fc" id="L125">		PrintWriter writer = null;</span>
+		try {
+<span class="fc" id="L127">			writer = new PrintWriter(path);</span>
+<span class="fc" id="L128">			writer.write(engine.getTheory());</span>
+<span class="nc" id="L129">		} catch (IOException e) {</span>
+<span class="nc" id="L130">			getLogger().warn(getClass(), IO + path, e);</span>
+<span class="nc" id="L131">			getLogger().info(getClass(), DONT_WORRY + path);</span>
+		} finally {
+<span class="pc bpc" id="L133" title="5 of 6 branches missed.">			if (writer != null) {</span>
+<span class="pc" id="L134">				writer.close();</span>
+			}
+		}
+<span class="fc" id="L137">	}</span>
+
+	public void abolish(String functor, int arity) {
+<span class="fc" id="L140">		String pi = functor + &quot;/&quot; + arity;</span>
+		try {
+<span class="fc" id="L142">			engine.abolish(pi);</span>
+<span class="nc" id="L143">		} catch (PrologException e) {</span>
+<span class="nc" id="L144">			getLogger().error(getClass(), INDICATOR_NOT_FOUND, e);</span>
+<span class="fc" id="L145">		}</span>
+<span class="fc" id="L146">	}</span>
+
+	private boolean exist(Clause clause) {
+<span class="fc" id="L149">		String name = clause.head.name;</span>
+<span class="fc" id="L150">		StructAtom functor = new StructAtom(name);</span>
+<span class="fc" id="L151">		String key = functor + &quot;/&quot; + clause.head.arity;</span>
+<span class="fc" id="L152">		Iterator&lt;?&gt; i = engine.dynamicPredicateIndicators();</span>
+<span class="fc bfc" id="L153" title="All 2 branches covered.">		while (i.hasNext()) {</span>
+<span class="fc" id="L154">			String predIndicator = (String) i.next();</span>
+<span class="fc bfc" id="L155" title="All 2 branches covered.">			if (predIndicator.equals(key)) {</span>
+				try {
+<span class="fc" id="L157">					List&lt;?&gt; list = engine.find(predIndicator);</span>
+<span class="fc bfc" id="L158" title="All 2 branches covered.">					for (Object object : list) {</span>
+<span class="pc bpc" id="L159" title="1 of 2 branches missed.">						if (object instanceof Clause) {</span>
+<span class="fc" id="L160">							Clause iclause = (Clause) object;</span>
+<span class="fc bfc" id="L161" title="All 2 branches covered.">							if (iclause.head.equals(clause.head)) {</span>
+
+<span class="fc bfc" id="L163" title="All 2 branches covered.">								Struct[] xclausetail = iclause.tail.length &gt; 0 ? iclause.tail</span>
+										: new Struct[] { (Struct) Term.TRUE };
+<span class="fc bfc" id="L165" title="All 2 branches covered.">								Struct[] yclausetail = clause.tail.length &gt; 0 ? clause.tail</span>
+										: new Struct[] { (Struct) Term.TRUE };
+
+<span class="fc bfc" id="L168" title="All 2 branches covered.">								if (xclausetail.length != yclausetail.length) {</span>
+<span class="fc" id="L169">									return false;</span>
+								}
+
+<span class="fc bfc" id="L172" title="All 2 branches covered.">								for (int j = 0; j &lt; yclausetail.length; j++) {</span>
+<span class="fc bfc" id="L173" title="All 2 branches covered.">									if (!xclausetail[j].equals(yclausetail[j])) {</span>
+<span class="fc" id="L174">										return false;</span>
+									}
+
+								}
+
+<span class="fc" id="L179">								return true;</span>
+							}
+						}
+<span class="fc" id="L182">					}</span>
+<span class="nc" id="L183">				} catch (PrologException e) {</span>
+<span class="nc" id="L184">					getLogger().error(getClass(), INDICATOR_NOT_FOUND, e);</span>
+<span class="fc" id="L185">				}</span>
+			}
+<span class="fc" id="L187">		}</span>
+<span class="fc" id="L188">		return false;</span>
+	}
+
+	public void asserta(String stringClause) {
+		try {
+<span class="fc" id="L193">			Term term = new Parser(stringClause).nextTerm(false);</span>
+<span class="fc" id="L194">			asserta(BuiltIn.convertTermToClause(term));</span>
+<span class="nc" id="L195">		} catch (PrologException e) {</span>
+<span class="nc" id="L196">			getLogger().error(getClass(), SYNTAX_ERROR + stringClause, e);</span>
+<span class="fc" id="L197">		}</span>
+<span class="fc" id="L198">	}</span>
+
+	public void asserta(PrologTerm head, PrologTerm... body) {
+<span class="fc" id="L201">		Struct h = fromTerm(head, Struct.class);</span>
+<span class="fc" id="L202">		Struct[] b = new Struct[body.length];</span>
+<span class="fc bfc" id="L203" title="All 2 branches covered.">		for (int i = 0; i &lt; body.length; i++) {</span>
+<span class="fc" id="L204">			b[i] = fromTerm(body[i], Struct.class);</span>
+		}
+<span class="fc" id="L206">		Struct o = fromTerm(head, body, Struct.class);</span>
+<span class="fc" id="L207">		asserta(new Clause(b, h, o));</span>
+<span class="fc" id="L208">	}</span>
+
+	private void asserta(Clause clause) {
+<span class="fc bfc" id="L211" title="All 2 branches covered.">		if (!exist(clause)) {</span>
+			try {
+<span class="fc" id="L213">				engine.assertA(clause);</span>
+<span class="nc" id="L214">			} catch (PrologException e) {</span>
+<span class="nc" id="L215">				getLogger().error(getClass(), RUNTIME_ERROR, e);</span>
+<span class="fc" id="L216">			}</span>
+		}
+<span class="fc" id="L218">	}</span>
+
+	public void assertz(String stringClause) {
+		try {
+<span class="fc" id="L222">			Term term = new Parser(stringClause).nextTerm(false);</span>
+<span class="fc" id="L223">			assertz(BuiltIn.convertTermToClause(term));</span>
+<span class="nc" id="L224">		} catch (PrologException e) {</span>
+<span class="nc" id="L225">			getLogger().error(getClass(), SYNTAX_ERROR + stringClause, e);</span>
+<span class="fc" id="L226">		}</span>
+<span class="fc" id="L227">	}</span>
+
+	public void assertz(PrologTerm head, PrologTerm... body) {
+<span class="fc" id="L230">		Struct h = fromTerm(head, Struct.class);</span>
+<span class="fc" id="L231">		Struct[] b = new Struct[body.length];</span>
+<span class="fc bfc" id="L232" title="All 2 branches covered.">		for (int i = 0; i &lt; body.length; i++) {</span>
+<span class="fc" id="L233">			b[i] = fromTerm(body[i], Struct.class);</span>
+		}
+<span class="fc" id="L235">		Struct o = fromTerm(head, body, Struct.class);</span>
+<span class="fc" id="L236">		assertz(new Clause(b, h, o));</span>
+<span class="fc" id="L237">	}</span>
+
+	private void assertz(Clause clause) {
+<span class="fc bfc" id="L240" title="All 2 branches covered.">		if (!exist(clause)) {</span>
+			try {
+<span class="fc" id="L242">				engine.assertZ(clause);</span>
+<span class="nc" id="L243">			} catch (PrologException e) {</span>
+<span class="nc" id="L244">				getLogger().error(getClass(), RUNTIME_ERROR, e);</span>
+<span class="fc" id="L245">			}</span>
+		}
+<span class="fc" id="L247">	}</span>
+
+	public boolean clause(String stringClause) {
+		try {
+<span class="fc" id="L251">			Term term = new Parser(stringClause).nextTerm(false);</span>
+<span class="fc" id="L252">			return clause(BuiltIn.convertTermToClause(term));</span>
+<span class="nc" id="L253">		} catch (PrologException e) {</span>
+<span class="nc" id="L254">			getLogger().error(getClass(), SYNTAX_ERROR + stringClause, e);</span>
+		}
+<span class="nc" id="L256">		return false;</span>
+	}
+
+	public boolean clause(PrologTerm head, PrologTerm... body) {
+<span class="fc" id="L260">		Struct h = fromTerm(head, Struct.class);</span>
+<span class="fc" id="L261">		Struct[] b = new Struct[body.length];</span>
+<span class="fc bfc" id="L262" title="All 2 branches covered.">		for (int i = 0; i &lt; body.length; i++) {</span>
+<span class="fc" id="L263">			b[i] = fromTerm(body[i], Struct.class);</span>
+		}
+<span class="fc" id="L265">		Struct o = fromTerm(head, body, Struct.class);</span>
+<span class="fc" id="L266">		return clause(new Clause(b, h, o));</span>
+	}
+
+	private boolean clause(Clause clause) {
+<span class="fc" id="L270">		String key = clause.head.name + &quot;/&quot; + clause.head.arity;</span>
+<span class="fc" id="L271">		Iterator&lt;?&gt; i = engine.dynamicPredicateIndicators();</span>
+<span class="fc bfc" id="L272" title="All 2 branches covered.">		while (i.hasNext()) {</span>
+<span class="fc" id="L273">			String predIndicator = (String) i.next();</span>
+<span class="fc bfc" id="L274" title="All 2 branches covered.">			if (predIndicator.equals(key)) {</span>
+				try {
+<span class="fc" id="L276">					List&lt;?&gt; list = engine.find(predIndicator);</span>
+<span class="fc bfc" id="L277" title="All 2 branches covered.">					for (Object object : list) {</span>
+<span class="pc bpc" id="L278" title="1 of 2 branches missed.">						if (object instanceof Clause) {</span>
+<span class="fc" id="L279">							Clause c = (Clause) object;</span>
+<span class="fc bfc" id="L280" title="All 2 branches covered.">							if (Prolog.match(c.original, clause.original)) {</span>
+<span class="fc" id="L281">								return true;</span>
+							}
+						}
+<span class="fc" id="L284">					}</span>
+<span class="nc" id="L285">				} catch (PrologException e) {</span>
+<span class="nc" id="L286">					getLogger().error(getClass(), INDICATOR_NOT_FOUND + predIndicator, e);</span>
+<span class="fc" id="L287">				}</span>
+			}
+<span class="fc" id="L289">		}</span>
+<span class="fc" id="L290">		return false;</span>
+	}
+
+	public void retract(String stringClause) {
+		try {
+<span class="fc" id="L295">			Term term = new Parser(stringClause).nextTerm(false);</span>
+<span class="fc" id="L296">			retract(BuiltIn.convertTermToClause(term));</span>
+<span class="nc" id="L297">		} catch (PrologException e) {</span>
+<span class="nc" id="L298">			getLogger().error(getClass(), SYNTAX_ERROR + stringClause, e);</span>
+<span class="fc" id="L299">		}</span>
+<span class="fc" id="L300">	}</span>
+
+	public void retract(PrologTerm head, PrologTerm... body) {
+<span class="fc" id="L303">		Struct h = fromTerm(head, Struct.class);</span>
+<span class="fc" id="L304">		Struct[] b = new Struct[body.length];</span>
+<span class="fc bfc" id="L305" title="All 2 branches covered.">		for (int i = 0; i &lt; body.length; i++) {</span>
+<span class="fc" id="L306">			b[i] = fromTerm(body[i], Struct.class);</span>
+		}
+<span class="fc" id="L308">		Struct o = fromTerm(head, body, Struct.class);</span>
+<span class="fc" id="L309">		retract(new Clause(b, h, o));</span>
+<span class="fc" id="L310">	}</span>
+
+	private void retract(Clause clause) {
+		try {
+<span class="fc" id="L314">			engine.retract(clause.original);</span>
+<span class="nc" id="L315">		} catch (PrologException e) {</span>
+<span class="nc" id="L316">			getLogger().error(getClass(), RUNTIME_ERROR, e);</span>
+<span class="fc" id="L317">		}</span>
+<span class="fc" id="L318">	}</span>
+
+	public PrologQuery query(String stringQuery) {
+<span class="fc" id="L321">		return new JTrologQuery(this, stringQuery);</span>
+	}
+
+	public PrologQuery query(PrologTerm[] terms) {
+<span class="nc" id="L325">		return new JTrologQuery(this, terms);</span>
+	}
+
+	public PrologQuery query(PrologTerm term, PrologTerm... terms) {
+<span class="fc" id="L329">		return new JTrologQuery(this, term, terms);</span>
+	}
+
+	public void operator(int priority, String specifier, String operator) {
+<span class="fc" id="L333">		engine.opNew(operator, specifier, priority);</span>
+<span class="fc" id="L334">	}</span>
+
+	public boolean currentPredicate(String functor, int arity) {
+<span class="fc" id="L337">		String key = Parser.wrapAtom(functor) + &quot;/&quot; + arity;</span>
+
+		// supported built-ins
+<span class="pc bpc" id="L340" title="1 of 4 branches missed.">		boolean isBuiltin = engine.hasPrimitive(key) || engine.hasPrimitiveExp(key);</span>
+
+		// user defined predicates
+<span class="fc bfc" id="L343" title="All 2 branches covered.">		if (!isBuiltin) {</span>
+			try {
+<span class="pc bpc" id="L345" title="1 of 2 branches missed.">				if (!engine.find(key).isEmpty()) {</span>
+<span class="fc" id="L346">					return true;</span>
+				}
+<span class="nc" id="L348">			} catch (PrologException e) {</span>
+<span class="nc" id="L349">				getLogger().error(getClass(), PrologLogger.INDICATOR_NOT_FOUND + key, e);</span>
+<span class="nc" id="L350">			}</span>
+		}
+
+		// not defined
+<span class="fc" id="L354">		return isBuiltin;</span>
+	}
+
+	public boolean currentOperator(int priority, String specifier, String operator) {
+<span class="fc" id="L358">		return currentOperators().contains(new JTrologOperator(priority, specifier, operator));</span>
+	}
+
+	public Set&lt;PrologOperator&gt; currentOperators() {
+<span class="fc" id="L362">		return JTrologUtil.getOperatorSet(engine);</span>
+	}
+
+	public Iterator&lt;PrologClause&gt; iterator() {
+<span class="fc" id="L366">		Collection&lt;PrologClause&gt; cls = new LinkedList&lt;PrologClause&gt;();</span>
+<span class="fc" id="L367">		Parser parser = new Parser(engine.getTheory());</span>
+<span class="fc bfc" id="L368" title="All 2 branches covered.">		for (Iterator&lt;?&gt; iterator = parser.iterator(); iterator.hasNext();) {</span>
+<span class="fc" id="L369">			Term term = (Term) iterator.next();</span>
+<span class="pc bpc" id="L370" title="1 of 2 branches missed.">			if (term instanceof Struct) {</span>
+<span class="fc" id="L371">				Struct struct = (Struct) term;</span>
+<span class="pc bpc" id="L372" title="1 of 4 branches missed.">				if (struct.name.equals(&quot;:-&quot;) &amp;&amp; struct.arity == 2) {</span>
+<span class="fc" id="L373">					PrologTerm head = toTerm(struct.getArg(0), PrologTerm.class);</span>
+<span class="fc" id="L374">					PrologTerm body = toTerm(struct.getArg(1), PrologTerm.class);</span>
+<span class="fc" id="L375">					cls.add(new JTrologClause(provider, head, body, false, false, false));</span>
+<span class="fc" id="L376">				} else {</span>
+<span class="fc" id="L377">					PrologTerm head = toTerm(struct, PrologTerm.class);</span>
+<span class="fc" id="L378">					cls.add(new JTrologClause(provider, head, false, false, false));</span>
+				}
+			}
+<span class="fc" id="L381">		}</span>
+<span class="fc" id="L382">		return new PrologProgramIterator(cls);</span>
+	}
+
+	public int getProgramSize() {
+<span class="fc" id="L386">		int counter = 0;</span>
+<span class="fc" id="L387">		Iterator&lt;?&gt; i = engine.dynamicPredicateIndicators();</span>
+<span class="fc bfc" id="L388" title="All 2 branches covered.">		while (i.hasNext()) {</span>
+<span class="fc" id="L389">			String predIndicator = (String) i.next();</span>
+			try {
+<span class="fc" id="L391">				List&lt;?&gt; list = engine.find(predIndicator);</span>
+<span class="fc" id="L392">				counter += list.size();</span>
+<span class="nc" id="L393">			} catch (PrologException e) {</span>
+<span class="nc" id="L394">				getLogger().error(getClass(), PrologLogger.INDICATOR_NOT_FOUND + predIndicator, e);</span>
+<span class="fc" id="L395">			}</span>
+<span class="fc" id="L396">		}</span>
+<span class="fc" id="L397">		return counter;</span>
+	}
+
+	public Set&lt;PrologIndicator&gt; getPredicates() {
+<span class="fc" id="L401">		Set&lt;PrologIndicator&gt; predicates = new HashSet&lt;PrologIndicator&gt;();</span>
+<span class="fc" id="L402">		Iterator&lt;?&gt; i = engine.dynamicPredicateIndicators();</span>
+<span class="pc bpc" id="L403" title="1 of 2 branches missed.">		while (i.hasNext()) {</span>
+<span class="nc" id="L404">			String predIndicator = (String) i.next();</span>
+			try {
+<span class="nc" id="L406">				List&lt;?&gt; list = engine.find(predIndicator);</span>
+<span class="nc bnc" id="L407" title="All 2 branches missed.">				for (Object object : list) {</span>
+<span class="nc bnc" id="L408" title="All 2 branches missed.">					if (object instanceof Clause) {</span>
+<span class="nc" id="L409">						Clause clause = (Clause) object;</span>
+<span class="nc" id="L410">						String functor = clause.head.name;</span>
+<span class="nc" id="L411">						int arity = clause.head.arity;</span>
+<span class="nc" id="L412">						JTrologIndicator p = new JTrologIndicator(functor, arity);</span>
+<span class="nc" id="L413">						predicates.add(p);</span>
+					}
+<span class="nc" id="L415">				}</span>
+<span class="nc" id="L416">			} catch (PrologException e) {</span>
+<span class="nc" id="L417">				getLogger().error(getClass(), PrologLogger.INDICATOR_NOT_FOUND + predIndicator, e);</span>
+<span class="nc" id="L418">			}</span>
+<span class="nc" id="L419">		}</span>
+<span class="fc" id="L420">		return predicates;</span>
+	}
+
+	public Set&lt;PrologIndicator&gt; getBuiltIns() {
+<span class="fc" id="L424">		Iterator&lt;?&gt; libraries = engine.getCurrentLibraries();</span>
+<span class="fc" id="L425">		Set&lt;PrologIndicator&gt; builtins = new HashSet&lt;PrologIndicator&gt;();</span>
+<span class="fc bfc" id="L426" title="All 2 branches covered.">		while (libraries.hasNext()) {</span>
+<span class="fc" id="L427">			Object object = libraries.next();</span>
+<span class="pc bpc" id="L428" title="1 of 2 branches missed.">			if (object instanceof Library) {</span>
+<span class="fc" id="L429">				Library library = (Library) object;</span>
+<span class="fc" id="L430">				Class&lt;? extends Library&gt; c = library.getClass();</span>
+<span class="fc" id="L431">				Method[] methods = c.getDeclaredMethods();</span>
+<span class="fc" id="L432">				String regex = &quot;\\.|\\?|#|[a-z][A-Za-z0-9_]*_[0-9]+&quot;;</span>
+<span class="fc bfc" id="L433" title="All 2 branches covered.">				for (Method method1 : methods) {</span>
+<span class="fc" id="L434">					String method = method1.getName();</span>
+<span class="fc bfc" id="L435" title="All 2 branches covered.">					if (method.matches(regex)) {</span>
+<span class="fc" id="L436">						int j = method.lastIndexOf('_');</span>
+<span class="fc" id="L437">						String f = method.substring(0, j);</span>
+<span class="fc" id="L438">						int a = Integer.parseInt(method.substring(j + 1));</span>
+<span class="fc" id="L439">						builtins.add(new JTrologIndicator(f, a));</span>
+					}
+				}
+			}
+<span class="fc" id="L443">		}</span>
+<span class="fc" id="L444">		return builtins;</span>
+	}
+
+	public String getLicense() {
+<span class="fc" id="L448">		return Licenses.NO_SPECIFIED;</span>
+	}
+
+	public String getVersion() {
+<span class="fc" id="L452">		return JTrolog.VERSION;</span>
+	}
+
+	public String getName() {
+<span class="fc" id="L456">		return JTrolog.NAME;</span>
+	}
+
+	@Override
+	public int hashCode() {
+<span class="nc" id="L461">		final int prime = 31;</span>
+<span class="nc" id="L462">		int result = 1;</span>
+<span class="nc bnc" id="L463" title="All 2 branches missed.">		result = prime * result + ((engine == null) ? 0 : engine.hashCode());</span>
+<span class="nc" id="L464">		return result;</span>
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+<span class="pc bpc" id="L469" title="1 of 2 branches missed.">		if (this == obj)</span>
+<span class="fc" id="L470">			return true;</span>
+<span class="nc bnc" id="L471" title="All 2 branches missed.">		if (obj == null)</span>
+<span class="nc" id="L472">			return false;</span>
+<span class="nc bnc" id="L473" title="All 2 branches missed.">		if (getClass() != obj.getClass())</span>
+<span class="nc" id="L474">			return false;</span>
+<span class="nc" id="L475">		JTrologEngine other = (JTrologEngine) obj;</span>
+<span class="nc bnc" id="L476" title="All 4 branches missed.">		return engine != null &amp;&amp; other.engine != null;</span>
+	}
+
+	public void dispose() {
+<span class="pc bpc" id="L480" title="1 of 2 branches missed.">		if (engine != null) {</span>
+<span class="fc" id="L481">			engine.clearTheory();</span>
+		}
+<span class="fc" id="L483">	}</span>
+
+	public final List&lt;String&gt; verify() {
+<span class="nc" id="L486">		return Arrays.asList(&quot;OK&quot;);</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>
