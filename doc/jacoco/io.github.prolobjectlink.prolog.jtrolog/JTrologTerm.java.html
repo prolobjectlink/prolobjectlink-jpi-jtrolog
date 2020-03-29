@@ -1,0 +1,375 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>JTrologTerm.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">prolobjectlink-jpi-jtrolog</a> &gt; <a href="index.source.html" class="el_package">io.github.prolobjectlink.prolog.jtrolog</a> &gt; <span class="el_source">JTrologTerm.java</span></div><h1>JTrologTerm.java</h1><pre class="source lang-java linenums">/*
+ * #%L
+ * prolobjectlink-jpi-jtrolog
+ * %%
+ * Copyright (C) 2019 Prolobjectlink Project
+ * %%
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation, either version 2.1 of the
+ * License, or (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Lesser Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Lesser Public
+ * License along with this program.  If not, see
+ * &lt;http://www.gnu.org/licenses/lgpl-2.1.html&gt;.
+ * #L%
+ */
+package io.github.prolobjectlink.prolog.jtrolog;
+
+import static io.github.prolobjectlink.prolog.PrologTermType.ATOM_TYPE;
+import static io.github.prolobjectlink.prolog.PrologTermType.CUT_TYPE;
+import static io.github.prolobjectlink.prolog.PrologTermType.DOUBLE_TYPE;
+import static io.github.prolobjectlink.prolog.PrologTermType.FAIL_TYPE;
+import static io.github.prolobjectlink.prolog.PrologTermType.FALSE_TYPE;
+import static io.github.prolobjectlink.prolog.PrologTermType.FLOAT_TYPE;
+import static io.github.prolobjectlink.prolog.PrologTermType.INTEGER_TYPE;
+import static io.github.prolobjectlink.prolog.PrologTermType.LIST_TYPE;
+import static io.github.prolobjectlink.prolog.PrologTermType.LONG_TYPE;
+import static io.github.prolobjectlink.prolog.PrologTermType.NIL_TYPE;
+import static io.github.prolobjectlink.prolog.PrologTermType.STRUCTURE_TYPE;
+import static io.github.prolobjectlink.prolog.PrologTermType.TRUE_TYPE;
+import static io.github.prolobjectlink.prolog.PrologTermType.VARIABLE_TYPE;
+
+import java.util.Iterator;
+
+import io.github.prolobjectlink.prolog.AbstractTerm;
+import io.github.prolobjectlink.prolog.PrologNumber;
+import io.github.prolobjectlink.prolog.PrologProvider;
+import io.github.prolobjectlink.prolog.PrologTerm;
+import jTrolog.engine.Prolog;
+import jTrolog.terms.Double;
+import jTrolog.terms.Float;
+import jTrolog.terms.Int;
+import jTrolog.terms.Long;
+import jTrolog.terms.Number;
+import jTrolog.terms.Struct;
+import jTrolog.terms.StructAtom;
+import jTrolog.terms.Term;
+import jTrolog.terms.Var;
+
+/**
+ * 
+ * @author Jose Zalacain
+ * @since 1.0
+ */
+abstract class JTrologTerm extends AbstractTerm implements PrologTerm {
+
+	// variable index
+	protected int vIndex;
+	protected Term value;
+
+<span class="fc" id="L66">	static final JTrologOperatorSet ops = new JTrologOperatorSet();</span>
+
+	protected JTrologTerm(int type, PrologProvider provider) {
+<span class="fc" id="L69">		super(type, provider);</span>
+<span class="fc" id="L70">	}</span>
+
+	protected JTrologTerm(int type, PrologProvider provider, Term value) {
+<span class="fc" id="L73">		super(type, provider);</span>
+<span class="fc" id="L74">		this.value = value;</span>
+<span class="fc" id="L75">	}</span>
+
+	/**
+	 * Variable constructor
+	 * 
+	 * @param type
+	 * @param provider
+	 * @param n
+	 */
+	protected JTrologTerm(int type, PrologProvider provider, String name, int n) {
+<span class="fc" id="L85">		this(type, provider, new Var(name, n));</span>
+<span class="fc" id="L86">		this.vIndex = n;</span>
+<span class="fc" id="L87">	}</span>
+
+	public final boolean isAtom() {
+<span class="fc" id="L90">		return value instanceof StructAtom;</span>
+	}
+
+	public final boolean isNumber() {
+<span class="fc" id="L94">		return value instanceof Number;</span>
+	}
+
+	public final boolean isFloat() {
+<span class="fc bfc" id="L98" title="All 4 branches covered.">		return value instanceof Float &amp;&amp; !isDouble();</span>
+	}
+
+	public final boolean isDouble() {
+<span class="fc" id="L102">		return value instanceof Double;</span>
+	}
+
+	public final boolean isInteger() {
+<span class="fc bfc" id="L106" title="All 4 branches covered.">		return value instanceof Int &amp;&amp; !isLong();</span>
+	}
+
+	public final boolean isLong() {
+<span class="fc" id="L110">		return value instanceof Long;</span>
+	}
+
+	public final boolean isVariable() {
+<span class="fc" id="L114">		return value instanceof Var;</span>
+	}
+
+	public final boolean isList() {
+<span class="fc bfc" id="L118" title="All 2 branches covered.">		if (value == Term.emptyList) {</span>
+<span class="fc" id="L119">			return true;</span>
+<span class="fc bfc" id="L120" title="All 2 branches covered.">		} else if (value instanceof Struct) {</span>
+<span class="fc" id="L121">			Struct s = (Struct) value;</span>
+<span class="pc bpc" id="L122" title="1 of 4 branches missed.">			return (s.name.equals(&quot;.&quot;) &amp;&amp; s.arity == 2);</span>
+		}
+<span class="fc" id="L124">		return false;</span>
+	}
+
+	public final boolean isStructure() {
+<span class="fc bfc" id="L128" title="All 4 branches covered.">		if (!isAtom() &amp;&amp; !isList()) {</span>
+<span class="fc" id="L129">			return value instanceof Struct;</span>
+		}
+<span class="fc" id="L131">		return false;</span>
+	}
+
+	public final boolean isNil() {
+<span class="fc bfc" id="L135" title="All 4 branches covered.">		if (!isVariable() &amp;&amp; !isNumber()) {</span>
+<span class="fc" id="L136">			return hasIndicator(&quot;nil&quot;, 0);</span>
+		}
+<span class="fc" id="L138">		return false;</span>
+	}
+
+	public final boolean isEmptyList() {
+<span class="fc bfc" id="L142" title="All 2 branches covered.">		return value == Term.emptyList;</span>
+	}
+
+	public final boolean isEvaluable() {
+<span class="fc" id="L146">		Prolog prolog = new Prolog();</span>
+<span class="fc" id="L147">		Iterator&lt;?&gt; i = prolog.getCurrentOperators();</span>
+<span class="fc bfc" id="L148" title="All 2 branches covered.">		while (i.hasNext()) {</span>
+<span class="fc" id="L149">			Object object = i.next();</span>
+<span class="fc" id="L150">			boolean valueIsStrct = (value instanceof Struct);</span>
+<span class="fc" id="L151">			boolean objectIsStrct = (object instanceof Struct);</span>
+<span class="pc bpc" id="L152" title="1 of 4 branches missed.">			if (valueIsStrct &amp;&amp; objectIsStrct) {</span>
+<span class="fc" id="L153">				Struct op = (Struct) object;</span>
+<span class="fc" id="L154">				Struct vop = (Struct) value;</span>
+<span class="pc bpc" id="L155" title="1 of 4 branches missed.">				if (op.arity == 3 &amp;&amp; ((StructAtom) op.getArg(2)).name.equals(vop.name)) {</span>
+<span class="fc" id="L156">					return true;</span>
+				}
+			}
+<span class="fc" id="L159">		}</span>
+<span class="fc" id="L160">		return false;</span>
+	}
+
+	public final boolean isAtomic() {
+<span class="pc bpc" id="L164" title="1 of 2 branches missed.">		return !isCompound();</span>
+	}
+
+	public final boolean isCompound() {
+<span class="pc bpc" id="L168" title="1 of 4 branches missed.">		return isList() || isStructure();</span>
+	}
+
+	public final boolean isTrueType() {
+<span class="nc" id="L172">		return false;</span>
+	}
+
+	public final boolean isFalseType() {
+<span class="nc" id="L176">		return false;</span>
+	}
+
+	public final boolean isNullType() {
+<span class="nc" id="L180">		return false;</span>
+	}
+
+	public final boolean isVoidType() {
+<span class="nc" id="L184">		return false;</span>
+	}
+
+	public final boolean isObjectType() {
+<span class="nc" id="L188">		return false;</span>
+	}
+
+	public final boolean isReference() {
+<span class="nc" id="L192">		return false;</span>
+	}
+
+	public final Object getObject() {
+<span class="nc" id="L196">		return null;</span>
+	}
+
+	public final PrologTerm getTerm() {
+<span class="fc" id="L200">		return this;</span>
+	}
+
+	public final boolean unify(PrologTerm term) {
+<span class="fc" id="L204">		Term otherTerm = fromTerm(term, Term.class);</span>
+<span class="fc" id="L205">		return Prolog.match(value, otherTerm);</span>
+	}
+
+	public final int compareTo(PrologTerm term) {
+<span class="fc" id="L209">		int termType = term.getType();</span>
+
+<span class="fc bfc" id="L211" title="All 2 branches covered.">		if ((type &gt;&gt; 8) &lt; (termType &gt;&gt; 8)) {</span>
+<span class="fc" id="L212">			return -1;</span>
+<span class="fc bfc" id="L213" title="All 2 branches covered.">		} else if ((type &gt;&gt; 8) &gt; (termType &gt;&gt; 8)) {</span>
+<span class="fc" id="L214">			return 1;</span>
+		}
+
+<span class="pc bpc" id="L217" title="1 of 8 branches missed.">		switch (type) {</span>
+		case NIL_TYPE:
+		case CUT_TYPE:
+		case FAIL_TYPE:
+		case TRUE_TYPE:
+		case FALSE_TYPE:
+		case ATOM_TYPE:
+
+			// alphabetic functor comparison
+<span class="fc" id="L226">			StructAtom atom = (StructAtom) value;</span>
+<span class="fc" id="L227">			int result = atom.name.compareTo(term.getFunctor());</span>
+<span class="fc bfc" id="L228" title="All 2 branches covered.">			if (result &lt; 0) {</span>
+<span class="fc" id="L229">				return -1;</span>
+<span class="fc bfc" id="L230" title="All 2 branches covered.">			} else if (result &gt; 0) {</span>
+<span class="fc" id="L231">				return 1;</span>
+			}
+			break;
+
+		case FLOAT_TYPE:
+
+<span class="fc" id="L237">			float thisFloatValue = ((Number) value).floatValue();</span>
+<span class="fc" id="L238">			float otherFloatValue = ((PrologNumber) term).getFloatValue();</span>
+
+<span class="fc bfc" id="L240" title="All 2 branches covered.">			if (thisFloatValue &lt; otherFloatValue) {</span>
+<span class="fc" id="L241">				return -1;</span>
+<span class="fc bfc" id="L242" title="All 2 branches covered.">			} else if (thisFloatValue &gt; otherFloatValue) {</span>
+<span class="fc" id="L243">				return 1;</span>
+			}
+
+			break;
+
+		case LONG_TYPE:
+
+<span class="fc" id="L250">			long thisLongValue = ((Number) value).longValue();</span>
+<span class="fc" id="L251">			long otherLongValue = ((PrologNumber) term).getLongValue();</span>
+
+<span class="fc bfc" id="L253" title="All 2 branches covered.">			if (thisLongValue &lt; otherLongValue) {</span>
+<span class="fc" id="L254">				return -1;</span>
+<span class="pc bpc" id="L255" title="1 of 2 branches missed.">			} else if (thisLongValue &gt; otherLongValue) {</span>
+<span class="nc" id="L256">				return 1;</span>
+			}
+
+			break;
+
+		case DOUBLE_TYPE:
+
+<span class="fc" id="L263">			double thisDoubleValue = ((Number) value).doubleValue();</span>
+<span class="fc" id="L264">			double otherDoubleValue = ((PrologNumber) term).getDoubleValue();</span>
+
+<span class="fc bfc" id="L266" title="All 2 branches covered.">			if (thisDoubleValue &lt; otherDoubleValue) {</span>
+<span class="fc" id="L267">				return -1;</span>
+<span class="fc bfc" id="L268" title="All 2 branches covered.">			} else if (thisDoubleValue &gt; otherDoubleValue) {</span>
+<span class="fc" id="L269">				return 1;</span>
+			}
+
+			break;
+
+		case INTEGER_TYPE:
+
+<span class="fc" id="L276">			int thisIntegerValue = ((Number) value).intValue();</span>
+<span class="fc" id="L277">			int otherIntegerValue = ((PrologNumber) term).getIntegerValue();</span>
+
+<span class="fc bfc" id="L279" title="All 2 branches covered.">			if (thisIntegerValue &lt; otherIntegerValue) {</span>
+<span class="fc" id="L280">				return -1;</span>
+<span class="fc bfc" id="L281" title="All 2 branches covered.">			} else if (thisIntegerValue &gt; otherIntegerValue) {</span>
+<span class="fc" id="L282">				return 1;</span>
+			}
+
+			break;
+
+		case LIST_TYPE:
+		case STRUCTURE_TYPE:
+
+<span class="fc" id="L290">			PrologTerm thisCompound = this;</span>
+<span class="fc" id="L291">			PrologTerm otherCompound = term;</span>
+
+			// comparison by arity
+<span class="fc bfc" id="L294" title="All 2 branches covered.">			if (thisCompound.getArity() &lt; otherCompound.getArity()) {</span>
+<span class="fc" id="L295">				return -1;</span>
+<span class="fc bfc" id="L296" title="All 2 branches covered.">			} else if (thisCompound.getArity() &gt; otherCompound.getArity()) {</span>
+<span class="fc" id="L297">				return 1;</span>
+			}
+
+			// alphabetic functor comparison
+<span class="fc" id="L301">			result = thisCompound.getFunctor().compareTo(otherCompound.getFunctor());</span>
+<span class="fc bfc" id="L302" title="All 2 branches covered.">			if (result &lt; 0) {</span>
+<span class="fc" id="L303">				return -1;</span>
+<span class="pc bpc" id="L304" title="1 of 2 branches missed.">			} else if (result &gt; 0) {</span>
+<span class="nc" id="L305">				return 1;</span>
+			}
+
+			// arguments comparison
+<span class="fc" id="L309">			PrologTerm[] thisArguments = thisCompound.getArguments();</span>
+<span class="fc" id="L310">			PrologTerm[] otherArguments = otherCompound.getArguments();</span>
+
+<span class="fc bfc" id="L312" title="All 2 branches covered.">			for (int i = 0; i &lt; thisArguments.length; i++) {</span>
+<span class="fc" id="L313">				PrologTerm thisArgument = thisArguments[i];</span>
+<span class="fc" id="L314">				PrologTerm otherArgument = otherArguments[i];</span>
+<span class="pc bpc" id="L315" title="2 of 4 branches missed.">				if (thisArgument != null &amp;&amp; otherArgument != null) {</span>
+<span class="fc" id="L316">					result = thisArgument.compareTo(otherArgument);</span>
+<span class="fc bfc" id="L317" title="All 2 branches covered.">					if (result != 0) {</span>
+<span class="fc" id="L318">						return result;</span>
+					}
+				}
+			}
+<span class="fc" id="L322">			break;</span>
+
+		case VARIABLE_TYPE:
+
+<span class="fc" id="L326">			PrologTerm thisVariable = this;</span>
+<span class="fc" id="L327">			PrologTerm otherVariable = term;</span>
+<span class="fc bfc" id="L328" title="All 2 branches covered.">			if (thisVariable.hashCode() &lt; otherVariable.hashCode()) {</span>
+<span class="fc" id="L329">				return -1;</span>
+<span class="pc bpc" id="L330" title="1 of 2 branches missed.">			} else if (thisVariable.hashCode() &gt; otherVariable.hashCode()) {</span>
+<span class="nc" id="L331">				return 1;</span>
+			}
+			break;
+
+		default:
+<span class="nc" id="L336">			return 0;</span>
+
+		}
+
+<span class="fc" id="L340">		return 0;</span>
+	}
+
+	public int hashCode() {
+<span class="fc" id="L344">		final int prime = 31;</span>
+<span class="fc" id="L345">		int result = 1;</span>
+<span class="fc" id="L346">		result = prime * result + type;</span>
+<span class="pc bpc" id="L347" title="1 of 2 branches missed.">		result = prime * result + ((value == null) ? 0 : value.toString().hashCode());</span>
+<span class="fc" id="L348">		return result;</span>
+	}
+
+	public boolean equals(Object obj) {
+<span class="fc bfc" id="L352" title="All 2 branches covered.">		if (this == obj)</span>
+<span class="fc" id="L353">			return true;</span>
+<span class="pc bpc" id="L354" title="1 of 2 branches missed.">		if (obj == null)</span>
+<span class="nc" id="L355">			return false;</span>
+<span class="pc bpc" id="L356" title="1 of 2 branches missed.">		if (!(obj instanceof JTrologTerm))</span>
+<span class="nc" id="L357">			return false;</span>
+<span class="fc" id="L358">		JTrologTerm other = (JTrologTerm) obj;</span>
+<span class="pc bpc" id="L359" title="1 of 2 branches missed.">		if (value == null) {</span>
+<span class="nc bnc" id="L360" title="All 2 branches missed.">			if (other.value != null)</span>
+<span class="nc" id="L361">				return false;</span>
+<span class="fc bfc" id="L362" title="All 2 branches covered.">		} else if (value.toString().equals(other.value.toString())) {</span>
+<span class="fc" id="L363">			return true;</span>
+<span class="pc bpc" id="L364" title="1 of 2 branches missed.">		} else if (!Prolog.match(value, other.value)) {</span>
+<span class="fc" id="L365">			return false;</span>
+		}
+<span class="nc" id="L367">		return true;</span>
+	}
+
+	public final String toString() {
+<span class="fc" id="L371">		return value.toStringSmall();</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>
