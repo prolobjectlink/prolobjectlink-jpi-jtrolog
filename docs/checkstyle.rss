@@ -3,7 +3,7 @@
 <rss version="0.91">
   <channel>
     <title>prolobjectlink-jpi-jtrolog - Checkstyle report</title>
-    <link>https://github.com/prolobjectlink/prolobjectlink-jpi-jtrolog</link>
+    <link>https://prolobjectlink.github.io/prolobjectlink-jpi-jtrolog</link>
     <description>prolobjectlink-jpi-jtrolog - Checkstyle report</description>
     <language>en-us</language>
     <copyright>&#169;2012 - 2020 Prolobjectlink Project</copyright>
@@ -13,9 +13,9 @@
              Warnings: 0,
              Infos: 0
       </title>
-            <link>https://github.com/prolobjectlink/prolobjectlink-jpi-jtrolog/checkstyle.html</link>
+            <link>https://prolobjectlink.github.io/prolobjectlink-jpi-jtrolog/checkstyle.html</link>
       <description>
-        <p>Click <a href="https://github.com/prolobjectlink/prolobjectlink-jpi-jtrolog/checkstyle.html">here</a> for the full Checkstyle report.</p>
+        <p>Click <a href="https://prolobjectlink.github.io/prolobjectlink-jpi-jtrolog/checkstyle.html">here</a> for the full Checkstyle report.</p>
 
         <table summary="Files" boder="1">
           <thead>
@@ -29,7 +29,7 @@
           <tbody>
                           <tr>
                 <td>
-                  <a href="https://github.com/prolobjectlink/prolobjectlink-jpi-jtrolog/checkstyle.html#jTrolog.terms.Number.java">jTrolog/terms/Number.java</a>
+                  <a href="https://prolobjectlink.github.io/prolobjectlink-jpi-jtrolog/checkstyle.html#jTrolog.terms.Number.java">jTrolog/terms/Number.java</a>
                 </td>
                 <td>
                   0
@@ -43,7 +43,7 @@
               </tr>
                           <tr>
                 <td>
-                  <a href="https://github.com/prolobjectlink/prolobjectlink-jpi-jtrolog/checkstyle.html#io.github.prolobjectlink.prolog.jtrolog.JTrologFormatter.java">io/github/prolobjectlink/prolog/jtrolog/JTrologFormatter.java</a>
+                  <a href="https://prolobjectlink.github.io/prolobjectlink-jpi-jtrolog/checkstyle.html#io.github.prolobjectlink.prolog.jtrolog.JTrologFormatter.java">io/github/prolobjectlink/prolog/jtrolog/JTrologFormatter.java</a>
                 </td>
                 <td>
                   0
@@ -57,7 +57,7 @@
               </tr>
                           <tr>
                 <td>
-                  <a href="https://github.com/prolobjectlink/prolobjectlink-jpi-jtrolog/checkstyle.html#io.github.prolobjectlink.prolog.jtrolog.JTrologJavaConverter.java">io/github/prolobjectlink/prolog/jtrolog/JTrologJavaConverter.java</a>
+                  <a href="https://prolobjectlink.github.io/prolobjectlink-jpi-jtrolog/checkstyle.html#io.github.prolobjectlink.prolog.jtrolog.JTrologJavaConverter.java">io/github/prolobjectlink/prolog/jtrolog/JTrologJavaConverter.java</a>
                 </td>
                 <td>
                   0
@@ -71,7 +71,7 @@
               </tr>
                           <tr>
                 <td>
-                  <a href="https://github.com/prolobjectlink/prolobjectlink-jpi-jtrolog/checkstyle.html#jTrolog.parser.Parser.java">jTrolog/parser/Parser.java</a>
+                  <a href="https://prolobjectlink.github.io/prolobjectlink-jpi-jtrolog/checkstyle.html#jTrolog.parser.Parser.java">jTrolog/parser/Parser.java</a>
                 </td>
                 <td>
                   0
@@ -85,7 +85,7 @@
               </tr>
                           <tr>
                 <td>
-                  <a href="https://github.com/prolobjectlink/prolobjectlink-jpi-jtrolog/checkstyle.html#jTrolog.terms.Var.java">jTrolog/terms/Var.java</a>
+                  <a href="https://prolobjectlink.github.io/prolobjectlink-jpi-jtrolog/checkstyle.html#jTrolog.terms.Var.java">jTrolog/terms/Var.java</a>
                 </td>
                 <td>
                   0
@@ -99,7 +99,7 @@
               </tr>
                           <tr>
                 <td>
-                  <a href="https://github.com/prolobjectlink/prolobjectlink-jpi-jtrolog/checkstyle.html#io.github.prolobjectlink.prolog.jtrolog.JTrologLogger.java">io/github/prolobjectlink/prolog/jtrolog/JTrologLogger.java</a>
+                  <a href="https://prolobjectlink.github.io/prolobjectlink-jpi-jtrolog/checkstyle.html#io.github.prolobjectlink.prolog.jtrolog.JTrologLogger.java">io/github/prolobjectlink/prolog/jtrolog/JTrologLogger.java</a>
                 </td>
                 <td>
                   0
@@ -113,7 +113,7 @@
               </tr>
                           <tr>
                 <td>
-                  <a href="https://github.com/prolobjectlink/prolobjectlink-jpi-jtrolog/checkstyle.html#io.github.prolobjectlink.prolog.jtrolog.JTrologUtil.java">io/github/prolobjectlink/prolog/jtrolog/JTrologUtil.java</a>
+                  <a href="https://prolobjectlink.github.io/prolobjectlink-jpi-jtrolog/checkstyle.html#io.github.prolobjectlink.prolog.jtrolog.JTrologUtil.java">io/github/prolobjectlink/prolog/jtrolog/JTrologUtil.java</a>
                 </td>
                 <td>
                   0
@@ -127,7 +127,7 @@
               </tr>
                           <tr>
                 <td>
-                  <a href="https://github.com/prolobjectlink/prolobjectlink-jpi-jtrolog/checkstyle.html#jTrolog.parser.Token.java">jTrolog/parser/Token.java</a>
+                  <a href="https://prolobjectlink.github.io/prolobjectlink-jpi-jtrolog/checkstyle.html#jTrolog.parser.Token.java">jTrolog/parser/Token.java</a>
                 </td>
                 <td>
                   0
@@ -141,7 +141,7 @@
               </tr>
                           <tr>
                 <td>
-                  <a href="https://github.com/prolobjectlink/prolobjectlink-jpi-jtrolog/checkstyle.html#jTrolog.terms.Term.java">jTrolog/terms/Term.java</a>
+                  <a href="https://prolobjectlink.github.io/prolobjectlink-jpi-jtrolog/checkstyle.html#jTrolog.terms.Term.java">jTrolog/terms/Term.java</a>
                 </td>
                 <td>
                   0
@@ -155,7 +155,7 @@
               </tr>
                           <tr>
                 <td>
-                  <a href="https://github.com/prolobjectlink/prolobjectlink-jpi-jtrolog/checkstyle.html#jTrolog.lib.IOLibrary.java">jTrolog/lib/IOLibrary.java</a>
+                  <a href="https://prolobjectlink.github.io/prolobjectlink-jpi-jtrolog/checkstyle.html#jTrolog.lib.IOLibrary.java">jTrolog/lib/IOLibrary.java</a>
                 </td>
                 <td>
                   0
@@ -169,7 +169,7 @@
               </tr>
                           <tr>
                 <td>
-                  <a href="https://github.com/prolobjectlink/prolobjectlink-jpi-jtrolog/checkstyle.html#io.github.prolobjectlink.prolog.jtrolog.JTrolog.java">io/github/prolobjectlink/prolog/jtrolog/JTrolog.java</a>
+                  <a href="https://prolobjectlink.github.io/prolobjectlink-jpi-jtrolog/checkstyle.html#io.github.prolobjectlink.prolog.jtrolog.JTrolog.java">io/github/prolobjectlink/prolog/jtrolog/JTrolog.java</a>
                 </td>
                 <td>
                   0
@@ -183,7 +183,7 @@
               </tr>
                           <tr>
                 <td>
-                  <a href="https://github.com/prolobjectlink/prolobjectlink-jpi-jtrolog/checkstyle.html#jTrolog.lib.ISOLibrary.java">jTrolog/lib/ISOLibrary.java</a>
+                  <a href="https://prolobjectlink.github.io/prolobjectlink-jpi-jtrolog/checkstyle.html#jTrolog.lib.ISOLibrary.java">jTrolog/lib/ISOLibrary.java</a>
                 </td>
                 <td>
                   0
@@ -197,7 +197,7 @@
               </tr>
                           <tr>
                 <td>
-                  <a href="https://github.com/prolobjectlink/prolobjectlink-jpi-jtrolog/checkstyle.html#jTrolog.engine.DefaultProlog.java">jTrolog/engine/DefaultProlog.java</a>
+                  <a href="https://prolobjectlink.github.io/prolobjectlink-jpi-jtrolog/checkstyle.html#jTrolog.engine.DefaultProlog.java">jTrolog/engine/DefaultProlog.java</a>
                 </td>
                 <td>
                   0
@@ -211,7 +211,7 @@
               </tr>
                           <tr>
                 <td>
-                  <a href="https://github.com/prolobjectlink/prolobjectlink-jpi-jtrolog/checkstyle.html#jTrolog.terms.Int.java">jTrolog/terms/Int.java</a>
+                  <a href="https://prolobjectlink.github.io/prolobjectlink-jpi-jtrolog/checkstyle.html#jTrolog.terms.Int.java">jTrolog/terms/Int.java</a>
                 </td>
                 <td>
                   0
@@ -225,7 +225,7 @@
               </tr>
                           <tr>
                 <td>
-                  <a href="https://github.com/prolobjectlink/prolobjectlink-jpi-jtrolog/checkstyle.html#jTrolog.engine.PrimitiveInfo.java">jTrolog/engine/PrimitiveInfo.java</a>
+                  <a href="https://prolobjectlink.github.io/prolobjectlink-jpi-jtrolog/checkstyle.html#jTrolog.engine.PrimitiveInfo.java">jTrolog/engine/PrimitiveInfo.java</a>
                 </td>
                 <td>
                   0
@@ -239,7 +239,7 @@
               </tr>
                           <tr>
                 <td>
-                  <a href="https://github.com/prolobjectlink/prolobjectlink-jpi-jtrolog/checkstyle.html#io.github.prolobjectlink.prolog.jtrolog.JTrologCut.java">io/github/prolobjectlink/prolog/jtrolog/JTrologCut.java</a>
+                  <a href="https://prolobjectlink.github.io/prolobjectlink-jpi-jtrolog/checkstyle.html#io.github.prolobjectlink.prolog.jtrolog.JTrologCut.java">io/github/prolobjectlink/prolog/jtrolog/JTrologCut.java</a>
                 </td>
                 <td>
                   0
@@ -253,7 +253,7 @@
               </tr>
                           <tr>
                 <td>
-                  <a href="https://github.com/prolobjectlink/prolobjectlink-jpi-jtrolog/checkstyle.html#io.github.prolobjectlink.prolog.jtrolog.JTrologEngine.java">io/github/prolobjectlink/prolog/jtrolog/JTrologEngine.java</a>
+                  <a href="https://prolobjectlink.github.io/prolobjectlink-jpi-jtrolog/checkstyle.html#io.github.prolobjectlink.prolog.jtrolog.JTrologEngine.java">io/github/prolobjectlink/prolog/jtrolog/JTrologEngine.java</a>
                 </td>
                 <td>
                   0
@@ -267,7 +267,7 @@
               </tr>
                           <tr>
                 <td>
-                  <a href="https://github.com/prolobjectlink/prolobjectlink-jpi-jtrolog/checkstyle.html#jTrolog.lib.BuiltIn.java">jTrolog/lib/BuiltIn.java</a>
+                  <a href="https://prolobjectlink.github.io/prolobjectlink-jpi-jtrolog/checkstyle.html#jTrolog.lib.BuiltIn.java">jTrolog/lib/BuiltIn.java</a>
                 </td>
                 <td>
                   0
@@ -281,7 +281,7 @@
               </tr>
                           <tr>
                 <td>
-                  <a href="https://github.com/prolobjectlink/prolobjectlink-jpi-jtrolog/checkstyle.html#jTrolog.terms.WrapVar.java">jTrolog/terms/WrapVar.java</a>
+                  <a href="https://prolobjectlink.github.io/prolobjectlink-jpi-jtrolog/checkstyle.html#jTrolog.terms.WrapVar.java">jTrolog/terms/WrapVar.java</a>
                 </td>
                 <td>
                   0
@@ -295,7 +295,7 @@
               </tr>
                           <tr>
                 <td>
-                  <a href="https://github.com/prolobjectlink/prolobjectlink-jpi-jtrolog/checkstyle.html#jTrolog.parser.Tokenizer.java">jTrolog/parser/Tokenizer.java</a>
+                  <a href="https://prolobjectlink.github.io/prolobjectlink-jpi-jtrolog/checkstyle.html#jTrolog.parser.Tokenizer.java">jTrolog/parser/Tokenizer.java</a>
                 </td>
                 <td>
                   0
@@ -309,7 +309,7 @@
               </tr>
                           <tr>
                 <td>
-                  <a href="https://github.com/prolobjectlink/prolobjectlink-jpi-jtrolog/checkstyle.html#io.github.prolobjectlink.prolog.jtrolog.JTrologNil.java">io/github/prolobjectlink/prolog/jtrolog/JTrologNil.java</a>
+                  <a href="https://prolobjectlink.github.io/prolobjectlink-jpi-jtrolog/checkstyle.html#io.github.prolobjectlink.prolog.jtrolog.JTrologNil.java">io/github/prolobjectlink/prolog/jtrolog/JTrologNil.java</a>
                 </td>
                 <td>
                   0
@@ -323,7 +323,7 @@
               </tr>
                           <tr>
                 <td>
-                  <a href="https://github.com/prolobjectlink/prolobjectlink-jpi-jtrolog/checkstyle.html#io.github.prolobjectlink.prolog.jtrolog.JTrologTrue.java">io/github/prolobjectlink/prolog/jtrolog/JTrologTrue.java</a>
+                  <a href="https://prolobjectlink.github.io/prolobjectlink-jpi-jtrolog/checkstyle.html#io.github.prolobjectlink.prolog.jtrolog.JTrologTrue.java">io/github/prolobjectlink/prolog/jtrolog/JTrologTrue.java</a>
                 </td>
                 <td>
                   0
@@ -337,7 +337,7 @@
               </tr>
                           <tr>
                 <td>
-                  <a href="https://github.com/prolobjectlink/prolobjectlink-jpi-jtrolog/checkstyle.html#jTrolog.terms.EvaluableTerm.java">jTrolog/terms/EvaluableTerm.java</a>
+                  <a href="https://prolobjectlink.github.io/prolobjectlink-jpi-jtrolog/checkstyle.html#jTrolog.terms.EvaluableTerm.java">jTrolog/terms/EvaluableTerm.java</a>
                 </td>
                 <td>
                   0
@@ -351,7 +351,7 @@
               </tr>
                           <tr>
                 <td>
-                  <a href="https://github.com/prolobjectlink/prolobjectlink-jpi-jtrolog/checkstyle.html#jTrolog.terms.IteratorAsTerm.java">jTrolog/terms/IteratorAsTerm.java</a>
+                  <a href="https://prolobjectlink.github.io/prolobjectlink-jpi-jtrolog/checkstyle.html#jTrolog.terms.IteratorAsTerm.java">jTrolog/terms/IteratorAsTerm.java</a>
                 </td>
                 <td>
                   0
@@ -365,7 +365,7 @@
               </tr>
                           <tr>
                 <td>
-                  <a href="https://github.com/prolobjectlink/prolobjectlink-jpi-jtrolog/checkstyle.html#io.github.prolobjectlink.prolog.jtrolog.JTrologEmpty.java">io/github/prolobjectlink/prolog/jtrolog/JTrologEmpty.java</a>
+                  <a href="https://prolobjectlink.github.io/prolobjectlink-jpi-jtrolog/checkstyle.html#io.github.prolobjectlink.prolog.jtrolog.JTrologEmpty.java">io/github/prolobjectlink/prolog/jtrolog/JTrologEmpty.java</a>
                 </td>
                 <td>
                   0
@@ -379,7 +379,7 @@
               </tr>
                           <tr>
                 <td>
-                  <a href="https://github.com/prolobjectlink/prolobjectlink-jpi-jtrolog/checkstyle.html#io.github.prolobjectlink.prolog.jtrolog.JTrologOperator.java">io/github/prolobjectlink/prolog/jtrolog/JTrologOperator.java</a>
+                  <a href="https://prolobjectlink.github.io/prolobjectlink-jpi-jtrolog/checkstyle.html#io.github.prolobjectlink.prolog.jtrolog.JTrologOperator.java">io/github/prolobjectlink/prolog/jtrolog/JTrologOperator.java</a>
                 </td>
                 <td>
                   0
@@ -393,7 +393,7 @@
               </tr>
                           <tr>
                 <td>
-                  <a href="https://github.com/prolobjectlink/prolobjectlink-jpi-jtrolog/checkstyle.html#io.github.prolobjectlink.prolog.jtrolog.JTrologInteger.java">io/github/prolobjectlink/prolog/jtrolog/JTrologInteger.java</a>
+                  <a href="https://prolobjectlink.github.io/prolobjectlink-jpi-jtrolog/checkstyle.html#io.github.prolobjectlink.prolog.jtrolog.JTrologInteger.java">io/github/prolobjectlink/prolog/jtrolog/JTrologInteger.java</a>
                 </td>
                 <td>
                   0
@@ -407,7 +407,7 @@
               </tr>
                           <tr>
                 <td>
-                  <a href="https://github.com/prolobjectlink/prolobjectlink-jpi-jtrolog/checkstyle.html#jTrolog.terms.Struct.java">jTrolog/terms/Struct.java</a>
+                  <a href="https://prolobjectlink.github.io/prolobjectlink-jpi-jtrolog/checkstyle.html#jTrolog.terms.Struct.java">jTrolog/terms/Struct.java</a>
                 </td>
                 <td>
                   0
@@ -421,7 +421,7 @@
               </tr>
                           <tr>
                 <td>
-                  <a href="https://github.com/prolobjectlink/prolobjectlink-jpi-jtrolog/checkstyle.html#jTrolog.engine.SolutionManager.java">jTrolog/engine/SolutionManager.java</a>
+                  <a href="https://prolobjectlink.github.io/prolobjectlink-jpi-jtrolog/checkstyle.html#jTrolog.engine.SolutionManager.java">jTrolog/engine/SolutionManager.java</a>
                 </td>
                 <td>
                   0
@@ -435,7 +435,7 @@
               </tr>
                           <tr>
                 <td>
-                  <a href="https://github.com/prolobjectlink/prolobjectlink-jpi-jtrolog/checkstyle.html#jTrolog.engine.Engine.java">jTrolog/engine/Engine.java</a>
+                  <a href="https://prolobjectlink.github.io/prolobjectlink-jpi-jtrolog/checkstyle.html#jTrolog.engine.Engine.java">jTrolog/engine/Engine.java</a>
                 </td>
                 <td>
                   0
@@ -449,7 +449,7 @@
               </tr>
                           <tr>
                 <td>
-                  <a href="https://github.com/prolobjectlink/prolobjectlink-jpi-jtrolog/checkstyle.html#jTrolog.terms.Flag.java">jTrolog/terms/Flag.java</a>
+                  <a href="https://prolobjectlink.github.io/prolobjectlink-jpi-jtrolog/checkstyle.html#jTrolog.terms.Flag.java">jTrolog/terms/Flag.java</a>
                 </td>
                 <td>
                   0
@@ -463,7 +463,7 @@
               </tr>
                           <tr>
                 <td>
-                  <a href="https://github.com/prolobjectlink/prolobjectlink-jpi-jtrolog/checkstyle.html#jTrolog.terms.StructAtom.java">jTrolog/terms/StructAtom.java</a>
+                  <a href="https://prolobjectlink.github.io/prolobjectlink-jpi-jtrolog/checkstyle.html#jTrolog.terms.StructAtom.java">jTrolog/terms/StructAtom.java</a>
                 </td>
                 <td>
                   0
@@ -477,7 +477,7 @@
               </tr>
                           <tr>
                 <td>
-                  <a href="https://github.com/prolobjectlink/prolobjectlink-jpi-jtrolog/checkstyle.html#jTrolog.terms.WrapStruct.java">jTrolog/terms/WrapStruct.java</a>
+                  <a href="https://prolobjectlink.github.io/prolobjectlink-jpi-jtrolog/checkstyle.html#jTrolog.terms.WrapStruct.java">jTrolog/terms/WrapStruct.java</a>
                 </td>
                 <td>
                   0
@@ -491,7 +491,7 @@
               </tr>
                           <tr>
                 <td>
-                  <a href="https://github.com/prolobjectlink/prolobjectlink-jpi-jtrolog/checkstyle.html#jTrolog.lib.DCGLibrary.java">jTrolog/lib/DCGLibrary.java</a>
+                  <a href="https://prolobjectlink.github.io/prolobjectlink-jpi-jtrolog/checkstyle.html#jTrolog.lib.DCGLibrary.java">jTrolog/lib/DCGLibrary.java</a>
                 </td>
                 <td>
                   0
@@ -505,7 +505,7 @@
               </tr>
                           <tr>
                 <td>
-                  <a href="https://github.com/prolobjectlink/prolobjectlink-jpi-jtrolog/checkstyle.html#jTrolog.engine.Prolog.java">jTrolog/engine/Prolog.java</a>
+                  <a href="https://prolobjectlink.github.io/prolobjectlink-jpi-jtrolog/checkstyle.html#jTrolog.engine.Prolog.java">jTrolog/engine/Prolog.java</a>
                 </td>
                 <td>
                   0
@@ -519,7 +519,7 @@
               </tr>
                           <tr>
                 <td>
-                  <a href="https://github.com/prolobjectlink/prolobjectlink-jpi-jtrolog/checkstyle.html#io.github.prolobjectlink.prolog.jtrolog.JTrologTerm.java">io/github/prolobjectlink/prolog/jtrolog/JTrologTerm.java</a>
+                  <a href="https://prolobjectlink.github.io/prolobjectlink-jpi-jtrolog/checkstyle.html#io.github.prolobjectlink.prolog.jtrolog.JTrologTerm.java">io/github/prolobjectlink/prolog/jtrolog/JTrologTerm.java</a>
                 </td>
                 <td>
                   0
@@ -533,7 +533,7 @@
               </tr>
                           <tr>
                 <td>
-                  <a href="https://github.com/prolobjectlink/prolobjectlink-jpi-jtrolog/checkstyle.html#jTrolog.engine.OperatorTable.java">jTrolog/engine/OperatorTable.java</a>
+                  <a href="https://prolobjectlink.github.io/prolobjectlink-jpi-jtrolog/checkstyle.html#jTrolog.engine.OperatorTable.java">jTrolog/engine/OperatorTable.java</a>
                 </td>
                 <td>
                   0
@@ -547,7 +547,7 @@
               </tr>
                           <tr>
                 <td>
-                  <a href="https://github.com/prolobjectlink/prolobjectlink-jpi-jtrolog/checkstyle.html#io.github.prolobjectlink.prolog.jtrolog.JTrologStructure.java">io/github/prolobjectlink/prolog/jtrolog/JTrologStructure.java</a>
+                  <a href="https://prolobjectlink.github.io/prolobjectlink-jpi-jtrolog/checkstyle.html#io.github.prolobjectlink.prolog.jtrolog.JTrologStructure.java">io/github/prolobjectlink/prolog/jtrolog/JTrologStructure.java</a>
                 </td>
                 <td>
                   0
@@ -561,7 +561,7 @@
               </tr>
                           <tr>
                 <td>
-                  <a href="https://github.com/prolobjectlink/prolobjectlink-jpi-jtrolog/checkstyle.html#jTrolog.terms.Float.java">jTrolog/terms/Float.java</a>
+                  <a href="https://prolobjectlink.github.io/prolobjectlink-jpi-jtrolog/checkstyle.html#jTrolog.terms.Float.java">jTrolog/terms/Float.java</a>
                 </td>
                 <td>
                   0
@@ -575,7 +575,7 @@
               </tr>
                           <tr>
                 <td>
-                  <a href="https://github.com/prolobjectlink/prolobjectlink-jpi-jtrolog/checkstyle.html#io.github.prolobjectlink.prolog.jtrolog.JTrologFail.java">io/github/prolobjectlink/prolog/jtrolog/JTrologFail.java</a>
+                  <a href="https://prolobjectlink.github.io/prolobjectlink-jpi-jtrolog/checkstyle.html#io.github.prolobjectlink.prolog.jtrolog.JTrologFail.java">io/github/prolobjectlink/prolog/jtrolog/JTrologFail.java</a>
                 </td>
                 <td>
                   0
@@ -589,7 +589,7 @@
               </tr>
                           <tr>
                 <td>
-                  <a href="https://github.com/prolobjectlink/prolobjectlink-jpi-jtrolog/checkstyle.html#io.github.prolobjectlink.prolog.jtrolog.JTrologQuery.java">io/github/prolobjectlink/prolog/jtrolog/JTrologQuery.java</a>
+                  <a href="https://prolobjectlink.github.io/prolobjectlink-jpi-jtrolog/checkstyle.html#io.github.prolobjectlink.prolog.jtrolog.JTrologQuery.java">io/github/prolobjectlink/prolog/jtrolog/JTrologQuery.java</a>
                 </td>
                 <td>
                   0
@@ -603,7 +603,7 @@
               </tr>
                           <tr>
                 <td>
-                  <a href="https://github.com/prolobjectlink/prolobjectlink-jpi-jtrolog/checkstyle.html#jTrolog.engine.LinkTable.java">jTrolog/engine/LinkTable.java</a>
+                  <a href="https://prolobjectlink.github.io/prolobjectlink-jpi-jtrolog/checkstyle.html#jTrolog.engine.LinkTable.java">jTrolog/engine/LinkTable.java</a>
                 </td>
                 <td>
                   0
@@ -617,7 +617,7 @@
               </tr>
                           <tr>
                 <td>
-                  <a href="https://github.com/prolobjectlink/prolobjectlink-jpi-jtrolog/checkstyle.html#io.github.prolobjectlink.prolog.jtrolog.JTrologConsole.java">io/github/prolobjectlink/prolog/jtrolog/JTrologConsole.java</a>
+                  <a href="https://prolobjectlink.github.io/prolobjectlink-jpi-jtrolog/checkstyle.html#io.github.prolobjectlink.prolog.jtrolog.JTrologConsole.java">io/github/prolobjectlink/prolog/jtrolog/JTrologConsole.java</a>
                 </td>
                 <td>
                   0
@@ -631,7 +631,7 @@
               </tr>
                           <tr>
                 <td>
-                  <a href="https://github.com/prolobjectlink/prolobjectlink-jpi-jtrolog/checkstyle.html#io.github.prolobjectlink.prolog.jtrolog.JTrologFloat.java">io/github/prolobjectlink/prolog/jtrolog/JTrologFloat.java</a>
+                  <a href="https://prolobjectlink.github.io/prolobjectlink-jpi-jtrolog/checkstyle.html#io.github.prolobjectlink.prolog.jtrolog.JTrologFloat.java">io/github/prolobjectlink/prolog/jtrolog/JTrologFloat.java</a>
                 </td>
                 <td>
                   0
@@ -645,7 +645,7 @@
               </tr>
                           <tr>
                 <td>
-                  <a href="https://github.com/prolobjectlink/prolobjectlink-jpi-jtrolog/checkstyle.html#jTrolog.engine.ClauseDatabase.java">jTrolog/engine/ClauseDatabase.java</a>
+                  <a href="https://prolobjectlink.github.io/prolobjectlink-jpi-jtrolog/checkstyle.html#jTrolog.engine.ClauseDatabase.java">jTrolog/engine/ClauseDatabase.java</a>
                 </td>
                 <td>
                   0
@@ -659,7 +659,7 @@
               </tr>
                           <tr>
                 <td>
-                  <a href="https://github.com/prolobjectlink/prolobjectlink-jpi-jtrolog/checkstyle.html#jTrolog.errors.NoMorePrologSolutions.java">jTrolog/errors/NoMorePrologSolutions.java</a>
+                  <a href="https://prolobjectlink.github.io/prolobjectlink-jpi-jtrolog/checkstyle.html#jTrolog.errors.NoMorePrologSolutions.java">jTrolog/errors/NoMorePrologSolutions.java</a>
                 </td>
                 <td>
                   0
@@ -673,7 +673,7 @@
               </tr>
                           <tr>
                 <td>
-                  <a href="https://github.com/prolobjectlink/prolobjectlink-jpi-jtrolog/checkstyle.html#jTrolog.terms.ListIterator.java">jTrolog/terms/ListIterator.java</a>
+                  <a href="https://prolobjectlink.github.io/prolobjectlink-jpi-jtrolog/checkstyle.html#jTrolog.terms.ListIterator.java">jTrolog/terms/ListIterator.java</a>
                 </td>
                 <td>
                   0
@@ -687,7 +687,7 @@
               </tr>
                           <tr>
                 <td>
-                  <a href="https://github.com/prolobjectlink/prolobjectlink-jpi-jtrolog/checkstyle.html#jTrolog.lib.Library.java">jTrolog/lib/Library.java</a>
+                  <a href="https://prolobjectlink.github.io/prolobjectlink-jpi-jtrolog/checkstyle.html#jTrolog.lib.Library.java">jTrolog/lib/Library.java</a>
                 </td>
                 <td>
                   0
@@ -701,7 +701,7 @@
               </tr>
                           <tr>
                 <td>
-                  <a href="https://github.com/prolobjectlink/prolobjectlink-jpi-jtrolog/checkstyle.html#io.github.prolobjectlink.prolog.jtrolog.JTrologOperatorSet.java">io/github/prolobjectlink/prolog/jtrolog/JTrologOperatorSet.java</a>
+                  <a href="https://prolobjectlink.github.io/prolobjectlink-jpi-jtrolog/checkstyle.html#io.github.prolobjectlink.prolog.jtrolog.JTrologOperatorSet.java">io/github/prolobjectlink/prolog/jtrolog/JTrologOperatorSet.java</a>
                 </td>
                 <td>
                   0
@@ -715,7 +715,7 @@
               </tr>
                           <tr>
                 <td>
-                  <a href="https://github.com/prolobjectlink/prolobjectlink-jpi-jtrolog/checkstyle.html#jTrolog.parser.TermIterator.java">jTrolog/parser/TermIterator.java</a>
+                  <a href="https://prolobjectlink.github.io/prolobjectlink-jpi-jtrolog/checkstyle.html#jTrolog.parser.TermIterator.java">jTrolog/parser/TermIterator.java</a>
                 </td>
                 <td>
                   0
@@ -729,7 +729,7 @@
               </tr>
                           <tr>
                 <td>
-                  <a href="https://github.com/prolobjectlink/prolobjectlink-jpi-jtrolog/checkstyle.html#jTrolog.errors.InvalidTermException.java">jTrolog/errors/InvalidTermException.java</a>
+                  <a href="https://prolobjectlink.github.io/prolobjectlink-jpi-jtrolog/checkstyle.html#jTrolog.errors.InvalidTermException.java">jTrolog/errors/InvalidTermException.java</a>
                 </td>
                 <td>
                   0
@@ -743,7 +743,7 @@
               </tr>
                           <tr>
                 <td>
-                  <a href="https://github.com/prolobjectlink/prolobjectlink-jpi-jtrolog/checkstyle.html#io.github.prolobjectlink.prolog.jtrolog.JTrologAtom.java">io/github/prolobjectlink/prolog/jtrolog/JTrologAtom.java</a>
+                  <a href="https://prolobjectlink.github.io/prolobjectlink-jpi-jtrolog/checkstyle.html#io.github.prolobjectlink.prolog.jtrolog.JTrologAtom.java">io/github/prolobjectlink/prolog/jtrolog/JTrologAtom.java</a>
                 </td>
                 <td>
                   0
@@ -757,7 +757,7 @@
               </tr>
                           <tr>
                 <td>
-                  <a href="https://github.com/prolobjectlink/prolobjectlink-jpi-jtrolog/checkstyle.html#io.github.prolobjectlink.prolog.jtrolog.JTrologClause.java">io/github/prolobjectlink/prolog/jtrolog/JTrologClause.java</a>
+                  <a href="https://prolobjectlink.github.io/prolobjectlink-jpi-jtrolog/checkstyle.html#io.github.prolobjectlink.prolog.jtrolog.JTrologClause.java">io/github/prolobjectlink/prolog/jtrolog/JTrologClause.java</a>
                 </td>
                 <td>
                   0
@@ -771,7 +771,7 @@
               </tr>
                           <tr>
                 <td>
-                  <a href="https://github.com/prolobjectlink/prolobjectlink-jpi-jtrolog/checkstyle.html#jTrolog.engine.LibraryAndTheoryManager.java">jTrolog/engine/LibraryAndTheoryManager.java</a>
+                  <a href="https://prolobjectlink.github.io/prolobjectlink-jpi-jtrolog/checkstyle.html#jTrolog.engine.LibraryAndTheoryManager.java">jTrolog/engine/LibraryAndTheoryManager.java</a>
                 </td>
                 <td>
                   0
@@ -785,7 +785,7 @@
               </tr>
                           <tr>
                 <td>
-                  <a href="https://github.com/prolobjectlink/prolobjectlink-jpi-jtrolog/checkstyle.html#jTrolog.errors.PrologException.java">jTrolog/errors/PrologException.java</a>
+                  <a href="https://prolobjectlink.github.io/prolobjectlink-jpi-jtrolog/checkstyle.html#jTrolog.errors.PrologException.java">jTrolog/errors/PrologException.java</a>
                 </td>
                 <td>
                   0
@@ -799,7 +799,7 @@
               </tr>
                           <tr>
                 <td>
-                  <a href="https://github.com/prolobjectlink/prolobjectlink-jpi-jtrolog/checkstyle.html#jTrolog.engine.Solution.java">jTrolog/engine/Solution.java</a>
+                  <a href="https://prolobjectlink.github.io/prolobjectlink-jpi-jtrolog/checkstyle.html#jTrolog.engine.Solution.java">jTrolog/engine/Solution.java</a>
                 </td>
                 <td>
                   0
@@ -813,7 +813,7 @@
               </tr>
                           <tr>
                 <td>
-                  <a href="https://github.com/prolobjectlink/prolobjectlink-jpi-jtrolog/checkstyle.html#jTrolog.terms.Double.java">jTrolog/terms/Double.java</a>
+                  <a href="https://prolobjectlink.github.io/prolobjectlink-jpi-jtrolog/checkstyle.html#jTrolog.terms.Double.java">jTrolog/terms/Double.java</a>
                 </td>
                 <td>
                   0
@@ -827,7 +827,7 @@
               </tr>
                           <tr>
                 <td>
-                  <a href="https://github.com/prolobjectlink/prolobjectlink-jpi-jtrolog/checkstyle.html#io.github.prolobjectlink.prolog.jtrolog.JTrologConverter.java">io/github/prolobjectlink/prolog/jtrolog/JTrologConverter.java</a>
+                  <a href="https://prolobjectlink.github.io/prolobjectlink-jpi-jtrolog/checkstyle.html#io.github.prolobjectlink.prolog.jtrolog.JTrologConverter.java">io/github/prolobjectlink/prolog/jtrolog/JTrologConverter.java</a>
                 </td>
                 <td>
                   0
@@ -841,7 +841,7 @@
               </tr>
                           <tr>
                 <td>
-                  <a href="https://github.com/prolobjectlink/prolobjectlink-jpi-jtrolog/checkstyle.html#jTrolog.terms.Wrapper.java">jTrolog/terms/Wrapper.java</a>
+                  <a href="https://prolobjectlink.github.io/prolobjectlink-jpi-jtrolog/checkstyle.html#jTrolog.terms.Wrapper.java">jTrolog/terms/Wrapper.java</a>
                 </td>
                 <td>
                   0
@@ -855,7 +855,7 @@
               </tr>
                           <tr>
                 <td>
-                  <a href="https://github.com/prolobjectlink/prolobjectlink-jpi-jtrolog/checkstyle.html#io.github.prolobjectlink.prolog.jtrolog.JTrologDouble.java">io/github/prolobjectlink/prolog/jtrolog/JTrologDouble.java</a>
+                  <a href="https://prolobjectlink.github.io/prolobjectlink-jpi-jtrolog/checkstyle.html#io.github.prolobjectlink.prolog.jtrolog.JTrologDouble.java">io/github/prolobjectlink/prolog/jtrolog/JTrologDouble.java</a>
                 </td>
                 <td>
                   0
@@ -869,7 +869,7 @@
               </tr>
                           <tr>
                 <td>
-                  <a href="https://github.com/prolobjectlink/prolobjectlink-jpi-jtrolog/checkstyle.html#io.github.prolobjectlink.prolog.jtrolog.JTrologFalse.java">io/github/prolobjectlink/prolog/jtrolog/JTrologFalse.java</a>
+                  <a href="https://prolobjectlink.github.io/prolobjectlink-jpi-jtrolog/checkstyle.html#io.github.prolobjectlink.prolog.jtrolog.JTrologFalse.java">io/github/prolobjectlink/prolog/jtrolog/JTrologFalse.java</a>
                 </td>
                 <td>
                   0
@@ -883,7 +883,7 @@
               </tr>
                           <tr>
                 <td>
-                  <a href="https://github.com/prolobjectlink/prolobjectlink-jpi-jtrolog/checkstyle.html#jTrolog.engine.BindingsTable.java">jTrolog/engine/BindingsTable.java</a>
+                  <a href="https://prolobjectlink.github.io/prolobjectlink-jpi-jtrolog/checkstyle.html#jTrolog.engine.BindingsTable.java">jTrolog/engine/BindingsTable.java</a>
                 </td>
                 <td>
                   0
@@ -897,7 +897,7 @@
               </tr>
                           <tr>
                 <td>
-                  <a href="https://github.com/prolobjectlink/prolobjectlink-jpi-jtrolog/checkstyle.html#jTrolog.terms.Clause.java">jTrolog/terms/Clause.java</a>
+                  <a href="https://prolobjectlink.github.io/prolobjectlink-jpi-jtrolog/checkstyle.html#jTrolog.terms.Clause.java">jTrolog/terms/Clause.java</a>
                 </td>
                 <td>
                   0
@@ -911,7 +911,7 @@
               </tr>
                           <tr>
                 <td>
-                  <a href="https://github.com/prolobjectlink/prolobjectlink-jpi-jtrolog/checkstyle.html#jTrolog.engine.GarbageCan.java">jTrolog/engine/GarbageCan.java</a>
+                  <a href="https://prolobjectlink.github.io/prolobjectlink-jpi-jtrolog/checkstyle.html#jTrolog.engine.GarbageCan.java">jTrolog/engine/GarbageCan.java</a>
                 </td>
                 <td>
                   0
@@ -925,7 +925,7 @@
               </tr>
                           <tr>
                 <td>
-                  <a href="https://github.com/prolobjectlink/prolobjectlink-jpi-jtrolog/checkstyle.html#jTrolog.lib.BasicLibrary.java">jTrolog/lib/BasicLibrary.java</a>
+                  <a href="https://prolobjectlink.github.io/prolobjectlink-jpi-jtrolog/checkstyle.html#jTrolog.lib.BasicLibrary.java">jTrolog/lib/BasicLibrary.java</a>
                 </td>
                 <td>
                   0
@@ -939,7 +939,7 @@
               </tr>
                           <tr>
                 <td>
-                  <a href="https://github.com/prolobjectlink/prolobjectlink-jpi-jtrolog/checkstyle.html#jTrolog.terms.Long.java">jTrolog/terms/Long.java</a>
+                  <a href="https://prolobjectlink.github.io/prolobjectlink-jpi-jtrolog/checkstyle.html#jTrolog.terms.Long.java">jTrolog/terms/Long.java</a>
                 </td>
                 <td>
                   0
@@ -953,7 +953,7 @@
               </tr>
                           <tr>
                 <td>
-                  <a href="https://github.com/prolobjectlink/prolobjectlink-jpi-jtrolog/checkstyle.html#io.github.prolobjectlink.prolog.jtrolog.JTrologVariable.java">io/github/prolobjectlink/prolog/jtrolog/JTrologVariable.java</a>
+                  <a href="https://prolobjectlink.github.io/prolobjectlink-jpi-jtrolog/checkstyle.html#io.github.prolobjectlink.prolog.jtrolog.JTrologVariable.java">io/github/prolobjectlink/prolog/jtrolog/JTrologVariable.java</a>
                 </td>
                 <td>
                   0
@@ -967,7 +967,7 @@
               </tr>
                           <tr>
                 <td>
-                  <a href="https://github.com/prolobjectlink/prolobjectlink-jpi-jtrolog/checkstyle.html#io.github.prolobjectlink.prolog.jtrolog.JTrologList.java">io/github/prolobjectlink/prolog/jtrolog/JTrologList.java</a>
+                  <a href="https://prolobjectlink.github.io/prolobjectlink-jpi-jtrolog/checkstyle.html#io.github.prolobjectlink.prolog.jtrolog.JTrologList.java">io/github/prolobjectlink/prolog/jtrolog/JTrologList.java</a>
                 </td>
                 <td>
                   0
@@ -981,7 +981,7 @@
               </tr>
                           <tr>
                 <td>
-                  <a href="https://github.com/prolobjectlink/prolobjectlink-jpi-jtrolog/checkstyle.html#jTrolog.engine.ChoicePoint.java">jTrolog/engine/ChoicePoint.java</a>
+                  <a href="https://prolobjectlink.github.io/prolobjectlink-jpi-jtrolog/checkstyle.html#jTrolog.engine.ChoicePoint.java">jTrolog/engine/ChoicePoint.java</a>
                 </td>
                 <td>
                   0
@@ -995,7 +995,7 @@
               </tr>
                           <tr>
                 <td>
-                  <a href="https://github.com/prolobjectlink/prolobjectlink-jpi-jtrolog/checkstyle.html#io.github.prolobjectlink.prolog.jtrolog.JTrologScriptFactory.java">io/github/prolobjectlink/prolog/jtrolog/JTrologScriptFactory.java</a>
+                  <a href="https://prolobjectlink.github.io/prolobjectlink-jpi-jtrolog/checkstyle.html#io.github.prolobjectlink.prolog.jtrolog.JTrologScriptFactory.java">io/github/prolobjectlink/prolog/jtrolog/JTrologScriptFactory.java</a>
                 </td>
                 <td>
                   0
@@ -1009,7 +1009,7 @@
               </tr>
                           <tr>
                 <td>
-                  <a href="https://github.com/prolobjectlink/prolobjectlink-jpi-jtrolog/checkstyle.html#io.github.prolobjectlink.prolog.jtrolog.JTrologLong.java">io/github/prolobjectlink/prolog/jtrolog/JTrologLong.java</a>
+                  <a href="https://prolobjectlink.github.io/prolobjectlink-jpi-jtrolog/checkstyle.html#io.github.prolobjectlink.prolog.jtrolog.JTrologLong.java">io/github/prolobjectlink/prolog/jtrolog/JTrologLong.java</a>
                 </td>
                 <td>
                   0
@@ -1023,7 +1023,7 @@
               </tr>
                           <tr>
                 <td>
-                  <a href="https://github.com/prolobjectlink/prolobjectlink-jpi-jtrolog/checkstyle.html#jTrolog.errors.InvalidLibraryException.java">jTrolog/errors/InvalidLibraryException.java</a>
+                  <a href="https://prolobjectlink.github.io/prolobjectlink-jpi-jtrolog/checkstyle.html#jTrolog.errors.InvalidLibraryException.java">jTrolog/errors/InvalidLibraryException.java</a>
                 </td>
                 <td>
                   0
@@ -1037,7 +1037,7 @@
               </tr>
                           <tr>
                 <td>
-                  <a href="https://github.com/prolobjectlink/prolobjectlink-jpi-jtrolog/checkstyle.html#io.github.prolobjectlink.prolog.jtrolog.JTrologIndicator.java">io/github/prolobjectlink/prolog/jtrolog/JTrologIndicator.java</a>
+                  <a href="https://prolobjectlink.github.io/prolobjectlink-jpi-jtrolog/checkstyle.html#io.github.prolobjectlink.prolog.jtrolog.JTrologIndicator.java">io/github/prolobjectlink/prolog/jtrolog/JTrologIndicator.java</a>
                 </td>
                 <td>
                   0
