@@ -476,7 +476,7 @@ public class Prolog implements Serializable {
 	 * Matches the structure of the two original terms. OBS: Variables in the
 	 * original terms are not resolved. If this is desired, then the terms
 	 * passed in should be clonedAndResolved first.
-	 * <p/>
+	 * 
 	 * OBS2: no unification of variables is made.
 	 * 
 	 * @param t0

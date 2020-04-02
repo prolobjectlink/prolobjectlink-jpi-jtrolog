@@ -53,7 +53,7 @@ import java.util.Random;
  * 
  * @author ivar.orstavik@hist.no
  */
-@SuppressWarnings({ &quot;rawtypes&quot;, &quot;unchecked&quot;,&quot;serial&quot; })
+@SuppressWarnings({ &quot;rawtypes&quot;, &quot;unchecked&quot;, &quot;serial&quot; })
 public class IOLibrary extends Library {
 
 	private HashMap streams;
@@ -214,63 +214,62 @@ public class IOLibrary extends Library {
 	}
 
 	/**
-	 * reads a source text from a file.
-	 * &lt;p/&gt;
-	 * It's useful used with agent predicate: text_from_file(File,Source),
-	 * agent(Source).
+	 * reads a source text from a file. It's useful used with agent predicate:
+	 * text_from_file(File,Source), agent(Source).
 	 */
 	public boolean text_from_file_2(BindingsTable bt, Term file_name, Term text) throws IOException {
-<span class="nc" id="L223">		StringBuffer res = new StringBuffer();</span>
+<span class="nc" id="L221">		StringBuffer res = new StringBuffer();</span>
 		BufferedReader in;
-<span class="nc" id="L225">		Object possibleInput = streams.get(Parser.removeApices(file_name.toString()));</span>
-<span class="nc bnc" id="L226" title="All 2 branches missed.">		if (possibleInput instanceof InputStream) {</span>
-<span class="nc" id="L227">			in = new BufferedReader(new InputStreamReader((InputStream) possibleInput));</span>
+<span class="nc" id="L223">		Object possibleInput = streams.get(Parser.removeApices(file_name.toString()));</span>
+<span class="nc bnc" id="L224" title="All 2 branches missed.">		if (possibleInput instanceof InputStream) {</span>
+<span class="nc" id="L225">			in = new BufferedReader(new InputStreamReader((InputStream) possibleInput));</span>
 		} else {
-<span class="nc" id="L229">			in = new BufferedReader(new FileReader(&quot;infilename&quot;));</span>
+<span class="nc" id="L227">			in = new BufferedReader(new FileReader(&quot;infilename&quot;));</span>
 		}
 		String str;
-<span class="nc bnc" id="L232" title="All 2 branches missed.">		while ((str = in.readLine()) != null)</span>
-<span class="nc" id="L233">			res.append(str);</span>
-<span class="nc" id="L234">		in.close();</span>
+<span class="nc bnc" id="L230" title="All 2 branches missed.">		while ((str = in.readLine()) != null)</span>
+<span class="nc" id="L231">			res.append(str);</span>
+<span class="nc" id="L232">		in.close();</span>
 
-<span class="nc" id="L236">		return bt.unify(text, new StructAtom(res.toString()));</span>
+<span class="nc" id="L234">		return bt.unify(text, new StructAtom(res.toString()));</span>
 	}
 
 	// miscellanea
 
 	public boolean rand_float_1(BindingsTable bt, Term t) {
-<span class="nc" id="L242">		return bt.unify(t, new Double(gen.nextFloat()));</span>
+<span class="nc" id="L240">		return bt.unify(t, new Double(gen.nextFloat()));</span>
 	}
 
 	public boolean rand_int_2(BindingsTable bt, Number argNum, Term num) {
-<span class="nc" id="L246">		return bt.unify(num, new Int(gen.nextInt(argNum.intValue())));</span>
+<span class="nc" id="L244">		return bt.unify(num, new Int(gen.nextInt(argNum.intValue())));</span>
 	}
 
 	public String getTheory() {
-<span class="fc" id="L250">		return &quot;consult(File) :- text_from_file(File,Text), add_theory(Text).\n&quot; + &quot;reconsult(File) :- text_from_file(File,Text), set_theory(Text).\n&quot;</span>
+<span class="fc" id="L248">		return &quot;consult(File) :- text_from_file(File,Text), add_theory(Text).\n&quot;</span>
+				+ &quot;reconsult(File) :- text_from_file(File,Text), set_theory(Text).\n&quot;
 				+ &quot;solve_file(File,Goal) :- text_from_file(File,Text),text_term(Text,Goal),call(Goal).\n&quot;;
 	}
 
 	public static String readStream(InputStream is) throws IOException {
-<span class="fc" id="L255">		BufferedReader br = new BufferedReader(new InputStreamReader(is));</span>
-<span class="fc" id="L256">		StringBuilder sb = new StringBuilder();</span>
+<span class="fc" id="L254">		BufferedReader br = new BufferedReader(new InputStreamReader(is));</span>
+<span class="fc" id="L255">		StringBuilder sb = new StringBuilder();</span>
 		String line;
-<span class="fc bfc" id="L258" title="All 2 branches covered.">		while ((line = br.readLine()) != null)</span>
-<span class="fc" id="L259">			sb.append(line).append(&quot;\n&quot;);</span>
-<span class="fc" id="L260">		br.close();</span>
-<span class="fc" id="L261">		return sb.toString();</span>
+<span class="fc bfc" id="L257" title="All 2 branches covered.">		while ((line = br.readLine()) != null)</span>
+<span class="fc" id="L258">			sb.append(line).append(&quot;\n&quot;);</span>
+<span class="fc" id="L259">		br.close();</span>
+<span class="fc" id="L260">		return sb.toString();</span>
 	}
 
 	private OutputStream getOutputStream(String out) {
-<span class="nc bnc" id="L265" title="All 2 branches missed.">		if (&quot;stdout&quot;.equals(out))</span>
-<span class="nc" id="L266">			return ((Library) this).engine.getPrintStream();</span>
-<span class="nc" id="L267">		return (OutputStream) streams.get(out);</span>
+<span class="nc bnc" id="L264" title="All 2 branches missed.">		if (&quot;stdout&quot;.equals(out))</span>
+<span class="nc" id="L265">			return ((Library) this).engine.getPrintStream();</span>
+<span class="nc" id="L266">		return (OutputStream) streams.get(out);</span>
 	}
 
 	private InputStream getInputStream(String in) {
-<span class="nc bnc" id="L271" title="All 2 branches missed.">		if (&quot;stdout&quot;.equals(in))</span>
-<span class="nc" id="L272">			return System.in;</span>
-<span class="nc" id="L273">		return (InputStream) streams.get(in);</span>
+<span class="nc bnc" id="L270" title="All 2 branches missed.">		if (&quot;stdout&quot;.equals(in))</span>
+<span class="nc" id="L271">			return System.in;</span>
+<span class="nc" id="L272">		return (InputStream) streams.get(in);</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

@@ -1037,7 +1037,7 @@ public class BasicLibrary extends Library {
 	}
 
 	/**
-	 * Defines a map for synonyms for primitives. String primitive name ->
+	 * Defines a map for synonyms for primitives. String primitive name =
 	 * String[]{synonym name, another synonym name, ..}.
 	 */
 	public String[] getSynonym(String primitive) {

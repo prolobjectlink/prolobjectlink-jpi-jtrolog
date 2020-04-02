@@ -42,7 +42,6 @@ package jTrolog.errors;
  * This exception means that other solutions are asked but actually no other
  * ones exist.
  * 
- * @see jTrolog.engine.SolutionManager
  */
 @SuppressWarnings("serial")
 public class NoMorePrologSolutions extends PrologException {

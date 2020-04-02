@@ -30,7 +30,7 @@ import java.util.*;
 
 /**
  * Map of Prolog operators. A LinkedHashMap is set up to store each registered
- * operator as: 'name type' -> priority
+ * operator as: 'name type' = priority
  * 
  * @author ivar.orstavik@hist.no
  */

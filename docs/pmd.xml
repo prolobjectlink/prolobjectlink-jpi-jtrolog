@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<pmd version="4.2.5" timestamp="2020-04-01T18:21:13.284">
+<pmd version="4.2.5" timestamp="2020-04-02T19:12:00.235">
 <file name="C:\Users\Jose Zalacain\Documents\eclipse-java-photon-workspace\prolobjectlink-jpi-jtrolog\src\main\java\io\github\prolobjectlink\prolog\jtrolog\JTrologConverter.java">
 <violation beginline="22" endline="240" begincolumn="1" endcolumn="3" rule="TooManyStaticImports" ruleset="Import Statement Rules" package="io.github.prolobjectlink.prolog.jtrolog" externalInfoUrl="http://pmd.sourceforge.net/rules/imports.html#TooManyStaticImports" priority="3">
 Too many static imports may lead to messy code
@@ -36,7 +36,7 @@ No need to import a type that lives in the same package
 <violation beginline="26" endline="26" begincolumn="1" endcolumn="28" rule="ImportFromSamePackage" ruleset="Import Statement Rules" package="jTrolog.parser" externalInfoUrl="http://pmd.sourceforge.net/rules/imports.html#ImportFromSamePackage" priority="3">
 No need to import a type that lives in the same package
 </violation>
-<violation beginline="413" endline="428" begincolumn="41" endcolumn="41" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="jTrolog.parser" class="Tokenizer" method="readNextToken" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
+<violation beginline="405" endline="420" begincolumn="41" endcolumn="41" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="jTrolog.parser" class="Tokenizer" method="readNextToken" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
 These nested if statements could be combined
 </violation>
 </file>

@@ -44,7 +44,6 @@ import java.util.regex.Pattern;
 
 /**
  * This class defines a parser of prolog terms and sentences.
- * <p/>
  * BNF for jTrolog part 2: Parser term ::= expr(1200) expr(n) ::= exprC(n-1) {
  * op(xfx,n) expr(n-1) | op(xfy,n) expr(n) | op(xf,n) | op(yfx,n) expr(n-1) |
  * op(yf,n) }* // exprC is called parseLeftSide in the code exprC(n) ::= '-'

@@ -32,14 +32,6 @@ import java.util.Arrays;
 /**
  * BNF for jTrolog
  * 
- * part 1: Lexer digit ::= 0 .. 9 lc_letter ::= a .. z uc_letter ::= A .. Z | _
- * symbol ::= \ | $ | &amp; | ^ | @ | # | . | , | : | ; | = | &lt; | &gt; | + | - | * | /
- * | ~
- * 
- * letter ::= digit | lc_letter | uc_letter integer ::= { digit }+ float ::= {
- * digit }+ . { digit }+ [ E|e [ +|- ] { digit }+ ] // TODO Update BNF for
- * quotes? atom ::= lc_letter { letter }* | ! variable ::= uc_letter { letter }*
- * 
  * from the super class, the super.nextToken() returns and updates the following
  * relevant fields: - if the next token is a collection of wordChars, the type
  * returned is TT_WORD and the value is put into the field sval. - if the next
@@ -50,273 +42,273 @@ import java.util.Arrays;
 @SuppressWarnings({ &quot;rawtypes&quot;, &quot;unchecked&quot;,&quot;serial&quot; })
 class Tokenizer extends StreamTokenizer implements Serializable {
 
-<span class="fc" id="L53">	static final char[] GRAPHIC_CHARS = { '\\', '$', '&amp;', '?', '^', '@', '#', '.', ',', ':', ';', '=', '&lt;', '&gt;', '+', '-', '*', '/', '~' };</span>
+<span class="fc" id="L45">	static final char[] GRAPHIC_CHARS = { '\\', '$', '&amp;', '?', '^', '@', '#', '.', ',', ':', ';', '=', '&lt;', '&gt;', '+', '-', '*', '/', '~' };</span>
 	static {
-<span class="fc" id="L55">		Arrays.sort(Tokenizer.GRAPHIC_CHARS); // must be done to ensure correct</span>
+<span class="fc" id="L47">		Arrays.sort(Tokenizer.GRAPHIC_CHARS); // must be done to ensure correct</span>
 												// behavior of
 												// Arrays.binarySearch
-<span class="fc" id="L58">	}</span>
+<span class="fc" id="L50">	}</span>
 
 	// used to enable pushback from the parser. Not in any way connected with
 	// pushBack2 and super.pushBack().
-<span class="fc" id="L62">	private LinkedList tokenList = new LinkedList();</span>
+<span class="fc" id="L54">	private LinkedList tokenList = new LinkedList();</span>
 
 	// used in the double lookahead check that . following ints is a fraction
 	// marker or end marker (pushback() only works on one level)
-<span class="fc" id="L66">	private PushBack pushBack2 = null;</span>
+<span class="fc" id="L58">	private PushBack pushBack2 = null;</span>
 
 	public Tokenizer(String text) {
-<span class="fc" id="L69">		this(new StringReader(text));</span>
-<span class="fc" id="L70">	}</span>
+<span class="fc" id="L61">		this(new StringReader(text));</span>
+<span class="fc" id="L62">	}</span>
 
 	/**
 	 * creating a tokenizer for the source stream
 	 */
 	public Tokenizer(Reader text) {
-<span class="fc" id="L76">		super(text);</span>
+<span class="fc" id="L68">		super(text);</span>
 
 		// Prepare the tokenizer for Prolog-style tokenizing rules
-<span class="fc" id="L79">		resetSyntax();</span>
+<span class="fc" id="L71">		resetSyntax();</span>
 
 		// letters
-<span class="fc" id="L82">		wordChars('a', 'z');</span>
-<span class="fc" id="L83">		wordChars('A', 'Z');</span>
-<span class="fc" id="L84">		wordChars('_', '_');</span>
-<span class="fc" id="L85">		wordChars('0', '9'); // need to parse numbers as special words</span>
+<span class="fc" id="L74">		wordChars('a', 'z');</span>
+<span class="fc" id="L75">		wordChars('A', 'Z');</span>
+<span class="fc" id="L76">		wordChars('_', '_');</span>
+<span class="fc" id="L77">		wordChars('0', '9'); // need to parse numbers as special words</span>
 
-<span class="fc" id="L87">		ordinaryChar('!');</span>
+<span class="fc" id="L79">		ordinaryChar('!');</span>
 
 		// symbols
-<span class="fc" id="L90">		ordinaryChar('\\');</span>
-<span class="fc" id="L91">		ordinaryChar('$');</span>
-<span class="fc" id="L92">		ordinaryChar('&amp;');</span>
-<span class="fc" id="L93">		ordinaryChar('^');</span>
-<span class="fc" id="L94">		ordinaryChar('@');</span>
-<span class="fc" id="L95">		ordinaryChar('#');</span>
-<span class="fc" id="L96">		ordinaryChar(',');</span>
-<span class="fc" id="L97">		ordinaryChar('.');</span>
-<span class="fc" id="L98">		ordinaryChar(':');</span>
-<span class="fc" id="L99">		ordinaryChar(';');</span>
-<span class="fc" id="L100">		ordinaryChar('=');</span>
-<span class="fc" id="L101">		ordinaryChar('&lt;');</span>
-<span class="fc" id="L102">		ordinaryChar('&gt;');</span>
-<span class="fc" id="L103">		ordinaryChar('+');</span>
-<span class="fc" id="L104">		ordinaryChar('-');</span>
-<span class="fc" id="L105">		ordinaryChar('*');</span>
-<span class="fc" id="L106">		ordinaryChar('/');</span>
-<span class="fc" id="L107">		ordinaryChar('~');</span>
+<span class="fc" id="L82">		ordinaryChar('\\');</span>
+<span class="fc" id="L83">		ordinaryChar('$');</span>
+<span class="fc" id="L84">		ordinaryChar('&amp;');</span>
+<span class="fc" id="L85">		ordinaryChar('^');</span>
+<span class="fc" id="L86">		ordinaryChar('@');</span>
+<span class="fc" id="L87">		ordinaryChar('#');</span>
+<span class="fc" id="L88">		ordinaryChar(',');</span>
+<span class="fc" id="L89">		ordinaryChar('.');</span>
+<span class="fc" id="L90">		ordinaryChar(':');</span>
+<span class="fc" id="L91">		ordinaryChar(';');</span>
+<span class="fc" id="L92">		ordinaryChar('=');</span>
+<span class="fc" id="L93">		ordinaryChar('&lt;');</span>
+<span class="fc" id="L94">		ordinaryChar('&gt;');</span>
+<span class="fc" id="L95">		ordinaryChar('+');</span>
+<span class="fc" id="L96">		ordinaryChar('-');</span>
+<span class="fc" id="L97">		ordinaryChar('*');</span>
+<span class="fc" id="L98">		ordinaryChar('/');</span>
+<span class="fc" id="L99">		ordinaryChar('~');</span>
 
 		// quotes
-<span class="fc" id="L110">		ordinaryChar('\''); // must be parsed individually to handles \\ in</span>
+<span class="fc" id="L102">		ordinaryChar('\''); // must be parsed individually to handles \\ in</span>
 							// quotes and character code constants
-<span class="fc" id="L112">		ordinaryChar('\&quot;'); // same as above?</span>
+<span class="fc" id="L104">		ordinaryChar('\&quot;'); // same as above?</span>
 
 		// comments
-<span class="fc" id="L115">		ordinaryChar('%');</span>
+<span class="fc" id="L107">		ordinaryChar('%');</span>
 		// it is not possible to enable StreamTokenizer#slashStarComments and %
 		// as a StreamTokenizer#commentChar
 		// and it is also not possible to use StreamTokenizer#whitespaceChars
 		// for ' '
-<span class="fc" id="L120">	}</span>
+<span class="fc" id="L112">	}</span>
 
 	/**
 	 * reads next available token
 	 */
 	Token readToken() throws InvalidTermException, IOException {
-<span class="fc bfc" id="L126" title="All 2 branches covered.">		return !tokenList.isEmpty() ? (Token) tokenList.removeFirst() : readNextToken();</span>
+<span class="fc bfc" id="L118" title="All 2 branches covered.">		return !tokenList.isEmpty() ? (Token) tokenList.removeFirst() : readNextToken();</span>
 	}
 
 	/**
 	 * puts back token to be read again
 	 */
 	void unreadToken(Token token) {
-<span class="fc" id="L133">		tokenList.addFirst(token);</span>
-<span class="fc" id="L134">	}</span>
+<span class="fc" id="L125">		tokenList.addFirst(token);</span>
+<span class="fc" id="L126">	}</span>
 
 	Token readNextToken() throws IOException, InvalidTermException {
 		int typea;
 		String svala;
-<span class="fc bfc" id="L139" title="All 2 branches covered.">		if (pushBack2 != null) {</span>
-<span class="fc" id="L140">			typea = pushBack2.typea;</span>
-<span class="fc" id="L141">			svala = pushBack2.svala;</span>
-<span class="fc" id="L142">			pushBack2 = null;</span>
+<span class="fc bfc" id="L131" title="All 2 branches covered.">		if (pushBack2 != null) {</span>
+<span class="fc" id="L132">			typea = pushBack2.typea;</span>
+<span class="fc" id="L133">			svala = pushBack2.svala;</span>
+<span class="fc" id="L134">			pushBack2 = null;</span>
 		} else {
-<span class="fc" id="L144">			typea = super.nextToken();</span>
-<span class="fc" id="L145">			svala = sval;</span>
+<span class="fc" id="L136">			typea = super.nextToken();</span>
+<span class="fc" id="L137">			svala = sval;</span>
 		}
 
 		// skips whitespace
 		// could be simplified if lookahead for blank space in functors wasn't
 		// necessary
 		// and if '.' in numbers could be written with blank space
-<span class="fc bfc" id="L152" title="All 2 branches covered.">		while (Tokenizer.isWhite(typea)) {</span>
-<span class="fc" id="L153">			typea = super.nextToken();</span>
-<span class="fc" id="L154">			svala = sval;</span>
+<span class="fc bfc" id="L144" title="All 2 branches covered.">		while (Tokenizer.isWhite(typea)) {</span>
+<span class="fc" id="L145">			typea = super.nextToken();</span>
+<span class="fc" id="L146">			svala = sval;</span>
 		}
 
 		// skips single line comments
 		// could be simplified if % was not a legal character in quotes
-<span class="pc bpc" id="L159" title="1 of 2 branches missed.">		if (typea == '%') {</span>
+<span class="pc bpc" id="L151" title="1 of 2 branches missed.">		if (typea == '%') {</span>
 			do {
-<span class="nc" id="L161">				typea = super.nextToken();</span>
-<span class="nc bnc" id="L162" title="All 6 branches missed.">			} while (typea != '\r' &amp;&amp; typea != '\n' &amp;&amp; typea != TT_EOF);</span>
-<span class="nc" id="L163">			pushBack(); // pushes back \r or \n. These are whitespace, so when</span>
+<span class="nc" id="L153">				typea = super.nextToken();</span>
+<span class="nc bnc" id="L154" title="All 6 branches missed.">			} while (typea != '\r' &amp;&amp; typea != '\n' &amp;&amp; typea != TT_EOF);</span>
+<span class="nc" id="L155">			pushBack(); // pushes back \r or \n. These are whitespace, so when</span>
 						// readNextToken() finds them, they are marked as
 						// whitespace
-<span class="nc" id="L166">			return readNextToken();</span>
+<span class="nc" id="L158">			return readNextToken();</span>
 		}
 
 		// skips /* comments */
-<span class="fc bfc" id="L170" title="All 2 branches covered.">		if (typea == '/') {</span>
-<span class="fc" id="L171">			int typeb = super.nextToken();</span>
-<span class="pc bpc" id="L172" title="1 of 2 branches missed.">			if (typeb == '*') {</span>
+<span class="fc bfc" id="L162" title="All 2 branches covered.">		if (typea == '/') {</span>
+<span class="fc" id="L163">			int typeb = super.nextToken();</span>
+<span class="pc bpc" id="L164" title="1 of 2 branches missed.">			if (typeb == '*') {</span>
 				do {
-<span class="nc" id="L174">					typea = typeb;</span>
-<span class="nc" id="L175">					typeb = super.nextToken();</span>
-<span class="nc bnc" id="L176" title="All 4 branches missed.">				} while (typea != '*' || typeb != '/');</span>
-<span class="nc" id="L177">				return readNextToken();</span>
+<span class="nc" id="L166">					typea = typeb;</span>
+<span class="nc" id="L167">					typeb = super.nextToken();</span>
+<span class="nc bnc" id="L168" title="All 4 branches missed.">				} while (typea != '*' || typeb != '/');</span>
+<span class="nc" id="L169">				return readNextToken();</span>
 			} else {
-<span class="fc" id="L179">				pushBack();</span>
+<span class="fc" id="L171">				pushBack();</span>
 			}
 		}
 
 		// syntactic charachters
-<span class="fc bfc" id="L184" title="All 2 branches covered.">		if (typea == TT_EOF)</span>
-<span class="fc" id="L185">			return new Token(&quot;&quot;, Token.EOF);</span>
-<span class="fc bfc" id="L186" title="All 2 branches covered.">		if (typea == '(')</span>
-<span class="fc" id="L187">			return new Token(&quot;(&quot;, '(');</span>
-<span class="fc bfc" id="L188" title="All 2 branches covered.">		if (typea == ')')</span>
-<span class="fc" id="L189">			return new Token(&quot;)&quot;, ')');</span>
-<span class="pc bpc" id="L190" title="1 of 2 branches missed.">		if (typea == '{')</span>
-<span class="nc" id="L191">			return new Token(&quot;{&quot;, '{');</span>
-<span class="pc bpc" id="L192" title="1 of 2 branches missed.">		if (typea == '}')</span>
-<span class="nc" id="L193">			return new Token(&quot;}&quot;, '}');</span>
-<span class="fc bfc" id="L194" title="All 2 branches covered.">		if (typea == '[')</span>
-<span class="fc" id="L195">			return new Token(&quot;[&quot;, '[');</span>
-<span class="fc bfc" id="L196" title="All 2 branches covered.">		if (typea == ']')</span>
-<span class="fc" id="L197">			return new Token(&quot;]&quot;, ']');</span>
-<span class="fc bfc" id="L198" title="All 2 branches covered.">		if (typea == '|')</span>
-<span class="fc" id="L199">			return new Token(&quot;|&quot;, '|');</span>
+<span class="fc bfc" id="L176" title="All 2 branches covered.">		if (typea == TT_EOF)</span>
+<span class="fc" id="L177">			return new Token(&quot;&quot;, Token.EOF);</span>
+<span class="fc bfc" id="L178" title="All 2 branches covered.">		if (typea == '(')</span>
+<span class="fc" id="L179">			return new Token(&quot;(&quot;, '(');</span>
+<span class="fc bfc" id="L180" title="All 2 branches covered.">		if (typea == ')')</span>
+<span class="fc" id="L181">			return new Token(&quot;)&quot;, ')');</span>
+<span class="pc bpc" id="L182" title="1 of 2 branches missed.">		if (typea == '{')</span>
+<span class="nc" id="L183">			return new Token(&quot;{&quot;, '{');</span>
+<span class="pc bpc" id="L184" title="1 of 2 branches missed.">		if (typea == '}')</span>
+<span class="nc" id="L185">			return new Token(&quot;}&quot;, '}');</span>
+<span class="fc bfc" id="L186" title="All 2 branches covered.">		if (typea == '[')</span>
+<span class="fc" id="L187">			return new Token(&quot;[&quot;, '[');</span>
+<span class="fc bfc" id="L188" title="All 2 branches covered.">		if (typea == ']')</span>
+<span class="fc" id="L189">			return new Token(&quot;]&quot;, ']');</span>
+<span class="fc bfc" id="L190" title="All 2 branches covered.">		if (typea == '|')</span>
+<span class="fc" id="L191">			return new Token(&quot;|&quot;, '|');</span>
 
-<span class="fc bfc" id="L201" title="All 2 branches covered.">		if (typea == '!')</span>
-<span class="fc" id="L202">			return new Token(&quot;!&quot;, Token.ATOM);</span>
-<span class="fc bfc" id="L203" title="All 2 branches covered.">		if (typea == ',')</span>
-<span class="fc" id="L204">			return new Token(&quot;,&quot;, Token.OPERATOR);</span>
+<span class="fc bfc" id="L193" title="All 2 branches covered.">		if (typea == '!')</span>
+<span class="fc" id="L194">			return new Token(&quot;!&quot;, Token.ATOM);</span>
+<span class="fc bfc" id="L195" title="All 2 branches covered.">		if (typea == ',')</span>
+<span class="fc" id="L196">			return new Token(&quot;,&quot;, Token.OPERATOR);</span>
 
 		// check that '.' as end token is followed by a layout character, see
 		// ISO Standard 6.4.8 endnote
-<span class="fc bfc" id="L208" title="All 2 branches covered.">		if (typea == '.') {</span>
-<span class="fc" id="L209">			int typeb = super.nextToken();</span>
-<span class="fc" id="L210">			pushBack();</span>
-<span class="pc bpc" id="L211" title="2 of 6 branches missed.">			if (Tokenizer.isWhite(typeb) || typeb == '%' || typeb == StreamTokenizer.TT_EOF)</span>
-<span class="fc" id="L212">				return new Token(&quot;.&quot;, '.');</span>
+<span class="fc bfc" id="L200" title="All 2 branches covered.">		if (typea == '.') {</span>
+<span class="fc" id="L201">			int typeb = super.nextToken();</span>
+<span class="fc" id="L202">			pushBack();</span>
+<span class="pc bpc" id="L203" title="2 of 6 branches missed.">			if (Tokenizer.isWhite(typeb) || typeb == '%' || typeb == StreamTokenizer.TT_EOF)</span>
+<span class="fc" id="L204">				return new Token(&quot;.&quot;, '.');</span>
 		}
 
-<span class="fc" id="L215">		boolean isNumber = false;</span>
+<span class="fc" id="L207">		boolean isNumber = false;</span>
 
 		// variable, atom or number
-<span class="fc bfc" id="L218" title="All 2 branches covered.">		if (typea == TT_WORD) {</span>
-<span class="fc" id="L219">			char firstChar = svala.charAt(0);</span>
+<span class="fc bfc" id="L210" title="All 2 branches covered.">		if (typea == TT_WORD) {</span>
+<span class="fc" id="L211">			char firstChar = svala.charAt(0);</span>
 			// variable
-<span class="fc bfc" id="L221" title="All 4 branches covered.">			if (Character.isUpperCase(firstChar) || '_' == firstChar)</span>
-<span class="fc" id="L222">				return new Token(svala, Token.VARIABLE);</span>
+<span class="fc bfc" id="L213" title="All 4 branches covered.">			if (Character.isUpperCase(firstChar) || '_' == firstChar)</span>
+<span class="fc" id="L214">				return new Token(svala, Token.VARIABLE);</span>
 
-<span class="pc bpc" id="L224" title="1 of 4 branches missed.">			else if (firstChar &gt;= '0' &amp;&amp; firstChar &lt;= '9') // all words starting</span>
+<span class="pc bpc" id="L216" title="1 of 4 branches missed.">			else if (firstChar &gt;= '0' &amp;&amp; firstChar &lt;= '9') // all words starting</span>
 															// with 0 or 9 must
 															// be a number
-<span class="fc" id="L227">				isNumber = true; // set type to number and handle later</span>
+<span class="fc" id="L219">				isNumber = true; // set type to number and handle later</span>
 
 			else { // otherwise, it must be an atom (or wrong)
-<span class="fc" id="L230">				int typeb = super.nextToken(); // lookahead 1 to identify what</span>
+<span class="fc" id="L222">				int typeb = super.nextToken(); // lookahead 1 to identify what</span>
 												// type of atom
-<span class="fc" id="L232">				pushBack(); // this does not skip whitespaces, only readNext</span>
+<span class="fc" id="L224">				pushBack(); // this does not skip whitespaces, only readNext</span>
 							// does so.
-<span class="fc bfc" id="L234" title="All 2 branches covered.">				if (typeb == '(')</span>
-<span class="fc" id="L235">					return new Token(svala, Token.ATOM_FUNCTOR);</span>
-<span class="fc bfc" id="L236" title="All 2 branches covered.">				if (Tokenizer.isWhite(typeb))</span>
-<span class="fc" id="L237">					return new Token(svala, Token.ATOM_OPERATOR);</span>
-<span class="fc" id="L238">				return new Token(svala, Token.ATOM);</span>
+<span class="fc bfc" id="L226" title="All 2 branches covered.">				if (typeb == '(')</span>
+<span class="fc" id="L227">					return new Token(svala, Token.ATOM_FUNCTOR);</span>
+<span class="fc bfc" id="L228" title="All 2 branches covered.">				if (Tokenizer.isWhite(typeb))</span>
+<span class="fc" id="L229">					return new Token(svala, Token.ATOM_OPERATOR);</span>
+<span class="fc" id="L230">				return new Token(svala, Token.ATOM);</span>
 			}
 		}
 
 		// quotes
-<span class="pc bpc" id="L243" title="2 of 6 branches missed.">		if (typea == '\'' || typea == '\&quot;' || typea == '`') {</span>
-<span class="fc" id="L244">			int qType = typea;</span>
-<span class="fc" id="L245">			StringBuffer quote = new StringBuffer();</span>
+<span class="pc bpc" id="L235" title="2 of 6 branches missed.">		if (typea == '\'' || typea == '\&quot;' || typea == '`') {</span>
+<span class="fc" id="L236">			int qType = typea;</span>
+<span class="fc" id="L237">			StringBuffer quote = new StringBuffer();</span>
 			while (true) { // run through entire quote and added body to quote
 							// buffer
-<span class="fc" id="L248">				typea = super.nextToken();</span>
-<span class="fc" id="L249">				svala = sval;</span>
+<span class="fc" id="L240">				typea = super.nextToken();</span>
+<span class="fc" id="L241">				svala = sval;</span>
 				// double back slash and continuation escape sequence
-<span class="fc bfc" id="L251" title="All 2 branches covered.">				if (typea == '\\') {</span>
-<span class="fc" id="L252">					int typeb = super.nextToken();</span>
-<span class="pc bpc" id="L253" title="1 of 2 branches missed.">					if (typeb == '\\') { // double back slash '... \\\\ ...'</span>
-<span class="nc" id="L254">						quote.append((char) typeb);</span>
-<span class="nc" id="L255">						continue;</span>
+<span class="fc bfc" id="L243" title="All 2 branches covered.">				if (typea == '\\') {</span>
+<span class="fc" id="L244">					int typeb = super.nextToken();</span>
+<span class="pc bpc" id="L245" title="1 of 2 branches missed.">					if (typeb == '\\') { // double back slash '... \\\\ ...'</span>
+<span class="nc" id="L246">						quote.append((char) typeb);</span>
+<span class="nc" id="L247">						continue;</span>
 					}
-<span class="pc bpc" id="L257" title="1 of 2 branches missed.">					if (typeb == '\n') // continuation escape sequence marker</span>
+<span class="pc bpc" id="L249" title="1 of 2 branches missed.">					if (typeb == '\n') // continuation escape sequence marker</span>
 										// \\n
-<span class="nc" id="L259">						continue;</span>
-<span class="pc bpc" id="L260" title="1 of 2 branches missed.">					if (typeb == '\r') {</span>
-<span class="nc" id="L261">						int typec = super.nextToken();</span>
-<span class="nc bnc" id="L262" title="All 2 branches missed.">						if (typec == '\n')</span>
-<span class="nc" id="L263">							continue; // continuation escape sequence marker</span>
+<span class="nc" id="L251">						continue;</span>
+<span class="pc bpc" id="L252" title="1 of 2 branches missed.">					if (typeb == '\r') {</span>
+<span class="nc" id="L253">						int typec = super.nextToken();</span>
+<span class="nc bnc" id="L254" title="All 2 branches missed.">						if (typec == '\n')</span>
+<span class="nc" id="L255">							continue; // continuation escape sequence marker</span>
 										// \\r\n
-<span class="nc" id="L265">						pushBack();</span>
-<span class="nc" id="L266">						continue; // continuation escape sequence marker \\r</span>
+<span class="nc" id="L257">						pushBack();</span>
+<span class="nc" id="L258">						continue; // continuation escape sequence marker \\r</span>
 					}
-<span class="fc" id="L268">					pushBack(); // pushback typeb</span>
+<span class="fc" id="L260">					pushBack(); // pushback typeb</span>
 				}
 				// double '' or &quot;&quot; or ``
-<span class="fc bfc" id="L271" title="All 2 branches covered.">				if (typea == qType) {</span>
-<span class="fc" id="L272">					int typeb = super.nextToken();</span>
-<span class="pc bpc" id="L273" title="1 of 2 branches missed.">					if (typeb == qType) { // escaped '' or &quot;&quot; or ``</span>
-<span class="nc" id="L274">						quote.append((char) qType);</span>
-<span class="nc" id="L275">						continue;</span>
+<span class="fc bfc" id="L263" title="All 2 branches covered.">				if (typea == qType) {</span>
+<span class="fc" id="L264">					int typeb = super.nextToken();</span>
+<span class="pc bpc" id="L265" title="1 of 2 branches missed.">					if (typeb == qType) { // escaped '' or &quot;&quot; or ``</span>
+<span class="nc" id="L266">						quote.append((char) qType);</span>
+<span class="nc" id="L267">						continue;</span>
 					} else {
-<span class="fc" id="L277">						pushBack();</span>
-<span class="fc" id="L278">						break; // otherwise, break on single quote</span>
+<span class="fc" id="L269">						pushBack();</span>
+<span class="fc" id="L270">						break; // otherwise, break on single quote</span>
 					}
 				}
-<span class="pc bpc" id="L281" title="2 of 4 branches missed.">				if (typea == '\n' || typea == '\r')</span>
-<span class="nc" id="L282">					throw new InvalidTermException(&quot;line break in quote not allowed (unless they are escaped \\ first)&quot;);</span>
+<span class="pc bpc" id="L273" title="2 of 4 branches missed.">				if (typea == '\n' || typea == '\r')</span>
+<span class="nc" id="L274">					throw new InvalidTermException(&quot;line break in quote not allowed (unless they are escaped \\ first)&quot;);</span>
 
-<span class="fc bfc" id="L284" title="All 2 branches covered.">				if (svala != null)</span>
-<span class="fc" id="L285">					quote.append(svala);</span>
+<span class="fc bfc" id="L276" title="All 2 branches covered.">				if (svala != null)</span>
+<span class="fc" id="L277">					quote.append(svala);</span>
 				else
-<span class="fc" id="L287">					quote.append((char) typea);</span>
+<span class="fc" id="L279">					quote.append((char) typea);</span>
 			}
 
-<span class="fc" id="L290">			String quoteBody = quote.toString();</span>
+<span class="fc" id="L282">			String quoteBody = quote.toString();</span>
 
-<span class="pc bpc" id="L292" title="3 of 4 branches missed.">			qType = qType == '\'' ? Token.SQ_SEQUENCE : qType == '\&quot;' ? Token.DQ_SEQUENCE : Token.SQ_SEQUENCE;</span>
-<span class="pc bpc" id="L293" title="1 of 2 branches missed.">			if (qType == Token.SQ_SEQUENCE) {</span>
-<span class="fc bfc" id="L294" title="All 2 branches covered.">				if (Parser.isAtom(quoteBody))</span>
-<span class="fc" id="L295">					qType = Token.ATOM;</span>
-<span class="fc" id="L296">				int typeb = super.nextToken(); // lookahead 1 to identify what</span>
+<span class="pc bpc" id="L284" title="3 of 4 branches missed.">			qType = qType == '\'' ? Token.SQ_SEQUENCE : qType == '\&quot;' ? Token.DQ_SEQUENCE : Token.SQ_SEQUENCE;</span>
+<span class="pc bpc" id="L285" title="1 of 2 branches missed.">			if (qType == Token.SQ_SEQUENCE) {</span>
+<span class="fc bfc" id="L286" title="All 2 branches covered.">				if (Parser.isAtom(quoteBody))</span>
+<span class="fc" id="L287">					qType = Token.ATOM;</span>
+<span class="fc" id="L288">				int typeb = super.nextToken(); // lookahead 1 to identify what</span>
 												// type of quote
-<span class="fc" id="L298">				pushBack(); // nextToken() does not skip whitespaces, only</span>
+<span class="fc" id="L290">				pushBack(); // nextToken() does not skip whitespaces, only</span>
 							// readNext does so.
-<span class="fc bfc" id="L300" title="All 2 branches covered.">				if (typeb == '(')</span>
-<span class="fc" id="L301">					return new Token(quoteBody, Token.SQ_FUNCTOR);</span>
+<span class="fc bfc" id="L292" title="All 2 branches covered.">				if (typeb == '(')</span>
+<span class="fc" id="L293">					return new Token(quoteBody, Token.SQ_FUNCTOR);</span>
 			}
-<span class="fc" id="L303">			return new Token(quoteBody, qType);</span>
+<span class="fc" id="L295">			return new Token(quoteBody, qType);</span>
 		}
 
 		// symbols
-<span class="fc bfc" id="L307" title="All 2 branches covered.">		if (Arrays.binarySearch(Tokenizer.GRAPHIC_CHARS, (char) typea) &gt;= 0) {</span>
+<span class="fc bfc" id="L299" title="All 2 branches covered.">		if (Arrays.binarySearch(Tokenizer.GRAPHIC_CHARS, (char) typea) &gt;= 0) {</span>
 
 			// the symbols are parsed individually by the super.nextToken(), so
 			// accumulate symbollist
-<span class="fc" id="L311">			StringBuffer symbols = new StringBuffer();</span>
-<span class="fc" id="L312">			int typeb = typea;</span>
+<span class="fc" id="L303">			StringBuffer symbols = new StringBuffer();</span>
+<span class="fc" id="L304">			int typeb = typea;</span>
 			// String svalb = null;
-<span class="fc bfc" id="L314" title="All 2 branches covered.">			while (Arrays.binarySearch(Tokenizer.GRAPHIC_CHARS, (char) typeb) &gt;= 0) {</span>
-<span class="fc" id="L315">				symbols.append((char) typeb);</span>
-<span class="fc" id="L316">				typeb = super.nextToken();</span>
+<span class="fc bfc" id="L306" title="All 2 branches covered.">			while (Arrays.binarySearch(Tokenizer.GRAPHIC_CHARS, (char) typeb) &gt;= 0) {</span>
+<span class="fc" id="L307">				symbols.append((char) typeb);</span>
+<span class="fc" id="L308">				typeb = super.nextToken();</span>
 				// svalb = sval;
 			}
-<span class="fc" id="L319">			pushBack();</span>
+<span class="fc" id="L311">			pushBack();</span>
 
 			// special symbols: unary + and unary -
 			// try {
@@ -335,109 +327,109 @@ class Tokenizer extends StreamTokenizer implements Serializable {
 			// a float
 			// } catch (NumberFormatException e) {
 			// }
-<span class="pc bpc" id="L338" title="1 of 2 branches missed.">			if (typeb == '(') // applies to . as well</span>
-<span class="nc" id="L339">				return new Token(symbols.toString(), Token.OPERATOR_FUNCTOR);</span>
-<span class="fc" id="L340">			return new Token(symbols.toString(), Token.OPERATOR);</span>
+<span class="pc bpc" id="L330" title="1 of 2 branches missed.">			if (typeb == '(') // applies to . as well</span>
+<span class="nc" id="L331">				return new Token(symbols.toString(), Token.OPERATOR_FUNCTOR);</span>
+<span class="fc" id="L332">			return new Token(symbols.toString(), Token.OPERATOR);</span>
 		}
 
 		// numbers: 1. integer, 2. float
-<span class="pc bpc" id="L344" title="1 of 2 branches missed.">		if (isNumber) {</span>
+<span class="pc bpc" id="L336" title="1 of 2 branches missed.">		if (isNumber) {</span>
 			try { // the various parseInt checks will throw exceptions when
 					// parts of numbers are written illegally
 
 				// 1.a. complex integers
-<span class="fc bfc" id="L349" title="All 2 branches covered.">				if (svala.startsWith(&quot;0&quot;)) {</span>
-<span class="pc bpc" id="L350" title="1 of 2 branches missed.">					if (svala.indexOf('b') == 1)</span>
-<span class="nc" id="L351">						return new Token(&quot;&quot; + java.lang.Long.parseLong(svala.substring(2), 2), Token.INTEGER); // try</span>
+<span class="fc bfc" id="L341" title="All 2 branches covered.">				if (svala.startsWith(&quot;0&quot;)) {</span>
+<span class="pc bpc" id="L342" title="1 of 2 branches missed.">					if (svala.indexOf('b') == 1)</span>
+<span class="nc" id="L343">						return new Token(&quot;&quot; + java.lang.Long.parseLong(svala.substring(2), 2), Token.INTEGER); // try</span>
 																												// binary
-<span class="pc bpc" id="L353" title="1 of 2 branches missed.">					if (svala.indexOf('o') == 1)</span>
-<span class="nc" id="L354">						return new Token(&quot;&quot; + java.lang.Long.parseLong(svala.substring(2), 8), Token.INTEGER); // try</span>
+<span class="pc bpc" id="L345" title="1 of 2 branches missed.">					if (svala.indexOf('o') == 1)</span>
+<span class="nc" id="L346">						return new Token(&quot;&quot; + java.lang.Long.parseLong(svala.substring(2), 8), Token.INTEGER); // try</span>
 																												// octal
-<span class="pc bpc" id="L356" title="1 of 2 branches missed.">					if (svala.indexOf('x') == 1)</span>
-<span class="nc" id="L357">						return new Token(&quot;&quot; + java.lang.Long.parseLong(svala.substring(2), 16), Token.INTEGER); // try</span>
+<span class="pc bpc" id="L348" title="1 of 2 branches missed.">					if (svala.indexOf('x') == 1)</span>
+<span class="nc" id="L349">						return new Token(&quot;&quot; + java.lang.Long.parseLong(svala.substring(2), 16), Token.INTEGER); // try</span>
 																												// hex
 				}
 
 				// lookahead 1
-<span class="fc" id="L362">				int typeb = super.nextToken();</span>
-<span class="fc" id="L363">				String svalb = sval;</span>
+<span class="fc" id="L354">				int typeb = super.nextToken();</span>
+<span class="fc" id="L355">				String svalb = sval;</span>
 
 				// 1.b ordinary integers
-<span class="pc bpc" id="L366" title="1 of 4 branches missed.">				if (typeb != '.' &amp;&amp; typeb != '\'') { // i.e. not float or</span>
+<span class="pc bpc" id="L358" title="1 of 4 branches missed.">				if (typeb != '.' &amp;&amp; typeb != '\'') { // i.e. not float or</span>
 														// character constant
-<span class="fc" id="L368">					pushBack(); // lookahead 0</span>
-<span class="fc" id="L369">					return new Token(&quot;&quot; + java.lang.Long.parseLong(svala), Token.INTEGER);</span>
+<span class="fc" id="L360">					pushBack(); // lookahead 0</span>
+<span class="fc" id="L361">					return new Token(&quot;&quot; + java.lang.Long.parseLong(svala), Token.INTEGER);</span>
 				}
 
 				// 1.c character code constant
-<span class="pc bpc" id="L373" title="3 of 4 branches missed.">				if (typeb == '\'' &amp;&amp; &quot;0&quot;.equals(svala)) {</span>
-<span class="nc" id="L374">					int typec = super.nextToken(); // lookahead 2</span>
-<span class="nc" id="L375">					String svalc = sval;</span>
+<span class="pc bpc" id="L365" title="3 of 4 branches missed.">				if (typeb == '\'' &amp;&amp; &quot;0&quot;.equals(svala)) {</span>
+<span class="nc" id="L366">					int typec = super.nextToken(); // lookahead 2</span>
+<span class="nc" id="L367">					String svalc = sval;</span>
 					int intVal;
-<span class="nc bnc" id="L377" title="All 2 branches missed.">					if ((intVal = isCharacterCodeConstantToken(typec, svalc)) != -1)</span>
-<span class="nc" id="L378">						return new Token(&quot;&quot; + intVal, Token.INTEGER);</span>
+<span class="nc bnc" id="L369" title="All 2 branches missed.">					if ((intVal = isCharacterCodeConstantToken(typec, svalc)) != -1)</span>
+<span class="nc" id="L370">						return new Token(&quot;&quot; + intVal, Token.INTEGER);</span>
 
 					// this is an invalid character code constant int
-<span class="nc" id="L381">					throw new InvalidTermException(&quot;Character code constant starting with 0'&lt;X&gt; at line: &quot; + super.lineno() + &quot; cannot be recognized.&quot;);</span>
+<span class="nc" id="L373">					throw new InvalidTermException(&quot;Character code constant starting with 0'&lt;X&gt; at line: &quot; + super.lineno() + &quot; cannot be recognized.&quot;);</span>
 				}
 
 				// 2.a check that the value of the word prior to period is a
 				// valid long
-<span class="fc" id="L386">				java.lang.Long.parseLong(svala); // throws an exception if not</span>
+<span class="fc" id="L378">				java.lang.Long.parseLong(svala); // throws an exception if not</span>
 
 				// 2.b first int is followed by a period
-<span class="pc bpc" id="L389" title="1 of 2 branches missed.">				if (typeb != '.')</span>
-<span class="nc" id="L390">					throw new InvalidTermException(&quot;A number starting with 0-9 cannot be rcognized as an int and does not have a fraction '.' at line: &quot; + super.lineno());</span>
+<span class="pc bpc" id="L381" title="1 of 2 branches missed.">				if (typeb != '.')</span>
+<span class="nc" id="L382">					throw new InvalidTermException(&quot;A number starting with 0-9 cannot be rcognized as an int and does not have a fraction '.' at line: &quot; + super.lineno());</span>
 
 				// lookahead 2
-<span class="fc" id="L393">				int typec = super.nextToken();</span>
-<span class="fc" id="L394">				String svalc = sval;</span>
+<span class="fc" id="L385">				int typec = super.nextToken();</span>
+<span class="fc" id="L386">				String svalc = sval;</span>
 
 				// 2.c check that the next token after '.' is a possible
 				// fraction
-<span class="fc bfc" id="L398" title="All 2 branches covered.">				if (typec != TT_WORD) { // if its not, the period is an End</span>
+<span class="fc bfc" id="L390" title="All 2 branches covered.">				if (typec != TT_WORD) { // if its not, the period is an End</span>
 										// period
-<span class="fc" id="L400">					pushBack(); // pushback 1 the token after period</span>
-<span class="fc" id="L401">					pushBack2 = new PushBack(typeb, svalb); // pushback 2 the</span>
+<span class="fc" id="L392">					pushBack(); // pushback 1 the token after period</span>
+<span class="fc" id="L393">					pushBack2 = new PushBack(typeb, svalb); // pushback 2 the</span>
 															// period token
-<span class="fc" id="L403">					return new Token(svala, Token.INTEGER); // return what must</span>
+<span class="fc" id="L395">					return new Token(svala, Token.INTEGER); // return what must</span>
 															// be an int
 				}
 
 				// 2.d checking for exponent
-<span class="fc" id="L408">				int exponent = svalc.indexOf(&quot;E&quot;);</span>
-<span class="pc bpc" id="L409" title="1 of 2 branches missed.">				if (exponent == -1)</span>
-<span class="fc" id="L410">					exponent = svalc.indexOf(&quot;e&quot;);</span>
+<span class="fc" id="L400">				int exponent = svalc.indexOf(&quot;E&quot;);</span>
+<span class="pc bpc" id="L401" title="1 of 2 branches missed.">				if (exponent == -1)</span>
+<span class="fc" id="L402">					exponent = svalc.indexOf(&quot;e&quot;);</span>
 
-<span class="pc bpc" id="L412" title="1 of 2 branches missed.">				if (exponent &gt;= 1) { // the float must have a valid exponent</span>
-<span class="nc bnc" id="L413" title="All 2 branches missed.">					if (exponent == svalc.length() - 1) { // the exponent must</span>
+<span class="pc bpc" id="L404" title="1 of 2 branches missed.">				if (exponent &gt;= 1) { // the float must have a valid exponent</span>
+<span class="nc bnc" id="L405" title="All 2 branches missed.">					if (exponent == svalc.length() - 1) { // the exponent must</span>
 															// be signed
 															// exponent
-<span class="nc" id="L416">						int typeb2 = super.nextToken();</span>
-<span class="nc bnc" id="L417" title="All 4 branches missed.">						if (typeb2 == '+' || typeb2 == '-') {</span>
-<span class="nc" id="L418">							int typec2 = super.nextToken();</span>
-<span class="nc" id="L419">							String svalc2 = sval;</span>
-<span class="nc bnc" id="L420" title="All 2 branches missed.">							if (typec2 == TT_WORD) {</span>
+<span class="nc" id="L408">						int typeb2 = super.nextToken();</span>
+<span class="nc bnc" id="L409" title="All 4 branches missed.">						if (typeb2 == '+' || typeb2 == '-') {</span>
+<span class="nc" id="L410">							int typec2 = super.nextToken();</span>
+<span class="nc" id="L411">							String svalc2 = sval;</span>
+<span class="nc bnc" id="L412" title="All 2 branches missed.">							if (typec2 == TT_WORD) {</span>
 								// verify the remaining parts of the float and
 								// return
-<span class="nc" id="L423">								java.lang.Long.parseLong(svalc.substring(0, exponent));</span>
-<span class="nc" id="L424">								java.lang.Integer.parseInt(svalc2);</span>
-<span class="nc" id="L425">								return new Token(svala + &quot;.&quot; + svalc + (char) typeb2 + svalc2, Token.FLOAT);</span>
+<span class="nc" id="L415">								java.lang.Long.parseLong(svalc.substring(0, exponent));</span>
+<span class="nc" id="L416">								java.lang.Integer.parseInt(svalc2);</span>
+<span class="nc" id="L417">								return new Token(svala + &quot;.&quot; + svalc + (char) typeb2 + svalc2, Token.FLOAT);</span>
 							}
 						}
 					}
 				}
 				// 2.e verify lastly that ordinary floats and unsigned exponent
 				// floats are Java legal and return them
-<span class="fc" id="L432">				java.lang.Double.parseDouble(svala + &quot;.&quot; + svalc);</span>
-<span class="fc" id="L433">				return new Token(svala + &quot;.&quot; + svalc, Token.FLOAT);</span>
+<span class="fc" id="L424">				java.lang.Double.parseDouble(svala + &quot;.&quot; + svalc);</span>
+<span class="fc" id="L425">				return new Token(svala + &quot;.&quot; + svalc, Token.FLOAT);</span>
 
-<span class="nc" id="L435">			} catch (NumberFormatException e) {</span>
+<span class="nc" id="L427">			} catch (NumberFormatException e) {</span>
 				// TODO return more info on what was wrong with the number given
-<span class="nc" id="L437">				throw new InvalidTermException(&quot;A term starting with 0-9 cannot be parsed as a number at line: &quot; + lineno());</span>
+<span class="nc" id="L429">				throw new InvalidTermException(&quot;A term starting with 0-9 cannot be parsed as a number at line: &quot; + lineno());</span>
 			}
 		}
-<span class="nc" id="L440">		throw new InvalidTermException(&quot;Unknown Unicode character: &quot; + typea + &quot;  (&quot; + svala + &quot;)&quot;);</span>
+<span class="nc" id="L432">		throw new InvalidTermException(&quot;Unknown Unicode character: &quot; + typea + &quot;  (&quot; + svala + &quot;)&quot;);</span>
 	}
 
 	/**
@@ -449,32 +441,32 @@ class Tokenizer extends StreamTokenizer implements Serializable {
 	 *         needs a lookahead if typec is \
 	 */
 	private static int isCharacterCodeConstantToken(int typec, String svalc) {
-<span class="nc bnc" id="L452" title="All 2 branches missed.">		if (svalc != null) {</span>
-<span class="nc bnc" id="L453" title="All 2 branches missed.">			if (svalc.length() == 1)</span>
-<span class="nc" id="L454">				return (int) svalc.charAt(0);</span>
-<span class="nc bnc" id="L455" title="All 2 branches missed.">			if (svalc.length() &gt; 1) {</span>
+<span class="nc bnc" id="L444" title="All 2 branches missed.">		if (svalc != null) {</span>
+<span class="nc bnc" id="L445" title="All 2 branches missed.">			if (svalc.length() == 1)</span>
+<span class="nc" id="L446">				return (int) svalc.charAt(0);</span>
+<span class="nc bnc" id="L447" title="All 2 branches missed.">			if (svalc.length() &gt; 1) {</span>
 				// TODO the following charachters is not implemented:
 				// * 1 meta escape sequence (* 6.4.2.1 *) todo
 				// * 1 control escape sequence (* 6.4.2.1 *)
 				// * 1 octal escape sequence (* 6.4.2.1 *)
 				// * 1 hexadecimal escape sequence (* 6.4.2.1 *)
-<span class="nc" id="L461">				return -1;</span>
+<span class="nc" id="L453">				return -1;</span>
 			}
 		}
-<span class="nc bnc" id="L464" title="All 14 branches missed.">		if (typec == ' ' || // space char (* 6.5.4 *)</span>
-<span class="nc bnc" id="L465" title="All 2 branches missed.">				typec == '(' || typec == ')' || typec == '{' || typec == '}' || typec == '[' || typec == ']' || Arrays.binarySearch(GRAPHIC_CHARS, (char) typec) &gt;= 0) // graphic</span>
+<span class="nc bnc" id="L456" title="All 14 branches missed.">		if (typec == ' ' || // space char (* 6.5.4 *)</span>
+<span class="nc bnc" id="L457" title="All 2 branches missed.">				typec == '(' || typec == ')' || typec == '{' || typec == '}' || typec == '[' || typec == ']' || Arrays.binarySearch(GRAPHIC_CHARS, (char) typec) &gt;= 0) // graphic</span>
 																																										// char
 																																										// (*
 																																										// 6.5.1
 																																										// *)
 		// TODO solo char (* 6.5.3 *)
-<span class="nc" id="L471">			return typec;</span>
+<span class="nc" id="L463">			return typec;</span>
 
-<span class="nc" id="L473">		return -1;</span>
+<span class="nc" id="L465">		return -1;</span>
 	}
 
 	private static boolean isWhite(int type) {
-<span class="pc bpc" id="L477" title="2 of 10 branches missed.">		return type == ' ' || type == '\r' || type == '\n' || type == '\t' || type == '\f';</span>
+<span class="pc bpc" id="L469" title="2 of 10 branches missed.">		return type == ' ' || type == '\r' || type == '\n' || type == '\t' || type == '\f';</span>
 	}
 
 	/**
@@ -485,10 +477,10 @@ class Tokenizer extends StreamTokenizer implements Serializable {
 		int typea;
 		String svala;
 
-<span class="fc" id="L488">		public PushBack(int i, String s) {</span>
-<span class="fc" id="L489">			typea = i;</span>
-<span class="fc" id="L490">			svala = s;</span>
-<span class="fc" id="L491">		}</span>
+<span class="fc" id="L480">		public PushBack(int i, String s) {</span>
+<span class="fc" id="L481">			typea = i;</span>
+<span class="fc" id="L482">			svala = s;</span>
+<span class="fc" id="L483">		}</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

@@ -32,14 +32,6 @@ import java.util.Arrays;
 /**
  * BNF for jTrolog
  * 
- * part 1: Lexer digit ::= 0 .. 9 lc_letter ::= a .. z uc_letter ::= A .. Z | _
- * symbol ::= \ | $ | & | ^ | @ | # | . | , | : | ; | = | < | > | + | - | * | /
- * | ~
- * 
- * letter ::= digit | lc_letter | uc_letter integer ::= { digit }+ float ::= {
- * digit }+ . { digit }+ [ E|e [ +|- ] { digit }+ ] // TODO Update BNF for
- * quotes? atom ::= lc_letter { letter }* | ! variable ::= uc_letter { letter }*
- * 
  * from the super class, the super.nextToken() returns and updates the following
  * relevant fields: - if the next token is a collection of wordChars, the type
  * returned is TT_WORD and the value is put into the field sval. - if the next

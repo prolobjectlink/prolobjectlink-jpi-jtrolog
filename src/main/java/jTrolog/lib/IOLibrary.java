@@ -53,7 +53,7 @@ import java.util.Random;
  * 
  * @author ivar.orstavik@hist.no
  */
-@SuppressWarnings({ "rawtypes", "unchecked","serial" })
+@SuppressWarnings({ "rawtypes", "unchecked", "serial" })
 public class IOLibrary extends Library {
 
 	private HashMap streams;
@@ -214,10 +214,8 @@ public class IOLibrary extends Library {
 	}
 
 	/**
-	 * reads a source text from a file.
-	 * <p/>
-	 * It's useful used with agent predicate: text_from_file(File,Source),
-	 * agent(Source).
+	 * reads a source text from a file. It's useful used with agent predicate:
+	 * text_from_file(File,Source), agent(Source).
 	 */
 	public boolean text_from_file_2(BindingsTable bt, Term file_name, Term text) throws IOException {
 		StringBuffer res = new StringBuffer();
@@ -247,7 +245,8 @@ public class IOLibrary extends Library {
 	}
 
 	public String getTheory() {
-		return "consult(File) :- text_from_file(File,Text), add_theory(Text).\n" + "reconsult(File) :- text_from_file(File,Text), set_theory(Text).\n"
+		return "consult(File) :- text_from_file(File,Text), add_theory(Text).\n"
+				+ "reconsult(File) :- text_from_file(File,Text), set_theory(Text).\n"
 				+ "solve_file(File,Goal) :- text_from_file(File,Text),text_term(Text,Goal),call(Goal).\n";
 	}
 

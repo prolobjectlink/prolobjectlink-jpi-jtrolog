@@ -78,7 +78,7 @@ public class BuiltIn extends Library {
 	}
 
 	/**
-	 * Defines a map for synonyms for primitives. String primitive name ->
+	 * Defines a map for synonyms for primitives. String primitive name =
 	 * String[]{synonym name, another synonym name, ..}.
 	 */
 	public String[] getSynonym(String primitive) {
@@ -306,7 +306,7 @@ public class BuiltIn extends Library {
 
 	/**
 	 * op(+Precedence, +Type, +Name) defines a new operator if precedence not in
-	 * 0..1200 -> delete currently present op
+	 * 0..1200 = delete currently present op
 	 */
 	public void op_3(BindingsTable bt, Number arg0, StructAtom arg1, StructAtom arg2) {
 		String st = ((Struct) arg1).name;

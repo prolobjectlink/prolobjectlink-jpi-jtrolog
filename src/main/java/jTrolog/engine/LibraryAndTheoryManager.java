@@ -34,20 +34,22 @@ import java.util.*;
 import java.lang.reflect.InvocationTargetException;
 
 /**
+ * <p>
  * This class defines the Library and Theory Manager who manages the libraries
  * and clauses/theory often referred to as the Prolog database. The theory (as a
  * set of clauses) are stored in the ClauseDatabase which in essence is a
  * HashMap grouped by functor/arity.
- * <p/>
+ * </p>
+ * <p>
  * The LibraryAndTheoryManager functions logically, as prescribed by ISO
  * Standard 7.5.4 section. The effects of assertions and retractions shall not
  * be undone if the program subsequently backtracks over the assert or retract
  * call, as prescribed by ISO Standard 7.7.9 section.
- * <p/>
+ * </p>
+ * <p>
  * To use the LibraryAndTheoryManager one should primarily use the methods
  * assertA, assertZ, consult, retract, abolish and find.
- * <p/>
- * <p/>
+ * </p>
  * rewritten by:
  * 
  * @author ivar.orstavik@hist.no
