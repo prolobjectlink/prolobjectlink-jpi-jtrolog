@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>JTrologList.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">prolobjectlink-jpi-jtrolog</a> &gt; <a href="index.source.html" class="el_package">io.github.prolobjectlink.prolog.jtrolog</a> &gt; <span class="el_source">JTrologList.java</span></div><h1>JTrologList.java</h1><pre class="source lang-java linenums">/*
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>JTrologList.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">prolobjectlink-jpi-jtrolog</a> &gt; <a href="index.source.html" class="el_package">io.github.prolobjectlink.prolog.jtrolog</a> &gt; <span class="el_source">JTrologList.java</span></div><h1>JTrologList.java</h1><pre class="source lang-java linenums">/*
  * #%L
  * prolobjectlink-jpi-jtrolog
  * %%
@@ -53,16 +53,16 @@ class JTrologList extends JTrologTerm implements PrologList {
 <span class="fc bfc" id="L53" title="All 2 branches covered.">					for (int i = length - 2; i &gt;= 0; --i) {</span>
 <span class="fc" id="L54">						value = new Struct(&quot;.&quot;, new Term[] { arguments[i], value });</span>
 					}
-				} else {
+<span class="fc" id="L56">				} else {</span>
 <span class="nc" id="L57">					value = Term.emptyList;</span>
 <span class="nc bnc" id="L58" title="All 2 branches missed.">					for (int i = length - 1; i &gt;= 0; --i) {</span>
 <span class="nc" id="L59">						value = new Struct(&quot;.&quot;, new Term[] { arguments[i], value });</span>
 					}
 				}
-			} else {
+<span class="nc" id="L62">			} else {</span>
 <span class="nc" id="L63">				value = Term.emptyList;</span>
 			}
-<span class="fc" id="L65">		} else {</span>
+<span class="nc" id="L65">		} else {</span>
 <span class="nc" id="L66">			value = Term.emptyList;</span>
 		}
 <span class="fc" id="L68">	}</span>
@@ -77,16 +77,16 @@ class JTrologList extends JTrologTerm implements PrologList {
 <span class="nc bnc" id="L77" title="All 2 branches missed.">					for (int i = length - 2; i &gt;= 0; --i) {</span>
 <span class="nc" id="L78">						value = new Struct(&quot;.&quot;, new Term[] { ((JTrologTerm) arguments[i]).value, value });</span>
 					}
-				} else {
+<span class="nc" id="L80">				} else {</span>
 <span class="fc" id="L81">					value = Term.emptyList;</span>
 <span class="fc bfc" id="L82" title="All 2 branches covered.">					for (int i = length - 1; i &gt;= 0; --i) {</span>
 <span class="fc" id="L83">						value = new Struct(&quot;.&quot;, new Term[] { ((JTrologTerm) arguments[i]).value, value });</span>
 					}
 				}
-			} else {
+<span class="fc" id="L86">			} else {</span>
 <span class="nc" id="L87">				value = Term.emptyList;</span>
 			}
-<span class="fc" id="L89">		} else {</span>
+<span class="nc" id="L89">		} else {</span>
 <span class="nc" id="L90">			value = Term.emptyList;</span>
 		}
 <span class="fc" id="L92">	}</span>

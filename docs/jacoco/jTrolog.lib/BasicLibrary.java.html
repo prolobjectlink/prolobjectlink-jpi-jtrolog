@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>BasicLibrary.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">prolobjectlink-jpi-jtrolog</a> &gt; <a href="index.source.html" class="el_package">jTrolog.lib</a> &gt; <span class="el_source">BasicLibrary.java</span></div><h1>BasicLibrary.java</h1><pre class="source lang-java linenums">/*
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>BasicLibrary.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">prolobjectlink-jpi-jtrolog</a> &gt; <a href="index.source.html" class="el_package">jTrolog.lib</a> &gt; <span class="el_source">BasicLibrary.java</span></div><h1>BasicLibrary.java</h1><pre class="source lang-java linenums">/*
  * #%L
  * prolobjectlink-jpi-jtrolog
  * %%
@@ -575,7 +575,7 @@ import java.util.LinkedList;
 		//
 		// operators defined by the BasicLibrary theory
 		//
-		&quot;':-'(op( 1200, fx,   ':-')). \n&quot;
+<span class="fc" id="L578">		&quot;':-'(op( 1200, fx,   ':-')). \n&quot;</span>
 				+ &quot;:- op( 1200, xfx,  ':-'). \n&quot;
 				+ &quot;:- op( 1200, fx,   '?-'). \n&quot;
 				+ &quot;:- op( 1100, xfy,  ';'). \n&quot;
@@ -949,15 +949,15 @@ import java.util.LinkedList;
 <span class="nc bnc" id="L949" title="All 2 branches missed.">			if (term_equality_2(null, witness1, witness2)) {</span>
 <span class="nc" id="L950">				bt.unify(w_t.getArg(0), witness1);</span>
 <span class="nc" id="L951">				results.add(BindingsTable.unWrap(w_t.getArg(1)));</span>
-			} else {
+<span class="nc" id="L952">			} else {</span>
 <span class="nc" id="L953">				remains.add(BindingsTable.unWrap(w_t));</span>
 			}
-<span class="nc" id="L955">		}</span>
+		}
 
 		// 3. unify the results lists and remains list with aSet and bSet
 <span class="nc bnc" id="L958" title="All 2 branches missed.">		if (remains.isEmpty()) {</span>
 <span class="nc" id="L959">			bt.unify(bSet, Term.emptyList);</span>
-		} else {
+<span class="nc" id="L960">		} else {</span>
 <span class="nc" id="L961">			remains.add(Term.emptyList);</span>
 <span class="nc" id="L962">			bt.unify(bSet, BindingsTable.wrapWithID(Parser.createStructList(remains), wrapID));</span>
 		}
@@ -1027,9 +1027,9 @@ import java.util.LinkedList;
 <span class="nc" id="L1027">				Term child2 = (Term) it2.next();</span>
 <span class="nc bnc" id="L1028" title="All 2 branches missed.">				if (BasicLibrary.term_equality_2(null, child, child2))</span>
 <span class="nc" id="L1029">					continue outer;</span>
-<span class="nc" id="L1030">			}</span>
+			}
 <span class="nc" id="L1031">			resultList.add(child);</span>
-<span class="nc" id="L1032">		}</span>
+		}
 <span class="nc bnc" id="L1033" title="All 2 branches missed.">		if (resultList.isEmpty())</span>
 <span class="nc" id="L1034">			return bt.unify(diff, Term.emptyList);</span>
 <span class="nc" id="L1035">		resultList.add(Term.emptyList);</span>

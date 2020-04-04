@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>Tokenizer.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">prolobjectlink-jpi-jtrolog</a> &gt; <a href="index.source.html" class="el_package">jTrolog.parser</a> &gt; <span class="el_source">Tokenizer.java</span></div><h1>Tokenizer.java</h1><pre class="source lang-java linenums">/*
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>Tokenizer.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">prolobjectlink-jpi-jtrolog</a> &gt; <a href="index.source.html" class="el_package">jTrolog.parser</a> &gt; <span class="el_source">Tokenizer.java</span></div><h1>Tokenizer.java</h1><pre class="source lang-java linenums">/*
  * #%L
  * prolobjectlink-jpi-jtrolog
  * %%
@@ -132,7 +132,7 @@ class Tokenizer extends StreamTokenizer implements Serializable {
 <span class="fc" id="L132">			typea = pushBack2.typea;</span>
 <span class="fc" id="L133">			svala = pushBack2.svala;</span>
 <span class="fc" id="L134">			pushBack2 = null;</span>
-		} else {
+<span class="fc" id="L135">		} else {</span>
 <span class="fc" id="L136">			typea = super.nextToken();</span>
 <span class="fc" id="L137">			svala = sval;</span>
 		}
@@ -235,7 +235,7 @@ class Tokenizer extends StreamTokenizer implements Serializable {
 <span class="pc bpc" id="L235" title="2 of 6 branches missed.">		if (typea == '\'' || typea == '\&quot;' || typea == '`') {</span>
 <span class="fc" id="L236">			int qType = typea;</span>
 <span class="fc" id="L237">			StringBuffer quote = new StringBuffer();</span>
-			while (true) { // run through entire quote and added body to quote
+<span class="fc" id="L238">			while (true) { // run through entire quote and added body to quote</span>
 							// buffer
 <span class="fc" id="L240">				typea = super.nextToken();</span>
 <span class="fc" id="L241">				svala = sval;</span>
@@ -453,8 +453,8 @@ class Tokenizer extends StreamTokenizer implements Serializable {
 <span class="nc" id="L453">				return -1;</span>
 			}
 		}
-<span class="nc bnc" id="L456" title="All 14 branches missed.">		if (typec == ' ' || // space char (* 6.5.4 *)</span>
-<span class="nc bnc" id="L457" title="All 2 branches missed.">				typec == '(' || typec == ')' || typec == '{' || typec == '}' || typec == '[' || typec == ']' || Arrays.binarySearch(GRAPHIC_CHARS, (char) typec) &gt;= 0) // graphic</span>
+<span class="nc bnc" id="L456" title="All 2 branches missed.">		if (typec == ' ' || // space char (* 6.5.4 *)</span>
+<span class="nc bnc" id="L457" title="All 14 branches missed.">				typec == '(' || typec == ')' || typec == '{' || typec == '}' || typec == '[' || typec == ']' || Arrays.binarySearch(GRAPHIC_CHARS, (char) typec) &gt;= 0) // graphic</span>
 																																										// char
 																																										// (*
 																																										// 6.5.1
