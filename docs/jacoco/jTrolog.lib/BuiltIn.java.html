@@ -280,10 +280,10 @@ public class BuiltIn extends Library {
 <span class="nc" id="L280">						flag.setValue(arg1);</span>
 <span class="nc" id="L281">						return true;</span>
 					}
-				}
+<span class="nc" id="L283">				}</span>
 <span class="nc" id="L284">			} catch (PrologException e) {</span>
 <span class="nc" id="L285">				throw new RuntimeException(&quot;error in iterating a Struct list&quot;);</span>
-			}
+<span class="nc" id="L286">			}</span>
 		}
 <span class="nc" id="L288">		return false;</span>
 	}
@@ -339,7 +339,7 @@ public class BuiltIn extends Library {
 <span class="nc" id="L339">			File dir = new File(System.getProperty(&quot;user.dir&quot;));</span>
 <span class="nc" id="L340">			String filename = dir + File.separator + Parser.removeApices(theory.toString());</span>
 <span class="nc" id="L341">			is = new FileInputStream(filename);</span>
-		}
+<span class="nc" id="L342">		}</span>
 <span class="nc" id="L343">		engine.addTheory(IOLibrary.readStream(is));</span>
 <span class="nc" id="L344">	}</span>
 
@@ -378,7 +378,7 @@ public class BuiltIn extends Library {
 <span class="fc bfc" id="L378" title="All 2 branches covered.">		if (cl.predicateIndicator != Parser.doubleClauseSignature) {</span>
 <span class="fc" id="L379">			head = arg0;</span>
 <span class="fc" id="L380">			body = Term.TRUE;</span>
-<span class="fc" id="L381">		} else {</span>
+		} else {
 <span class="fc" id="L382">			head = cl.getArg(0);</span>
 <span class="fc" id="L383">			body = cl.getArg(1);</span>
 		}
@@ -428,8 +428,8 @@ public class BuiltIn extends Library {
 <span class="nc" id="L428">			throw new PrologException(&quot;type_error(callable, &quot; + body + &quot;)&quot;);</span>
 <span class="fc" id="L429">		Struct s = (Struct) body;</span>
 <span class="fc" id="L430">		String sPredIndic = s.predicateIndicator;</span>
-<span class="pc bpc" id="L431" title="2 of 8 branches missed.">		if (sPredIndic == Parser.ifSignature || sPredIndic == Parser.commaSignature || sPredIndic == Parser.semiColonSignature || sPredIndic == Parser.throwSignature</span>
-<span class="pc bpc" id="L432" title="1 of 2 branches missed.">				|| sPredIndic == Parser.catchSignature) {</span>
+<span class="pc bpc" id="L431" title="3 of 10 branches missed.">		if (sPredIndic == Parser.ifSignature || sPredIndic == Parser.commaSignature || sPredIndic == Parser.semiColonSignature || sPredIndic == Parser.throwSignature</span>
+				|| sPredIndic == Parser.catchSignature) {
 <span class="fc" id="L433">			Term[] args = new Term[s.arity];</span>
 <span class="fc bfc" id="L434" title="All 2 branches covered.">			for (int i = 0; i &lt; s.arity; i++)</span>
 <span class="fc" id="L435">				args[i] = convertTermToClauseBody(s.getArg(i));</span>

@@ -53,7 +53,7 @@ public class JTrolog extends AbstractProvider implements PrologProvider {
 
 <span class="fc" id="L54">	private static final PrologLogger logger = new JTrologLogger();</span>
 	static final String VERSION = Prolog.VERSION;
-<span class="fc" id="L56">	static final String NAME = &quot;jTrolog&quot;;</span>
+	static final String NAME = &quot;jTrolog&quot;;
 
 	public JTrolog() {
 <span class="fc" id="L59">		super(new JTrologConverter());</span>
@@ -123,11 +123,11 @@ public class JTrolog extends AbstractProvider implements PrologProvider {
 <span class="fc bfc" id="L123" title="All 4 branches covered.">			if (struct.name.equals(&quot;,&quot;) &amp;&amp; struct.arity == 2) {</span>
 <span class="fc" id="L124">				list.add(toTerm(struct.getArg(0), PrologTerm.class));</span>
 <span class="fc" id="L125">				term = struct.getArg(1);</span>
-<span class="fc" id="L126">			} else {</span>
+			} else {
 <span class="fc" id="L127">				list.add(toTerm(term, PrologTerm.class));</span>
 <span class="fc" id="L128">				term = parser.nextTerm(false);</span>
 			}
-		}
+<span class="fc" id="L130">		}</span>
 <span class="fc" id="L131">		return list.toArray(new PrologTerm[0]);</span>
 	}
 

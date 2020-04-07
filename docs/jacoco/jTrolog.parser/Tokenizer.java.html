@@ -132,7 +132,7 @@ class Tokenizer extends StreamTokenizer implements Serializable {
 <span class="fc" id="L132">			typea = pushBack2.typea;</span>
 <span class="fc" id="L133">			svala = pushBack2.svala;</span>
 <span class="fc" id="L134">			pushBack2 = null;</span>
-<span class="fc" id="L135">		} else {</span>
+		} else {
 <span class="fc" id="L136">			typea = super.nextToken();</span>
 <span class="fc" id="L137">			svala = sval;</span>
 		}
@@ -235,7 +235,7 @@ class Tokenizer extends StreamTokenizer implements Serializable {
 <span class="pc bpc" id="L235" title="2 of 6 branches missed.">		if (typea == '\'' || typea == '\&quot;' || typea == '`') {</span>
 <span class="fc" id="L236">			int qType = typea;</span>
 <span class="fc" id="L237">			StringBuffer quote = new StringBuffer();</span>
-<span class="fc" id="L238">			while (true) { // run through entire quote and added body to quote</span>
+			while (true) { // run through entire quote and added body to quote
 							// buffer
 <span class="fc" id="L240">				typea = super.nextToken();</span>
 <span class="fc" id="L241">				svala = sval;</span>
@@ -453,8 +453,8 @@ class Tokenizer extends StreamTokenizer implements Serializable {
 <span class="nc" id="L453">				return -1;</span>
 			}
 		}
-<span class="nc bnc" id="L456" title="All 2 branches missed.">		if (typec == ' ' || // space char (* 6.5.4 *)</span>
-<span class="nc bnc" id="L457" title="All 14 branches missed.">				typec == '(' || typec == ')' || typec == '{' || typec == '}' || typec == '[' || typec == ']' || Arrays.binarySearch(GRAPHIC_CHARS, (char) typec) &gt;= 0) // graphic</span>
+<span class="nc bnc" id="L456" title="All 14 branches missed.">		if (typec == ' ' || // space char (* 6.5.4 *)</span>
+<span class="nc bnc" id="L457" title="All 2 branches missed.">				typec == '(' || typec == ')' || typec == '{' || typec == '}' || typec == '[' || typec == ']' || Arrays.binarySearch(GRAPHIC_CHARS, (char) typec) &gt;= 0) // graphic</span>
 																																										// char
 																																										// (*
 																																										// 6.5.1

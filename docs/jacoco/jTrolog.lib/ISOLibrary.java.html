@@ -79,7 +79,7 @@ import java.util.Iterator;
 <span class="nc bnc" id="L79" title="All 6 branches missed.">				if (character.startsWith(&quot;'&quot;) &amp;&amp; character.endsWith(&quot;'&quot;) &amp;&amp; character.length() != 1)</span>
 <span class="nc" id="L80">					character = character.substring(1, character.length() - 1);</span>
 <span class="nc" id="L81">				res.append(character);</span>
-			}
+<span class="nc" id="L82">			}</span>
 <span class="nc" id="L83">			return bt.unify(arg0, new StructAtom(res.toString()));</span>
 		} else {
 <span class="nc bnc" id="L85" title="All 2 branches missed.">			if (!BasicLibrary.atom_1(bt, arg0))</span>
@@ -95,7 +95,7 @@ import java.util.Iterator;
 <span class="nc" id="L95">				String st = ((Struct) arg0).name;</span>
 <span class="nc bnc" id="L96" title="All 2 branches missed.">				if (st.length() &lt;= 1)</span>
 <span class="nc" id="L97">					return bt.unify(arg1, new Int(st.charAt(0)));</span>
-			}
+<span class="nc" id="L98">			}</span>
 <span class="nc bnc" id="L99" title="All 2 branches missed.">		} else if (arg1 instanceof Int) {</span>
 <span class="nc" id="L100">			char c = (char) ((jTrolog.terms.Number) arg1).intValue();</span>
 <span class="nc" id="L101">			return bt.unify(arg0, new StructAtom(&quot;&quot; + c));</span>
@@ -195,54 +195,54 @@ import java.util.Iterator;
 		//
 		// operators defined by the ISOLibrary theory
 		//
-<span class="fc" id="L198">		&quot;:- op(  300, yfx,  'div'). \n&quot; + &quot;:- op(  400, yfx,  'mod'). \n&quot; + &quot;:- op(  400, yfx,  'rem'). \n&quot; + &quot;:- op(  200, fx,   'sin'). \n&quot; + &quot;:- op(  200, fx,   'cos'). \n&quot;</span>
+		&quot;:- op(  300, yfx,  'div'). \n&quot; + &quot;:- op(  400, yfx,  'mod'). \n&quot; + &quot;:- op(  400, yfx,  'rem'). \n&quot; + &quot;:- op(  200, fx,   'sin'). \n&quot; + &quot;:- op(  200, fx,   'cos'). \n&quot;
 				+ &quot;:- op(  200, fx,   'sqrt'). \n&quot; + &quot;:- op(  200, fx,   'atan'). \n&quot; + &quot;:- op(  200, fx,   'exp'). \n&quot; + &quot;:- op(  200, fx,   'log'). \n&quot; +
 				//
 				// flags defined by the ISOLibrary theory
 				//
 				&quot;:- flag(bounded, [true,false], true, false).\n&quot; + &quot;:- flag(max_integer, [&quot;
 <span class="fc" id="L204">				+ Integer.toString(Integer.MAX_VALUE)</span>
-<span class="fc" id="L205">				+ &quot;], &quot;</span>
+				+ &quot;], &quot;
 <span class="fc" id="L206">				+ Integer.toString(Integer.MAX_VALUE)</span>
-<span class="fc" id="L207">				+ &quot;,false).\n&quot;</span>
-<span class="fc" id="L208">				+ &quot;:- flag(min_integer, [&quot;</span>
+				+ &quot;,false).\n&quot;
+				+ &quot;:- flag(min_integer, [&quot;
 <span class="fc" id="L209">				+ Integer.toString(Integer.MIN_VALUE)</span>
-<span class="fc" id="L210">				+ &quot;], &quot;</span>
+				+ &quot;], &quot;
 <span class="fc" id="L211">				+ Integer.toString(Integer.MIN_VALUE)</span>
-<span class="fc" id="L212">				+ &quot;,false).\n&quot;</span>
-<span class="fc" id="L213">				+ &quot;:- flag(integer_rounding_function, [up,down], down, false).\n&quot;</span>
-<span class="fc" id="L214">				+ &quot;:- flag(char_conversion,[on,off],off,false).\n&quot;</span>
-<span class="fc" id="L215">				+ &quot;:- flag(debug,[on,off],off,false).\n&quot;</span>
-<span class="fc" id="L216">				+ &quot;:- flag(max_arity, [&quot;</span>
+				+ &quot;,false).\n&quot;
+				+ &quot;:- flag(integer_rounding_function, [up,down], down, false).\n&quot;
+				+ &quot;:- flag(char_conversion,[on,off],off,false).\n&quot;
+				+ &quot;:- flag(debug,[on,off],off,false).\n&quot;
+				+ &quot;:- flag(max_arity, [&quot;
 <span class="fc" id="L217">				+ Integer.toString(Integer.MAX_VALUE)</span>
-<span class="fc" id="L218">				+ &quot;], &quot;</span>
+				+ &quot;], &quot;
 <span class="fc" id="L219">				+ Integer.toString(Integer.MAX_VALUE)</span>
-<span class="fc" id="L220">				+ &quot;,false).\n&quot;</span>
-<span class="fc" id="L221">				+ &quot;:- flag(undefined_predicate, [error,fail,warning], fail, false).\n&quot;</span>
-<span class="fc" id="L222">				+ &quot;:- flag(double_quotes, [atom,chars,codes], atom, true).\n&quot;</span>
+				+ &quot;,false).\n&quot;
+				+ &quot;:- flag(undefined_predicate, [error,fail,warning], fail, false).\n&quot;
+				+ &quot;:- flag(double_quotes, [atom,chars,codes], atom, true).\n&quot;
 				+
 				//
 				//
-<span class="fc" id="L226">				&quot;unbound(X):-not bound(X).\n                                                                          &quot;</span>
+				&quot;unbound(X):-not bound(X).\n                                                                          &quot;
 				+
 				//
-<span class="fc" id="L229">				&quot;atom_concat(F,S,R) :- atom_chars(F,FL),atom_chars(S,SL),!,append(FL,SL,RS),atom_chars(R,RS).\n          &quot;</span>
-<span class="fc" id="L230">				+ &quot;atom_concat(F,S,R) :- atom_chars(R,RS),append(FL,SL,RS),atom_chars(F,FL),atom_chars(S,SL).\n            &quot;</span>
-<span class="fc" id="L231">				+ &quot;atom_codes(A,L):-atom_chars(A,L1),!,chars_codes(L1,L).\n&quot;</span>
-<span class="fc" id="L232">				+ &quot;atom_codes(A,L):-chars_codes(L1,L),atom_chars(A,L1).\n&quot;</span>
-<span class="fc" id="L233">				+ &quot;chars_codes([],[]).\n&quot;</span>
-<span class="fc" id="L234">				+ &quot;chars_codes([X|L1],[Y|L2]):-char_code(X,Y),chars_codes(L1,L2).\n&quot;</span>
-<span class="fc" id="L235">				+ &quot;sub_atom(Atom,B,L,A,Sub):-atom_chars(Atom,L1),atom_chars(Sub,L2),!,sub_list(L2,L1,B),length(L2,L), length(L1,Len), A is Len - (B+L).\n&quot;</span>
-<span class="fc" id="L236">				+ &quot;sub_atom(Atom,B,L,A,Sub):-atom_chars(Atom,L1),sub_list(L2,L1,B),atom_chars(Sub,L2),length(L2,L), length(L1,Len), A is Len - (B+L).\n&quot;</span>
-<span class="fc" id="L237">				+ &quot;sub_list([],_,0).\n&quot;</span>
-<span class="fc" id="L238">				+ &quot;sub_list([X|L1],[X|L2],0):- sub_list_seq(L1,L2).\n&quot;</span>
-<span class="fc" id="L239">				+ &quot;sub_list(L1,[_|L2],N):- sub_list(L1,L2,M), N is M + 1.\n&quot;</span>
-<span class="fc" id="L240">				+ &quot;sub_list_seq([],L).\n&quot;</span>
-<span class="fc" id="L241">				+ &quot;sub_list_seq([X|L1],[X|L2]):-sub_list_seq(L1,L2).\n&quot;</span>
-<span class="fc" id="L242">				+ &quot;number_chars(Number,List):-num_atom(Number,Struct),atom_chars(Struct,List),!.\n&quot;</span>
-<span class="fc" id="L243">				+ &quot;number_chars(Number,List):-atom_chars(Struct,List),num_atom(Number,Struct).\n&quot;</span>
-<span class="fc" id="L244">				+ &quot;number_codes(Number,List):-num_atom(Number,Struct),atom_codes(Struct,List),!.\n&quot;</span>
-<span class="fc" id="L245">				+ &quot;number_codes(Number,List):-atom_codes(Struct,List),num_atom(Number,Struct).\n&quot;;</span>
+				&quot;atom_concat(F,S,R) :- atom_chars(F,FL),atom_chars(S,SL),!,append(FL,SL,RS),atom_chars(R,RS).\n          &quot;
+				+ &quot;atom_concat(F,S,R) :- atom_chars(R,RS),append(FL,SL,RS),atom_chars(F,FL),atom_chars(S,SL).\n            &quot;
+				+ &quot;atom_codes(A,L):-atom_chars(A,L1),!,chars_codes(L1,L).\n&quot;
+				+ &quot;atom_codes(A,L):-chars_codes(L1,L),atom_chars(A,L1).\n&quot;
+				+ &quot;chars_codes([],[]).\n&quot;
+				+ &quot;chars_codes([X|L1],[Y|L2]):-char_code(X,Y),chars_codes(L1,L2).\n&quot;
+				+ &quot;sub_atom(Atom,B,L,A,Sub):-atom_chars(Atom,L1),atom_chars(Sub,L2),!,sub_list(L2,L1,B),length(L2,L), length(L1,Len), A is Len - (B+L).\n&quot;
+				+ &quot;sub_atom(Atom,B,L,A,Sub):-atom_chars(Atom,L1),sub_list(L2,L1,B),atom_chars(Sub,L2),length(L2,L), length(L1,Len), A is Len - (B+L).\n&quot;
+				+ &quot;sub_list([],_,0).\n&quot;
+				+ &quot;sub_list([X|L1],[X|L2],0):- sub_list_seq(L1,L2).\n&quot;
+				+ &quot;sub_list(L1,[_|L2],N):- sub_list(L1,L2,M), N is M + 1.\n&quot;
+				+ &quot;sub_list_seq([],L).\n&quot;
+				+ &quot;sub_list_seq([X|L1],[X|L2]):-sub_list_seq(L1,L2).\n&quot;
+				+ &quot;number_chars(Number,List):-num_atom(Number,Struct),atom_chars(Struct,List),!.\n&quot;
+				+ &quot;number_chars(Number,List):-atom_chars(Struct,List),num_atom(Number,Struct).\n&quot;
+				+ &quot;number_codes(Number,List):-num_atom(Number,Struct),atom_codes(Struct,List),!.\n&quot;
+				+ &quot;number_codes(Number,List):-atom_codes(Struct,List),num_atom(Number,Struct).\n&quot;;
 		//
 		// ISO default
 		// &quot;current_prolog_flag(changeable_flags,[ char_conversion(on,off), debug(on,off), undefined_predicate(error,fail,warning),double_quotes(chars,codes,atom) ]).\n&quot;+

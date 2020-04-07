@@ -101,7 +101,7 @@ class LibraryAndTheoryManager implements Serializable {
 <span class="fc" id="L101">				it.remove();</span>
 <span class="fc" id="L102">				return d.original;</span>
 			}
-		}
+<span class="fc" id="L104">		}</span>
 <span class="nc" id="L105">		return null;</span>
 	}
 
@@ -153,7 +153,7 @@ class LibraryAndTheoryManager implements Serializable {
 			// d = BuiltIn.convertTermToClause(d);
 <span class="fc" id="L154">			Clause cl = BuiltIn.convertTermToClause(d);</span>
 <span class="fc" id="L155">			assertZ(cl, cl.head.predicateIndicator);</span>
-		}
+<span class="fc" id="L156">		}</span>
 <span class="fc" id="L157">	}</span>
 
 	/**
@@ -181,15 +181,15 @@ class LibraryAndTheoryManager implements Serializable {
 <span class="fc" id="L181">						args[i + 1] = ((Struct) dir).getArg(i);</span>
 <span class="fc" id="L182">					Prolog.evalPrimitive(directive, args);</span>
 				}
-<span class="pc" id="L184">			} catch (InvocationTargetException e) {</span>
+<span class="nc" id="L184">			} catch (InvocationTargetException e) {</span>
 <span class="nc" id="L185">				Throwable cause = e;</span>
 <span class="nc bnc" id="L186" title="All 2 branches missed.">				while (cause instanceof InvocationTargetException)</span>
 <span class="nc" id="L187">					cause = cause.getCause();</span>
 <span class="nc" id="L188">				throw cause;</span>
-			}
+<span class="fc" id="L189">			}</span>
 <span class="nc" id="L190">		} catch (Throwable cause) {</span>
 <span class="nc" id="L191">			engine.warn(&quot;An exception has been thrown during the execution of the &quot; + ((Struct) dir).predicateIndicator + &quot; directive.\n&quot; + cause.getMessage());</span>
-		}
+<span class="fc" id="L192">		}</span>
 <span class="fc" id="L193">		return true;</span>
 	}
 
@@ -238,7 +238,7 @@ class LibraryAndTheoryManager implements Serializable {
 <span class="fc" id="L238">			Clause cl = BuiltIn.convertTermToClause(d);</span>
 <span class="fc" id="L239">			theoryAssociated.addLast(cl.head.predicateIndicator, cl);</span>
 <span class="fc" id="L240">			allLibraryRules.addLast(cl.head.predicateIndicator, cl);</span>
-		}
+<span class="fc" id="L241">		}</span>
 <span class="fc" id="L242">		librariesToRules.put(lib, theoryAssociated);</span>
 <span class="fc" id="L243">		return lib;</span>
 	}
@@ -252,7 +252,7 @@ class LibraryAndTheoryManager implements Serializable {
 <span class="nc" id="L252">			List parentList = allLibraryRules.getPredicates(predInfo);</span>
 <span class="nc bnc" id="L253" title="All 2 branches missed.">			for (int i = 0; i &lt; toBeRemoved.size(); i++)</span>
 <span class="nc" id="L254">				parentList.remove(toBeRemoved.get(i));</span>
-		}
+<span class="nc" id="L255">		}</span>
 <span class="nc" id="L256">		return lib;</span>
 	}
 
@@ -261,7 +261,7 @@ class LibraryAndTheoryManager implements Serializable {
 <span class="fc" id="L261">			Library lib = (Library) it.next();</span>
 <span class="pc bpc" id="L262" title="1 of 2 branches missed.">			if (name.equals(lib.getName()))</span>
 <span class="nc" id="L263">				return lib;</span>
-		}
+<span class="fc" id="L264">		}</span>
 <span class="fc" id="L265">		return null;</span>
 	}
 

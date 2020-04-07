@@ -139,7 +139,7 @@ import java.util.NoSuchElementException;
 			// method
 <span class="fc" id="L140">			oneCtx = links.getCtx(vNr, oneCtx);</span>
 <span class="fc" id="L141">			one = link;</span>
-		}
+<span class="fc" id="L142">		}</span>
 <span class="fc bfc" id="L143" title="All 2 branches covered.">		while (two.type == Term.VAR) {</span>
 <span class="fc" id="L144">			final int vNr = ((Var) two).nrInStruct;</span>
 <span class="fc" id="L145">			Term link = links.getTerm(vNr, twoCtx);</span>
@@ -149,7 +149,7 @@ import java.util.NoSuchElementException;
 															// one
 <span class="nc" id="L150">			twoCtx = links.getCtx(vNr, twoCtx);</span>
 <span class="nc" id="L151">			two = link;</span>
-		}
+<span class="nc" id="L152">		}</span>
 		// from now on, neither branch is a Var
 <span class="pc bpc" id="L154" title="1 of 4 branches missed.">		if (one.type &gt;= Term.STRUCT &amp;&amp; two.type &gt;= Term.STRUCT) {</span>
 <span class="fc" id="L155">			Struct a = (Struct) one;</span>
@@ -195,14 +195,14 @@ import java.util.NoSuchElementException;
 													// skip two's children
 <span class="nc bnc" id="L196" title="All 4 branches missed.">							for (int postStop = prePostB[j]; j &lt; prePostB.length - 1 &amp;&amp; prePostB[j + 1] &lt; postStop; j++)</span>
 								;
-<span class="nc" id="L198">						continue bb;</span>
+						continue bb;
 					}
 					// else, Var one is bound. If it is bound to a Var, then the
 					// loop will continue updating the on Var, else it will
 					// continue down the method
 <span class="nc" id="L203">					tmpCtx1 = links.getCtx(vOne.nrInStruct, tmpCtx1);</span>
 <span class="nc" id="L204">					one = link;</span>
-				}
+<span class="nc" id="L205">				}</span>
 <span class="nc bnc" id="L206" title="All 2 branches missed.">				if (one.type == Term.STRUCT)// instanceof Struct &amp;&amp; ((Struct)</span>
 											// one).arity &gt; 0) //todo we don't
 											// need to mustMakeNewStackLevel
@@ -224,11 +224,11 @@ import java.util.NoSuchElementException;
 													// skip one's children
 <span class="nc bnc" id="L225" title="All 4 branches missed.">							for (int postStop = prePostA[i]; i &lt; prePostA.length - 1 &amp;&amp; prePostA[i + 1] &lt; postStop; i++)</span>
 								;
-<span class="nc" id="L227">						continue bb;</span>
+						continue bb;
 					}
 <span class="nc" id="L229">					tmpCtx2 = links.getCtx(vTwo.nrInStruct, tmpCtx2);</span>
 <span class="nc" id="L230">					two = link;</span>
-				}
+<span class="nc" id="L231">				}</span>
 <span class="nc bnc" id="L232" title="All 2 branches missed.">				if (two.type == Term.STRUCT)// instanceof Struct &amp;&amp; ((Struct)</span>
 											// two).arity &gt; 0)
 <span class="nc" id="L234">					mustMakeNewStackLevel = true;</span>
@@ -352,7 +352,7 @@ import java.util.NoSuchElementException;
 			// if the Var was linked to a Var, the loop will run once more
 			// else t is a Struct and 'if (t instanceof Struct)' below will kick
 			// into action
-		}
+<span class="nc" id="L355">		}</span>
 <span class="nc bnc" id="L356" title="All 2 branches missed.">		if (t.type == Term.STRUCT) {</span>
 <span class="nc" id="L357">			Var[] varList = ((Struct) t).getVarList();</span>
 <span class="nc bnc" id="L358" title="All 2 branches missed.">			if (varList == null)</span>
@@ -463,7 +463,7 @@ import java.util.NoSuchElementException;
 <span class="fc" id="L463">				break;</span>
 <span class="fc" id="L464">			term = link;</span>
 <span class="fc" id="L465">			ctx = secondOutOfFasterResolve = links.getCtx(vNr, ctx);</span>
-		}
+<span class="fc" id="L466">		}</span>
 <span class="fc" id="L467">		return term;</span>
 	}
 
@@ -485,10 +485,10 @@ import java.util.NoSuchElementException;
 <span class="nc" id="L485">				Var child = (Var) it.next();</span>
 <span class="nc" id="L486">				Term link = (Term) toBeLinked.next();</span>
 <span class="nc" id="L487">				unify(child, link);</span>
-			}
+<span class="nc" id="L488">			}</span>
 <span class="nc" id="L489">		} catch (PrologException e) {</span>
 <span class="nc" id="L490">			throw new RuntimeException(&quot;error in iterating a Struct list&quot;);</span>
-		}
+<span class="nc" id="L491">		}</span>
 <span class="nc" id="L492">		return res;</span>
 	}
 

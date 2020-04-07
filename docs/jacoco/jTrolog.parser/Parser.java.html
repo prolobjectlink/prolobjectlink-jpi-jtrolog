@@ -113,7 +113,7 @@ public class Parser implements Serializable {
 <span class="fc" id="L113">		variableList = new ArrayList();</span>
 <span class="fc bfc" id="L114" title="All 2 branches covered.">		if (p == null) {</span>
 <span class="fc" id="L115">			engine = Prolog.defaultMachine;</span>
-<span class="fc" id="L116">		} else {</span>
+		} else {
 <span class="fc" id="L117">			engine = p;</span>
 <span class="fc" id="L118">			Term dqFlag = p.getFlagValue(&quot;double_quotes&quot;);</span>
 <span class="fc bfc" id="L119" title="All 2 branches covered.">			if (dqFlag != null) {</span>
@@ -202,7 +202,7 @@ public class Parser implements Serializable {
 <span class="fc" id="L202">					leftRes = new Struct(operator.seq, new Term[] { leftRes, found }, Prolog.XFX);</span>
 <span class="fc" id="L203">					continue;</span>
 				}
-			}
+<span class="nc" id="L205">			}</span>
 			// XFY
 <span class="pc bpc" id="L207" title="1 of 4 branches missed.">			else if (XFY &gt;= XF &amp;&amp; XFY &gt;= minPriority) { // XFY has priority, or</span>
 														// XFX has failed
@@ -212,7 +212,7 @@ public class Parser implements Serializable {
 <span class="fc" id="L212">					leftRes = new Struct(operator.seq, new Term[] { leftRes, found }, Prolog.XFY);</span>
 <span class="fc" id="L213">					continue;</span>
 				}
-			}
+<span class="nc" id="L215">			}</span>
 			// XF
 <span class="pc bpc" id="L217" title="1 of 2 branches missed.">			else if (XF &gt;= minPriority) // XF has priority, or XFX and/or XFY</span>
 										// has failed
@@ -226,7 +226,7 @@ public class Parser implements Serializable {
 <span class="nc" id="L226">					leftRes = new Struct(operator.seq, new Term[] { leftRes, found }, Prolog.XFX);</span>
 <span class="nc" id="L227">					continue;</span>
 				}
-			}
+<span class="nc" id="L229">			}</span>
 			// YFX
 <span class="pc bpc" id="L231" title="1 of 4 branches missed.">			else if (YFX &gt;= YF &amp;&amp; YFX &gt;= Prolog.OP_LOW) {</span>
 <span class="fc" id="L232">				Term found = expr(YFX - 1, commaIsEndMarker);</span>
@@ -235,12 +235,12 @@ public class Parser implements Serializable {
 <span class="fc" id="L235">					leftRes = new Struct(operator.seq, new Term[] { leftRes, found }, Prolog.YFX);</span>
 <span class="fc" id="L236">					continue;</span>
 				}
-			}
+<span class="nc" id="L238">			}</span>
 			// either YF has priority over YFX or YFX failed
 <span class="pc bpc" id="L240" title="1 of 2 branches missed.">			else if (YF &gt;= Prolog.OP_LOW) {</span>
 <span class="nc" id="L241">				minPriority = YF;</span>
 <span class="nc" id="L242">				leftRes = new Struct(operator.seq, new Term[] { leftRes }, Prolog.YF);</span>
-				continue;
+<span class="nc" id="L243">				continue;</span>
 			}
 			break;
 		}
@@ -290,7 +290,7 @@ public class Parser implements Serializable {
 																// exprA(n - 1)
 <span class="pc bpc" id="L291" title="1 of 2 branches missed.">				if (found != null)</span>
 <span class="fc" id="L292">					return new Struct(f.seq, new Term[] { found }, Prolog.FX);</span>
-			}
+<span class="nc" id="L293">			}</span>
 			// FY has priority over FX, or FX has failed
 <span class="fc bfc" id="L295" title="All 2 branches covered.">			else if (FY &gt;= Prolog.OP_LOW) {</span>
 <span class="fc" id="L296">				Term found = expr(FY, commaIsEndMarker); // op(fy,n) exprA(1200)</span>
@@ -298,7 +298,7 @@ public class Parser implements Serializable {
 															// expr(n)
 <span class="pc bpc" id="L299" title="1 of 2 branches missed.">				if (found != null)</span>
 <span class="fc" id="L300">					return new Struct(f.seq, new Term[] { found }, Prolog.FY);</span>
-			}
+<span class="nc" id="L301">			}</span>
 			// FY has priority over FX, but FY failed
 <span class="pc bpc" id="L303" title="1 of 2 branches missed.">			else if (FX &gt;= Prolog.OP_LOW) {</span>
 <span class="nc" id="L304">				Term found = expr(FX - 1, commaIsEndMarker); // op(fx, n)</span>

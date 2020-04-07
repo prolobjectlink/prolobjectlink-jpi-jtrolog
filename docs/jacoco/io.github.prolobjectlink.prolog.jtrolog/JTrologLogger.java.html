@@ -60,11 +60,11 @@ import io.github.prolobjectlink.prolog.PrologLogger;
 <span class="fc" id="L60">		FileHandler file = null;</span>
 		try {
 <span class="fc" id="L62">			file = new FileHandler(&quot;%t/prolobjectlink-&quot; + date + &quot;.log&quot;, true);</span>
-<span class="pc" id="L63">		} catch (SecurityException e) {</span>
+<span class="nc" id="L63">		} catch (SecurityException e) {</span>
 <span class="nc" id="L64">			rootlogger.log(Level.SEVERE, MESSAGE, e);</span>
 <span class="nc" id="L65">		} catch (IOException e) {</span>
 <span class="nc" id="L66">			rootlogger.log(Level.SEVERE, MESSAGE, e);</span>
-		}
+<span class="pc" id="L67">		}</span>
 <span class="pc bpc" id="L68" title="2 of 4 branches missed.">		assert file != null;</span>
 <span class="fc" id="L69">		file.setFormatter(formatter);</span>
 <span class="fc" id="L70">		LOGGER.addHandler(file);</span>

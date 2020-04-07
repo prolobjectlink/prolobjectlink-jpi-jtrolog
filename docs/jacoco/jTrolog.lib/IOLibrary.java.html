@@ -159,9 +159,9 @@ public class IOLibrary extends Library {
 	public boolean get_1(BindingsTable bt, Term arg0) throws Exception {
 <span class="nc" id="L160">		InputStream inputStream = getInputStream(in);</span>
 		int ch;
-<span class="nc bnc" id="L162" title="All 2 branches missed.">		do {</span>
+		do {
 <span class="nc" id="L163">			ch = inputStream.read();</span>
-<span class="nc bnc" id="L164" title="All 2 branches missed.">		} while (ch &lt; 0x20 &amp;&amp; ch &gt;= 0);</span>
+<span class="nc bnc" id="L164" title="All 4 branches missed.">		} while (ch &lt; 0x20 &amp;&amp; ch &gt;= 0);</span>
 <span class="nc bnc" id="L165" title="All 2 branches missed.">		Term a1 = ch == -1 ? (Term) new Int(-1) : (Term) new StructAtom(Character.toString((char) ch));</span>
 <span class="nc" id="L166">		return bt.unify(arg0, a1);</span>
 	}
@@ -223,7 +223,7 @@ public class IOLibrary extends Library {
 <span class="nc" id="L223">		Object possibleInput = streams.get(Parser.removeApices(file_name.toString()));</span>
 <span class="nc bnc" id="L224" title="All 2 branches missed.">		if (possibleInput instanceof InputStream) {</span>
 <span class="nc" id="L225">			in = new BufferedReader(new InputStreamReader((InputStream) possibleInput));</span>
-<span class="nc" id="L226">		} else {</span>
+		} else {
 <span class="nc" id="L227">			in = new BufferedReader(new FileReader(&quot;infilename&quot;));</span>
 		}
 		String str;

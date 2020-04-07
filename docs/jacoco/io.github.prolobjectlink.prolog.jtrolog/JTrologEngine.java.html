@@ -93,13 +93,13 @@ public class JTrologEngine extends AbstractEngine implements PrologEngine {
 		try {
 <span class="fc" id="L94">			InputStream is = new FileInputStream(path);</span>
 <span class="fc" id="L95">			engine.addTheory(IOLibrary.readStream(is));</span>
-<span class="pc" id="L96">		} catch (FileNotFoundException e) {</span>
+<span class="nc" id="L96">		} catch (FileNotFoundException e) {</span>
 <span class="nc" id="L97">			getLogger().warn(getClass(), FILE_NOT_FOUND + path, e);</span>
 <span class="nc" id="L98">		} catch (PrologException e) {</span>
 <span class="nc" id="L99">			getLogger().error(getClass(), SYNTAX_ERROR + path, e);</span>
 <span class="nc" id="L100">		} catch (IOException e) {</span>
 <span class="nc" id="L101">			getLogger().warn(getClass(), IO + path, e);</span>
-		}
+<span class="pc" id="L102">		}</span>
 <span class="fc" id="L103">	}</span>
 
 	public void include(Reader reader) {
@@ -113,11 +113,11 @@ public class JTrologEngine extends AbstractEngine implements PrologEngine {
 <span class="fc" id="L113">				line = bfr.readLine();</span>
 			}
 <span class="fc" id="L115">			engine.addTheory(&quot;&quot; + script + &quot;&quot;);</span>
-<span class="pc" id="L116">		} catch (PrologException e) {</span>
+<span class="nc" id="L116">		} catch (PrologException e) {</span>
 <span class="nc" id="L117">			getLogger().error(getClass(), SYNTAX_ERROR + script, e);</span>
 <span class="nc" id="L118">		} catch (IOException e) {</span>
 <span class="nc" id="L119">			getLogger().warn(getClass(), IO + script, e);</span>
-		}
+<span class="pc" id="L120">		}</span>
 <span class="fc" id="L121">	}</span>
 
 	public void persist(String path) {
@@ -125,23 +125,23 @@ public class JTrologEngine extends AbstractEngine implements PrologEngine {
 		try {
 <span class="fc" id="L126">			writer = new PrintWriter(path);</span>
 <span class="fc" id="L127">			writer.write(engine.getTheory());</span>
-<span class="pc" id="L128">		} catch (IOException e) {</span>
+<span class="nc" id="L128">		} catch (IOException e) {</span>
 <span class="nc" id="L129">			getLogger().warn(getClass(), IO + path, e);</span>
 <span class="nc" id="L130">			getLogger().info(getClass(), DONT_WORRY + path);</span>
-<span class="nc" id="L131">		} finally {</span>
+		} finally {
 <span class="pc bpc" id="L132" title="5 of 6 branches missed.">			if (writer != null) {</span>
 <span class="pc" id="L133">				writer.close();</span>
 			}
-<span class="nc" id="L135">		}</span>
+		}
 <span class="fc" id="L136">	}</span>
 
 	public void abolish(String functor, int arity) {
 <span class="fc" id="L139">		String pi = functor + &quot;/&quot; + arity;</span>
 		try {
 <span class="fc" id="L141">			engine.abolish(pi);</span>
-<span class="pc" id="L142">		} catch (PrologException e) {</span>
+<span class="nc" id="L142">		} catch (PrologException e) {</span>
 <span class="nc" id="L143">			getLogger().error(getClass(), INDICATOR_NOT_FOUND, e);</span>
-		}
+<span class="fc" id="L144">		}</span>
 <span class="fc" id="L145">	}</span>
 
 	private boolean exist(Clause clause) {
@@ -160,9 +160,9 @@ public class JTrologEngine extends AbstractEngine implements PrologEngine {
 <span class="fc bfc" id="L160" title="All 2 branches covered.">							if (iclause.head.equals(clause.head)) {</span>
 
 <span class="fc bfc" id="L162" title="All 2 branches covered.">								Struct[] xclausetail = iclause.tail.length &gt; 0 ? iclause.tail</span>
-<span class="fc" id="L163">										: new Struct[] { (Struct) Term.TRUE };</span>
+										: new Struct[] { (Struct) Term.TRUE };
 <span class="fc bfc" id="L164" title="All 2 branches covered.">								Struct[] yclausetail = clause.tail.length &gt; 0 ? clause.tail</span>
-<span class="fc" id="L165">										: new Struct[] { (Struct) Term.TRUE };</span>
+										: new Struct[] { (Struct) Term.TRUE };
 
 <span class="fc bfc" id="L167" title="All 2 branches covered.">								if (xclausetail.length != yclausetail.length) {</span>
 <span class="fc" id="L168">									return false;</span>
@@ -178,12 +178,12 @@ public class JTrologEngine extends AbstractEngine implements PrologEngine {
 <span class="fc" id="L178">								return true;</span>
 							}
 						}
-					}
-<span class="pc" id="L182">				} catch (PrologException e) {</span>
+<span class="fc" id="L181">					}</span>
+<span class="nc" id="L182">				} catch (PrologException e) {</span>
 <span class="nc" id="L183">					getLogger().error(getClass(), INDICATOR_NOT_FOUND, e);</span>
-				}
+<span class="fc" id="L184">				}</span>
 			}
-		}
+<span class="fc" id="L186">		}</span>
 <span class="fc" id="L187">		return false;</span>
 	}
 
@@ -191,9 +191,9 @@ public class JTrologEngine extends AbstractEngine implements PrologEngine {
 		try {
 <span class="fc" id="L192">			Term term = new Parser(stringClause).nextTerm(false);</span>
 <span class="fc" id="L193">			asserta(BuiltIn.convertTermToClause(term));</span>
-<span class="pc" id="L194">		} catch (PrologException e) {</span>
+<span class="nc" id="L194">		} catch (PrologException e) {</span>
 <span class="nc" id="L195">			getLogger().error(getClass(), SYNTAX_ERROR + stringClause, e);</span>
-		}
+<span class="fc" id="L196">		}</span>
 <span class="fc" id="L197">	}</span>
 
 	public void asserta(PrologTerm head, PrologTerm... body) {
@@ -210,9 +210,9 @@ public class JTrologEngine extends AbstractEngine implements PrologEngine {
 <span class="fc bfc" id="L210" title="All 2 branches covered.">		if (!exist(clause)) {</span>
 			try {
 <span class="fc" id="L212">				engine.assertA(clause);</span>
-<span class="pc" id="L213">			} catch (PrologException e) {</span>
+<span class="nc" id="L213">			} catch (PrologException e) {</span>
 <span class="nc" id="L214">				getLogger().error(getClass(), RUNTIME_ERROR, e);</span>
-			}
+<span class="fc" id="L215">			}</span>
 		}
 <span class="fc" id="L217">	}</span>
 
@@ -220,9 +220,9 @@ public class JTrologEngine extends AbstractEngine implements PrologEngine {
 		try {
 <span class="fc" id="L221">			Term term = new Parser(stringClause).nextTerm(false);</span>
 <span class="fc" id="L222">			assertz(BuiltIn.convertTermToClause(term));</span>
-<span class="pc" id="L223">		} catch (PrologException e) {</span>
+<span class="nc" id="L223">		} catch (PrologException e) {</span>
 <span class="nc" id="L224">			getLogger().error(getClass(), SYNTAX_ERROR + stringClause, e);</span>
-		}
+<span class="fc" id="L225">		}</span>
 <span class="fc" id="L226">	}</span>
 
 	public void assertz(PrologTerm head, PrologTerm... body) {
@@ -239,9 +239,9 @@ public class JTrologEngine extends AbstractEngine implements PrologEngine {
 <span class="fc bfc" id="L239" title="All 2 branches covered.">		if (!exist(clause)) {</span>
 			try {
 <span class="fc" id="L241">				engine.assertZ(clause);</span>
-<span class="pc" id="L242">			} catch (PrologException e) {</span>
+<span class="nc" id="L242">			} catch (PrologException e) {</span>
 <span class="nc" id="L243">				getLogger().error(getClass(), RUNTIME_ERROR, e);</span>
-			}
+<span class="fc" id="L244">			}</span>
 		}
 <span class="fc" id="L246">	}</span>
 
@@ -280,12 +280,12 @@ public class JTrologEngine extends AbstractEngine implements PrologEngine {
 <span class="fc" id="L280">								return true;</span>
 							}
 						}
-					}
-<span class="pc" id="L284">				} catch (PrologException e) {</span>
+<span class="fc" id="L283">					}</span>
+<span class="nc" id="L284">				} catch (PrologException e) {</span>
 <span class="nc" id="L285">					getLogger().error(getClass(), INDICATOR_NOT_FOUND + predIndicator, e);</span>
-				}
+<span class="fc" id="L286">				}</span>
 			}
-		}
+<span class="fc" id="L288">		}</span>
 <span class="fc" id="L289">		return false;</span>
 	}
 
@@ -293,9 +293,9 @@ public class JTrologEngine extends AbstractEngine implements PrologEngine {
 		try {
 <span class="fc" id="L294">			Term term = new Parser(stringClause).nextTerm(false);</span>
 <span class="fc" id="L295">			retract(BuiltIn.convertTermToClause(term));</span>
-<span class="pc" id="L296">		} catch (PrologException e) {</span>
+<span class="nc" id="L296">		} catch (PrologException e) {</span>
 <span class="nc" id="L297">			getLogger().error(getClass(), SYNTAX_ERROR + stringClause, e);</span>
-		}
+<span class="fc" id="L298">		}</span>
 <span class="fc" id="L299">	}</span>
 
 	public void retract(PrologTerm head, PrologTerm... body) {
@@ -311,9 +311,9 @@ public class JTrologEngine extends AbstractEngine implements PrologEngine {
 	private void retract(Clause clause) {
 		try {
 <span class="fc" id="L313">			engine.retract(clause.original);</span>
-<span class="pc" id="L314">		} catch (PrologException e) {</span>
+<span class="nc" id="L314">		} catch (PrologException e) {</span>
 <span class="nc" id="L315">			getLogger().error(getClass(), RUNTIME_ERROR, e);</span>
-		}
+<span class="fc" id="L316">		}</span>
 <span class="fc" id="L317">	}</span>
 
 	public PrologQuery query(String stringQuery) {
@@ -346,7 +346,7 @@ public class JTrologEngine extends AbstractEngine implements PrologEngine {
 				}
 <span class="nc" id="L347">			} catch (PrologException e) {</span>
 <span class="nc" id="L348">				getLogger().error(getClass(), PrologLogger.INDICATOR_NOT_FOUND + key, e);</span>
-			}
+<span class="nc" id="L349">			}</span>
 		}
 
 		// not defined
@@ -377,7 +377,7 @@ public class JTrologEngine extends AbstractEngine implements PrologEngine {
 <span class="fc" id="L377">					cls.add(new JTrologClause(provider, head, false, false, false));</span>
 				}
 			}
-		}
+<span class="fc" id="L380">		}</span>
 <span class="fc" id="L381">		return new PrologProgramIterator(cls);</span>
 	}
 
@@ -389,10 +389,10 @@ public class JTrologEngine extends AbstractEngine implements PrologEngine {
 			try {
 <span class="fc" id="L390">				List&lt;?&gt; list = engine.find(predIndicator);</span>
 <span class="fc" id="L391">				counter += list.size();</span>
-<span class="pc" id="L392">			} catch (PrologException e) {</span>
+<span class="nc" id="L392">			} catch (PrologException e) {</span>
 <span class="nc" id="L393">				getLogger().error(getClass(), PrologLogger.INDICATOR_NOT_FOUND + predIndicator, e);</span>
-			}
-		}
+<span class="fc" id="L394">			}</span>
+<span class="fc" id="L395">		}</span>
 <span class="fc" id="L396">		return counter;</span>
 	}
 
@@ -411,11 +411,11 @@ public class JTrologEngine extends AbstractEngine implements PrologEngine {
 <span class="nc" id="L411">						JTrologIndicator p = new JTrologIndicator(functor, arity);</span>
 <span class="nc" id="L412">						predicates.add(p);</span>
 					}
-				}
+<span class="nc" id="L414">				}</span>
 <span class="nc" id="L415">			} catch (PrologException e) {</span>
 <span class="nc" id="L416">				getLogger().error(getClass(), PrologLogger.INDICATOR_NOT_FOUND + predIndicator, e);</span>
-			}
-		}
+<span class="nc" id="L417">			}</span>
+<span class="nc" id="L418">		}</span>
 <span class="fc" id="L419">		return predicates;</span>
 	}
 
@@ -439,7 +439,7 @@ public class JTrologEngine extends AbstractEngine implements PrologEngine {
 					}
 				}
 			}
-		}
+<span class="fc" id="L442">		}</span>
 <span class="fc" id="L443">		return builtins;</span>
 	}
 

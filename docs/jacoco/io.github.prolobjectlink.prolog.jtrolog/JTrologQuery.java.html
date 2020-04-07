@@ -59,7 +59,7 @@ final class JTrologQuery extends AbstractQuery implements PrologQuery {
 <span class="fc bfc" id="L59" title="All 2 branches covered.">				for (Var var : vars) {</span>
 <span class="fc" id="L60">					enumerateVariables(variables, var);</span>
 				}
-			}
+<span class="fc" id="L62">			}</span>
 <span class="fc bfc" id="L63" title="All 2 branches covered.">		} else if (!vector.contains(term.toString())) {</span>
 <span class="fc" id="L64">			vector.add(term.toString());</span>
 		}
@@ -71,9 +71,9 @@ final class JTrologQuery extends AbstractQuery implements PrologQuery {
 <span class="fc" id="L71">		enumerateVariables(variables, new Parser(query).nextTerm(false));</span>
 		try {
 <span class="fc" id="L73">			this.solution = jtrolog.solve(&quot;&quot; + query + &quot;.&quot;);</span>
-<span class="pc" id="L74">		} catch (Throwable e) {</span>
+<span class="nc" id="L74">		} catch (Throwable e) {</span>
 			// do nothing
-		}
+<span class="fc" id="L76">		}</span>
 <span class="fc" id="L77">	}</span>
 
 	JTrologQuery(AbstractEngine engine, PrologTerm[] terms) {
@@ -90,7 +90,7 @@ final class JTrologQuery extends AbstractQuery implements PrologQuery {
 <span class="nc" id="L90">				this.solution = jtrolog.solve(str);</span>
 <span class="nc" id="L91">			} catch (Throwable e) {</span>
 				// do nothing
-			}
+<span class="nc" id="L93">			}</span>
 		}
 <span class="nc" id="L95">	}</span>
 
@@ -109,9 +109,9 @@ final class JTrologQuery extends AbstractQuery implements PrologQuery {
 		}
 		try {
 <span class="fc" id="L111">			this.solution = jtrolog.solve(str + '.');</span>
-<span class="pc" id="L112">		} catch (Throwable e) {</span>
+<span class="nc" id="L112">		} catch (Throwable e) {</span>
 			// do nothing
-		}
+<span class="fc" id="L114">		}</span>
 <span class="fc" id="L115">	}</span>
 
 	public boolean hasSolution() {
@@ -149,7 +149,7 @@ final class JTrologQuery extends AbstractQuery implements PrologQuery {
 <span class="fc" id="L149">					map.put(vName, pTerm);</span>
 				}
 			}
-		}
+<span class="fc" id="L152">		}</span>
 <span class="fc" id="L153">		return map;</span>
 	}
 
@@ -162,7 +162,7 @@ final class JTrologQuery extends AbstractQuery implements PrologQuery {
 			}
 <span class="nc" id="L163">		} catch (Throwable e) {</span>
 <span class="nc" id="L164">			getLogger().error(getClass(), PrologLogger.NON_SOLUTION, e);</span>
-		}
+<span class="nc" id="L165">		}</span>
 <span class="nc" id="L166">		return array;</span>
 	}
 
@@ -201,9 +201,9 @@ final class JTrologQuery extends AbstractQuery implements PrologQuery {
 <span class="fc" id="L201">						index++;</span>
 <span class="fc" id="L202">						all.add(array);</span>
 					}
-<span class="pc" id="L204">				} catch (Throwable e) {</span>
+<span class="nc" id="L204">				} catch (Throwable e) {</span>
 <span class="nc" id="L205">					getLogger().error(getClass(), PrologLogger.NON_SOLUTION, e);</span>
-				}
+<span class="pc" id="L206">				}</span>
 
 			}
 
@@ -230,9 +230,9 @@ final class JTrologQuery extends AbstractQuery implements PrologQuery {
 <span class="fc" id="L230">					solution = jtrolog.solveNext();</span>
 <span class="fc" id="L231">					solutionMap = oneVariablesSolution();</span>
 <span class="fc" id="L232">					solutionMaps[index++] = solutionMap;</span>
-<span class="pc" id="L233">				} catch (Throwable e) {</span>
+<span class="nc" id="L233">				} catch (Throwable e) {</span>
 <span class="nc" id="L234">					getLogger().error(getClass(), PrologLogger.NON_SOLUTION, e);</span>
-				}
+<span class="pc" id="L235">				}</span>
 			}
 <span class="fc" id="L237">			return solutionMaps;</span>
 		}
@@ -261,9 +261,9 @@ final class JTrologQuery extends AbstractQuery implements PrologQuery {
 <span class="fc" id="L261">					n++;</span>
 <span class="fc" id="L262">					all.add(array);</span>
 				}
-<span class="pc" id="L264">			} catch (Throwable e) {</span>
+<span class="nc" id="L264">			} catch (Throwable e) {</span>
 <span class="nc" id="L265">				getLogger().error(getClass(), PrologLogger.NON_SOLUTION, e);</span>
-			}
+<span class="pc" id="L266">			}</span>
 
 		}
 
@@ -290,9 +290,9 @@ final class JTrologQuery extends AbstractQuery implements PrologQuery {
 <span class="pc bpc" id="L290" title="1 of 4 branches missed.">				if (!varMap.isEmpty() &amp;&amp; !contains(allVariables, varMap)) {</span>
 <span class="fc" id="L291">					allVariables.add(varMap);</span>
 				}
-<span class="pc" id="L293">			} catch (Throwable e) {</span>
+<span class="nc" id="L293">			} catch (Throwable e) {</span>
 <span class="nc" id="L294">				getLogger().error(getClass(), PrologLogger.NON_SOLUTION, e);</span>
-			}
+<span class="pc" id="L295">			}</span>
 		}
 
 <span class="fc" id="L298">		int lenght = allVariables.size();</span>
@@ -318,9 +318,9 @@ final class JTrologQuery extends AbstractQuery implements PrologQuery {
 <span class="pc bpc" id="L318" title="1 of 4 branches missed.">				if (!varMap.isEmpty() &amp;&amp; !contains(all, varMap)) {</span>
 <span class="fc" id="L319">					all.add(varMap);</span>
 				}
-<span class="pc" id="L321">			} catch (Throwable e) {</span>
+<span class="nc" id="L321">			} catch (Throwable e) {</span>
 <span class="nc" id="L322">				getLogger().error(getClass(), PrologLogger.NON_SOLUTION, e);</span>
-			}
+<span class="pc" id="L323">			}</span>
 		}
 
 <span class="fc" id="L326">		return all;</span>

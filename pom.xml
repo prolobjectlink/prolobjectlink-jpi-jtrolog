@@ -310,11 +310,11 @@
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>findbugs-maven-plugin</artifactId>
-				<version>2.3.1</version>
+				<version>3.0.3</version>
 				<configuration>
 					<threshold>Normal</threshold>
 					<effort>Default</effort>
-					<excludeFilterFile>${basedir}/findbugs-exclude-filter.xml</excludeFilterFile>
+					<excludeFilterFile>${basedir}/findbugs-exclude.xml</excludeFilterFile>
 				</configuration>
 			</plugin>
 			<plugin>
@@ -415,7 +415,7 @@
 				<artifactId>maven-surefire-plugin</artifactId>
 				<version>2.18.1</version>
 			</plugin>
-			
+
 			<plugin>
 				<groupId>org.apache.felix</groupId>
 				<artifactId>maven-bundle-plugin</artifactId>
@@ -428,12 +428,15 @@
 						<Import-Package>javax.script;${project.groupId}.*;provide:=true</Import-Package>
 						<Bundle-SymbolicName>${project.groupId}.prolog.jtrolog.plugin;singleton:=true</Bundle-SymbolicName>
 						<Bundle-RequiredExecutionEnvironment>JavaSE-1.6</Bundle-RequiredExecutionEnvironment>
+						<!-- <Embed-Dependency>*;scope=compile|runtime;inline=false</Embed-Dependency> -->
+						<!-- <Embed-Directory>target/dependency</Embed-Directory> -->
+						<!-- <Embed-StripGroup>true</Embed-StripGroup> -->
+						<!-- <Embed-Transitive>true</Embed-Transitive> -->
 					</instructions>
 				</configuration>
 				<executions>
 					<execution>
 						<id>bundle-manifest</id>
-						<!-- <phase>process-classes</phase> -->
 						<phase>install</phase>
 						<goals>
 							<goal>manifest</goal>
@@ -441,7 +444,20 @@
 					</execution>
 				</executions>
 			</plugin>
-			
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-dependency-plugin</artifactId>
+				<version>2.1</version>
+				<executions>
+					<execution>
+						<id>copy-dependencies</id>
+						<phase>package</phase>
+						<goals>
+							<goal>copy-dependencies</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
 		</plugins>
 	</build>
 
@@ -495,11 +511,11 @@
 					<outputEncoding>${project.reporting.outputEncoding}</outputEncoding>
 				</configuration>
 			</plugin>
-			<!-- <plugin> -->
-			<!-- <groupId>org.codehaus.mojo</groupId> -->
-			<!-- <artifactId>findbugs-maven-plugin</artifactId> -->
-			<!-- <version>2.3.1</version> -->
-			<!-- </plugin> -->
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>findbugs-maven-plugin</artifactId>
+				<version>3.0.3</version>
+			</plugin>
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>jdepend-maven-plugin</artifactId>

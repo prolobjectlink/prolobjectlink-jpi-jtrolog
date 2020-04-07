@@ -575,7 +575,7 @@ import java.util.LinkedList;
 		//
 		// operators defined by the BasicLibrary theory
 		//
-<span class="fc" id="L578">		&quot;':-'(op( 1200, fx,   ':-')). \n&quot;</span>
+		&quot;':-'(op( 1200, fx,   ':-')). \n&quot;
 				+ &quot;:- op( 1200, xfx,  ':-'). \n&quot;
 				+ &quot;:- op( 1200, fx,   '?-'). \n&quot;
 				+ &quot;:- op( 1100, xfy,  ';'). \n&quot;
@@ -949,15 +949,15 @@ import java.util.LinkedList;
 <span class="nc bnc" id="L949" title="All 2 branches missed.">			if (term_equality_2(null, witness1, witness2)) {</span>
 <span class="nc" id="L950">				bt.unify(w_t.getArg(0), witness1);</span>
 <span class="nc" id="L951">				results.add(BindingsTable.unWrap(w_t.getArg(1)));</span>
-<span class="nc" id="L952">			} else {</span>
+			} else {
 <span class="nc" id="L953">				remains.add(BindingsTable.unWrap(w_t));</span>
 			}
-		}
+<span class="nc" id="L955">		}</span>
 
 		// 3. unify the results lists and remains list with aSet and bSet
 <span class="nc bnc" id="L958" title="All 2 branches missed.">		if (remains.isEmpty()) {</span>
 <span class="nc" id="L959">			bt.unify(bSet, Term.emptyList);</span>
-<span class="nc" id="L960">		} else {</span>
+		} else {
 <span class="nc" id="L961">			remains.add(Term.emptyList);</span>
 <span class="nc" id="L962">			bt.unify(bSet, BindingsTable.wrapWithID(Parser.createStructList(remains), wrapID));</span>
 		}
@@ -1027,9 +1027,9 @@ import java.util.LinkedList;
 <span class="nc" id="L1027">				Term child2 = (Term) it2.next();</span>
 <span class="nc bnc" id="L1028" title="All 2 branches missed.">				if (BasicLibrary.term_equality_2(null, child, child2))</span>
 <span class="nc" id="L1029">					continue outer;</span>
-			}
+<span class="nc" id="L1030">			}</span>
 <span class="nc" id="L1031">			resultList.add(child);</span>
-		}
+<span class="nc" id="L1032">		}</span>
 <span class="nc bnc" id="L1033" title="All 2 branches missed.">		if (resultList.isEmpty())</span>
 <span class="nc" id="L1034">			return bt.unify(diff, Term.emptyList);</span>
 <span class="nc" id="L1035">		resultList.add(Term.emptyList);</span>
