@@ -76,6 +76,18 @@ final class JTrologQuery extends AbstractQuery implements PrologQuery {
 		}
 	}
 
+	JTrologQuery(AbstractEngine engine, PrologTerm term) {
+		super(engine);
+		String str = "" + term + "";
+		jtrolog = ((JTrologEngine) engine).engine;
+		enumerateVariables(variables, fromTerm(term, Term.class));
+		try {
+			this.solution = jtrolog.solve(str + '.');
+		} catch (Throwable e) {
+			// do nothing
+		}
+	}
+
 	JTrologQuery(AbstractEngine engine, PrologTerm[] terms) {
 		super(engine);
 		jtrolog = ((JTrologEngine) engine).engine;

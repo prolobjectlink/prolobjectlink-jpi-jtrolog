@@ -206,296 +206,321 @@
 <a class="jxr_linenumber" name="196" href="#196">196</a> 		}
 <a class="jxr_linenumber" name="197" href="#197">197</a> 	}
 <a class="jxr_linenumber" name="198" href="#198">198</a> 
-<a class="jxr_linenumber" name="199" href="#199">199</a> 	<strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> asserta(PrologTerm head, PrologTerm... body) {
-<a class="jxr_linenumber" name="200" href="#200">200</a> 		Struct h = fromTerm(head, Struct.<strong class="jxr_keyword">class</strong>);
-<a class="jxr_linenumber" name="201" href="#201">201</a> 		Struct[] b = <strong class="jxr_keyword">new</strong> <a href="../../../../../jTrolog/terms/Struct.html">Struct</a>[body.length];
-<a class="jxr_linenumber" name="202" href="#202">202</a> 		<strong class="jxr_keyword">for</strong> (<strong class="jxr_keyword">int</strong> i = 0; i &lt; body.length; i++) {
-<a class="jxr_linenumber" name="203" href="#203">203</a> 			b[i] = fromTerm(body[i], Struct.<strong class="jxr_keyword">class</strong>);
-<a class="jxr_linenumber" name="204" href="#204">204</a> 		}
-<a class="jxr_linenumber" name="205" href="#205">205</a> 		Struct o = fromTerm(head, body, Struct.<strong class="jxr_keyword">class</strong>);
-<a class="jxr_linenumber" name="206" href="#206">206</a> 		asserta(<strong class="jxr_keyword">new</strong> <a href="../../../../../jTrolog/terms/Clause.html">Clause</a>(b, h, o));
-<a class="jxr_linenumber" name="207" href="#207">207</a> 	}
-<a class="jxr_linenumber" name="208" href="#208">208</a> 
-<a class="jxr_linenumber" name="209" href="#209">209</a> 	<strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">void</strong> asserta(<a href="../../../../../jTrolog/terms/Clause.html">Clause</a> clause) {
-<a class="jxr_linenumber" name="210" href="#210">210</a> 		<strong class="jxr_keyword">if</strong> (!exist(clause)) {
-<a class="jxr_linenumber" name="211" href="#211">211</a> 			<strong class="jxr_keyword">try</strong> {
-<a class="jxr_linenumber" name="212" href="#212">212</a> 				engine.assertA(clause);
-<a class="jxr_linenumber" name="213" href="#213">213</a> 			} <strong class="jxr_keyword">catch</strong> (PrologException e) {
-<a class="jxr_linenumber" name="214" href="#214">214</a> 				getLogger().error(getClass(), RUNTIME_ERROR, e);
-<a class="jxr_linenumber" name="215" href="#215">215</a> 			}
-<a class="jxr_linenumber" name="216" href="#216">216</a> 		}
-<a class="jxr_linenumber" name="217" href="#217">217</a> 	}
-<a class="jxr_linenumber" name="218" href="#218">218</a> 
-<a class="jxr_linenumber" name="219" href="#219">219</a> 	<strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> assertz(String stringClause) {
-<a class="jxr_linenumber" name="220" href="#220">220</a> 		<strong class="jxr_keyword">try</strong> {
-<a class="jxr_linenumber" name="221" href="#221">221</a> 			Term term = <strong class="jxr_keyword">new</strong> <a href="../../../../../jTrolog/parser/Parser.html">Parser</a>(stringClause).nextTerm(false);
-<a class="jxr_linenumber" name="222" href="#222">222</a> 			assertz(BuiltIn.convertTermToClause(term));
-<a class="jxr_linenumber" name="223" href="#223">223</a> 		} <strong class="jxr_keyword">catch</strong> (PrologException e) {
-<a class="jxr_linenumber" name="224" href="#224">224</a> 			getLogger().error(getClass(), SYNTAX_ERROR + stringClause, e);
-<a class="jxr_linenumber" name="225" href="#225">225</a> 		}
-<a class="jxr_linenumber" name="226" href="#226">226</a> 	}
-<a class="jxr_linenumber" name="227" href="#227">227</a> 
-<a class="jxr_linenumber" name="228" href="#228">228</a> 	<strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> assertz(PrologTerm head, PrologTerm... body) {
-<a class="jxr_linenumber" name="229" href="#229">229</a> 		Struct h = fromTerm(head, Struct.<strong class="jxr_keyword">class</strong>);
-<a class="jxr_linenumber" name="230" href="#230">230</a> 		Struct[] b = <strong class="jxr_keyword">new</strong> <a href="../../../../../jTrolog/terms/Struct.html">Struct</a>[body.length];
-<a class="jxr_linenumber" name="231" href="#231">231</a> 		<strong class="jxr_keyword">for</strong> (<strong class="jxr_keyword">int</strong> i = 0; i &lt; body.length; i++) {
-<a class="jxr_linenumber" name="232" href="#232">232</a> 			b[i] = fromTerm(body[i], Struct.<strong class="jxr_keyword">class</strong>);
-<a class="jxr_linenumber" name="233" href="#233">233</a> 		}
-<a class="jxr_linenumber" name="234" href="#234">234</a> 		Struct o = fromTerm(head, body, Struct.<strong class="jxr_keyword">class</strong>);
-<a class="jxr_linenumber" name="235" href="#235">235</a> 		assertz(<strong class="jxr_keyword">new</strong> <a href="../../../../../jTrolog/terms/Clause.html">Clause</a>(b, h, o));
+<a class="jxr_linenumber" name="199" href="#199">199</a> 	@Override
+<a class="jxr_linenumber" name="200" href="#200">200</a> 	<strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> asserta(PrologTerm term) {
+<a class="jxr_linenumber" name="201" href="#201">201</a> 		asserta(<span class="jxr_string">""</span> + term + <span class="jxr_string">""</span>);
+<a class="jxr_linenumber" name="202" href="#202">202</a> 	}
+<a class="jxr_linenumber" name="203" href="#203">203</a> 
+<a class="jxr_linenumber" name="204" href="#204">204</a> 	<strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> asserta(PrologTerm head, PrologTerm... body) {
+<a class="jxr_linenumber" name="205" href="#205">205</a> 		Struct h = fromTerm(head, Struct.<strong class="jxr_keyword">class</strong>);
+<a class="jxr_linenumber" name="206" href="#206">206</a> 		Struct[] b = <strong class="jxr_keyword">new</strong> <a href="../../../../../jTrolog/terms/Struct.html">Struct</a>[body.length];
+<a class="jxr_linenumber" name="207" href="#207">207</a> 		<strong class="jxr_keyword">for</strong> (<strong class="jxr_keyword">int</strong> i = 0; i &lt; body.length; i++) {
+<a class="jxr_linenumber" name="208" href="#208">208</a> 			b[i] = fromTerm(body[i], Struct.<strong class="jxr_keyword">class</strong>);
+<a class="jxr_linenumber" name="209" href="#209">209</a> 		}
+<a class="jxr_linenumber" name="210" href="#210">210</a> 		Struct o = fromTerm(head, body, Struct.<strong class="jxr_keyword">class</strong>);
+<a class="jxr_linenumber" name="211" href="#211">211</a> 		asserta(<strong class="jxr_keyword">new</strong> <a href="../../../../../jTrolog/terms/Clause.html">Clause</a>(b, h, o));
+<a class="jxr_linenumber" name="212" href="#212">212</a> 	}
+<a class="jxr_linenumber" name="213" href="#213">213</a> 
+<a class="jxr_linenumber" name="214" href="#214">214</a> 	<strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">void</strong> asserta(<a href="../../../../../jTrolog/terms/Clause.html">Clause</a> clause) {
+<a class="jxr_linenumber" name="215" href="#215">215</a> 		<strong class="jxr_keyword">if</strong> (!exist(clause)) {
+<a class="jxr_linenumber" name="216" href="#216">216</a> 			<strong class="jxr_keyword">try</strong> {
+<a class="jxr_linenumber" name="217" href="#217">217</a> 				engine.assertA(clause);
+<a class="jxr_linenumber" name="218" href="#218">218</a> 			} <strong class="jxr_keyword">catch</strong> (PrologException e) {
+<a class="jxr_linenumber" name="219" href="#219">219</a> 				getLogger().error(getClass(), RUNTIME_ERROR, e);
+<a class="jxr_linenumber" name="220" href="#220">220</a> 			}
+<a class="jxr_linenumber" name="221" href="#221">221</a> 		}
+<a class="jxr_linenumber" name="222" href="#222">222</a> 	}
+<a class="jxr_linenumber" name="223" href="#223">223</a> 
+<a class="jxr_linenumber" name="224" href="#224">224</a> 	<strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> assertz(String stringClause) {
+<a class="jxr_linenumber" name="225" href="#225">225</a> 		<strong class="jxr_keyword">try</strong> {
+<a class="jxr_linenumber" name="226" href="#226">226</a> 			Term term = <strong class="jxr_keyword">new</strong> <a href="../../../../../jTrolog/parser/Parser.html">Parser</a>(stringClause).nextTerm(false);
+<a class="jxr_linenumber" name="227" href="#227">227</a> 			assertz(BuiltIn.convertTermToClause(term));
+<a class="jxr_linenumber" name="228" href="#228">228</a> 		} <strong class="jxr_keyword">catch</strong> (PrologException e) {
+<a class="jxr_linenumber" name="229" href="#229">229</a> 			getLogger().error(getClass(), SYNTAX_ERROR + stringClause, e);
+<a class="jxr_linenumber" name="230" href="#230">230</a> 		}
+<a class="jxr_linenumber" name="231" href="#231">231</a> 	}
+<a class="jxr_linenumber" name="232" href="#232">232</a> 
+<a class="jxr_linenumber" name="233" href="#233">233</a> 	@Override
+<a class="jxr_linenumber" name="234" href="#234">234</a> 	<strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> assertz(PrologTerm term) {
+<a class="jxr_linenumber" name="235" href="#235">235</a> 		assertz(<span class="jxr_string">""</span> + term + <span class="jxr_string">""</span>);
 <a class="jxr_linenumber" name="236" href="#236">236</a> 	}
 <a class="jxr_linenumber" name="237" href="#237">237</a> 
-<a class="jxr_linenumber" name="238" href="#238">238</a> 	<strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">void</strong> assertz(<a href="../../../../../jTrolog/terms/Clause.html">Clause</a> clause) {
-<a class="jxr_linenumber" name="239" href="#239">239</a> 		<strong class="jxr_keyword">if</strong> (!exist(clause)) {
-<a class="jxr_linenumber" name="240" href="#240">240</a> 			<strong class="jxr_keyword">try</strong> {
-<a class="jxr_linenumber" name="241" href="#241">241</a> 				engine.assertZ(clause);
-<a class="jxr_linenumber" name="242" href="#242">242</a> 			} <strong class="jxr_keyword">catch</strong> (PrologException e) {
-<a class="jxr_linenumber" name="243" href="#243">243</a> 				getLogger().error(getClass(), RUNTIME_ERROR, e);
-<a class="jxr_linenumber" name="244" href="#244">244</a> 			}
-<a class="jxr_linenumber" name="245" href="#245">245</a> 		}
+<a class="jxr_linenumber" name="238" href="#238">238</a> 	<strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> assertz(PrologTerm head, PrologTerm... body) {
+<a class="jxr_linenumber" name="239" href="#239">239</a> 		Struct h = fromTerm(head, Struct.<strong class="jxr_keyword">class</strong>);
+<a class="jxr_linenumber" name="240" href="#240">240</a> 		Struct[] b = <strong class="jxr_keyword">new</strong> <a href="../../../../../jTrolog/terms/Struct.html">Struct</a>[body.length];
+<a class="jxr_linenumber" name="241" href="#241">241</a> 		<strong class="jxr_keyword">for</strong> (<strong class="jxr_keyword">int</strong> i = 0; i &lt; body.length; i++) {
+<a class="jxr_linenumber" name="242" href="#242">242</a> 			b[i] = fromTerm(body[i], Struct.<strong class="jxr_keyword">class</strong>);
+<a class="jxr_linenumber" name="243" href="#243">243</a> 		}
+<a class="jxr_linenumber" name="244" href="#244">244</a> 		Struct o = fromTerm(head, body, Struct.<strong class="jxr_keyword">class</strong>);
+<a class="jxr_linenumber" name="245" href="#245">245</a> 		assertz(<strong class="jxr_keyword">new</strong> <a href="../../../../../jTrolog/terms/Clause.html">Clause</a>(b, h, o));
 <a class="jxr_linenumber" name="246" href="#246">246</a> 	}
 <a class="jxr_linenumber" name="247" href="#247">247</a> 
-<a class="jxr_linenumber" name="248" href="#248">248</a> 	<strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">boolean</strong> clause(String stringClause) {
-<a class="jxr_linenumber" name="249" href="#249">249</a> 		<strong class="jxr_keyword">try</strong> {
-<a class="jxr_linenumber" name="250" href="#250">250</a> 			Term term = <strong class="jxr_keyword">new</strong> <a href="../../../../../jTrolog/parser/Parser.html">Parser</a>(stringClause).nextTerm(false);
-<a class="jxr_linenumber" name="251" href="#251">251</a> 			<strong class="jxr_keyword">return</strong> clause(BuiltIn.convertTermToClause(term));
-<a class="jxr_linenumber" name="252" href="#252">252</a> 		} <strong class="jxr_keyword">catch</strong> (PrologException e) {
-<a class="jxr_linenumber" name="253" href="#253">253</a> 			getLogger().error(getClass(), SYNTAX_ERROR + stringClause, e);
-<a class="jxr_linenumber" name="254" href="#254">254</a> 		}
-<a class="jxr_linenumber" name="255" href="#255">255</a> 		<strong class="jxr_keyword">return</strong> false;
+<a class="jxr_linenumber" name="248" href="#248">248</a> 	<strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">void</strong> assertz(<a href="../../../../../jTrolog/terms/Clause.html">Clause</a> clause) {
+<a class="jxr_linenumber" name="249" href="#249">249</a> 		<strong class="jxr_keyword">if</strong> (!exist(clause)) {
+<a class="jxr_linenumber" name="250" href="#250">250</a> 			<strong class="jxr_keyword">try</strong> {
+<a class="jxr_linenumber" name="251" href="#251">251</a> 				engine.assertZ(clause);
+<a class="jxr_linenumber" name="252" href="#252">252</a> 			} <strong class="jxr_keyword">catch</strong> (PrologException e) {
+<a class="jxr_linenumber" name="253" href="#253">253</a> 				getLogger().error(getClass(), RUNTIME_ERROR, e);
+<a class="jxr_linenumber" name="254" href="#254">254</a> 			}
+<a class="jxr_linenumber" name="255" href="#255">255</a> 		}
 <a class="jxr_linenumber" name="256" href="#256">256</a> 	}
 <a class="jxr_linenumber" name="257" href="#257">257</a> 
-<a class="jxr_linenumber" name="258" href="#258">258</a> 	<strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">boolean</strong> clause(PrologTerm head, PrologTerm... body) {
-<a class="jxr_linenumber" name="259" href="#259">259</a> 		Struct h = fromTerm(head, Struct.<strong class="jxr_keyword">class</strong>);
-<a class="jxr_linenumber" name="260" href="#260">260</a> 		Struct[] b = <strong class="jxr_keyword">new</strong> <a href="../../../../../jTrolog/terms/Struct.html">Struct</a>[body.length];
-<a class="jxr_linenumber" name="261" href="#261">261</a> 		<strong class="jxr_keyword">for</strong> (<strong class="jxr_keyword">int</strong> i = 0; i &lt; body.length; i++) {
-<a class="jxr_linenumber" name="262" href="#262">262</a> 			b[i] = fromTerm(body[i], Struct.<strong class="jxr_keyword">class</strong>);
-<a class="jxr_linenumber" name="263" href="#263">263</a> 		}
-<a class="jxr_linenumber" name="264" href="#264">264</a> 		Struct o = fromTerm(head, body, Struct.<strong class="jxr_keyword">class</strong>);
-<a class="jxr_linenumber" name="265" href="#265">265</a> 		<strong class="jxr_keyword">return</strong> clause(<strong class="jxr_keyword">new</strong> <a href="../../../../../jTrolog/terms/Clause.html">Clause</a>(b, h, o));
+<a class="jxr_linenumber" name="258" href="#258">258</a> 	<strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">boolean</strong> clause(String stringClause) {
+<a class="jxr_linenumber" name="259" href="#259">259</a> 		<strong class="jxr_keyword">try</strong> {
+<a class="jxr_linenumber" name="260" href="#260">260</a> 			Term term = <strong class="jxr_keyword">new</strong> <a href="../../../../../jTrolog/parser/Parser.html">Parser</a>(stringClause).nextTerm(false);
+<a class="jxr_linenumber" name="261" href="#261">261</a> 			<strong class="jxr_keyword">return</strong> clause(BuiltIn.convertTermToClause(term));
+<a class="jxr_linenumber" name="262" href="#262">262</a> 		} <strong class="jxr_keyword">catch</strong> (PrologException e) {
+<a class="jxr_linenumber" name="263" href="#263">263</a> 			getLogger().error(getClass(), SYNTAX_ERROR + stringClause, e);
+<a class="jxr_linenumber" name="264" href="#264">264</a> 		}
+<a class="jxr_linenumber" name="265" href="#265">265</a> 		<strong class="jxr_keyword">return</strong> false;
 <a class="jxr_linenumber" name="266" href="#266">266</a> 	}
 <a class="jxr_linenumber" name="267" href="#267">267</a> 
-<a class="jxr_linenumber" name="268" href="#268">268</a> 	<strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">boolean</strong> clause(<a href="../../../../../jTrolog/terms/Clause.html">Clause</a> clause) {
-<a class="jxr_linenumber" name="269" href="#269">269</a> 		String key = clause.head.name + <span class="jxr_string">"/"</span> + clause.head.arity;
-<a class="jxr_linenumber" name="270" href="#270">270</a> 		Iterator&lt;?&gt; i = engine.dynamicPredicateIndicators();
-<a class="jxr_linenumber" name="271" href="#271">271</a> 		<strong class="jxr_keyword">while</strong> (i.hasNext()) {
-<a class="jxr_linenumber" name="272" href="#272">272</a> 			String predIndicator = (String) i.next();
-<a class="jxr_linenumber" name="273" href="#273">273</a> 			<strong class="jxr_keyword">if</strong> (predIndicator.equals(key)) {
-<a class="jxr_linenumber" name="274" href="#274">274</a> 				<strong class="jxr_keyword">try</strong> {
-<a class="jxr_linenumber" name="275" href="#275">275</a> 					List&lt;?&gt; list = engine.find(predIndicator);
-<a class="jxr_linenumber" name="276" href="#276">276</a> 					<strong class="jxr_keyword">for</strong> (Object object : list) {
-<a class="jxr_linenumber" name="277" href="#277">277</a> 						<strong class="jxr_keyword">if</strong> (object instanceof Clause) {
-<a class="jxr_linenumber" name="278" href="#278">278</a> 							Clause c = (Clause) object;
-<a class="jxr_linenumber" name="279" href="#279">279</a> 							<strong class="jxr_keyword">if</strong> (Prolog.match(c.original, clause.original)) {
-<a class="jxr_linenumber" name="280" href="#280">280</a> 								<strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">true</strong>;
-<a class="jxr_linenumber" name="281" href="#281">281</a> 							}
-<a class="jxr_linenumber" name="282" href="#282">282</a> 						}
-<a class="jxr_linenumber" name="283" href="#283">283</a> 					}
-<a class="jxr_linenumber" name="284" href="#284">284</a> 				} <strong class="jxr_keyword">catch</strong> (PrologException e) {
-<a class="jxr_linenumber" name="285" href="#285">285</a> 					getLogger().error(getClass(), INDICATOR_NOT_FOUND + predIndicator, e);
-<a class="jxr_linenumber" name="286" href="#286">286</a> 				}
-<a class="jxr_linenumber" name="287" href="#287">287</a> 			}
-<a class="jxr_linenumber" name="288" href="#288">288</a> 		}
-<a class="jxr_linenumber" name="289" href="#289">289</a> 		<strong class="jxr_keyword">return</strong> false;
-<a class="jxr_linenumber" name="290" href="#290">290</a> 	}
-<a class="jxr_linenumber" name="291" href="#291">291</a> 
-<a class="jxr_linenumber" name="292" href="#292">292</a> 	<strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> retract(String stringClause) {
-<a class="jxr_linenumber" name="293" href="#293">293</a> 		<strong class="jxr_keyword">try</strong> {
-<a class="jxr_linenumber" name="294" href="#294">294</a> 			Term term = <strong class="jxr_keyword">new</strong> <a href="../../../../../jTrolog/parser/Parser.html">Parser</a>(stringClause).nextTerm(false);
-<a class="jxr_linenumber" name="295" href="#295">295</a> 			retract(BuiltIn.convertTermToClause(term));
-<a class="jxr_linenumber" name="296" href="#296">296</a> 		} <strong class="jxr_keyword">catch</strong> (PrologException e) {
-<a class="jxr_linenumber" name="297" href="#297">297</a> 			getLogger().error(getClass(), SYNTAX_ERROR + stringClause, e);
-<a class="jxr_linenumber" name="298" href="#298">298</a> 		}
-<a class="jxr_linenumber" name="299" href="#299">299</a> 	}
-<a class="jxr_linenumber" name="300" href="#300">300</a> 
-<a class="jxr_linenumber" name="301" href="#301">301</a> 	<strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> retract(PrologTerm head, PrologTerm... body) {
-<a class="jxr_linenumber" name="302" href="#302">302</a> 		Struct h = fromTerm(head, Struct.<strong class="jxr_keyword">class</strong>);
-<a class="jxr_linenumber" name="303" href="#303">303</a> 		Struct[] b = <strong class="jxr_keyword">new</strong> <a href="../../../../../jTrolog/terms/Struct.html">Struct</a>[body.length];
-<a class="jxr_linenumber" name="304" href="#304">304</a> 		<strong class="jxr_keyword">for</strong> (<strong class="jxr_keyword">int</strong> i = 0; i &lt; body.length; i++) {
-<a class="jxr_linenumber" name="305" href="#305">305</a> 			b[i] = fromTerm(body[i], Struct.<strong class="jxr_keyword">class</strong>);
-<a class="jxr_linenumber" name="306" href="#306">306</a> 		}
-<a class="jxr_linenumber" name="307" href="#307">307</a> 		Struct o = fromTerm(head, body, Struct.<strong class="jxr_keyword">class</strong>);
-<a class="jxr_linenumber" name="308" href="#308">308</a> 		retract(<strong class="jxr_keyword">new</strong> <a href="../../../../../jTrolog/terms/Clause.html">Clause</a>(b, h, o));
-<a class="jxr_linenumber" name="309" href="#309">309</a> 	}
-<a class="jxr_linenumber" name="310" href="#310">310</a> 
-<a class="jxr_linenumber" name="311" href="#311">311</a> 	<strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">void</strong> retract(<a href="../../../../../jTrolog/terms/Clause.html">Clause</a> clause) {
-<a class="jxr_linenumber" name="312" href="#312">312</a> 		<strong class="jxr_keyword">try</strong> {
-<a class="jxr_linenumber" name="313" href="#313">313</a> 			engine.retract(clause.original);
-<a class="jxr_linenumber" name="314" href="#314">314</a> 		} <strong class="jxr_keyword">catch</strong> (PrologException e) {
-<a class="jxr_linenumber" name="315" href="#315">315</a> 			getLogger().error(getClass(), RUNTIME_ERROR, e);
-<a class="jxr_linenumber" name="316" href="#316">316</a> 		}
-<a class="jxr_linenumber" name="317" href="#317">317</a> 	}
-<a class="jxr_linenumber" name="318" href="#318">318</a> 
-<a class="jxr_linenumber" name="319" href="#319">319</a> 	<strong class="jxr_keyword">public</strong> PrologQuery query(String stringQuery) {
-<a class="jxr_linenumber" name="320" href="#320">320</a> 		<strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">new</strong> <a href="../../../../../io/github/prolobjectlink/prolog/jtrolog/JTrologQuery.html">JTrologQuery</a>(<strong class="jxr_keyword">this</strong>, stringQuery);
-<a class="jxr_linenumber" name="321" href="#321">321</a> 	}
-<a class="jxr_linenumber" name="322" href="#322">322</a> 
-<a class="jxr_linenumber" name="323" href="#323">323</a> 	<strong class="jxr_keyword">public</strong> PrologQuery query(PrologTerm[] terms) {
-<a class="jxr_linenumber" name="324" href="#324">324</a> 		<strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">new</strong> <a href="../../../../../io/github/prolobjectlink/prolog/jtrolog/JTrologQuery.html">JTrologQuery</a>(<strong class="jxr_keyword">this</strong>, terms);
-<a class="jxr_linenumber" name="325" href="#325">325</a> 	}
-<a class="jxr_linenumber" name="326" href="#326">326</a> 
-<a class="jxr_linenumber" name="327" href="#327">327</a> 	<strong class="jxr_keyword">public</strong> PrologQuery query(PrologTerm term, PrologTerm... terms) {
-<a class="jxr_linenumber" name="328" href="#328">328</a> 		<strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">new</strong> <a href="../../../../../io/github/prolobjectlink/prolog/jtrolog/JTrologQuery.html">JTrologQuery</a>(<strong class="jxr_keyword">this</strong>, term, terms);
+<a class="jxr_linenumber" name="268" href="#268">268</a> 	@Override
+<a class="jxr_linenumber" name="269" href="#269">269</a> 	<strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">boolean</strong> clause(PrologTerm term) {
+<a class="jxr_linenumber" name="270" href="#270">270</a> 		<strong class="jxr_keyword">return</strong> clause(<span class="jxr_string">""</span> + term + <span class="jxr_string">""</span>);
+<a class="jxr_linenumber" name="271" href="#271">271</a> 	}
+<a class="jxr_linenumber" name="272" href="#272">272</a> 
+<a class="jxr_linenumber" name="273" href="#273">273</a> 	<strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">boolean</strong> clause(PrologTerm head, PrologTerm... body) {
+<a class="jxr_linenumber" name="274" href="#274">274</a> 		Struct h = fromTerm(head, Struct.<strong class="jxr_keyword">class</strong>);
+<a class="jxr_linenumber" name="275" href="#275">275</a> 		Struct[] b = <strong class="jxr_keyword">new</strong> <a href="../../../../../jTrolog/terms/Struct.html">Struct</a>[body.length];
+<a class="jxr_linenumber" name="276" href="#276">276</a> 		<strong class="jxr_keyword">for</strong> (<strong class="jxr_keyword">int</strong> i = 0; i &lt; body.length; i++) {
+<a class="jxr_linenumber" name="277" href="#277">277</a> 			b[i] = fromTerm(body[i], Struct.<strong class="jxr_keyword">class</strong>);
+<a class="jxr_linenumber" name="278" href="#278">278</a> 		}
+<a class="jxr_linenumber" name="279" href="#279">279</a> 		Struct o = fromTerm(head, body, Struct.<strong class="jxr_keyword">class</strong>);
+<a class="jxr_linenumber" name="280" href="#280">280</a> 		<strong class="jxr_keyword">return</strong> clause(<strong class="jxr_keyword">new</strong> <a href="../../../../../jTrolog/terms/Clause.html">Clause</a>(b, h, o));
+<a class="jxr_linenumber" name="281" href="#281">281</a> 	}
+<a class="jxr_linenumber" name="282" href="#282">282</a> 
+<a class="jxr_linenumber" name="283" href="#283">283</a> 	<strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">boolean</strong> clause(<a href="../../../../../jTrolog/terms/Clause.html">Clause</a> clause) {
+<a class="jxr_linenumber" name="284" href="#284">284</a> 		String key = clause.head.name + <span class="jxr_string">"/"</span> + clause.head.arity;
+<a class="jxr_linenumber" name="285" href="#285">285</a> 		Iterator&lt;?&gt; i = engine.dynamicPredicateIndicators();
+<a class="jxr_linenumber" name="286" href="#286">286</a> 		<strong class="jxr_keyword">while</strong> (i.hasNext()) {
+<a class="jxr_linenumber" name="287" href="#287">287</a> 			String predIndicator = (String) i.next();
+<a class="jxr_linenumber" name="288" href="#288">288</a> 			<strong class="jxr_keyword">if</strong> (predIndicator.equals(key)) {
+<a class="jxr_linenumber" name="289" href="#289">289</a> 				<strong class="jxr_keyword">try</strong> {
+<a class="jxr_linenumber" name="290" href="#290">290</a> 					List&lt;?&gt; list = engine.find(predIndicator);
+<a class="jxr_linenumber" name="291" href="#291">291</a> 					<strong class="jxr_keyword">for</strong> (Object object : list) {
+<a class="jxr_linenumber" name="292" href="#292">292</a> 						<strong class="jxr_keyword">if</strong> (object instanceof Clause) {
+<a class="jxr_linenumber" name="293" href="#293">293</a> 							Clause c = (Clause) object;
+<a class="jxr_linenumber" name="294" href="#294">294</a> 							<strong class="jxr_keyword">if</strong> (Prolog.match(c.original, clause.original)) {
+<a class="jxr_linenumber" name="295" href="#295">295</a> 								<strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">true</strong>;
+<a class="jxr_linenumber" name="296" href="#296">296</a> 							}
+<a class="jxr_linenumber" name="297" href="#297">297</a> 						}
+<a class="jxr_linenumber" name="298" href="#298">298</a> 					}
+<a class="jxr_linenumber" name="299" href="#299">299</a> 				} <strong class="jxr_keyword">catch</strong> (PrologException e) {
+<a class="jxr_linenumber" name="300" href="#300">300</a> 					getLogger().error(getClass(), INDICATOR_NOT_FOUND + predIndicator, e);
+<a class="jxr_linenumber" name="301" href="#301">301</a> 				}
+<a class="jxr_linenumber" name="302" href="#302">302</a> 			}
+<a class="jxr_linenumber" name="303" href="#303">303</a> 		}
+<a class="jxr_linenumber" name="304" href="#304">304</a> 		<strong class="jxr_keyword">return</strong> false;
+<a class="jxr_linenumber" name="305" href="#305">305</a> 	}
+<a class="jxr_linenumber" name="306" href="#306">306</a> 
+<a class="jxr_linenumber" name="307" href="#307">307</a> 	<strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> retract(String stringClause) {
+<a class="jxr_linenumber" name="308" href="#308">308</a> 		<strong class="jxr_keyword">try</strong> {
+<a class="jxr_linenumber" name="309" href="#309">309</a> 			Term term = <strong class="jxr_keyword">new</strong> <a href="../../../../../jTrolog/parser/Parser.html">Parser</a>(stringClause).nextTerm(false);
+<a class="jxr_linenumber" name="310" href="#310">310</a> 			retract(BuiltIn.convertTermToClause(term));
+<a class="jxr_linenumber" name="311" href="#311">311</a> 		} <strong class="jxr_keyword">catch</strong> (PrologException e) {
+<a class="jxr_linenumber" name="312" href="#312">312</a> 			getLogger().error(getClass(), SYNTAX_ERROR + stringClause, e);
+<a class="jxr_linenumber" name="313" href="#313">313</a> 		}
+<a class="jxr_linenumber" name="314" href="#314">314</a> 	}
+<a class="jxr_linenumber" name="315" href="#315">315</a> 
+<a class="jxr_linenumber" name="316" href="#316">316</a> 	@Override
+<a class="jxr_linenumber" name="317" href="#317">317</a> 	<strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> retract(PrologTerm term) {
+<a class="jxr_linenumber" name="318" href="#318">318</a> 		retract(<span class="jxr_string">""</span> + term + <span class="jxr_string">""</span>);
+<a class="jxr_linenumber" name="319" href="#319">319</a> 	}
+<a class="jxr_linenumber" name="320" href="#320">320</a> 
+<a class="jxr_linenumber" name="321" href="#321">321</a> 	<strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> retract(PrologTerm head, PrologTerm... body) {
+<a class="jxr_linenumber" name="322" href="#322">322</a> 		Struct h = fromTerm(head, Struct.<strong class="jxr_keyword">class</strong>);
+<a class="jxr_linenumber" name="323" href="#323">323</a> 		Struct[] b = <strong class="jxr_keyword">new</strong> <a href="../../../../../jTrolog/terms/Struct.html">Struct</a>[body.length];
+<a class="jxr_linenumber" name="324" href="#324">324</a> 		<strong class="jxr_keyword">for</strong> (<strong class="jxr_keyword">int</strong> i = 0; i &lt; body.length; i++) {
+<a class="jxr_linenumber" name="325" href="#325">325</a> 			b[i] = fromTerm(body[i], Struct.<strong class="jxr_keyword">class</strong>);
+<a class="jxr_linenumber" name="326" href="#326">326</a> 		}
+<a class="jxr_linenumber" name="327" href="#327">327</a> 		Struct o = fromTerm(head, body, Struct.<strong class="jxr_keyword">class</strong>);
+<a class="jxr_linenumber" name="328" href="#328">328</a> 		retract(<strong class="jxr_keyword">new</strong> <a href="../../../../../jTrolog/terms/Clause.html">Clause</a>(b, h, o));
 <a class="jxr_linenumber" name="329" href="#329">329</a> 	}
 <a class="jxr_linenumber" name="330" href="#330">330</a> 
-<a class="jxr_linenumber" name="331" href="#331">331</a> 	<strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> <strong class="jxr_keyword">operator</strong>(<strong class="jxr_keyword">int</strong> priority, String specifier, String <strong class="jxr_keyword">operator</strong>) {
-<a class="jxr_linenumber" name="332" href="#332">332</a> 		engine.opNew(<strong class="jxr_keyword">operator</strong>, specifier, priority);
-<a class="jxr_linenumber" name="333" href="#333">333</a> 	}
-<a class="jxr_linenumber" name="334" href="#334">334</a> 
-<a class="jxr_linenumber" name="335" href="#335">335</a> 	<strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">boolean</strong> currentPredicate(String functor, <strong class="jxr_keyword">int</strong> arity) {
-<a class="jxr_linenumber" name="336" href="#336">336</a> 		String key = Parser.wrapAtom(functor) + <span class="jxr_string">"/"</span> + arity;
-<a class="jxr_linenumber" name="337" href="#337">337</a> 
-<a class="jxr_linenumber" name="338" href="#338">338</a> 		<em class="jxr_comment">// supported built-ins</em>
-<a class="jxr_linenumber" name="339" href="#339">339</a> 		<strong class="jxr_keyword">boolean</strong> isBuiltin = engine.hasPrimitive(key) || engine.hasPrimitiveExp(key);
-<a class="jxr_linenumber" name="340" href="#340">340</a> 
-<a class="jxr_linenumber" name="341" href="#341">341</a> 		<em class="jxr_comment">// user defined predicates</em>
-<a class="jxr_linenumber" name="342" href="#342">342</a> 		<strong class="jxr_keyword">if</strong> (!isBuiltin) {
-<a class="jxr_linenumber" name="343" href="#343">343</a> 			<strong class="jxr_keyword">try</strong> {
-<a class="jxr_linenumber" name="344" href="#344">344</a> 				<strong class="jxr_keyword">if</strong> (!engine.find(key).isEmpty()) {
-<a class="jxr_linenumber" name="345" href="#345">345</a> 					<strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">true</strong>;
-<a class="jxr_linenumber" name="346" href="#346">346</a> 				}
-<a class="jxr_linenumber" name="347" href="#347">347</a> 			} <strong class="jxr_keyword">catch</strong> (PrologException e) {
-<a class="jxr_linenumber" name="348" href="#348">348</a> 				getLogger().error(getClass(), PrologLogger.INDICATOR_NOT_FOUND + key, e);
-<a class="jxr_linenumber" name="349" href="#349">349</a> 			}
-<a class="jxr_linenumber" name="350" href="#350">350</a> 		}
+<a class="jxr_linenumber" name="331" href="#331">331</a> 	<strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">void</strong> retract(<a href="../../../../../jTrolog/terms/Clause.html">Clause</a> clause) {
+<a class="jxr_linenumber" name="332" href="#332">332</a> 		<strong class="jxr_keyword">try</strong> {
+<a class="jxr_linenumber" name="333" href="#333">333</a> 			engine.retract(clause.original);
+<a class="jxr_linenumber" name="334" href="#334">334</a> 		} <strong class="jxr_keyword">catch</strong> (PrologException e) {
+<a class="jxr_linenumber" name="335" href="#335">335</a> 			getLogger().error(getClass(), RUNTIME_ERROR, e);
+<a class="jxr_linenumber" name="336" href="#336">336</a> 		}
+<a class="jxr_linenumber" name="337" href="#337">337</a> 	}
+<a class="jxr_linenumber" name="338" href="#338">338</a> 
+<a class="jxr_linenumber" name="339" href="#339">339</a> 	@Override
+<a class="jxr_linenumber" name="340" href="#340">340</a> 	<strong class="jxr_keyword">public</strong> PrologQuery query(PrologTerm goal) {
+<a class="jxr_linenumber" name="341" href="#341">341</a> 		<strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">new</strong> <a href="../../../../../io/github/prolobjectlink/prolog/jtrolog/JTrologQuery.html">JTrologQuery</a>(<strong class="jxr_keyword">this</strong>, goal);
+<a class="jxr_linenumber" name="342" href="#342">342</a> 	}
+<a class="jxr_linenumber" name="343" href="#343">343</a> 
+<a class="jxr_linenumber" name="344" href="#344">344</a> 	<strong class="jxr_keyword">public</strong> PrologQuery query(String stringQuery) {
+<a class="jxr_linenumber" name="345" href="#345">345</a> 		<strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">new</strong> <a href="../../../../../io/github/prolobjectlink/prolog/jtrolog/JTrologQuery.html">JTrologQuery</a>(<strong class="jxr_keyword">this</strong>, stringQuery);
+<a class="jxr_linenumber" name="346" href="#346">346</a> 	}
+<a class="jxr_linenumber" name="347" href="#347">347</a> 
+<a class="jxr_linenumber" name="348" href="#348">348</a> 	<strong class="jxr_keyword">public</strong> PrologQuery query(PrologTerm[] terms) {
+<a class="jxr_linenumber" name="349" href="#349">349</a> 		<strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">new</strong> <a href="../../../../../io/github/prolobjectlink/prolog/jtrolog/JTrologQuery.html">JTrologQuery</a>(<strong class="jxr_keyword">this</strong>, terms);
+<a class="jxr_linenumber" name="350" href="#350">350</a> 	}
 <a class="jxr_linenumber" name="351" href="#351">351</a> 
-<a class="jxr_linenumber" name="352" href="#352">352</a> 		<em class="jxr_comment">// not defined</em>
-<a class="jxr_linenumber" name="353" href="#353">353</a> 		<strong class="jxr_keyword">return</strong> isBuiltin;
+<a class="jxr_linenumber" name="352" href="#352">352</a> 	<strong class="jxr_keyword">public</strong> PrologQuery query(PrologTerm term, PrologTerm... terms) {
+<a class="jxr_linenumber" name="353" href="#353">353</a> 		<strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">new</strong> <a href="../../../../../io/github/prolobjectlink/prolog/jtrolog/JTrologQuery.html">JTrologQuery</a>(<strong class="jxr_keyword">this</strong>, term, terms);
 <a class="jxr_linenumber" name="354" href="#354">354</a> 	}
 <a class="jxr_linenumber" name="355" href="#355">355</a> 
-<a class="jxr_linenumber" name="356" href="#356">356</a> 	<strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">boolean</strong> currentOperator(<strong class="jxr_keyword">int</strong> priority, String specifier, String <strong class="jxr_keyword">operator</strong>) {
-<a class="jxr_linenumber" name="357" href="#357">357</a> 		<strong class="jxr_keyword">return</strong> currentOperators().contains(<strong class="jxr_keyword">new</strong> JTrologOperator(priority, specifier, <strong class="jxr_keyword">operator</strong>));
+<a class="jxr_linenumber" name="356" href="#356">356</a> 	<strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> <strong class="jxr_keyword">operator</strong>(<strong class="jxr_keyword">int</strong> priority, String specifier, String <strong class="jxr_keyword">operator</strong>) {
+<a class="jxr_linenumber" name="357" href="#357">357</a> 		engine.opNew(<strong class="jxr_keyword">operator</strong>, specifier, priority);
 <a class="jxr_linenumber" name="358" href="#358">358</a> 	}
 <a class="jxr_linenumber" name="359" href="#359">359</a> 
-<a class="jxr_linenumber" name="360" href="#360">360</a> 	<strong class="jxr_keyword">public</strong> Set&lt;PrologOperator&gt; currentOperators() {
-<a class="jxr_linenumber" name="361" href="#361">361</a> 		<strong class="jxr_keyword">return</strong> JTrologUtil.getOperatorSet(engine);
-<a class="jxr_linenumber" name="362" href="#362">362</a> 	}
-<a class="jxr_linenumber" name="363" href="#363">363</a> 
-<a class="jxr_linenumber" name="364" href="#364">364</a> 	<strong class="jxr_keyword">public</strong> Iterator&lt;PrologClause&gt; iterator() {
-<a class="jxr_linenumber" name="365" href="#365">365</a> 		Collection&lt;PrologClause&gt; cls = <strong class="jxr_keyword">new</strong> LinkedList&lt;PrologClause&gt;();
-<a class="jxr_linenumber" name="366" href="#366">366</a> 		Parser parser = <strong class="jxr_keyword">new</strong> <a href="../../../../../jTrolog/parser/Parser.html">Parser</a>(engine.getTheory());
-<a class="jxr_linenumber" name="367" href="#367">367</a> 		<strong class="jxr_keyword">for</strong> (Iterator&lt;?&gt; iterator = parser.iterator(); iterator.hasNext();) {
-<a class="jxr_linenumber" name="368" href="#368">368</a> 			Term term = (Term) iterator.next();
-<a class="jxr_linenumber" name="369" href="#369">369</a> 			<strong class="jxr_keyword">if</strong> (term instanceof Struct) {
-<a class="jxr_linenumber" name="370" href="#370">370</a> 				Struct struct = (Struct) term;
-<a class="jxr_linenumber" name="371" href="#371">371</a> 				<strong class="jxr_keyword">if</strong> (struct.name.equals(<span class="jxr_string">":-"</span>) &amp;&amp; struct.arity == 2) {
-<a class="jxr_linenumber" name="372" href="#372">372</a> 					PrologTerm head = toTerm(struct.getArg(0), PrologTerm.<strong class="jxr_keyword">class</strong>);
-<a class="jxr_linenumber" name="373" href="#373">373</a> 					PrologTerm body = toTerm(struct.getArg(1), PrologTerm.<strong class="jxr_keyword">class</strong>);
-<a class="jxr_linenumber" name="374" href="#374">374</a> 					cls.add(<strong class="jxr_keyword">new</strong> <a href="../../../../../io/github/prolobjectlink/prolog/jtrolog/JTrologClause.html">JTrologClause</a>(provider, head, body, false, false, false));
-<a class="jxr_linenumber" name="375" href="#375">375</a> 				} <strong class="jxr_keyword">else</strong> {
-<a class="jxr_linenumber" name="376" href="#376">376</a> 					PrologTerm head = toTerm(struct, PrologTerm.<strong class="jxr_keyword">class</strong>);
-<a class="jxr_linenumber" name="377" href="#377">377</a> 					cls.add(<strong class="jxr_keyword">new</strong> <a href="../../../../../io/github/prolobjectlink/prolog/jtrolog/JTrologClause.html">JTrologClause</a>(provider, head, false, false, false));
-<a class="jxr_linenumber" name="378" href="#378">378</a> 				}
-<a class="jxr_linenumber" name="379" href="#379">379</a> 			}
-<a class="jxr_linenumber" name="380" href="#380">380</a> 		}
-<a class="jxr_linenumber" name="381" href="#381">381</a> 		<strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">new</strong> PrologProgramIterator(cls);
-<a class="jxr_linenumber" name="382" href="#382">382</a> 	}
-<a class="jxr_linenumber" name="383" href="#383">383</a> 
-<a class="jxr_linenumber" name="384" href="#384">384</a> 	<strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">int</strong> getProgramSize() {
-<a class="jxr_linenumber" name="385" href="#385">385</a> 		<strong class="jxr_keyword">int</strong> counter = 0;
-<a class="jxr_linenumber" name="386" href="#386">386</a> 		Iterator&lt;?&gt; i = engine.dynamicPredicateIndicators();
-<a class="jxr_linenumber" name="387" href="#387">387</a> 		<strong class="jxr_keyword">while</strong> (i.hasNext()) {
-<a class="jxr_linenumber" name="388" href="#388">388</a> 			String predIndicator = (String) i.next();
-<a class="jxr_linenumber" name="389" href="#389">389</a> 			<strong class="jxr_keyword">try</strong> {
-<a class="jxr_linenumber" name="390" href="#390">390</a> 				List&lt;?&gt; list = engine.find(predIndicator);
-<a class="jxr_linenumber" name="391" href="#391">391</a> 				counter += list.size();
-<a class="jxr_linenumber" name="392" href="#392">392</a> 			} <strong class="jxr_keyword">catch</strong> (PrologException e) {
-<a class="jxr_linenumber" name="393" href="#393">393</a> 				getLogger().error(getClass(), PrologLogger.INDICATOR_NOT_FOUND + predIndicator, e);
-<a class="jxr_linenumber" name="394" href="#394">394</a> 			}
-<a class="jxr_linenumber" name="395" href="#395">395</a> 		}
-<a class="jxr_linenumber" name="396" href="#396">396</a> 		<strong class="jxr_keyword">return</strong> counter;
-<a class="jxr_linenumber" name="397" href="#397">397</a> 	}
-<a class="jxr_linenumber" name="398" href="#398">398</a> 
-<a class="jxr_linenumber" name="399" href="#399">399</a> 	<strong class="jxr_keyword">public</strong> Set&lt;PrologIndicator&gt; getPredicates() {
-<a class="jxr_linenumber" name="400" href="#400">400</a> 		Set&lt;PrologIndicator&gt; predicates = <strong class="jxr_keyword">new</strong> HashSet&lt;PrologIndicator&gt;();
-<a class="jxr_linenumber" name="401" href="#401">401</a> 		Iterator&lt;?&gt; i = engine.dynamicPredicateIndicators();
-<a class="jxr_linenumber" name="402" href="#402">402</a> 		<strong class="jxr_keyword">while</strong> (i.hasNext()) {
-<a class="jxr_linenumber" name="403" href="#403">403</a> 			String predIndicator = (String) i.next();
-<a class="jxr_linenumber" name="404" href="#404">404</a> 			<strong class="jxr_keyword">try</strong> {
-<a class="jxr_linenumber" name="405" href="#405">405</a> 				List&lt;?&gt; list = engine.find(predIndicator);
-<a class="jxr_linenumber" name="406" href="#406">406</a> 				<strong class="jxr_keyword">for</strong> (Object object : list) {
-<a class="jxr_linenumber" name="407" href="#407">407</a> 					<strong class="jxr_keyword">if</strong> (object instanceof Clause) {
-<a class="jxr_linenumber" name="408" href="#408">408</a> 						Clause clause = (Clause) object;
-<a class="jxr_linenumber" name="409" href="#409">409</a> 						String functor = clause.head.name;
-<a class="jxr_linenumber" name="410" href="#410">410</a> 						<strong class="jxr_keyword">int</strong> arity = clause.head.arity;
-<a class="jxr_linenumber" name="411" href="#411">411</a> 						JTrologIndicator p = <strong class="jxr_keyword">new</strong> <a href="../../../../../io/github/prolobjectlink/prolog/jtrolog/JTrologIndicator.html">JTrologIndicator</a>(functor, arity);
-<a class="jxr_linenumber" name="412" href="#412">412</a> 						predicates.add(p);
-<a class="jxr_linenumber" name="413" href="#413">413</a> 					}
-<a class="jxr_linenumber" name="414" href="#414">414</a> 				}
-<a class="jxr_linenumber" name="415" href="#415">415</a> 			} <strong class="jxr_keyword">catch</strong> (PrologException e) {
-<a class="jxr_linenumber" name="416" href="#416">416</a> 				getLogger().error(getClass(), PrologLogger.INDICATOR_NOT_FOUND + predIndicator, e);
-<a class="jxr_linenumber" name="417" href="#417">417</a> 			}
-<a class="jxr_linenumber" name="418" href="#418">418</a> 		}
-<a class="jxr_linenumber" name="419" href="#419">419</a> 		<strong class="jxr_keyword">return</strong> predicates;
-<a class="jxr_linenumber" name="420" href="#420">420</a> 	}
-<a class="jxr_linenumber" name="421" href="#421">421</a> 
-<a class="jxr_linenumber" name="422" href="#422">422</a> 	<strong class="jxr_keyword">public</strong> Set&lt;PrologIndicator&gt; getBuiltIns() {
-<a class="jxr_linenumber" name="423" href="#423">423</a> 		Iterator&lt;?&gt; libraries = engine.getCurrentLibraries();
-<a class="jxr_linenumber" name="424" href="#424">424</a> 		Set&lt;PrologIndicator&gt; builtins = <strong class="jxr_keyword">new</strong> HashSet&lt;PrologIndicator&gt;();
-<a class="jxr_linenumber" name="425" href="#425">425</a> 		<strong class="jxr_keyword">while</strong> (libraries.hasNext()) {
-<a class="jxr_linenumber" name="426" href="#426">426</a> 			Object object = libraries.next();
-<a class="jxr_linenumber" name="427" href="#427">427</a> 			<strong class="jxr_keyword">if</strong> (object instanceof Library) {
-<a class="jxr_linenumber" name="428" href="#428">428</a> 				Library library = (Library) object;
-<a class="jxr_linenumber" name="429" href="#429">429</a> 				Class&lt;? <strong class="jxr_keyword">extends</strong> Library&gt; c = library.getClass();
-<a class="jxr_linenumber" name="430" href="#430">430</a> 				Method[] methods = c.getDeclaredMethods();
-<a class="jxr_linenumber" name="431" href="#431">431</a> 				String regex = <span class="jxr_string">"&#92;&#92;.|&#92;&#92;?|#|[a-z][A-Za-z0-9_]*_[0-9]+"</span>;
-<a class="jxr_linenumber" name="432" href="#432">432</a> 				<strong class="jxr_keyword">for</strong> (Method method1 : methods) {
-<a class="jxr_linenumber" name="433" href="#433">433</a> 					String method = method1.getName();
-<a class="jxr_linenumber" name="434" href="#434">434</a> 					<strong class="jxr_keyword">if</strong> (method.matches(regex)) {
-<a class="jxr_linenumber" name="435" href="#435">435</a> 						<strong class="jxr_keyword">int</strong> j = method.lastIndexOf('_');
-<a class="jxr_linenumber" name="436" href="#436">436</a> 						String f = method.substring(0, j);
-<a class="jxr_linenumber" name="437" href="#437">437</a> 						<strong class="jxr_keyword">int</strong> a = Integer.parseInt(method.substring(j + 1));
-<a class="jxr_linenumber" name="438" href="#438">438</a> 						builtins.add(<strong class="jxr_keyword">new</strong> <a href="../../../../../io/github/prolobjectlink/prolog/jtrolog/JTrologIndicator.html">JTrologIndicator</a>(f, a));
-<a class="jxr_linenumber" name="439" href="#439">439</a> 					}
-<a class="jxr_linenumber" name="440" href="#440">440</a> 				}
-<a class="jxr_linenumber" name="441" href="#441">441</a> 			}
-<a class="jxr_linenumber" name="442" href="#442">442</a> 		}
-<a class="jxr_linenumber" name="443" href="#443">443</a> 		<strong class="jxr_keyword">return</strong> builtins;
-<a class="jxr_linenumber" name="444" href="#444">444</a> 	}
-<a class="jxr_linenumber" name="445" href="#445">445</a> 
-<a class="jxr_linenumber" name="446" href="#446">446</a> 	<strong class="jxr_keyword">public</strong> String getLicense() {
-<a class="jxr_linenumber" name="447" href="#447">447</a> 		<strong class="jxr_keyword">return</strong> Licenses.NO_SPECIFIED;
-<a class="jxr_linenumber" name="448" href="#448">448</a> 	}
-<a class="jxr_linenumber" name="449" href="#449">449</a> 
-<a class="jxr_linenumber" name="450" href="#450">450</a> 	<strong class="jxr_keyword">public</strong> String getVersion() {
-<a class="jxr_linenumber" name="451" href="#451">451</a> 		<strong class="jxr_keyword">return</strong> JTrolog.VERSION;
-<a class="jxr_linenumber" name="452" href="#452">452</a> 	}
-<a class="jxr_linenumber" name="453" href="#453">453</a> 
-<a class="jxr_linenumber" name="454" href="#454">454</a> 	<strong class="jxr_keyword">public</strong> String getName() {
-<a class="jxr_linenumber" name="455" href="#455">455</a> 		<strong class="jxr_keyword">return</strong> JTrolog.NAME;
-<a class="jxr_linenumber" name="456" href="#456">456</a> 	}
-<a class="jxr_linenumber" name="457" href="#457">457</a> 
-<a class="jxr_linenumber" name="458" href="#458">458</a> 	@Override
-<a class="jxr_linenumber" name="459" href="#459">459</a> 	<strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">int</strong> hashCode() {
-<a class="jxr_linenumber" name="460" href="#460">460</a> 		<strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">int</strong> prime = 31;
-<a class="jxr_linenumber" name="461" href="#461">461</a> 		<strong class="jxr_keyword">int</strong> result = 1;
-<a class="jxr_linenumber" name="462" href="#462">462</a> 		result = prime * result + ((engine == <strong class="jxr_keyword">null</strong>) ? 0 : engine.hashCode());
-<a class="jxr_linenumber" name="463" href="#463">463</a> 		<strong class="jxr_keyword">return</strong> result;
-<a class="jxr_linenumber" name="464" href="#464">464</a> 	}
-<a class="jxr_linenumber" name="465" href="#465">465</a> 
-<a class="jxr_linenumber" name="466" href="#466">466</a> 	@Override
-<a class="jxr_linenumber" name="467" href="#467">467</a> 	<strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">boolean</strong> equals(Object obj) {
-<a class="jxr_linenumber" name="468" href="#468">468</a> 		<strong class="jxr_keyword">if</strong> (<strong class="jxr_keyword">this</strong> == obj)
-<a class="jxr_linenumber" name="469" href="#469">469</a> 			<strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">true</strong>;
-<a class="jxr_linenumber" name="470" href="#470">470</a> 		<strong class="jxr_keyword">if</strong> (obj == <strong class="jxr_keyword">null</strong>)
-<a class="jxr_linenumber" name="471" href="#471">471</a> 			<strong class="jxr_keyword">return</strong> false;
-<a class="jxr_linenumber" name="472" href="#472">472</a> 		<strong class="jxr_keyword">if</strong> (getClass() != obj.getClass())
-<a class="jxr_linenumber" name="473" href="#473">473</a> 			<strong class="jxr_keyword">return</strong> false;
-<a class="jxr_linenumber" name="474" href="#474">474</a> 		JTrologEngine other = (JTrologEngine) obj;
-<a class="jxr_linenumber" name="475" href="#475">475</a> 		<strong class="jxr_keyword">return</strong> engine != <strong class="jxr_keyword">null</strong> &amp;&amp; other.engine != <strong class="jxr_keyword">null</strong>;
-<a class="jxr_linenumber" name="476" href="#476">476</a> 	}
-<a class="jxr_linenumber" name="477" href="#477">477</a> 
-<a class="jxr_linenumber" name="478" href="#478">478</a> 	<strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> dispose() {
-<a class="jxr_linenumber" name="479" href="#479">479</a> 		<strong class="jxr_keyword">if</strong> (engine != <strong class="jxr_keyword">null</strong>) {
-<a class="jxr_linenumber" name="480" href="#480">480</a> 			engine.clearTheory();
-<a class="jxr_linenumber" name="481" href="#481">481</a> 		}
-<a class="jxr_linenumber" name="482" href="#482">482</a> 	}
-<a class="jxr_linenumber" name="483" href="#483">483</a> 
-<a class="jxr_linenumber" name="484" href="#484">484</a> 	<strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">final</strong> List&lt;String&gt; verify() {
-<a class="jxr_linenumber" name="485" href="#485">485</a> 		<strong class="jxr_keyword">return</strong> Arrays.asList(<span class="jxr_string">"OK"</span>);
-<a class="jxr_linenumber" name="486" href="#486">486</a> 	}
-<a class="jxr_linenumber" name="487" href="#487">487</a> 
-<a class="jxr_linenumber" name="488" href="#488">488</a> }
+<a class="jxr_linenumber" name="360" href="#360">360</a> 	<strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">boolean</strong> currentPredicate(String functor, <strong class="jxr_keyword">int</strong> arity) {
+<a class="jxr_linenumber" name="361" href="#361">361</a> 		String key = Parser.wrapAtom(functor) + <span class="jxr_string">"/"</span> + arity;
+<a class="jxr_linenumber" name="362" href="#362">362</a> 
+<a class="jxr_linenumber" name="363" href="#363">363</a> 		<em class="jxr_comment">// supported built-ins</em>
+<a class="jxr_linenumber" name="364" href="#364">364</a> 		<strong class="jxr_keyword">boolean</strong> isBuiltin = engine.hasPrimitive(key) || engine.hasPrimitiveExp(key);
+<a class="jxr_linenumber" name="365" href="#365">365</a> 
+<a class="jxr_linenumber" name="366" href="#366">366</a> 		<em class="jxr_comment">// user defined predicates</em>
+<a class="jxr_linenumber" name="367" href="#367">367</a> 		<strong class="jxr_keyword">if</strong> (!isBuiltin) {
+<a class="jxr_linenumber" name="368" href="#368">368</a> 			<strong class="jxr_keyword">try</strong> {
+<a class="jxr_linenumber" name="369" href="#369">369</a> 				<strong class="jxr_keyword">if</strong> (!engine.find(key).isEmpty()) {
+<a class="jxr_linenumber" name="370" href="#370">370</a> 					<strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">true</strong>;
+<a class="jxr_linenumber" name="371" href="#371">371</a> 				}
+<a class="jxr_linenumber" name="372" href="#372">372</a> 			} <strong class="jxr_keyword">catch</strong> (PrologException e) {
+<a class="jxr_linenumber" name="373" href="#373">373</a> 				getLogger().error(getClass(), PrologLogger.INDICATOR_NOT_FOUND + key, e);
+<a class="jxr_linenumber" name="374" href="#374">374</a> 			}
+<a class="jxr_linenumber" name="375" href="#375">375</a> 		}
+<a class="jxr_linenumber" name="376" href="#376">376</a> 
+<a class="jxr_linenumber" name="377" href="#377">377</a> 		<em class="jxr_comment">// not defined</em>
+<a class="jxr_linenumber" name="378" href="#378">378</a> 		<strong class="jxr_keyword">return</strong> isBuiltin;
+<a class="jxr_linenumber" name="379" href="#379">379</a> 	}
+<a class="jxr_linenumber" name="380" href="#380">380</a> 
+<a class="jxr_linenumber" name="381" href="#381">381</a> 	<strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">boolean</strong> currentOperator(<strong class="jxr_keyword">int</strong> priority, String specifier, String <strong class="jxr_keyword">operator</strong>) {
+<a class="jxr_linenumber" name="382" href="#382">382</a> 		<strong class="jxr_keyword">return</strong> currentOperators().contains(<strong class="jxr_keyword">new</strong> JTrologOperator(priority, specifier, <strong class="jxr_keyword">operator</strong>));
+<a class="jxr_linenumber" name="383" href="#383">383</a> 	}
+<a class="jxr_linenumber" name="384" href="#384">384</a> 
+<a class="jxr_linenumber" name="385" href="#385">385</a> 	<strong class="jxr_keyword">public</strong> Set&lt;PrologOperator&gt; currentOperators() {
+<a class="jxr_linenumber" name="386" href="#386">386</a> 		<strong class="jxr_keyword">return</strong> JTrologUtil.getOperatorSet(engine);
+<a class="jxr_linenumber" name="387" href="#387">387</a> 	}
+<a class="jxr_linenumber" name="388" href="#388">388</a> 
+<a class="jxr_linenumber" name="389" href="#389">389</a> 	<strong class="jxr_keyword">public</strong> Iterator&lt;PrologClause&gt; iterator() {
+<a class="jxr_linenumber" name="390" href="#390">390</a> 		Collection&lt;PrologClause&gt; cls = <strong class="jxr_keyword">new</strong> LinkedList&lt;PrologClause&gt;();
+<a class="jxr_linenumber" name="391" href="#391">391</a> 		Parser parser = <strong class="jxr_keyword">new</strong> <a href="../../../../../jTrolog/parser/Parser.html">Parser</a>(engine.getTheory());
+<a class="jxr_linenumber" name="392" href="#392">392</a> 		<strong class="jxr_keyword">for</strong> (Iterator&lt;?&gt; iterator = parser.iterator(); iterator.hasNext();) {
+<a class="jxr_linenumber" name="393" href="#393">393</a> 			Term term = (Term) iterator.next();
+<a class="jxr_linenumber" name="394" href="#394">394</a> 			<strong class="jxr_keyword">if</strong> (term instanceof Struct) {
+<a class="jxr_linenumber" name="395" href="#395">395</a> 				Struct struct = (Struct) term;
+<a class="jxr_linenumber" name="396" href="#396">396</a> 				<strong class="jxr_keyword">if</strong> (struct.name.equals(<span class="jxr_string">":-"</span>) &amp;&amp; struct.arity == 2) {
+<a class="jxr_linenumber" name="397" href="#397">397</a> 					PrologTerm head = toTerm(struct.getArg(0), PrologTerm.<strong class="jxr_keyword">class</strong>);
+<a class="jxr_linenumber" name="398" href="#398">398</a> 					PrologTerm body = toTerm(struct.getArg(1), PrologTerm.<strong class="jxr_keyword">class</strong>);
+<a class="jxr_linenumber" name="399" href="#399">399</a> 					cls.add(<strong class="jxr_keyword">new</strong> <a href="../../../../../io/github/prolobjectlink/prolog/jtrolog/JTrologClause.html">JTrologClause</a>(provider, head, body, false, false, false));
+<a class="jxr_linenumber" name="400" href="#400">400</a> 				} <strong class="jxr_keyword">else</strong> {
+<a class="jxr_linenumber" name="401" href="#401">401</a> 					PrologTerm head = toTerm(struct, PrologTerm.<strong class="jxr_keyword">class</strong>);
+<a class="jxr_linenumber" name="402" href="#402">402</a> 					cls.add(<strong class="jxr_keyword">new</strong> <a href="../../../../../io/github/prolobjectlink/prolog/jtrolog/JTrologClause.html">JTrologClause</a>(provider, head, false, false, false));
+<a class="jxr_linenumber" name="403" href="#403">403</a> 				}
+<a class="jxr_linenumber" name="404" href="#404">404</a> 			}
+<a class="jxr_linenumber" name="405" href="#405">405</a> 		}
+<a class="jxr_linenumber" name="406" href="#406">406</a> 		<strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">new</strong> PrologProgramIterator(cls);
+<a class="jxr_linenumber" name="407" href="#407">407</a> 	}
+<a class="jxr_linenumber" name="408" href="#408">408</a> 
+<a class="jxr_linenumber" name="409" href="#409">409</a> 	<strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">int</strong> getProgramSize() {
+<a class="jxr_linenumber" name="410" href="#410">410</a> 		<strong class="jxr_keyword">int</strong> counter = 0;
+<a class="jxr_linenumber" name="411" href="#411">411</a> 		Iterator&lt;?&gt; i = engine.dynamicPredicateIndicators();
+<a class="jxr_linenumber" name="412" href="#412">412</a> 		<strong class="jxr_keyword">while</strong> (i.hasNext()) {
+<a class="jxr_linenumber" name="413" href="#413">413</a> 			String predIndicator = (String) i.next();
+<a class="jxr_linenumber" name="414" href="#414">414</a> 			<strong class="jxr_keyword">try</strong> {
+<a class="jxr_linenumber" name="415" href="#415">415</a> 				List&lt;?&gt; list = engine.find(predIndicator);
+<a class="jxr_linenumber" name="416" href="#416">416</a> 				counter += list.size();
+<a class="jxr_linenumber" name="417" href="#417">417</a> 			} <strong class="jxr_keyword">catch</strong> (PrologException e) {
+<a class="jxr_linenumber" name="418" href="#418">418</a> 				getLogger().error(getClass(), PrologLogger.INDICATOR_NOT_FOUND + predIndicator, e);
+<a class="jxr_linenumber" name="419" href="#419">419</a> 			}
+<a class="jxr_linenumber" name="420" href="#420">420</a> 		}
+<a class="jxr_linenumber" name="421" href="#421">421</a> 		<strong class="jxr_keyword">return</strong> counter;
+<a class="jxr_linenumber" name="422" href="#422">422</a> 	}
+<a class="jxr_linenumber" name="423" href="#423">423</a> 
+<a class="jxr_linenumber" name="424" href="#424">424</a> 	<strong class="jxr_keyword">public</strong> Set&lt;PrologIndicator&gt; getPredicates() {
+<a class="jxr_linenumber" name="425" href="#425">425</a> 		Set&lt;PrologIndicator&gt; predicates = <strong class="jxr_keyword">new</strong> HashSet&lt;PrologIndicator&gt;();
+<a class="jxr_linenumber" name="426" href="#426">426</a> 		Iterator&lt;?&gt; i = engine.dynamicPredicateIndicators();
+<a class="jxr_linenumber" name="427" href="#427">427</a> 		<strong class="jxr_keyword">while</strong> (i.hasNext()) {
+<a class="jxr_linenumber" name="428" href="#428">428</a> 			String predIndicator = (String) i.next();
+<a class="jxr_linenumber" name="429" href="#429">429</a> 			<strong class="jxr_keyword">try</strong> {
+<a class="jxr_linenumber" name="430" href="#430">430</a> 				List&lt;?&gt; list = engine.find(predIndicator);
+<a class="jxr_linenumber" name="431" href="#431">431</a> 				<strong class="jxr_keyword">for</strong> (Object object : list) {
+<a class="jxr_linenumber" name="432" href="#432">432</a> 					<strong class="jxr_keyword">if</strong> (object instanceof Clause) {
+<a class="jxr_linenumber" name="433" href="#433">433</a> 						Clause clause = (Clause) object;
+<a class="jxr_linenumber" name="434" href="#434">434</a> 						String functor = clause.head.name;
+<a class="jxr_linenumber" name="435" href="#435">435</a> 						<strong class="jxr_keyword">int</strong> arity = clause.head.arity;
+<a class="jxr_linenumber" name="436" href="#436">436</a> 						JTrologIndicator p = <strong class="jxr_keyword">new</strong> <a href="../../../../../io/github/prolobjectlink/prolog/jtrolog/JTrologIndicator.html">JTrologIndicator</a>(functor, arity);
+<a class="jxr_linenumber" name="437" href="#437">437</a> 						predicates.add(p);
+<a class="jxr_linenumber" name="438" href="#438">438</a> 					}
+<a class="jxr_linenumber" name="439" href="#439">439</a> 				}
+<a class="jxr_linenumber" name="440" href="#440">440</a> 			} <strong class="jxr_keyword">catch</strong> (PrologException e) {
+<a class="jxr_linenumber" name="441" href="#441">441</a> 				getLogger().error(getClass(), PrologLogger.INDICATOR_NOT_FOUND + predIndicator, e);
+<a class="jxr_linenumber" name="442" href="#442">442</a> 			}
+<a class="jxr_linenumber" name="443" href="#443">443</a> 		}
+<a class="jxr_linenumber" name="444" href="#444">444</a> 		<strong class="jxr_keyword">return</strong> predicates;
+<a class="jxr_linenumber" name="445" href="#445">445</a> 	}
+<a class="jxr_linenumber" name="446" href="#446">446</a> 
+<a class="jxr_linenumber" name="447" href="#447">447</a> 	<strong class="jxr_keyword">public</strong> Set&lt;PrologIndicator&gt; getBuiltIns() {
+<a class="jxr_linenumber" name="448" href="#448">448</a> 		Iterator&lt;?&gt; libraries = engine.getCurrentLibraries();
+<a class="jxr_linenumber" name="449" href="#449">449</a> 		Set&lt;PrologIndicator&gt; builtins = <strong class="jxr_keyword">new</strong> HashSet&lt;PrologIndicator&gt;();
+<a class="jxr_linenumber" name="450" href="#450">450</a> 		<strong class="jxr_keyword">while</strong> (libraries.hasNext()) {
+<a class="jxr_linenumber" name="451" href="#451">451</a> 			Object object = libraries.next();
+<a class="jxr_linenumber" name="452" href="#452">452</a> 			<strong class="jxr_keyword">if</strong> (object instanceof Library) {
+<a class="jxr_linenumber" name="453" href="#453">453</a> 				Library library = (Library) object;
+<a class="jxr_linenumber" name="454" href="#454">454</a> 				Class&lt;? <strong class="jxr_keyword">extends</strong> Library&gt; c = library.getClass();
+<a class="jxr_linenumber" name="455" href="#455">455</a> 				Method[] methods = c.getDeclaredMethods();
+<a class="jxr_linenumber" name="456" href="#456">456</a> 				String regex = <span class="jxr_string">"&#92;&#92;.|&#92;&#92;?|#|[a-z][A-Za-z0-9_]*_[0-9]+"</span>;
+<a class="jxr_linenumber" name="457" href="#457">457</a> 				<strong class="jxr_keyword">for</strong> (Method method1 : methods) {
+<a class="jxr_linenumber" name="458" href="#458">458</a> 					String method = method1.getName();
+<a class="jxr_linenumber" name="459" href="#459">459</a> 					<strong class="jxr_keyword">if</strong> (method.matches(regex)) {
+<a class="jxr_linenumber" name="460" href="#460">460</a> 						<strong class="jxr_keyword">int</strong> j = method.lastIndexOf('_');
+<a class="jxr_linenumber" name="461" href="#461">461</a> 						String f = method.substring(0, j);
+<a class="jxr_linenumber" name="462" href="#462">462</a> 						<strong class="jxr_keyword">int</strong> a = Integer.parseInt(method.substring(j + 1));
+<a class="jxr_linenumber" name="463" href="#463">463</a> 						builtins.add(<strong class="jxr_keyword">new</strong> <a href="../../../../../io/github/prolobjectlink/prolog/jtrolog/JTrologIndicator.html">JTrologIndicator</a>(f, a));
+<a class="jxr_linenumber" name="464" href="#464">464</a> 					}
+<a class="jxr_linenumber" name="465" href="#465">465</a> 				}
+<a class="jxr_linenumber" name="466" href="#466">466</a> 			}
+<a class="jxr_linenumber" name="467" href="#467">467</a> 		}
+<a class="jxr_linenumber" name="468" href="#468">468</a> 		<strong class="jxr_keyword">return</strong> builtins;
+<a class="jxr_linenumber" name="469" href="#469">469</a> 	}
+<a class="jxr_linenumber" name="470" href="#470">470</a> 
+<a class="jxr_linenumber" name="471" href="#471">471</a> 	<strong class="jxr_keyword">public</strong> String getLicense() {
+<a class="jxr_linenumber" name="472" href="#472">472</a> 		<strong class="jxr_keyword">return</strong> Licenses.NO_SPECIFIED;
+<a class="jxr_linenumber" name="473" href="#473">473</a> 	}
+<a class="jxr_linenumber" name="474" href="#474">474</a> 
+<a class="jxr_linenumber" name="475" href="#475">475</a> 	<strong class="jxr_keyword">public</strong> String getVersion() {
+<a class="jxr_linenumber" name="476" href="#476">476</a> 		<strong class="jxr_keyword">return</strong> JTrolog.VERSION;
+<a class="jxr_linenumber" name="477" href="#477">477</a> 	}
+<a class="jxr_linenumber" name="478" href="#478">478</a> 
+<a class="jxr_linenumber" name="479" href="#479">479</a> 	<strong class="jxr_keyword">public</strong> String getName() {
+<a class="jxr_linenumber" name="480" href="#480">480</a> 		<strong class="jxr_keyword">return</strong> JTrolog.NAME;
+<a class="jxr_linenumber" name="481" href="#481">481</a> 	}
+<a class="jxr_linenumber" name="482" href="#482">482</a> 
+<a class="jxr_linenumber" name="483" href="#483">483</a> 	@Override
+<a class="jxr_linenumber" name="484" href="#484">484</a> 	<strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">int</strong> hashCode() {
+<a class="jxr_linenumber" name="485" href="#485">485</a> 		<strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">int</strong> prime = 31;
+<a class="jxr_linenumber" name="486" href="#486">486</a> 		<strong class="jxr_keyword">int</strong> result = 1;
+<a class="jxr_linenumber" name="487" href="#487">487</a> 		result = prime * result + ((engine == <strong class="jxr_keyword">null</strong>) ? 0 : engine.hashCode());
+<a class="jxr_linenumber" name="488" href="#488">488</a> 		<strong class="jxr_keyword">return</strong> result;
+<a class="jxr_linenumber" name="489" href="#489">489</a> 	}
+<a class="jxr_linenumber" name="490" href="#490">490</a> 
+<a class="jxr_linenumber" name="491" href="#491">491</a> 	@Override
+<a class="jxr_linenumber" name="492" href="#492">492</a> 	<strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">boolean</strong> equals(Object obj) {
+<a class="jxr_linenumber" name="493" href="#493">493</a> 		<strong class="jxr_keyword">if</strong> (<strong class="jxr_keyword">this</strong> == obj)
+<a class="jxr_linenumber" name="494" href="#494">494</a> 			<strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">true</strong>;
+<a class="jxr_linenumber" name="495" href="#495">495</a> 		<strong class="jxr_keyword">if</strong> (obj == <strong class="jxr_keyword">null</strong>)
+<a class="jxr_linenumber" name="496" href="#496">496</a> 			<strong class="jxr_keyword">return</strong> false;
+<a class="jxr_linenumber" name="497" href="#497">497</a> 		<strong class="jxr_keyword">if</strong> (getClass() != obj.getClass())
+<a class="jxr_linenumber" name="498" href="#498">498</a> 			<strong class="jxr_keyword">return</strong> false;
+<a class="jxr_linenumber" name="499" href="#499">499</a> 		JTrologEngine other = (JTrologEngine) obj;
+<a class="jxr_linenumber" name="500" href="#500">500</a> 		<strong class="jxr_keyword">return</strong> engine != <strong class="jxr_keyword">null</strong> &amp;&amp; other.engine != <strong class="jxr_keyword">null</strong>;
+<a class="jxr_linenumber" name="501" href="#501">501</a> 	}
+<a class="jxr_linenumber" name="502" href="#502">502</a> 
+<a class="jxr_linenumber" name="503" href="#503">503</a> 	<strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> dispose() {
+<a class="jxr_linenumber" name="504" href="#504">504</a> 		<strong class="jxr_keyword">if</strong> (engine != <strong class="jxr_keyword">null</strong>) {
+<a class="jxr_linenumber" name="505" href="#505">505</a> 			engine.clearTheory();
+<a class="jxr_linenumber" name="506" href="#506">506</a> 		}
+<a class="jxr_linenumber" name="507" href="#507">507</a> 	}
+<a class="jxr_linenumber" name="508" href="#508">508</a> 
+<a class="jxr_linenumber" name="509" href="#509">509</a> 	<strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">final</strong> List&lt;String&gt; verify() {
+<a class="jxr_linenumber" name="510" href="#510">510</a> 		<strong class="jxr_keyword">return</strong> Arrays.asList(<span class="jxr_string">"OK"</span>);
+<a class="jxr_linenumber" name="511" href="#511">511</a> 	}
+<a class="jxr_linenumber" name="512" href="#512">512</a> 
+<a class="jxr_linenumber" name="513" href="#513">513</a> }
 </pre>
 <hr/><div id="footer">This page was automatically generated by <a href="http://maven.apache.org/">Maven</a></div></body>
 </html>

@@ -196,6 +196,11 @@ public class JTrologEngine extends AbstractEngine implements PrologEngine {
 		}
 	}
 
+	@Override
+	public void asserta(PrologTerm term) {
+		asserta("" + term + "");
+	}
+
 	public void asserta(PrologTerm head, PrologTerm... body) {
 		Struct h = fromTerm(head, Struct.class);
 		Struct[] b = new Struct[body.length];
@@ -223,6 +228,11 @@ public class JTrologEngine extends AbstractEngine implements PrologEngine {
 		} catch (PrologException e) {
 			getLogger().error(getClass(), SYNTAX_ERROR + stringClause, e);
 		}
+	}
+
+	@Override
+	public void assertz(PrologTerm term) {
+		assertz("" + term + "");
 	}
 
 	public void assertz(PrologTerm head, PrologTerm... body) {
@@ -253,6 +263,11 @@ public class JTrologEngine extends AbstractEngine implements PrologEngine {
 			getLogger().error(getClass(), SYNTAX_ERROR + stringClause, e);
 		}
 		return false;
+	}
+
+	@Override
+	public boolean clause(PrologTerm term) {
+		return clause("" + term + "");
 	}
 
 	public boolean clause(PrologTerm head, PrologTerm... body) {
@@ -298,6 +313,11 @@ public class JTrologEngine extends AbstractEngine implements PrologEngine {
 		}
 	}
 
+	@Override
+	public void retract(PrologTerm term) {
+		retract("" + term + "");
+	}
+
 	public void retract(PrologTerm head, PrologTerm... body) {
 		Struct h = fromTerm(head, Struct.class);
 		Struct[] b = new Struct[body.length];
@@ -314,6 +334,11 @@ public class JTrologEngine extends AbstractEngine implements PrologEngine {
 		} catch (PrologException e) {
 			getLogger().error(getClass(), RUNTIME_ERROR, e);
 		}
+	}
+
+	@Override
+	public PrologQuery query(PrologTerm goal) {
+		return new JTrologQuery(this, goal);
 	}
 
 	public PrologQuery query(String stringQuery) {

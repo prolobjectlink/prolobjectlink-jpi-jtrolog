@@ -47,10 +47,10 @@ prolobjectlink-jpi-jtrolog,jTrolog.parser,TermIterator,28,58,4,8,8,17,4,6,1,3
 prolobjectlink-jpi-jtrolog,jTrolog.parser,Tokenizer,324,692,77,97,52,155,54,41,1,7
 prolobjectlink-jpi-jtrolog,io.github.prolobjectlink.prolog.jtrolog,JTrologStructure,11,178,1,9,3,31,4,14,3,10
 prolobjectlink-jpi-jtrolog,io.github.prolobjectlink.prolog.jtrolog,JTrologFormatter,182,3,18,0,43,1,10,1,1,1
-prolobjectlink-jpi-jtrolog,io.github.prolobjectlink.prolog.jtrolog,JTrologEngine,390,841,29,67,68,187,24,62,4,34
+prolobjectlink-jpi-jtrolog,io.github.prolobjectlink.prolog.jtrolog,JTrologEngine,404,885,31,65,68,195,26,65,4,39
 prolobjectlink-jpi-jtrolog,io.github.prolobjectlink.prolog.jtrolog,JTrolog,75,207,4,10,14,40,13,26,9,23
 prolobjectlink-jpi-jtrolog,io.github.prolobjectlink.prolog.jtrolog,JTrologAtom,6,56,3,1,0,10,2,8,0,8
-prolobjectlink-jpi-jtrolog,io.github.prolobjectlink.prolog.jtrolog,JTrologQuery,215,644,33,67,45,143,33,36,3,16
+prolobjectlink-jpi-jtrolog,io.github.prolobjectlink.prolog.jtrolog,JTrologQuery,216,692,34,66,46,150,34,36,3,17
 prolobjectlink-jpi-jtrolog,io.github.prolobjectlink.prolog.jtrolog,JTrologCut,0,52,1,3,0,7,1,7,0,6
 prolobjectlink-jpi-jtrolog,io.github.prolobjectlink.prolog.jtrolog,JTrologOperatorSet,11,86,6,12,4,24,5,10,0,6
 prolobjectlink-jpi-jtrolog,io.github.prolobjectlink.prolog.jtrolog,JTrologNil,0,52,0,4,0,7,0,8,0,6
