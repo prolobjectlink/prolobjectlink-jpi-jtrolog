@@ -34,6 +34,7 @@ import static io.github.prolobjectlink.prolog.PrologTermType.NIL_TYPE;
 import static io.github.prolobjectlink.prolog.PrologTermType.STRUCTURE_TYPE;
 import static io.github.prolobjectlink.prolog.PrologTermType.TRUE_TYPE;
 import static io.github.prolobjectlink.prolog.PrologTermType.VARIABLE_TYPE;
+import static io.github.prolobjectlink.prolog.PrologTermType.OBJECT_TYPE;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -64,177 +65,179 @@ import jTrolog.terms.Var;
  * @author Jose Zalacain
  * @since 1.0
  */
-<span class="fc" id="L67">final class JTrologConverter extends AbstractConverter&lt;Term&gt; implements PrologConverter&lt;Term&gt; {</span>
+<span class="fc" id="L68">final class JTrologConverter extends AbstractConverter&lt;Term&gt; implements PrologConverter&lt;Term&gt; {</span>
 
-<span class="fc" id="L69">	private static final JTrologOperatorSet OPERATORS = new JTrologOperatorSet();</span>
+<span class="fc" id="L70">	private static final JTrologOperatorSet OPERATORS = new JTrologOperatorSet();</span>
 
 	public PrologTerm toTerm(Term prologTerm) {
-<span class="fc bfc" id="L72" title="All 2 branches covered.">		if (prologTerm.equals(Term.TRUE)) {</span>
-<span class="fc" id="L73">			return new JTrologTrue(provider);</span>
-<span class="fc bfc" id="L74" title="All 2 branches covered.">		} else if (prologTerm.equals(Term.FALSE)) {</span>
-<span class="fc" id="L75">			return new JTrologFalse(provider);</span>
+<span class="fc bfc" id="L73" title="All 2 branches covered.">		if (prologTerm.equals(Term.TRUE)) {</span>
+<span class="fc" id="L74">			return new JTrologTrue(provider);</span>
+<span class="fc bfc" id="L75" title="All 2 branches covered.">		} else if (prologTerm.equals(Term.FALSE)) {</span>
+<span class="fc" id="L76">			return new JTrologFalse(provider);</span>
 		}
 
 		// long extend integer and double extend float
 		// be careful with instance check order
 
-<span class="fc bfc" id="L81" title="All 2 branches covered.">		else if (prologTerm instanceof Double) { // double always before float</span>
-<span class="fc" id="L82">			return new JTrologDouble(provider, ((Double) prologTerm).doubleValue());</span>
-<span class="fc bfc" id="L83" title="All 2 branches covered.">		} else if (prologTerm instanceof Float) { // float always after double</span>
-<span class="fc" id="L84">			return new JTrologFloat(provider, ((Float) prologTerm).floatValue());</span>
-<span class="fc bfc" id="L85" title="All 2 branches covered.">		} else if (prologTerm instanceof Long) { // long always before integer</span>
-<span class="fc" id="L86">			return new JTrologLong(provider, ((Long) prologTerm).longValue());</span>
-<span class="fc bfc" id="L87" title="All 2 branches covered.">		} else if (prologTerm instanceof Int) { // integer always after long</span>
-<span class="fc" id="L88">			return new JTrologInteger(provider, ((Int) prologTerm).intValue());</span>
-<span class="fc bfc" id="L89" title="All 2 branches covered.">		} else if (prologTerm instanceof Var) {</span>
-<span class="fc" id="L90">			Var var = (Var) prologTerm;</span>
-<span class="fc" id="L91">			String name = var.toString();</span>
-<span class="fc" id="L92">			PrologVariable v = sharedVariables.get(name);</span>
-<span class="fc bfc" id="L93" title="All 2 branches covered.">			if (v == null) {</span>
-<span class="fc" id="L94">				v = new JTrologVariable(provider, name, var.nrInStruct);</span>
-<span class="fc" id="L95">				sharedVariables.put(v.toString(), v);</span>
+<span class="fc bfc" id="L82" title="All 2 branches covered.">		else if (prologTerm instanceof Double) { // double always before float</span>
+<span class="fc" id="L83">			return new JTrologDouble(provider, ((Double) prologTerm).doubleValue());</span>
+<span class="fc bfc" id="L84" title="All 2 branches covered.">		} else if (prologTerm instanceof Float) { // float always after double</span>
+<span class="fc" id="L85">			return new JTrologFloat(provider, ((Float) prologTerm).floatValue());</span>
+<span class="fc bfc" id="L86" title="All 2 branches covered.">		} else if (prologTerm instanceof Long) { // long always before integer</span>
+<span class="fc" id="L87">			return new JTrologLong(provider, ((Long) prologTerm).longValue());</span>
+<span class="fc bfc" id="L88" title="All 2 branches covered.">		} else if (prologTerm instanceof Int) { // integer always after long</span>
+<span class="fc" id="L89">			return new JTrologInteger(provider, ((Int) prologTerm).intValue());</span>
+<span class="fc bfc" id="L90" title="All 2 branches covered.">		} else if (prologTerm instanceof Var) {</span>
+<span class="fc" id="L91">			Var var = (Var) prologTerm;</span>
+<span class="fc" id="L92">			String name = var.toString();</span>
+<span class="fc" id="L93">			PrologVariable v = sharedVariables.get(name);</span>
+<span class="fc bfc" id="L94" title="All 2 branches covered.">			if (v == null) {</span>
+<span class="fc" id="L95">				v = new JTrologVariable(provider, name, var.nrInStruct);</span>
+<span class="fc" id="L96">				sharedVariables.put(v.toString(), v);</span>
 			}
-<span class="fc" id="L97">			return v;</span>
-<span class="pc bpc" id="L98" title="1 of 2 branches missed.">		} else if (prologTerm instanceof Struct) {</span>
+<span class="fc" id="L98">			return v;</span>
+<span class="pc bpc" id="L99" title="1 of 2 branches missed.">		} else if (prologTerm instanceof Struct) {</span>
 
-<span class="fc" id="L100">			Struct struct = (Struct) prologTerm;</span>
-<span class="fc" id="L101">			int arity = struct.arity;</span>
-<span class="fc" id="L102">			String functor = struct.name;</span>
-<span class="fc" id="L103">			Term[] arguments = new Term[arity];</span>
+<span class="fc" id="L101">			Struct struct = (Struct) prologTerm;</span>
+<span class="fc" id="L102">			int arity = struct.arity;</span>
+<span class="fc" id="L103">			String functor = struct.name;</span>
+<span class="fc" id="L104">			Term[] arguments = new Term[arity];</span>
 
-<span class="fc bfc" id="L105" title="All 2 branches covered.">			if (struct == Term.emptyList) {</span>
-<span class="fc" id="L106">				return new JTrologEmpty(provider);</span>
+<span class="fc bfc" id="L106" title="All 2 branches covered.">			if (struct == Term.emptyList) {</span>
+<span class="fc" id="L107">				return new JTrologEmpty(provider);</span>
 			}
 
 			// atom and constants
-<span class="fc bfc" id="L110" title="All 2 branches covered.">			else if (prologTerm instanceof StructAtom) {</span>
-<span class="fc bfc" id="L111" title="All 2 branches covered.">				if (functor.equals(&quot;nil&quot;)) {</span>
-<span class="fc" id="L112">					return new JTrologNil(provider);</span>
-<span class="fc bfc" id="L113" title="All 2 branches covered.">				} else if (functor.equals(&quot;!&quot;)) {</span>
-<span class="fc" id="L114">					return new JTrologCut(provider);</span>
-<span class="fc bfc" id="L115" title="All 2 branches covered.">				} else if (functor.equals(&quot;fail&quot;)) {</span>
-<span class="fc" id="L116">					return new JTrologFail(provider);</span>
+<span class="fc bfc" id="L111" title="All 2 branches covered.">			else if (prologTerm instanceof StructAtom) {</span>
+<span class="fc bfc" id="L112" title="All 2 branches covered.">				if (functor.equals(&quot;nil&quot;)) {</span>
+<span class="fc" id="L113">					return new JTrologNil(provider);</span>
+<span class="fc bfc" id="L114" title="All 2 branches covered.">				} else if (functor.equals(&quot;!&quot;)) {</span>
+<span class="fc" id="L115">					return new JTrologCut(provider);</span>
+<span class="fc bfc" id="L116" title="All 2 branches covered.">				} else if (functor.equals(&quot;fail&quot;)) {</span>
+<span class="fc" id="L117">					return new JTrologFail(provider);</span>
 				} else {
-<span class="fc" id="L118">					return new JTrologAtom(provider, functor);</span>
+<span class="fc" id="L119">					return new JTrologAtom(provider, functor);</span>
 				}
 			}
 
 			// list
-<span class="pc bpc" id="L123" title="1 of 4 branches missed.">			else if (struct.name.equals(&quot;.&quot;) &amp;&amp; struct.arity == 2) {</span>
-<span class="fc" id="L124">				ArrayList&lt;Term&gt; args = new ArrayList&lt;Term&gt;();</span>
-<span class="fc" id="L125">				Iterator&lt;?&gt; i = Struct.iterator(struct);</span>
-<span class="fc bfc" id="L126" title="All 2 branches covered.">				while (i.hasNext()) {</span>
-<span class="fc" id="L127">					Term term = (Term) i.next();</span>
-<span class="fc" id="L128">					args.add(term);</span>
-<span class="fc" id="L129">				}</span>
-<span class="fc" id="L130">				return new JTrologList(provider, args.toArray(arguments));</span>
+<span class="pc bpc" id="L124" title="1 of 4 branches missed.">			else if (struct.name.equals(&quot;.&quot;) &amp;&amp; struct.arity == 2) {</span>
+<span class="fc" id="L125">				ArrayList&lt;Term&gt; args = new ArrayList&lt;Term&gt;();</span>
+<span class="fc" id="L126">				Iterator&lt;?&gt; i = Struct.iterator(struct);</span>
+<span class="fc bfc" id="L127" title="All 2 branches covered.">				while (i.hasNext()) {</span>
+<span class="fc" id="L128">					Term term = (Term) i.next();</span>
+<span class="fc" id="L129">					args.add(term);</span>
+<span class="fc" id="L130">				}</span>
+<span class="fc" id="L131">				return new JTrologList(provider, args.toArray(arguments));</span>
 			}
 
 			// expression
-<span class="fc bfc" id="L134" title="All 4 branches covered.">			else if (arity == 2 &amp;&amp; OPERATORS.currentOp(functor)) {</span>
-<span class="fc" id="L135">				Term left = struct.getArg(0);</span>
-<span class="fc" id="L136">				Term right = struct.getArg(1);</span>
-<span class="fc" id="L137">				return new JTrologStructure(provider, left, functor, right);</span>
+<span class="fc bfc" id="L135" title="All 4 branches covered.">			else if (arity == 2 &amp;&amp; OPERATORS.currentOp(functor)) {</span>
+<span class="fc" id="L136">				Term left = struct.getArg(0);</span>
+<span class="fc" id="L137">				Term right = struct.getArg(1);</span>
+<span class="fc" id="L138">				return new JTrologStructure(provider, left, functor, right);</span>
 			}
 
 			// structure
 			else {
-<span class="fc bfc" id="L142" title="All 2 branches covered.">				for (int i = 0; i &lt; arity; i++) {</span>
-<span class="fc" id="L143">					arguments[i] = struct.getArg(i);</span>
+<span class="fc bfc" id="L143" title="All 2 branches covered.">				for (int i = 0; i &lt; arity; i++) {</span>
+<span class="fc" id="L144">					arguments[i] = struct.getArg(i);</span>
 				}
-<span class="fc" id="L145">				return new JTrologStructure(provider, functor, arguments);</span>
+<span class="fc" id="L146">				return new JTrologStructure(provider, functor, arguments);</span>
 			}
 
 		} else {
-<span class="nc" id="L149">			throw new UnknownTermError(prologTerm);</span>
+<span class="nc" id="L150">			throw new UnknownTermError(prologTerm);</span>
 		}
 	}
 
 	public Term fromTerm(PrologTerm term) {
-<span class="pc bpc" id="L154" title="1 of 14 branches missed.">		switch (term.getType()) {</span>
+<span class="pc bpc" id="L155" title="2 of 15 branches missed.">		switch (term.getType()) {</span>
 		case NIL_TYPE:
-<span class="fc" id="L156">			return new StructAtom(&quot;nil&quot;);</span>
+<span class="fc" id="L157">			return new StructAtom(&quot;nil&quot;);</span>
 		case CUT_TYPE:
-<span class="fc" id="L158">			return new StructAtom(&quot;!&quot;);</span>
+<span class="fc" id="L159">			return new StructAtom(&quot;!&quot;);</span>
 		case FAIL_TYPE:
-<span class="fc" id="L160">			return new StructAtom(&quot;fail&quot;);</span>
+<span class="fc" id="L161">			return new StructAtom(&quot;fail&quot;);</span>
 		case TRUE_TYPE:
-<span class="fc" id="L162">			return Term.TRUE;</span>
+<span class="fc" id="L163">			return Term.TRUE;</span>
 		case FALSE_TYPE:
-<span class="fc" id="L164">			return Term.FALSE;</span>
+<span class="fc" id="L165">			return Term.FALSE;</span>
 		case ATOM_TYPE:
-<span class="fc" id="L166">			return new StructAtom(removeQuoted(((PrologAtom) term).getStringValue()));</span>
+<span class="fc" id="L167">			return new StructAtom(removeQuoted(((PrologAtom) term).getStringValue()));</span>
 		case FLOAT_TYPE:
-<span class="fc" id="L168">			return new Float(((PrologFloat) term).getFloatValue());</span>
+<span class="fc" id="L169">			return new Float(((PrologFloat) term).getFloatValue());</span>
 		case INTEGER_TYPE:
-<span class="fc" id="L170">			return new Int(((PrologInteger) term).getIntegerValue());</span>
+<span class="fc" id="L171">			return new Int(((PrologInteger) term).getIntegerValue());</span>
 		case DOUBLE_TYPE:
-<span class="fc" id="L172">			return new Double(((PrologDouble) term).getDoubleValue());</span>
+<span class="fc" id="L173">			return new Double(((PrologDouble) term).getDoubleValue());</span>
 		case LONG_TYPE:
-<span class="fc" id="L174">			return new Long(((PrologLong) term).getLongValue());</span>
+<span class="fc" id="L175">			return new Long(((PrologLong) term).getLongValue());</span>
 		case VARIABLE_TYPE:
-<span class="fc" id="L176">			PrologVariable v = (PrologVariable) term;</span>
-<span class="fc" id="L177">			String name = v.getName();</span>
-<span class="fc" id="L178">			Term variable = sharedPrologVariables.get(name);</span>
-<span class="fc bfc" id="L179" title="All 2 branches covered.">			if (variable == null) {</span>
-<span class="fc" id="L180">				variable = new Var(name, v.getPosition());</span>
-<span class="fc" id="L181">				sharedPrologVariables.put(name, variable);</span>
+<span class="fc" id="L177">			PrologVariable v = (PrologVariable) term;</span>
+<span class="fc" id="L178">			String name = v.getName();</span>
+<span class="fc" id="L179">			Term variable = sharedPrologVariables.get(name);</span>
+<span class="fc bfc" id="L180" title="All 2 branches covered.">			if (variable == null) {</span>
+<span class="fc" id="L181">				variable = new Var(name, v.getPosition());</span>
+<span class="fc" id="L182">				sharedPrologVariables.put(name, variable);</span>
 			}
-<span class="fc" id="L183">			return variable;</span>
+<span class="fc" id="L184">			return variable;</span>
 		case LIST_TYPE:
-<span class="fc" id="L185">			PrologTerm[] elements = term.getArguments();</span>
-<span class="pc bpc" id="L186" title="1 of 4 branches missed.">			if (elements != null &amp;&amp; elements.length &gt; 0) {</span>
-<span class="fc" id="L187">				Term list = Term.emptyList;</span>
-<span class="pc bpc" id="L188" title="1 of 2 branches missed.">				int offset = elements[elements.length - 1].isEmptyList() ? 2 : 1;</span>
-<span class="fc bfc" id="L189" title="All 2 branches covered.">				for (int i = elements.length - offset; i &gt;= 0; --i) {</span>
-<span class="fc" id="L190">					list = new Struct(&quot;.&quot;, new Term[] { fromTerm(elements[i], Term.class), list });</span>
+<span class="fc" id="L186">			PrologTerm[] elements = term.getArguments();</span>
+<span class="pc bpc" id="L187" title="1 of 4 branches missed.">			if (elements != null &amp;&amp; elements.length &gt; 0) {</span>
+<span class="fc" id="L188">				Term list = Term.emptyList;</span>
+<span class="pc bpc" id="L189" title="1 of 2 branches missed.">				int offset = elements[elements.length - 1].isEmptyList() ? 2 : 1;</span>
+<span class="fc bfc" id="L190" title="All 2 branches covered.">				for (int i = elements.length - offset; i &gt;= 0; --i) {</span>
+<span class="fc" id="L191">					list = new Struct(&quot;.&quot;, new Term[] { fromTerm(elements[i], Term.class), list });</span>
 				}
-<span class="fc" id="L192">				return list;</span>
+<span class="fc" id="L193">				return list;</span>
 			}
-<span class="fc" id="L194">			return Term.emptyList;</span>
+<span class="fc" id="L195">			return Term.emptyList;</span>
 		case STRUCTURE_TYPE:
-<span class="fc" id="L196">			String functor = term.getFunctor();</span>
-<span class="pc bpc" id="L197" title="1 of 2 branches missed.">			if (term.getArity() &lt; 1) {</span>
-<span class="nc bnc" id="L198" title="All 2 branches missed.">				if (!functor.matches(SIMPLE_ATOM_REGEX)) {</span>
-<span class="nc" id="L199">					return new StructAtom(&quot;'&quot; + functor + &quot;'&quot;);</span>
+<span class="fc" id="L197">			String functor = term.getFunctor();</span>
+<span class="pc bpc" id="L198" title="1 of 2 branches missed.">			if (term.getArity() &lt; 1) {</span>
+<span class="nc bnc" id="L199" title="All 2 branches missed.">				if (!functor.matches(SIMPLE_ATOM_REGEX)) {</span>
+<span class="nc" id="L200">					return new StructAtom(&quot;'&quot; + functor + &quot;'&quot;);</span>
 				} else {
-<span class="nc" id="L201">					return new StructAtom(functor);</span>
+<span class="nc" id="L202">					return new StructAtom(functor);</span>
 				}
 			}
-<span class="fc" id="L204">			Term[] arguments = fromTermArray(((PrologStructure) term).getArguments());</span>
-<span class="fc" id="L205">			return new Struct(functor, arguments);</span>
+<span class="fc" id="L205">			Term[] arguments = fromTermArray(((PrologStructure) term).getArguments());</span>
+<span class="fc" id="L206">			return new Struct(functor, arguments);</span>
+		case OBJECT_TYPE:
+<span class="nc" id="L208">			return new Struct(&quot;'@'&quot;, new Term[] { new StructAtom(&quot;'&quot; + term.getObject() + &quot;'&quot;) });</span>
 		default:
-<span class="nc" id="L207">			throw new UnknownTermError(term);</span>
+<span class="nc" id="L210">			throw new UnknownTermError(term);</span>
 		}
 	}
 
 	public Term[] fromTermArray(PrologTerm[] terms) {
-<span class="fc" id="L212">		Term[] prologTerms = new Term[terms.length];</span>
-<span class="fc bfc" id="L213" title="All 2 branches covered.">		for (int i = 0; i &lt; terms.length; i++) {</span>
-<span class="fc" id="L214">			prologTerms[i] = fromTerm(terms[i]);</span>
+<span class="fc" id="L215">		Term[] prologTerms = new Term[terms.length];</span>
+<span class="fc bfc" id="L216" title="All 2 branches covered.">		for (int i = 0; i &lt; terms.length; i++) {</span>
+<span class="fc" id="L217">			prologTerms[i] = fromTerm(terms[i]);</span>
 		}
-<span class="fc" id="L216">		return prologTerms;</span>
+<span class="fc" id="L219">		return prologTerms;</span>
 	}
 
 	public Term fromTerm(PrologTerm head, PrologTerm[] body) {
-<span class="fc" id="L220">		Term h = fromTerm(head);</span>
-<span class="fc bfc" id="L221" title="All 4 branches covered.">		if (body != null &amp;&amp; body.length &gt; 0) {</span>
-<span class="fc" id="L222">			Term b = fromTerm(body[body.length - 1]);</span>
-<span class="fc bfc" id="L223" title="All 2 branches covered.">			for (int i = body.length - 2; i &gt;= 0; --i) {</span>
-<span class="fc" id="L224">				b = new Struct(&quot;,&quot;, new Term[] { fromTerm(body[i]), b });</span>
+<span class="fc" id="L223">		Term h = fromTerm(head);</span>
+<span class="fc bfc" id="L224" title="All 4 branches covered.">		if (body != null &amp;&amp; body.length &gt; 0) {</span>
+<span class="fc" id="L225">			Term b = fromTerm(body[body.length - 1]);</span>
+<span class="fc bfc" id="L226" title="All 2 branches covered.">			for (int i = body.length - 2; i &gt;= 0; --i) {</span>
+<span class="fc" id="L227">				b = new Struct(&quot;,&quot;, new Term[] { fromTerm(body[i]), b });</span>
 			}
-<span class="fc" id="L226">			return new Struct(&quot;:-&quot;, new Term[] { h, b });</span>
+<span class="fc" id="L229">			return new Struct(&quot;:-&quot;, new Term[] { h, b });</span>
 		}
-<span class="fc" id="L228">		return new Struct(&quot;:-&quot;, new Term[] { h, Term.TRUE });</span>
+<span class="fc" id="L231">		return new Struct(&quot;:-&quot;, new Term[] { h, Term.TRUE });</span>
 	}
 
 	public PrologProvider createProvider() {
-<span class="fc" id="L232">		return new JTrolog(this);</span>
+<span class="fc" id="L235">		return new JTrolog(this);</span>
 	}
 
 	@Override
 	public String toString() {
-<span class="fc" id="L237">		return &quot;JTrologConverter&quot;;</span>
+<span class="fc" id="L240">		return &quot;JTrologConverter&quot;;</span>
 	}
 
 }

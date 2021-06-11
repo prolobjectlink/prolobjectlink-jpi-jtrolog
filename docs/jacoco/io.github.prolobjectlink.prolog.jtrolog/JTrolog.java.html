@@ -195,20 +195,36 @@ public class JTrolog extends AbstractProvider implements PrologProvider {
 	}
 
 	public PrologTerm newReference(Object reference) {
-<span class="nc" id="L198">		throw new UnsupportedOperationException(&quot;newReference(Object reference)&quot;);</span>
+<span class="fc" id="L198">		return new JTrologReference(this, reference);</span>
+	}
+
+	public PrologTerm falseReference() {
+<span class="fc" id="L202">		return newReference(false);</span>
+	}
+
+	public PrologTerm trueReference() {
+<span class="fc" id="L206">		return newReference(true);</span>
+	}
+
+	public PrologTerm nullReference() {
+<span class="fc" id="L210">		return newReference(null);</span>
+	}
+
+	public PrologTerm voidReference() {
+<span class="fc" id="L214">		return newReference(void.class);</span>
 	}
 
 	public PrologJavaConverter getJavaConverter() {
-<span class="fc" id="L202">		return new JTrologJavaConverter(this);</span>
+<span class="fc" id="L218">		return new JTrologJavaConverter(this);</span>
 	}
 
 	public PrologLogger getLogger() {
-<span class="nc" id="L206">		return logger;</span>
+<span class="nc" id="L222">		return logger;</span>
 	}
 
 	@Override
 	public String toString() {
-<span class="nc" id="L211">		return &quot;TuPrologProvider [converter=&quot; + converter + &quot;]&quot;;</span>
+<span class="nc" id="L227">		return &quot;TuPrologProvider [converter=&quot; + converter + &quot;]&quot;;</span>
 	}
 
 }

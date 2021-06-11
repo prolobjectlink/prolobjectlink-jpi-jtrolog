@@ -195,7 +195,23 @@ public class JTrolog extends AbstractProvider implements PrologProvider {
 	}
 
 	public PrologTerm newReference(Object reference) {
-		throw new UnsupportedOperationException("newReference(Object reference)");
+		return new JTrologReference(this, reference);
+	}
+
+	public PrologTerm falseReference() {
+		return newReference(false);
+	}
+
+	public PrologTerm trueReference() {
+		return newReference(true);
+	}
+
+	public PrologTerm nullReference() {
+		return newReference(null);
+	}
+
+	public PrologTerm voidReference() {
+		return newReference(void.class);
 	}
 
 	public PrologJavaConverter getJavaConverter() {

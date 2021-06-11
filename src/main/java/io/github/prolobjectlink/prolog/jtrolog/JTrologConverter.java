@@ -34,6 +34,7 @@ import static io.github.prolobjectlink.prolog.PrologTermType.NIL_TYPE;
 import static io.github.prolobjectlink.prolog.PrologTermType.STRUCTURE_TYPE;
 import static io.github.prolobjectlink.prolog.PrologTermType.TRUE_TYPE;
 import static io.github.prolobjectlink.prolog.PrologTermType.VARIABLE_TYPE;
+import static io.github.prolobjectlink.prolog.PrologTermType.OBJECT_TYPE;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -203,6 +204,8 @@ final class JTrologConverter extends AbstractConverter<Term> implements PrologCo
 			}
 			Term[] arguments = fromTermArray(((PrologStructure) term).getArguments());
 			return new Struct(functor, arguments);
+		case OBJECT_TYPE:
+			return new Struct("'@'", new Term[] { new StructAtom("'" + term.getObject() + "'") });
 		default:
 			throw new UnknownTermError(term);
 		}
