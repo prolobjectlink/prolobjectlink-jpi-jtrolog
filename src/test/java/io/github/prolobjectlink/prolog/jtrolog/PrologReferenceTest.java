@@ -301,27 +301,27 @@ public class PrologReferenceTest extends PrologBaseTest {
 
 		// with atom
 		PrologAtom atom = provider.newAtom("John Doe");
-		assertEquals(-1, ref.compareTo(atom));
+		assertEquals(1, ref.compareTo(atom));
 
 		// with integer
 		PrologInteger iValue = provider.newInteger(28);
-		assertEquals(-1, ref.compareTo(iValue));
+		assertEquals(1, ref.compareTo(iValue));
 
 		// with long
 		PrologLong lValue = provider.newLong(28);
-		assertEquals(-1, ref.compareTo(lValue));
+		assertEquals(1, ref.compareTo(lValue));
 
 		// with float
 		PrologFloat fValue = provider.newFloat(36.47);
-		assertEquals(-1, ref.compareTo(fValue));
+		assertEquals(1, ref.compareTo(fValue));
 
 		// with double
 		PrologDouble dValue = provider.newDouble(36.47);
-		assertEquals(-1, ref.compareTo(dValue));
+		assertEquals(1, ref.compareTo(dValue));
 
 		// with variable
 		PrologVariable variable = provider.newVariable("X", 0);
-		assertEquals(-1, ref.compareTo(variable));
+		assertEquals(1, ref.compareTo(variable));
 
 		// with predicate
 //		PrologStructure structure1 = provider.parseStructure("@(X)");
