@@ -47,11 +47,12 @@ prolobjectlink-jpi-jtrolog,jTrolog.parser,TermIterator,28,58,4,8,8,17,4,6,1,3
 prolobjectlink-jpi-jtrolog,jTrolog.parser,Tokenizer,324,692,77,97,52,155,54,41,1,7
 prolobjectlink-jpi-jtrolog,io.github.prolobjectlink.prolog.jtrolog,JTrologStructure,11,152,0,6,3,29,3,11,3,8
 prolobjectlink-jpi-jtrolog,io.github.prolobjectlink.prolog.jtrolog,JTrologFormatter,182,3,18,0,43,1,10,1,1,1
-prolobjectlink-jpi-jtrolog,io.github.prolobjectlink.prolog.jtrolog,JTrologEngine,406,885,31,65,69,195,27,65,5,39
+prolobjectlink-jpi-jtrolog,io.github.prolobjectlink.prolog.jtrolog,JTrologEngine,411,885,31,65,71,195,28,65,6,39
 prolobjectlink-jpi-jtrolog,io.github.prolobjectlink.prolog.jtrolog,JTrolog,92,249,4,10,17,48,13,34,9,31
 prolobjectlink-jpi-jtrolog,io.github.prolobjectlink.prolog.jtrolog,JTrologAtom,0,36,0,0,0,8,0,6,0,6
 prolobjectlink-jpi-jtrolog,io.github.prolobjectlink.prolog.jtrolog,JTrologMap.PrologMapIterator,0,58,0,2,0,11,0,4,0,3
 prolobjectlink-jpi-jtrolog,io.github.prolobjectlink.prolog.jtrolog,JTrologQuery,216,692,34,66,46,150,34,36,3,17
+prolobjectlink-jpi-jtrolog,io.github.prolobjectlink.prolog.jtrolog,JTrologProgram,10,0,0,0,3,0,2,0,2,0
 prolobjectlink-jpi-jtrolog,io.github.prolobjectlink.prolog.jtrolog,JTrologCut,0,26,0,0,0,5,0,4,0,4
 prolobjectlink-jpi-jtrolog,io.github.prolobjectlink.prolog.jtrolog,JTrologOperatorSet,11,86,6,12,4,24,5,10,0,6
 prolobjectlink-jpi-jtrolog,io.github.prolobjectlink.prolog.jtrolog,JTrologNil,0,26,0,0,0,5,0,4,0,4
@@ -75,10 +76,11 @@ prolobjectlink-jpi-jtrolog,io.github.prolobjectlink.prolog.jtrolog,JTrologUtil,3
 prolobjectlink-jpi-jtrolog,io.github.prolobjectlink.prolog.jtrolog,JTrologFloat,0,79,0,0,0,13,0,12,0,12
 prolobjectlink-jpi-jtrolog,io.github.prolobjectlink.prolog.jtrolog,JTrologScriptFactory,0,12,0,0,0,3,0,2,0,2
 prolobjectlink-jpi-jtrolog,io.github.prolobjectlink.prolog.jtrolog,JTrologReference,0,5,0,0,0,2,0,1,0,1
+prolobjectlink-jpi-jtrolog,io.github.prolobjectlink.prolog.jtrolog,JTrologClauses,165,0,26,0,43,0,24,0,11,0
 prolobjectlink-jpi-jtrolog,io.github.prolobjectlink.prolog.jtrolog,JTrologTerm,34,486,17,95,15,124,22,67,6,24
 prolobjectlink-jpi-jtrolog,io.github.prolobjectlink.prolog.jtrolog,JTrologConverter,59,528,9,68,6,95,8,45,0,8
 prolobjectlink-jpi-jtrolog,io.github.prolobjectlink.prolog.jtrolog,JTrologEmpty,0,17,0,0,0,5,0,4,0,4
-prolobjectlink-jpi-jtrolog,io.github.prolobjectlink.prolog.jtrolog,JTrologMap,18,306,12,20,7,76,11,33,0,28
+prolobjectlink-jpi-jtrolog,io.github.prolobjectlink.prolog.jtrolog,JTrologMap,63,306,16,20,17,76,17,33,4,28
 prolobjectlink-jpi-jtrolog,jTrolog.errors,PrologException,4,3,0,0,2,2,1,1,1,1
 prolobjectlink-jpi-jtrolog,jTrolog.errors,InvalidLibraryException,32,20,1,1,8,4,5,2,4,2
 prolobjectlink-jpi-jtrolog,jTrolog.errors,InvalidTermException,0,4,0,0,0,2,0,1,0,1

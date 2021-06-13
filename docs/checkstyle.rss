@@ -8,8 +8,8 @@
     <language>en-us</language>
     <copyright>&#169;2020 - 2021 Prolobjectlink Project</copyright>
     <item>
-      <title>File: 76,
-             Errors: 11937,
+      <title>File: 78,
+             Errors: 12082,
              Warnings: 0,
              Infos: 0
       </title>
@@ -276,7 +276,7 @@
                   0
                 </td>
                 <td>
-                  562
+                  567
                 </td>
               </tr>
                           <tr>
@@ -375,6 +375,20 @@
                 </td>
                 <td>
                   27
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://prolobjectlink.github.io/prolobjectlink-jpi-jtrolog/checkstyle.html#io.github.prolobjectlink.prolog.jtrolog.JTrologProgram.java">io/github/prolobjectlink/prolog/jtrolog/JTrologProgram.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  14
                 </td>
               </tr>
                           <tr>
@@ -668,7 +682,7 @@
                   0
                 </td>
                 <td>
-                  223
+                  247
                 </td>
               </tr>
                           <tr>
@@ -977,6 +991,20 @@
                 </td>
                 <td>
                   1636
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="https://prolobjectlink.github.io/prolobjectlink-jpi-jtrolog/checkstyle.html#io.github.prolobjectlink.prolog.jtrolog.JTrologClauses.java">io/github/prolobjectlink/prolog/jtrolog/JTrologClauses.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  102
                 </td>
               </tr>
                           <tr>
