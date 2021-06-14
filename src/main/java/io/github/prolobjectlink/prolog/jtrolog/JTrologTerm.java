@@ -165,7 +165,7 @@ abstract class JTrologTerm extends AbstractTerm implements PrologTerm {
 	}
 
 	public final boolean isCompound() {
-		return isList() || isStructure();
+		return !(isEmptyList()) && (isList() || isStructure());
 	}
 
 	public final boolean isTrueType() {

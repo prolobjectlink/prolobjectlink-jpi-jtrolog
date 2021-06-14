@@ -23,6 +23,7 @@ package io.github.prolobjectlink.prolog.jtrolog;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import io.github.prolobjectlink.prolog.AbstractProvider;
 import io.github.prolobjectlink.prolog.PrologAtom;
@@ -196,6 +197,29 @@ public class JTrolog extends AbstractProvider implements PrologProvider {
 
 	public PrologTerm newReference(Object reference) {
 		return new JTrologReference(this, reference);
+	}
+
+	public final PrologTerm newEntry(PrologTerm key, PrologTerm value) {
+		return new JTrologEntry(this, key, value);
+	}
+
+	public final PrologTerm newEntry(Object key, Object value) {
+		PrologJavaConverter transformer = getJavaConverter();
+		PrologTerm keyTerm = transformer.toTerm(key);
+		PrologTerm valueTerm = transformer.toTerm(value);
+		return new JTrologEntry(this, keyTerm, valueTerm);
+	}
+
+	public final PrologTerm newMap(Map<PrologTerm, PrologTerm> map) {
+		return new JTrologMap(this, map);
+	}
+
+	public final PrologTerm newMap(int initialCapacity) {
+		return new JTrologMap(this, initialCapacity);
+	}
+
+	public final PrologTerm newMap() {
+		return new JTrologMap(this);
 	}
 
 	public PrologTerm falseReference() {
