@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>JTrologList.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">prolobjectlink-jpi-jtrolog</a> &gt; <a href="index.source.html" class="el_package">io.github.prolobjectlink.prolog.jtrolog</a> &gt; <span class="el_source">JTrologList.java</span></div><h1>JTrologList.java</h1><pre class="source lang-java linenums">/*
+ * #%L
+ * prolobjectlink-jpi-jtrolog
+ * %%
+ * Copyright (C) 2019 Prolobjectlink Project
+ * %%
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation, either version 2.1 of the
+ * License, or (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Lesser Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Lesser Public
+ * License along with this program.  If not, see
+ * &lt;http://www.gnu.org/licenses/lgpl-2.1.html&gt;.
+ * #L%
+ */
+package io.github.prolobjectlink.prolog.jtrolog;
+
+import static io.github.prolobjectlink.prolog.PrologTermType.LIST_TYPE;
+
+import java.util.Iterator;
+
+import io.github.prolobjectlink.prolog.AbstractIterator;
+import io.github.prolobjectlink.prolog.PrologList;
+import io.github.prolobjectlink.prolog.PrologProvider;
+import io.github.prolobjectlink.prolog.PrologTerm;
+import jTrolog.terms.Struct;
+import jTrolog.terms.Term;
+
+/**
+ * 
+ * @author Jose Zalacain
+ * @since 1.0
+ */
+class JTrologList extends JTrologTerm implements PrologList {
+
+	protected JTrologList(PrologProvider provider) {
+<span class="fc" id="L43">		super(LIST_TYPE, provider, Term.emptyList);</span>
+<span class="fc" id="L44">	}</span>
+
+	protected JTrologList(PrologProvider provider, Term[] arguments) {
+<span class="fc" id="L47">		super(LIST_TYPE, provider);</span>
+<span class="pc bpc" id="L48" title="1 of 2 branches missed.">		if (arguments != null) {</span>
+<span class="fc" id="L49">			int length = arguments.length;</span>
+<span class="pc bpc" id="L50" title="1 of 2 branches missed.">			if (length &gt; 0) {</span>
+<span class="pc bpc" id="L51" title="1 of 2 branches missed.">				if (arguments[length - 1].equals(Term.emptyList)) {</span>
+<span class="fc" id="L52">					value = arguments[length - 1];</span>
+<span class="fc bfc" id="L53" title="All 2 branches covered.">					for (int i = length - 2; i &gt;= 0; --i) {</span>
+<span class="fc" id="L54">						value = new Struct(&quot;.&quot;, new Term[] { arguments[i], value });</span>
+					}
+				} else {
+<span class="nc" id="L57">					value = Term.emptyList;</span>
+<span class="nc bnc" id="L58" title="All 2 branches missed.">					for (int i = length - 1; i &gt;= 0; --i) {</span>
+<span class="nc" id="L59">						value = new Struct(&quot;.&quot;, new Term[] { arguments[i], value });</span>
+					}
+				}
+			} else {
+<span class="nc" id="L63">				value = Term.emptyList;</span>
+			}
+<span class="fc" id="L65">		} else {</span>
+<span class="nc" id="L66">			value = Term.emptyList;</span>
+		}
+<span class="fc" id="L68">	}</span>
+
+	protected JTrologList(PrologProvider provider, PrologTerm[] arguments) {
+<span class="fc" id="L71">		super(LIST_TYPE, provider);</span>
+<span class="pc bpc" id="L72" title="1 of 2 branches missed.">		if (arguments != null) {</span>
+<span class="fc" id="L73">			int length = arguments.length;</span>
+<span class="pc bpc" id="L74" title="1 of 2 branches missed.">			if (length &gt; 0) {</span>
+<span class="pc bpc" id="L75" title="1 of 2 branches missed.">				if (arguments[length - 1].isEmptyList()) {</span>
+<span class="nc" id="L76">					value = ((JTrologTerm) arguments[length - 1]).value;</span>
+<span class="nc bnc" id="L77" title="All 2 branches missed.">					for (int i = length - 2; i &gt;= 0; --i) {</span>
+<span class="nc" id="L78">						value = new Struct(&quot;.&quot;, new Term[] { ((JTrologTerm) arguments[i]).value, value });</span>
+					}
+				} else {
+<span class="fc" id="L81">					value = Term.emptyList;</span>
+<span class="fc bfc" id="L82" title="All 2 branches covered.">					for (int i = length - 1; i &gt;= 0; --i) {</span>
+<span class="fc" id="L83">						value = new Struct(&quot;.&quot;, new Term[] { ((JTrologTerm) arguments[i]).value, value });</span>
+					}
+				}
+			} else {
+<span class="nc" id="L87">				value = Term.emptyList;</span>
+			}
+<span class="fc" id="L89">		} else {</span>
+<span class="nc" id="L90">			value = Term.emptyList;</span>
+		}
+<span class="fc" id="L92">	}</span>
+
+	protected JTrologList(PrologProvider provider, PrologTerm head, PrologTerm tail) {
+<span class="nc" id="L95">		super(LIST_TYPE, provider);</span>
+<span class="nc" id="L96">		Term h = ((JTrologTerm) head).value;</span>
+<span class="nc" id="L97">		Term t = ((JTrologTerm) tail).value;</span>
+<span class="nc" id="L98">		value = new Struct(&quot;.&quot;, new Term[] { h, t });</span>
+<span class="nc" id="L99">	}</span>
+
+	protected JTrologList(PrologProvider provider, PrologTerm[] arguments, PrologTerm tail) {
+<span class="nc" id="L102">		super(LIST_TYPE, provider);</span>
+<span class="nc" id="L103">		value = ((JTrologTerm) tail).value;</span>
+<span class="nc bnc" id="L104" title="All 2 branches missed.">		for (int i = arguments.length - 1; i &gt;= 0; --i) {</span>
+<span class="nc" id="L105">			value = new Struct(&quot;.&quot;, new Term[] { ((JTrologTerm) arguments[i]).value, value });</span>
+		}
+<span class="nc" id="L107">	}</span>
+
+	public int size() {
+<span class="fc" id="L110">		int counter = 0;</span>
+<span class="fc" id="L111">		Iterator&lt;?&gt; i = iterator();</span>
+<span class="fc bfc" id="L112" title="All 2 branches covered.">		while (i.hasNext()) {</span>
+<span class="fc" id="L113">			counter++;</span>
+<span class="fc" id="L114">			i.next();</span>
+		}
+<span class="fc" id="L116">		return counter;</span>
+	}
+
+	public void clear() {
+<span class="fc" id="L120">		value = Term.emptyList;</span>
+<span class="fc" id="L121">	}</span>
+
+	public boolean isEmpty() {
+<span class="fc bfc" id="L124" title="All 2 branches covered.">		return value == Term.emptyList;</span>
+	}
+
+	public Iterator&lt;PrologTerm&gt; iterator() {
+<span class="fc" id="L128">		Struct list = (Struct) value;</span>
+<span class="fc" id="L129">		return new JTrologListIter(list);</span>
+	}
+
+	public PrologTerm getHead() {
+<span class="fc" id="L133">		Term head = ((Struct) value).getArg(0);</span>
+<span class="fc" id="L134">		return toTerm(head, PrologTerm.class);</span>
+	}
+
+	public PrologTerm getTail() {
+<span class="fc" id="L138">		Term tail = ((Struct) value).getArg(1);</span>
+<span class="fc" id="L139">		return toTerm(tail, PrologTerm.class);</span>
+	}
+
+	public int getArity() {
+<span class="fc" id="L143">		return ((Struct) value).arity;</span>
+	}
+
+	public String getFunctor() {
+<span class="fc" id="L147">		return ((Struct) value).name;</span>
+	}
+
+	public PrologTerm[] getArguments() {
+<span class="fc" id="L151">		PrologTerm[] a = new PrologTerm[size()];</span>
+<span class="fc" id="L152">		Iterator&lt;PrologTerm&gt; i = iterator();</span>
+<span class="fc bfc" id="L153" title="All 2 branches covered.">		for (int index = 0; i.hasNext(); index++) {</span>
+<span class="fc" id="L154">			a[index] = i.next();</span>
+		}
+<span class="fc" id="L156">		return a;</span>
+	}
+
+	private class JTrologListIter extends AbstractIterator&lt;PrologTerm&gt; implements Iterator&lt;PrologTerm&gt; {
+
+		private PrologTerm next;
+		private final Iterator&lt;?&gt; i;
+
+<span class="fc" id="L164">		private JTrologListIter(Struct list) {</span>
+<span class="fc" id="L165">			i = Struct.iterator(list);</span>
+<span class="pc bpc" id="L166" title="1 of 2 branches missed.">			if (i.hasNext()) {</span>
+<span class="fc" id="L167">				next = toTerm(i.next(), PrologTerm.class);</span>
+			}
+<span class="fc" id="L169">		}</span>
+
+		public boolean hasNext() {
+<span class="pc bpc" id="L172" title="1 of 4 branches missed.">			return next != null &amp;&amp; !next.isEmptyList();</span>
+		}
+
+		public PrologTerm next() {
+<span class="fc" id="L176">			PrologTerm lastReturned = next;</span>
+<span class="fc" id="L177">			next = toTerm(i.next(), PrologTerm.class);</span>
+<span class="fc" id="L178">			return lastReturned;</span>
+		}
+
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>DCGLibrary.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">prolobjectlink-jpi-jtrolog</a> &gt; <a href="index.source.html" class="el_package">jTrolog.lib</a> &gt; <span class="el_source">DCGLibrary.java</span></div><h1>DCGLibrary.java</h1><pre class="source lang-java linenums">/*
+ * #%L
+ * prolobjectlink-jpi-jtrolog
+ * %%
+ * Copyright (C) 2012 - 2018 WorkLogic Project
+ * %%
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation, either version 2.1 of the
+ * License, or (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Lesser Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Lesser Public
+ * License along with this program.  If not, see
+ * &lt;http://www.gnu.org/licenses/lgpl-2.1.html&gt;.
+ * #L%
+ */
+/*
+ * tuProlog - Copyright (C) 2001-2002  aliCE team at deis.unibo.it
+ *
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation; either
+ * version 2.1 of the License, or (at your option) any later version.
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ */
+package jTrolog.lib;
+
+/**
+ * Library for managing DCGs. Library/Theory dependency: BasicLibrary
+ */
+@SuppressWarnings(&quot;serial&quot;)
+public class DCGLibrary extends Library {
+
+<span class="nc" id="L47">	public DCGLibrary() {</span>
+<span class="nc" id="L48">	}</span>
+
+	public String getTheory() {
+<span class="nc" id="L51">		return &quot;:- op(1200, xfx, '--&gt;').  &quot; + &quot;:- op(200, xfx, '\\').  &quot; +</span>
+
+		&quot;phrase(Category,String,Left, SyntaxTree) :- dcg_parse(Category,String\\Left, SyntaxTree). &quot; + &quot;phrase(Category,[H|T], SyntaxTree) :- dcg_parse(Category,[H|T]\\[], SyntaxTree). &quot; +
+
+		&quot;dcg_parse(A,Tokens,  A &lt; SubTree) :- &quot; + &quot;not list(A), &quot; + &quot;(A --&gt; B), &quot; + &quot;dcg_parse(B,Tokens, SubTree). &quot; + &quot;dcg_parse((A,B),(Tokens \\ Xs), [SubTreeA|SubTreeB]) :- &quot;
+				+ &quot;dcg_parse(A,(Tokens \\ Tokens1), SubTreeA), &quot; + &quot;dcg_parse(B,(Tokens1 \\ Xs), SubTreeB). &quot; + &quot;dcg_parse(A, Tokens, A) :- &quot; + &quot;list(A), &quot; + &quot;dcg_connect(A,Tokens). &quot;
+				+ &quot;dcg_parse({A},(Xs \\ Xs), []) :- A. &quot; +
+
+				&quot;dcg_connect([],(Xs \\ Xs)). &quot; + &quot;dcg_connect([W|Ws],([W|Xs] \\ Ys)) :- dcg_connect(Ws,(Xs \\ Ys)). &quot;;
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

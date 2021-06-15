@@ -1,6 +1,6 @@
 /*-
  * #%L
- * prolobjectlink-jpi-tuprolog
+ * prolobjectlink-jpi-jtrolog
  * %%
  * Copyright (C) 2020 - 2021 Prolobjectlink Project
  * %%

@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>JTrologDouble.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">prolobjectlink-jpi-jtrolog</a> &gt; <a href="index.source.html" class="el_package">io.github.prolobjectlink.prolog.jtrolog</a> &gt; <span class="el_source">JTrologDouble.java</span></div><h1>JTrologDouble.java</h1><pre class="source lang-java linenums">/*
+ * #%L
+ * prolobjectlink-jpi-jtrolog
+ * %%
+ * Copyright (C) 2019 Prolobjectlink Project
+ * %%
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation, either version 2.1 of the
+ * License, or (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Lesser Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Lesser Public
+ * License along with this program.  If not, see
+ * &lt;http://www.gnu.org/licenses/lgpl-2.1.html&gt;.
+ * #L%
+ */
+package io.github.prolobjectlink.prolog.jtrolog;
+
+import static io.github.prolobjectlink.prolog.PrologTermType.DOUBLE_TYPE;
+
+import io.github.prolobjectlink.prolog.ArityError;
+import io.github.prolobjectlink.prolog.FunctorError;
+import io.github.prolobjectlink.prolog.PrologDouble;
+import io.github.prolobjectlink.prolog.PrologFloat;
+import io.github.prolobjectlink.prolog.PrologInteger;
+import io.github.prolobjectlink.prolog.PrologLong;
+import io.github.prolobjectlink.prolog.PrologProvider;
+import io.github.prolobjectlink.prolog.PrologTerm;
+import jTrolog.terms.Double;
+
+/**
+ * 
+ * @author Jose Zalacain
+ * @since 1.0
+ */
+final class JTrologDouble extends JTrologTerm implements PrologDouble {
+
+	JTrologDouble(PrologProvider provider, Number value) {
+<span class="fc" id="L44">		super(DOUBLE_TYPE, provider, new Double(value.doubleValue()));</span>
+<span class="fc" id="L45">	}</span>
+
+	public PrologInteger getPrologInteger() {
+<span class="fc" id="L48">		return new JTrologInteger(provider, getIntegerValue());</span>
+	}
+
+	public PrologFloat getPrologFloat() {
+<span class="fc" id="L52">		return new JTrologFloat(provider, getFloatValue());</span>
+	}
+
+	public PrologDouble getPrologDouble() {
+<span class="fc" id="L56">		return new JTrologDouble(provider, getDoubleValue());</span>
+	}
+
+	public PrologLong getPrologLong() {
+<span class="fc" id="L60">		return new JTrologLong(provider, getLongValue());</span>
+	}
+
+	public long getLongValue() {
+<span class="fc" id="L64">		return ((Double) value).longValue();</span>
+	}
+
+	public double getDoubleValue() {
+<span class="fc" id="L68">		return ((Double) value).doubleValue();</span>
+	}
+
+	public int getIntegerValue() {
+<span class="fc" id="L72">		return ((Double) value).intValue();</span>
+	}
+
+	public float getFloatValue() {
+<span class="fc" id="L76">		return ((Double) value).floatValue();</span>
+	}
+
+	public PrologTerm[] getArguments() {
+<span class="fc" id="L80">		return new JTrologDouble[0];</span>
+	}
+
+	public int getArity() {
+<span class="fc" id="L84">		throw new ArityError(this);</span>
+	}
+
+	public String getFunctor() {
+<span class="fc" id="L88">		throw new FunctorError(this);</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

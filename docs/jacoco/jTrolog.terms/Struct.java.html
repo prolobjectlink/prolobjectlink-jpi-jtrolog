@@ -1,0 +1,266 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>Struct.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">prolobjectlink-jpi-jtrolog</a> &gt; <a href="index.source.html" class="el_package">jTrolog.terms</a> &gt; <span class="el_source">Struct.java</span></div><h1>Struct.java</h1><pre class="source lang-java linenums">/*
+ * #%L
+ * prolobjectlink-jpi-jtrolog
+ * %%
+ * Copyright (C) 2012 - 2018 WorkLogic Project
+ * %%
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation, either version 2.1 of the
+ * License, or (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Lesser Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Lesser Public
+ * License along with this program.  If not, see
+ * &lt;http://www.gnu.org/licenses/lgpl-2.1.html&gt;.
+ * #L%
+ */
+package jTrolog.terms;
+
+import jTrolog.parser.Parser;
+import jTrolog.terms.EvaluableTerm;
+import jTrolog.engine.Prolog;
+
+import java.util.*;
+
+/**
+ * Struct class represents both compound prolog term and atom term (considered
+ * as 0-arity compound).
+ */
+@SuppressWarnings({ &quot;rawtypes&quot;, &quot;unchecked&quot;,&quot;serial&quot;,&quot;unused&quot; })
+public class Struct extends EvaluableTerm {
+
+	public final String name;
+	public final String predicateIndicator;
+	/** speedup hash map operation */
+	public final int arity;
+<span class="fc" id="L41">	public int operatorType = -1; // see Prolog.FX, Prolog.XFX etc.</span>
+
+	private Term[] args;
+	private Var[] varList;
+
+	public Var[] getVarList() {
+<span class="fc" id="L47">		return varList;</span>
+	}
+
+<span class="fc" id="L50">	Struct(String n, int arity, String predIndic) {</span>
+<span class="fc" id="L51">		type = Term.STRUCT;</span>
+<span class="fc" id="L52">		name = n;</span>
+<span class="fc" id="L53">		this.arity = arity;</span>
+<span class="fc" id="L54">		predicateIndicator = predIndic;</span>
+<span class="fc" id="L55">	}</span>
+
+	/**
+	 * Struct representing an operator
+	 */
+	public Struct(String f, Term[] argList, int opType) {
+<span class="fc" id="L61">		this(f, argList);</span>
+<span class="fc" id="L62">		operatorType = opType;</span>
+<span class="fc" id="L63">	}</span>
+
+	/**
+	 * Compound struct with an array of arguments
+	 */
+	public Struct(String f, Term[] argList) {
+<span class="fc" id="L69">		this((Parser.removeApices(f)).intern(), argList.length, (Parser.wrapAtom(f) + &quot;/&quot; + argList.length).intern());</span>
+<span class="fc" id="L70">		args = argList;</span>
+<span class="fc" id="L71">		varList = (Var[]) getChildrenVarList(args).toArray(new Var[0]);</span>
+		// prepArrays();
+<span class="fc" id="L73">	}</span>
+
+	/**
+	 * Gets the i-th element of this structure
+	 * 
+	 * No bound check is done
+	 */
+	public Term getArg(int index) {
+<span class="fc" id="L81">		return args[index];</span>
+	}
+
+	public int getOperatorType() {
+<span class="fc" id="L85">		return operatorType;</span>
+	}
+
+	private static List getChildrenVarList(Term[] args) {
+<span class="fc" id="L89">		List findings = new ArrayList();</span>
+<span class="fc bfc" id="L90" title="All 2 branches covered.">		for (int i = 0; i &lt; args.length; i++) {</span>
+<span class="fc" id="L91">			Term arg = args[i];</span>
+<span class="fc bfc" id="L92" title="All 2 branches covered.">			if (arg instanceof Var)</span>
+<span class="fc" id="L93">				findings.add(arg);</span>
+<span class="fc bfc" id="L94" title="All 2 branches covered.">			else if (arg instanceof Struct) {</span>
+<span class="fc" id="L95">				Var[] childsVars = ((Struct) arg).varList;</span>
+<span class="pc bpc" id="L96" title="1 of 4 branches missed.">				if (childsVars != null &amp;&amp; childsVars.length &gt; 0)</span>
+<span class="fc" id="L97">					findings.addAll(Arrays.asList(childsVars));</span>
+			}
+		}
+<span class="fc" id="L100">		return findings;</span>
+	}
+
+	/**
+	 * Gets the string representation of this structure
+	 * 
+	 * Specific representations are provided for lists and atoms. Names starting
+	 * with upper case letter are enclosed in apices.
+	 */
+	public String toString() {
+<span class="fc bfc" id="L110" title="All 2 branches covered.">		return predicateIndicator == Parser.listSignature ? toStringList(false) : toStringImpl(false);</span>
+	}
+
+	public String toStringList(boolean small) {
+<span class="fc" id="L114">		StringBuffer res = new StringBuffer(&quot;[&quot;);</span>
+<span class="fc" id="L115">		boolean firstPass = true;</span>
+<span class="fc" id="L116">		int stopPrinting = Integer.MAX_VALUE;</span>
+<span class="pc bpc" id="L117" title="1 of 2 branches missed.">		for (Iterator it = iterator(this); it.hasNext();) {</span>
+<span class="pc bpc" id="L118" title="1 of 2 branches missed.">			if (small) {</span>
+<span class="nc bnc" id="L119" title="All 2 branches missed.">				if (stopPrinting-- == 0) {</span>
+<span class="nc" id="L120">					Term last = (Term) it.next();</span>
+<span class="nc bnc" id="L121" title="All 2 branches missed.">					for (; it.hasNext(); last = (Term) it.next())</span>
+						;
+<span class="nc bnc" id="L123" title="All 2 branches missed.">					if (last.equals(emptyList))</span>
+<span class="nc" id="L124">						return res.append(&quot; ... &quot;).append(&quot;]&quot;).toString();</span>
+<span class="nc" id="L125">					return res.append(&quot; ... &quot;).append(&quot;|&quot;).append(last.toStringSmall()).append(&quot;]&quot;).toString();</span>
+				}
+			}
+<span class="fc" id="L128">			Term child = (Term) it.next();</span>
+<span class="fc bfc" id="L129" title="All 2 branches covered.">			if (!it.hasNext()) { // last child</span>
+<span class="pc bpc" id="L130" title="1 of 2 branches missed.">				if (child.equals(emptyList))</span>
+<span class="fc" id="L131">					return res.append(']').toString();</span>
+<span class="nc bnc" id="L132" title="All 2 branches missed.">				return res.append('|').append(small ? child.toStringSmall() : child.toString()).append(']').toString();</span>
+			}
+<span class="fc bfc" id="L134" title="All 2 branches covered.">			if (firstPass)</span>
+<span class="fc" id="L135">				firstPass = false;</span>
+			else
+<span class="fc" id="L137">				res.append(&quot;, &quot;);</span>
+<span class="pc bpc" id="L138" title="1 of 2 branches missed.">			res.append(small ? child.toStringSmall() : child.toString());</span>
+<span class="fc" id="L139">		}</span>
+<span class="nc" id="L140">		throw new RuntimeException(&quot;bug&quot;);</span>
+	}
+
+	public String toStringSmall() {
+<span class="pc bpc" id="L144" title="1 of 2 branches missed.">		return predicateIndicator == Parser.listSignature ? toStringList(true) : toStringImpl(true);</span>
+	}
+
+	private String toStringImpl(boolean small) {
+
+<span class="fc bfc" id="L149" title="All 2 branches covered.">		if (predicateIndicator == Parser.commaSignature) {</span>
+<span class="pc bpc" id="L150" title="1 of 2 branches missed.">			String a = small ? getArg(0).toStringSmall() : getArg(0).toString();</span>
+<span class="pc bpc" id="L151" title="1 of 2 branches missed.">			String b = small ? getArg(1).toStringSmall() : getArg(1).toString();</span>
+<span class="fc" id="L152">			return a + name + &quot; &quot; + b;</span>
+		}
+
+<span class="fc" id="L155">		int opType = getOperatorType();</span>
+<span class="pc bpc" id="L156" title="2 of 6 branches missed.">		if (opType == Prolog.XFX || opType == Prolog.YFX || opType == Prolog.XFY) {</span>
+<span class="pc bpc" id="L157" title="1 of 2 branches missed.">			String a = small ? getArg(0).toStringSmall() : getArg(0).toString();</span>
+<span class="pc bpc" id="L158" title="1 of 2 branches missed.">			String b = small ? getArg(1).toStringSmall() : getArg(1).toString();</span>
+<span class="fc" id="L159">			return a + &quot; &quot; + name + &quot; &quot; + b;</span>
+		}
+<span class="pc bpc" id="L161" title="2 of 4 branches missed.">		if (opType == Prolog.XF || opType == Prolog.YF) {</span>
+<span class="nc bnc" id="L162" title="All 2 branches missed.">			String a = small ? getArg(0).toStringSmall() : getArg(0).toString();</span>
+<span class="nc" id="L163">			return a + &quot; &quot; + name;</span>
+		}
+<span class="pc bpc" id="L165" title="2 of 4 branches missed.">		if (opType == Prolog.FX || opType == Prolog.FY) {</span>
+<span class="nc bnc" id="L166" title="All 2 branches missed.">			String a = small ? getArg(0).toStringSmall() : getArg(0).toString();</span>
+<span class="nc" id="L167">			return name + &quot; &quot; + a;</span>
+		}
+
+<span class="pc bpc" id="L170" title="1 of 2 branches missed.">		if (name.equals(&quot;{}&quot;)) {</span>
+<span class="nc bnc" id="L171" title="All 2 branches missed.">			if (arity == 0)</span>
+<span class="nc" id="L172">				return name;</span>
+<span class="nc bnc" id="L173" title="All 2 branches missed.">			if (arity == 1)</span>
+<span class="nc bnc" id="L174" title="All 2 branches missed.">				return &quot;{&quot; + (small ? getArg(0).toStringSmall() : getArg(0).toString()) + &quot;}&quot;;</span>
+		}
+<span class="fc" id="L176">		StringBuffer res = new StringBuffer(Parser.wrapAtom(name));</span>
+<span class="fc" id="L177">		res.append(&quot;(&quot;);</span>
+<span class="fc bfc" id="L178" title="All 2 branches covered.">		for (int i = 0; i &lt; arity; i++) {</span>
+<span class="fc" id="L179">			Term arg = getArg(i);</span>
+<span class="fc bfc" id="L180" title="All 4 branches covered.">			if (arg instanceof Struct &amp;&amp; ((Struct) arg).predicateIndicator == Parser.commaSignature)</span>
+<span class="pc bpc" id="L181" title="1 of 2 branches missed.">				res.append(&quot;(&quot;).append(small ? arg.toStringSmall() : arg.toString()).append(&quot;)&quot;);</span>
+			else
+<span class="fc bfc" id="L183" title="All 2 branches covered.">				res.append(small ? arg.toStringSmall() : arg.toString());</span>
+<span class="fc bfc" id="L184" title="All 2 branches covered.">			if (i &lt; arity - 1)</span>
+<span class="fc" id="L185">				res.append(&quot;, &quot;);</span>
+		}
+<span class="fc" id="L187">		res.append(&quot;)&quot;);</span>
+<span class="fc" id="L188">		return res.toString();</span>
+	}
+
+	public boolean equals(Object t) {
+<span class="pc bpc" id="L192" title="1 of 2 branches missed.">		if (!(t instanceof Struct))</span>
+<span class="nc" id="L193">			return false;</span>
+<span class="fc" id="L194">		Struct other = (Struct) t;</span>
+<span class="fc bfc" id="L195" title="All 2 branches covered.">		if (!predicateIndicator.equals(other.predicateIndicator))</span>
+<span class="fc" id="L196">			return false;</span>
+		// return true;
+<span class="fc" id="L198">		Struct s1 = (Struct) t;</span>
+<span class="pc bpc" id="L199" title="1 of 2 branches missed.">		if (arity != s1.arity)</span>
+<span class="nc" id="L200">			return false;</span>
+<span class="fc bfc" id="L201" title="All 2 branches covered.">		for (int i = 0; i &lt; s1.arity; i++) {</span>
+<span class="fc bfc" id="L202" title="All 2 branches covered.">			if (!getArg(i).equals(s1.getArg(i)))</span>
+<span class="fc" id="L203">				return false;</span>
+		}
+<span class="fc" id="L205">		return true;</span>
+	}
+
+	public static Iterator iterator(Struct structList) {
+<span class="pc bpc" id="L209" title="1 of 2 branches missed.">		final Struct origin = (Struct) (structList instanceof Wrapper ? ((Wrapper) structList).getBasis() : structList);</span>
+<span class="fc" id="L210">		Iterator it = new ListIterator(origin);</span>
+<span class="pc bpc" id="L211" title="1 of 2 branches missed.">		if (structList instanceof Wrapper)</span>
+<span class="nc" id="L212">			return new Wrapper.WrappedIterator(it, ((Wrapper) structList).getContext());</span>
+<span class="fc" id="L213">		return it;</span>
+	}
+
+	private void prepArrays() {
+
+		// give me my sizzzzze!
+<span class="nc" id="L219">		int size = 1; // count me in</span>
+<span class="nc bnc" id="L220" title="All 2 branches missed.">		for (int i = 0; i &lt; arity; i++) {</span>
+<span class="nc" id="L221">			Term arg = args[i];</span>
+<span class="nc bnc" id="L222" title="All 4 branches missed.">			if (arg instanceof Struct &amp;&amp; ((Struct) arg).arity &gt; 0)</span>
+<span class="nc" id="L223">				size += ((Struct) arg).prePost.length;</span>
+			else
+<span class="nc" id="L225">				size++;</span>
+		}
+<span class="nc" id="L227">		prePost = new int[size];</span>
+<span class="nc" id="L228">		tree = new Term[size];</span>
+
+<span class="nc" id="L230">		int pos = 0;</span>
+
+<span class="nc" id="L232">		prePost[pos] = size - 1;</span>
+<span class="nc" id="L233">		tree[pos] = this;</span>
+<span class="nc" id="L234">		upDateChild(pos++);</span>
+
+<span class="nc" id="L236">		int position = 0;</span>
+<span class="nc bnc" id="L237" title="All 2 branches missed.">		for (int i = 0; i &lt; arity; i++) {</span>
+<span class="nc" id="L238">			Term child = getArg(i);</span>
+<span class="nc bnc" id="L239" title="All 4 branches missed.">			if (child instanceof Struct &amp;&amp; ((Struct) child).arity &gt; 0) {</span>
+<span class="nc" id="L240">				Struct cs1 = (Struct) child;</span>
+<span class="nc" id="L241">				Term[] valuesArr = cs1.tree;</span>
+<span class="nc" id="L242">				int[] prePostArr = cs1.prePost;</span>
+<span class="nc" id="L243">				int childSize = valuesArr.length;</span>
+
+<span class="nc bnc" id="L245" title="All 2 branches missed.">				for (int j = 0; j &lt; childSize; j++) {</span>
+<span class="nc" id="L246">					this.prePost[pos] = prePostArr[j] + position;</span>
+<span class="nc" id="L247">					this.tree[pos] = valuesArr[j];</span>
+<span class="nc" id="L248">					upDateChild(pos++);</span>
+				}
+<span class="nc" id="L250">				position += childSize;</span>
+<span class="nc" id="L251">			} else { // atoms and numbers and vars</span>
+<span class="nc" id="L252">				prePost[pos] = position++;</span>
+<span class="nc" id="L253">				tree[pos] = child;</span>
+<span class="nc" id="L254">				upDateChild(pos++);</span>
+			}
+		}
+<span class="nc" id="L257">	}</span>
+
+	private void upDateChild(int i) {
+<span class="nc" id="L260">		Term child = tree[i];</span>
+<span class="nc" id="L261">		child.tree = tree;</span>
+<span class="nc" id="L262">		child.prePost = prePost;</span>
+<span class="nc" id="L263">		child.pos = i;</span>
+<span class="nc" id="L264">	}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

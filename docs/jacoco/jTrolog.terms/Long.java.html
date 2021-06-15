@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>Long.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">prolobjectlink-jpi-jtrolog</a> &gt; <a href="index.source.html" class="el_package">jTrolog.terms</a> &gt; <span class="el_source">Long.java</span></div><h1>Long.java</h1><pre class="source lang-java linenums">/*
+ * #%L
+ * prolobjectlink-jpi-jtrolog
+ * %%
+ * Copyright (C) 2012 - 2018 WorkLogic Project
+ * %%
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation, either version 2.1 of the
+ * License, or (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Lesser Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Lesser Public
+ * License along with this program.  If not, see
+ * &lt;http://www.gnu.org/licenses/lgpl-2.1.html&gt;.
+ * #L%
+ */
+package jTrolog.terms;
+
+/**
+ * Long class represents the long prolog data type
+ */
+@SuppressWarnings({ &quot;serial&quot; })
+public class Long extends Int {
+
+	private long value;
+
+<span class="fc" id="L32">	public Long(long v) {</span>
+<span class="fc" id="L33">		value = v;</span>
+<span class="fc" id="L34">	}</span>
+
+<span class="nc" id="L36">	public Long(String val) {</span>
+<span class="nc" id="L37">		value = java.lang.Long.parseLong(val);</span>
+<span class="nc" id="L38">	}</span>
+
+	/**
+	 * Returns the value of the Integer as int
+	 */
+	final public int intValue() {
+<span class="pc bpc" id="L44" title="1 of 2 branches missed.">		if (value &gt; Integer.MAX_VALUE)</span>
+<span class="nc" id="L45">			throw new RuntimeException(&quot;value not intable&quot;);</span>
+<span class="fc" id="L46">		return (int) value;</span>
+	}
+
+	/**
+	 * Returns the value of the Integer as float
+	 */
+	final public float floatValue() {
+<span class="fc" id="L53">		return (float) value;</span>
+	}
+
+	/**
+	 * Returns the value of the Integer as double
+	 */
+	final public double doubleValue() {
+<span class="fc" id="L60">		return (double) value;</span>
+	}
+
+	/**
+	 * Returns the value of the Integer as long
+	 */
+	final public long longValue() {
+<span class="fc" id="L67">		return value;</span>
+	}
+
+	public String toString() {
+<span class="fc" id="L71">		return java.lang.Long.toString(value);</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

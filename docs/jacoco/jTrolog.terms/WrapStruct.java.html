@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>WrapStruct.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">prolobjectlink-jpi-jtrolog</a> &gt; <a href="index.source.html" class="el_package">jTrolog.terms</a> &gt; <span class="el_source">WrapStruct.java</span></div><h1>WrapStruct.java</h1><pre class="source lang-java linenums">/*
+ * #%L
+ * prolobjectlink-jpi-jtrolog
+ * %%
+ * Copyright (C) 2012 - 2018 WorkLogic Project
+ * %%
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation, either version 2.1 of the
+ * License, or (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Lesser Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Lesser Public
+ * License along with this program.  If not, see
+ * &lt;http://www.gnu.org/licenses/lgpl-2.1.html&gt;.
+ * #L%
+ */
+package jTrolog.terms;
+
+import jTrolog.terms.Struct;
+import jTrolog.terms.Term;
+import jTrolog.terms.Wrapper;
+import jTrolog.engine.BindingsTable;
+
+
+/**
+ * @author ivar.orstavik@hist.no
+ */
+@SuppressWarnings({ &quot;serial&quot; })
+public class WrapStruct extends Struct implements Wrapper {
+
+	public final int context;
+	private Struct basis;
+
+	public WrapStruct(Struct struct, int renameVarID) {
+<span class="fc" id="L40">		super(struct.name, struct.arity, struct.predicateIndicator);</span>
+<span class="fc" id="L41">		basis = struct;</span>
+<span class="fc" id="L42">		context = renameVarID;</span>
+<span class="fc" id="L43">	}</span>
+
+	public int getOperatorType() {
+<span class="fc" id="L46">		return basis.getOperatorType();</span>
+	}
+
+	public Term getArg(int i) {
+<span class="fc" id="L50">		return BindingsTable.wrapWithID(basis.getArg(i), context);</span>
+	}
+
+	public Var[] getVarList() {
+<span class="nc" id="L54">		return basis.getVarList();</span>
+	}
+
+	public int getContext() {
+<span class="nc" id="L58">		return context;</span>
+	}
+
+	public Term getBasis() {
+<span class="nc" id="L62">		return basis;</span>
+	}
+
+	// public boolean equals(Object t) {
+	// return (t instanceof WrapStruct &amp;&amp; ((WrapStruct) t).getContext() ==
+	// context &amp;&amp; ((WrapStruct) t).getBasis().equals(basis));
+	// }
+
+	public String toString() {
+<span class="nc" id="L71">		return basis.toString();</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

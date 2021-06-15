@@ -1,0 +1,460 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>BuiltIn.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">prolobjectlink-jpi-jtrolog</a> &gt; <a href="index.source.html" class="el_package">jTrolog.lib</a> &gt; <span class="el_source">BuiltIn.java</span></div><h1>BuiltIn.java</h1><pre class="source lang-java linenums">/*
+ * #%L
+ * prolobjectlink-jpi-jtrolog
+ * %%
+ * Copyright (C) 2012 - 2018 WorkLogic Project
+ * %%
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation, either version 2.1 of the
+ * License, or (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Lesser Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Lesser Public
+ * License along with this program.  If not, see
+ * &lt;http://www.gnu.org/licenses/lgpl-2.1.html&gt;.
+ * #L%
+ */
+/*
+ * tuProlog - Copyright (C) 2001-2007 aliCE team at deis.unibo.it
+ *
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation; either
+ * version 2.1 of the License, or (at your option) any later version.
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ */
+package jTrolog.lib;
+
+import jTrolog.engine.BindingsTable;
+import jTrolog.engine.Prolog;
+import jTrolog.errors.InvalidLibraryException;
+import jTrolog.errors.PrologException;
+import jTrolog.parser.Parser;
+import jTrolog.terms.Clause;
+import jTrolog.terms.Flag;
+import jTrolog.terms.Int;
+import jTrolog.terms.Number;
+import jTrolog.terms.Struct;
+import jTrolog.terms.StructAtom;
+import jTrolog.terms.Term;
+import jTrolog.terms.Var;
+import jTrolog.terms.WrapStruct;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
+
+/**
+ * Library of built-in predicates
+ * 
+ * @author Alex Benini
+ * @author janerist@stud.ntnu.no
+ * @author ivar.orstavik@hist.no
+ */
+@SuppressWarnings({ &quot;rawtypes&quot;, &quot;unchecked&quot;,&quot;serial&quot; })
+public class BuiltIn extends Library {
+
+	private Prolog engine;
+
+<span class="fc" id="L76">	public BuiltIn(Prolog mediator) {</span>
+<span class="fc" id="L77">		engine = mediator;</span>
+<span class="fc" id="L78">	}</span>
+
+	/**
+	 * Defines a map for synonyms for primitives. String primitive name =
+	 * String[]{synonym name, another synonym name, ..}.
+	 */
+	public String[] getSynonym(String primitive) {
+<span class="fc bfc" id="L85" title="All 2 branches covered.">		if (primitive.equals(&quot;cut&quot;))</span>
+<span class="fc" id="L86">			return new String[] { &quot;!&quot; };</span>
+<span class="fc bfc" id="L87" title="All 2 branches covered.">		if (primitive.equals(&quot;unify&quot;))</span>
+<span class="fc" id="L88">			return new String[] { &quot;=&quot; };</span>
+<span class="fc bfc" id="L89" title="All 2 branches covered.">		if (primitive.equals(&quot;deunify&quot;))</span>
+<span class="fc" id="L90">			return new String[] { &quot;\\=&quot; };</span>
+<span class="fc bfc" id="L91" title="All 2 branches covered.">		if (primitive.equals(&quot;comma&quot;))</span>
+<span class="fc" id="L92">			return new String[] { &quot;,&quot; };</span>
+<span class="fc bfc" id="L93" title="All 2 branches covered.">		if (primitive.equals(&quot;solve&quot;))</span>
+<span class="fc" id="L94">			return new String[] { &quot;initialization&quot; };</span>
+<span class="fc bfc" id="L95" title="All 2 branches covered.">		if (primitive.equals(&quot;assertz&quot;))</span>
+<span class="fc" id="L96">			return new String[] { &quot;assert&quot; };</span>
+<span class="fc bfc" id="L97" title="All 2 branches covered.">		if (primitive.equals(&quot;copy&quot;))</span>
+<span class="fc" id="L98">			return new String[] { &quot;copy_term&quot; };</span>
+<span class="fc" id="L99">		return null;</span>
+	}
+
+	/**
+	 * Primitives
+	 */
+	public boolean comma_2(BindingsTable bt, Term arg0, Term arg1) {
+<span class="nc" id="L106">		throw new RuntimeException(&quot;','/2 method is hardcoded in the Engine, do not use Buitlin.comma_2!&quot;);</span>
+	}
+
+	public static boolean cut_0(BindingsTable bt) {
+<span class="nc" id="L110">		throw new RuntimeException(&quot;!/0 method is hardcoded in engine, do not use Buitlin.cut_0!&quot;);</span>
+	}
+
+	public static boolean fail_0(BindingsTable bt) {
+<span class="fc" id="L114">		return false;</span>
+	}
+
+	public static boolean true_0(BindingsTable bt) {
+<span class="fc" id="L118">		return true;</span>
+	}
+
+	public static boolean call_1(BindingsTable bt, Term arg1) {
+<span class="nc" id="L122">		throw new RuntimeException(&quot;call/1 method is hardcoded in engine, do not use Buitlin.call_1!&quot;);</span>
+	}
+
+	public static boolean halt_0(BindingsTable bt) throws PrologException {
+<span class="nc" id="L126">		throw new PrologException(&quot;halt()&quot;);</span>
+	}
+
+	public boolean halt_1(BindingsTable bt, jTrolog.terms.Number arg0) throws PrologException {
+<span class="nc" id="L130">		throw new PrologException(&quot;halt(&quot; + arg0.intValue() + &quot;)&quot;);</span>
+	}
+
+	public boolean $debug_1(BindingsTable bt, Term arg0) {
+<span class="nc" id="L134">		System.out.println(&quot;debug=== &quot; + bt.variant(arg0));</span>
+<span class="nc" id="L135">		return true;</span>
+	}
+
+	public boolean $debug_3(BindingsTable bt, Term arg0, Term arg2, Term arg3) {
+<span class="nc" id="L139">		System.out.println(&quot;debug0=== &quot; + bt.variant(arg0));</span>
+<span class="nc" id="L140">		System.out.println(&quot;debug1=== &quot; + bt.variant(arg2));</span>
+<span class="nc" id="L141">		System.out.println(&quot;debug2=== &quot; + bt.variant(arg3));</span>
+<span class="nc" id="L142">		return true;</span>
+	}
+
+	public boolean asserta_1(BindingsTable bt, Term arg0) throws PrologException {
+<span class="nc" id="L146">		arg0 = bt.variant(arg0);</span>
+<span class="nc" id="L147">		engine.assertA(convertTermToClause(arg0));</span>
+<span class="nc" id="L148">		return true;</span>
+	}
+
+	public boolean assertz_1(BindingsTable bt, Term arg0) throws PrologException {
+<span class="nc" id="L152">		arg0 = bt.variant(arg0);</span>
+<span class="nc" id="L153">		engine.assertZ(convertTermToClause(arg0));</span>
+<span class="nc" id="L154">		return true;</span>
+	}
+
+	public boolean $retract_1(BindingsTable bt, Struct arg0) throws PrologException {
+<span class="nc" id="L158">		arg0 = (Struct) bt.variant(arg0);</span>
+<span class="nc" id="L159">		arg0 = convertTermToClause(arg0).original;</span>
+<span class="nc" id="L160">		Struct sarg0 = (Struct) bt.wrapWithID(arg0);</span>
+<span class="nc" id="L161">		Struct retractedClause = engine.retract(sarg0);</span>
+		// if clause to retract found -&gt; retract + true
+<span class="nc bnc" id="L163" title="All 2 branches missed.">		if (retractedClause != null) {</span>
+<span class="nc" id="L164">			bt.unify(retractedClause, arg0);</span>
+<span class="nc" id="L165">			return true;</span>
+		}
+<span class="nc" id="L167">		return false;</span>
+	}
+
+	/**
+	 * see 8.9.4 p.81 in ISO standard
+	 * 
+	 * @param predicateIndicator
+	 * @return true
+	 * @throws PrologException
+	 *             in case of errors
+	 */
+	public boolean abolish_1(BindingsTable bt, Struct predicateIndicator) throws PrologException {
+<span class="nc" id="L179">		engine.abolish(isPredicateIndicator(predicateIndicator, bt));</span>
+<span class="nc" id="L180">		return true;</span>
+	}
+
+	/**
+	 * Registers the existence predicate indicator in the dynamic data base. If
+	 * such a predicate is later requested, but none exists, the search will not
+	 * throw an error, but return false. see ISO spec on abolish for details on
+	 * errors.
+	 * 
+	 * @param predicateIndicator
+	 * @return true
+	 * @throws PrologException
+	 *             in case of bad input
+	 */
+	public boolean dynamic_1(BindingsTable bt, Struct predicateIndicator) throws PrologException {
+<span class="nc" id="L195">		engine.setDynamicPredicateIndicator(isPredicateIndicator(predicateIndicator, bt));</span>
+<span class="nc" id="L196">		return true;</span>
+	}
+
+	/*
+	 * loads a engine library, given its java class name
+	 */
+	public boolean load_library_1(BindingsTable bt, Struct arg0) throws InvalidLibraryException {
+<span class="nc bnc" id="L203" title="All 2 branches missed.">		if (!BasicLibrary.atom_1(bt, arg0))</span>
+<span class="nc" id="L204">			return false;</span>
+<span class="nc" id="L205">		engine.loadLibrary(arg0.name);</span>
+<span class="nc" id="L206">		return true;</span>
+	}
+
+	/**
+	 * unloads a engine library, given its java class name
+	 */
+	public boolean unload_library_1(BindingsTable bt, Struct arg0) throws InvalidLibraryException {
+<span class="nc bnc" id="L213" title="All 2 branches missed.">		if (!BasicLibrary.atom_1(bt, arg0))</span>
+<span class="nc" id="L214">			return false;</span>
+<span class="nc" id="L215">		engine.unloadLibrary(arg0.name);</span>
+<span class="nc" id="L216">		return true;</span>
+	}
+
+	/*
+	 * get flag list: flag_list(-List)
+	 */
+	public boolean flag_list_1(BindingsTable bt, Term arg0) {
+<span class="nc" id="L223">		return bt.unify(arg0, bt.wrapWithID(engine.getPrologFlagList()));</span>
+	}
+
+	public boolean unify_2(BindingsTable bt, Term arg0, Term arg1) {
+<span class="nc" id="L227">		return bt.unify(arg0, arg1);</span>
+	}
+
+	// \=
+	public boolean deunify_2(BindingsTable bt, Term arg0, Term arg1) {
+<span class="nc bnc" id="L232" title="All 2 branches missed.">		return !bt.unify(arg0, arg1);</span>
+	}
+
+	// unifies a new Struct list of the given length with Any vars as elements
+	// with the Var out
+	public boolean newlist_2(BindingsTable bt, Int length, Var out) throws PrologException {
+<span class="nc" id="L238">		int lengthInt = length.intValue();</span>
+<span class="nc bnc" id="L239" title="All 2 branches missed.">		if (lengthInt &lt; 0)</span>
+<span class="nc" id="L240">			throw new PrologException(&quot;domain_error(not_less_than_zero, &quot; + length + &quot;)&quot;);</span>
+<span class="nc bnc" id="L241" title="All 2 branches missed.">		if (lengthInt == 0)</span>
+<span class="nc" id="L242">			return bt.unify(out, Term.emptyList);</span>
+<span class="nc" id="L243">		return bt.unify(out, (WrapStruct) bt.wrapWithID(Parser.createListContainingAnyVars(lengthInt)));</span>
+	}
+
+	// $copy
+	public boolean copy_2(BindingsTable bt, Term arg0, Term arg1) {
+<span class="nc" id="L248">		return bt.unify(bt.wrapWithID(bt.variant(arg0)), arg1);</span>
+	}
+
+	// $find
+	// look for clauses whose head unifies whith arg0 and unify the list of them
+	// with arg1
+	public boolean $find_2(BindingsTable bt, Struct arg0, Term arg1) throws PrologException, CloneNotSupportedException {
+<span class="nc" id="L255">		String key = arg0.predicateIndicator;</span>
+<span class="nc bnc" id="L256" title="All 2 branches missed.">		if (engine.hasPrimitive(key))</span>
+<span class="nc" id="L257">			throw new PrologException(&quot;permission_error(access, static_procedure, &quot; + key + &quot;)&quot;);</span>
+<span class="nc" id="L258">		LinkedList res = new LinkedList();</span>
+<span class="nc" id="L259">		List clauses = engine.find(key);</span>
+<span class="nc bnc" id="L260" title="All 2 branches missed.">		if (clauses.isEmpty())</span>
+<span class="nc" id="L261">			return bt.unify(arg1, Term.emptyList);</span>
+<span class="nc bnc" id="L262" title="All 2 branches missed.">		for (Iterator it = clauses.iterator(); it.hasNext();)</span>
+<span class="nc" id="L263">			res.add(((Clause) it.next()).original);</span>
+<span class="nc" id="L264">		res.add(Term.emptyList);</span>
+<span class="nc" id="L265">		return bt.unify(arg1, bt.wrapWithID(Parser.createStructList(res)));</span>
+	}
+
+	// set_prolog_flag(+Name,@Value)
+	public boolean set_prolog_flag_2(BindingsTable bt, Term arg0, Term arg1) {
+<span class="nc bnc" id="L270" title="All 6 branches missed.">		if (!BasicLibrary.atom_1(bt, arg0) &amp;&amp; !(arg0 instanceof Struct) || !BasicLibrary.ground_1(bt, arg1))</span>
+<span class="nc" id="L271">			return false;</span>
+
+<span class="nc" id="L273">		String name = arg0.toString();</span>
+<span class="nc" id="L274">		Flag flag = engine.getFlag(name);// Flag) it.next();</span>
+<span class="nc bnc" id="L275" title="All 2 branches missed.">		if (flag != null) {</span>
+			try {
+<span class="nc bnc" id="L277" title="All 2 branches missed.">				for (Iterator it2 = bt.structListIterator(flag.getValueList(), true); it2.hasNext();) {</span>
+<span class="nc" id="L278">					Term t = (Term) it2.next();</span>
+<span class="nc bnc" id="L279" title="All 2 branches missed.">					if (Prolog.match(arg1, t)) {</span>
+<span class="nc" id="L280">						flag.setValue(arg1);</span>
+<span class="nc" id="L281">						return true;</span>
+					}
+<span class="nc" id="L283">				}</span>
+<span class="nc" id="L284">			} catch (PrologException e) {</span>
+<span class="nc" id="L285">				throw new RuntimeException(&quot;error in iterating a Struct list&quot;);</span>
+<span class="nc" id="L286">			}</span>
+		}
+<span class="nc" id="L288">		return false;</span>
+	}
+
+	// get_prolog_flag(@Name,?Value)
+	public boolean get_prolog_flag_2(BindingsTable bt, Term arg0, Term arg1) {
+<span class="nc bnc" id="L293" title="All 4 branches missed.">		if (!BasicLibrary.atom_1(bt, arg0) &amp;&amp; !(arg0 instanceof Struct))</span>
+<span class="nc" id="L294">			return false;</span>
+
+<span class="nc" id="L296">		String name = arg0.toString();</span>
+<span class="nc" id="L297">		Term value = engine.getFlagValue(name);</span>
+<span class="nc bnc" id="L298" title="All 2 branches missed.">		if (value == null)</span>
+<span class="nc" id="L299">			return false;</span>
+<span class="nc" id="L300">		return bt.unify(value, arg1);</span>
+	}
+
+	/*
+	 * DIRECTIVES
+	 */
+
+	/**
+	 * op(+Precedence, +Type, +Name) defines a new operator if precedence not in
+	 * 0..1200 = delete currently present op
+	 */
+	public void op_3(BindingsTable bt, Number arg0, StructAtom arg1, StructAtom arg2) {
+<span class="fc" id="L312">		String st = ((Struct) arg1).name;</span>
+<span class="pc bpc" id="L313" title="1 of 2 branches missed.">		if (st.matches(&quot;[xy]?f[xy]?&quot;)) // a tad simplified</span>
+<span class="fc" id="L314">			engine.opNew(arg2.toString(), st, arg0.intValue());</span>
+<span class="fc" id="L315">	}</span>
+
+	public void flag_4(BindingsTable bt, Term flagName, Struct flagSet, Term flagDefault, Term flagModifiable) {
+<span class="pc bpc" id="L318" title="1 of 4 branches missed.">		if (flagModifiable.equals(Term.TRUE) || flagModifiable.equals(Term.FALSE))</span>
+<span class="fc" id="L319">			engine.defineFlag(flagName.toString(), flagSet, flagDefault, flagModifiable.equals(Term.TRUE));</span>
+<span class="fc" id="L320">	}</span>
+
+	// todo test that this works properly.
+	// todo Can alternatively use a temporary list to be run after the rest of
+	// the theories in consults have been added.
+	public void solve_1(BindingsTable bt, Struct goal) throws Throwable {
+<span class="nc" id="L326">		engine.solve(bt.wrapWithID(bt.variant(goal)).toString());</span>
+<span class="nc" id="L327">	}</span>
+
+	public void load_library_1(BindingsTable bt, Term lib) throws InvalidLibraryException {
+<span class="nc bnc" id="L330" title="All 2 branches missed.">		if (BasicLibrary.atom_1(bt, lib))</span>
+<span class="nc" id="L331">			engine.loadLibrary(((Struct) lib).name);</span>
+<span class="nc" id="L332">	}</span>
+
+	public void consult_1(BindingsTable bt, Term theory) throws FileNotFoundException, PrologException, IOException {
+		FileInputStream is;
+		try {
+<span class="nc" id="L337">			is = new FileInputStream(Parser.removeApices(theory.toString()));</span>
+<span class="nc" id="L338">		} catch (FileNotFoundException e) {</span>
+<span class="nc" id="L339">			File dir = new File(System.getProperty(&quot;user.dir&quot;));</span>
+<span class="nc" id="L340">			String filename = dir + File.separator + Parser.removeApices(theory.toString());</span>
+<span class="nc" id="L341">			is = new FileInputStream(filename);</span>
+<span class="nc" id="L342">		}</span>
+<span class="nc" id="L343">		engine.addTheory(IOLibrary.readStream(is));</span>
+<span class="nc" id="L344">	}</span>
+
+	public boolean $instantiation_error_0(BindingsTable bt) throws PrologException {
+<span class="nc" id="L347">		throw new PrologException(&quot;instantiation_error&quot;);</span>
+	}
+
+	public boolean $type_error_2(BindingsTable bt, Term typeName, Term term) throws PrologException {
+<span class="nc" id="L351">		throw new PrologException(&quot;type_error(&quot; + typeName + &quot;, &quot; + term + &quot;)&quot;);</span>
+	}
+
+	public boolean $representation_error_1(BindingsTable bt, Term maxArity) throws PrologException {
+<span class="nc" id="L355">		throw new PrologException(&quot;representation_error(&quot; + maxArity + &quot;)&quot;);</span>
+	}
+
+	public boolean $domain_error_zero_1(BindingsTable bt, Term term) throws Exception {
+<span class="nc" id="L359">		throw new PrologException(&quot;domain_error(not_less_than_zero, &quot; + term + &quot;)&quot;);</span>
+	}
+
+	/**
+	 * see ISO 7.6.1 and 7.6.2
+	 * 
+	 * @param arg0
+	 * @return
+	 * @throws PrologException
+	 */
+	public static Clause convertTermToClause(Term arg0) throws PrologException {
+<span class="pc bpc" id="L370" title="1 of 2 branches missed.">		if (arg0 instanceof Var)</span>
+<span class="nc" id="L371">			throw new PrologException(&quot;instantiation_error&quot;);</span>
+
+<span class="pc bpc" id="L373" title="1 of 2 branches missed.">		if (arg0 instanceof Number)</span>
+<span class="nc" id="L374">			throw new PrologException(&quot;type_error(callable, &quot; + arg0 + &quot;)&quot;);</span>
+
+		Term head, body;
+<span class="fc" id="L377">		Struct cl = (Struct) arg0;</span>
+<span class="fc bfc" id="L378" title="All 2 branches covered.">		if (cl.predicateIndicator != Parser.doubleClauseSignature) {</span>
+<span class="fc" id="L379">			head = arg0;</span>
+<span class="fc" id="L380">			body = Term.TRUE;</span>
+		} else {
+<span class="fc" id="L382">			head = cl.getArg(0);</span>
+<span class="fc" id="L383">			body = cl.getArg(1);</span>
+		}
+<span class="pc bpc" id="L385" title="1 of 2 branches missed.">		if (head instanceof Number)</span>
+<span class="nc" id="L386">			throw new PrologException(&quot;type_error(callable, &quot; + head + &quot;)&quot;);</span>
+<span class="pc bpc" id="L387" title="1 of 2 branches missed.">		if (head instanceof Var)</span>
+<span class="nc" id="L388">			throw new PrologException(&quot;instantiation_error&quot;);</span>
+
+<span class="pc bpc" id="L390" title="1 of 2 branches missed.">		if (body instanceof Number)</span>
+<span class="nc" id="L391">			throw new PrologException(&quot;type_error(callable, &quot; + body + &quot;)&quot;);</span>
+<span class="fc" id="L392">		body = convertTermToClauseBody(body);</span>
+<span class="fc" id="L393">		Struct[] body2 = convertTermToClauseBody2(body);</span>
+
+<span class="fc" id="L395">		return new Clause(body2, (Struct) head, new Struct(&quot;:-&quot;, new Term[] { head, body }));</span>
+	}
+
+	// todo see 7.6.2 and table 9 in ISO
+	public static Struct[] convertTermToClauseBody2(Term body) throws PrologException {
+<span class="fc" id="L400">		LinkedList tmp = new LinkedList();</span>
+<span class="pc bpc" id="L401" title="1 of 4 branches missed.">		while (body instanceof Struct &amp;&amp; ((Struct) body).predicateIndicator == Parser.commaSignature) {</span>
+<span class="fc" id="L402">			tmp.add(convertTermToClauseBody(((Struct) body).getArg(0))); // todo,</span>
+																			// this
+																			// might
+																			// turn
+																			// out
+																			// to
+																			// be
+																			// a
+																			// problem
+																			// if
+																			// the
+																			// left
+																			// child
+																			// is
+																			// a
+																			// comma...
+<span class="fc" id="L418">			body = ((Struct) body).getArg(1);</span>
+		}
+<span class="fc" id="L420">		tmp.add(convertTermToClauseBody(body));</span>
+<span class="fc" id="L421">		return (Struct[]) tmp.toArray(new Struct[tmp.size()]);</span>
+	}
+
+	public static Struct convertTermToClauseBody(Term body) throws PrologException {
+<span class="fc bfc" id="L425" title="All 2 branches covered.">		if (body instanceof Var)</span>
+<span class="fc" id="L426">			return new Struct(&quot;call&quot;, new Term[] { body });</span>
+<span class="pc bpc" id="L427" title="1 of 2 branches missed.">		if (body instanceof Number)</span>
+<span class="nc" id="L428">			throw new PrologException(&quot;type_error(callable, &quot; + body + &quot;)&quot;);</span>
+<span class="fc" id="L429">		Struct s = (Struct) body;</span>
+<span class="fc" id="L430">		String sPredIndic = s.predicateIndicator;</span>
+<span class="pc bpc" id="L431" title="3 of 10 branches missed.">		if (sPredIndic == Parser.ifSignature || sPredIndic == Parser.commaSignature || sPredIndic == Parser.semiColonSignature || sPredIndic == Parser.throwSignature</span>
+				|| sPredIndic == Parser.catchSignature) {
+<span class="fc" id="L433">			Term[] args = new Term[s.arity];</span>
+<span class="fc bfc" id="L434" title="All 2 branches covered.">			for (int i = 0; i &lt; s.arity; i++)</span>
+<span class="fc" id="L435">				args[i] = convertTermToClauseBody(s.getArg(i));</span>
+<span class="fc" id="L436">			return new Struct(s.name, args, s.getOperatorType());</span>
+		}
+<span class="fc" id="L438">		return s;</span>
+	}
+
+	public static String isPredicateIndicator(Struct predicateIndicator, BindingsTable bt) throws PrologException {
+<span class="nc bnc" id="L442" title="All 2 branches missed.">		if (predicateIndicator.predicateIndicator != &quot;'/'/2&quot;)</span>
+<span class="nc" id="L443">			throw new PrologException(&quot;type_error(predicate_indicator, &quot; + predicateIndicator + &quot;)&quot;);</span>
+<span class="nc" id="L444">		Term name = bt.resolve(predicateIndicator.getArg(0));</span>
+<span class="nc" id="L445">		Term arity = bt.resolve(predicateIndicator.getArg(1));</span>
+<span class="nc bnc" id="L446" title="All 4 branches missed.">		if (name instanceof Var || arity instanceof Var)</span>
+<span class="nc" id="L447">			throw new PrologException(&quot;instantiation_error&quot;);</span>
+<span class="nc bnc" id="L448" title="All 2 branches missed.">		if (!(arity instanceof Int))</span>
+<span class="nc" id="L449">			throw new PrologException(&quot;type_error(integer, &quot; + arity + &quot;)&quot;);</span>
+<span class="nc bnc" id="L450" title="All 2 branches missed.">		if (!(name instanceof StructAtom))</span>
+<span class="nc" id="L451">			throw new PrologException(&quot;type_error(atom, &quot; + name + &quot;)&quot;);</span>
+<span class="nc" id="L452">		Int arityInt = (Int) arity;</span>
+<span class="nc bnc" id="L453" title="All 2 branches missed.">		if (arityInt.intValue() &lt; 0)</span>
+<span class="nc" id="L454">			throw new PrologException(&quot;domain_error(not_less_than_zero, &quot; + arityInt + &quot;)&quot;);</span>
+<span class="nc bnc" id="L455" title="All 2 branches missed.">		if (arityInt.longValue() &gt; Integer.MAX_VALUE)</span>
+<span class="nc" id="L456">			throw new PrologException(&quot;representation_error(max_arity)&quot;);</span>
+<span class="nc" id="L457">		return Parser.wrapAtom(name.toString()) + &quot;/&quot; + arity;</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>
