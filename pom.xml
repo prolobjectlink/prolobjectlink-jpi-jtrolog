@@ -298,7 +298,7 @@
 					<failOnMissingHeader>true</failOnMissingHeader>
 					<acceptPomPackaging>true</acceptPomPackaging>
 					<licenseName>lgpl_v2_1</licenseName>
-					<dryRun>true</dryRun>
+					<!-- <dryRun>true</dryRun> -->
 					<licenseFile>LICENSE.md</licenseFile>
 					<addJavaLicenseAfterPackage>false</addJavaLicenseAfterPackage>
 					<roots>
@@ -693,24 +693,24 @@
 					</reportSet>
 				</reportSets>
 			</plugin>
-			<plugin>
-				<artifactId>maven-changelog-plugin</artifactId>
-				<version>2.2</version>
-				<reportSets>
-					<reportSet>
-						<id>dual-report</id>
-						<configuration>
-							<type>range</type>
-							<range>30</range>
-						</configuration>
-						<reports>
-							<report>changelog</report>
-							<report>file-activity</report>
-							<report>dev-activity</report>
-						</reports>
-					</reportSet>
-				</reportSets>
-			</plugin>
+			<!-- <plugin> -->
+			<!-- <artifactId>maven-changelog-plugin</artifactId> -->
+			<!-- <version>2.2</version> -->
+			<!-- <reportSets> -->
+			<!-- <reportSet> -->
+			<!-- <id>dual-report</id> -->
+			<!-- <configuration> -->
+			<!-- <type>range</type> -->
+			<!-- <range>30</range> -->
+			<!-- </configuration> -->
+			<!-- <reports> -->
+			<!-- <report>changelog</report> -->
+			<!-- <report>file-activity</report> -->
+			<!-- <report>dev-activity</report> -->
+			<!-- </reports> -->
+			<!-- </reportSet> -->
+			<!-- </reportSets> -->
+			<!-- </plugin> -->
 		</plugins>
 	</reporting>
 
