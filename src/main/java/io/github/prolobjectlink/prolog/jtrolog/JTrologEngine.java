@@ -476,6 +476,10 @@ public class JTrologEngine extends AbstractEngine implements PrologEngine {
 		return JTrolog.VERSION;
 	}
 
+	public final String getVendor() {
+		return JTrolog.NAME;
+	}
+
 	public String getName() {
 		return JTrolog.NAME;
 	}
