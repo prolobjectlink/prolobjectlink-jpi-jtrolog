@@ -89,14 +89,6 @@ class JTrologStructure extends JTrologTerm implements PrologStructure {
 		return Parser.wrapAtom(structure.name);
 	}
 
-	public String getIndicator() {
-		return getFunctor() + "/" + getArity();
-	}
-
-	public boolean hasIndicator(String functor, int arity) {
-		return getFunctor().equals(functor) && getArity() == arity;
-	}
-
 	public final PrologTerm getRight() {
 		return getArgument(1);
 	}

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>JTrologList.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">prolobjectlink-jpi-jtrolog</a> &gt; <a href="index.source.html" class="el_package">io.github.prolobjectlink.prolog.jtrolog</a> &gt; <span class="el_source">JTrologList.java</span></div><h1>JTrologList.java</h1><pre class="source lang-java linenums">/*
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>JTrologList.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">prolobjectlink-jpi-jtrolog</a> &gt; <a href="index.source.html" class="el_package">io.github.prolobjectlink.prolog.jtrolog</a> &gt; <span class="el_source">JTrologList.java</span></div><h1>JTrologList.java</h1><pre class="source lang-java linenums">/*
  * #%L
  * prolobjectlink-jpi-jtrolog
  * %%
@@ -147,21 +147,13 @@ class JTrologList extends JTrologTerm implements PrologList {
 <span class="fc" id="L147">		return ((Struct) value).name;</span>
 	}
 
-	public String getIndicator() {
-<span class="fc" id="L151">		return getFunctor() + &quot;/&quot; + getArity();</span>
-	}
-
-	public boolean hasIndicator(String functor, int arity) {
-<span class="pc bpc" id="L155" title="3 of 4 branches missed.">		return getFunctor().equals(functor) &amp;&amp; getArity() == arity;</span>
-	}
-
 	public PrologTerm[] getArguments() {
-<span class="fc" id="L159">		PrologTerm[] a = new PrologTerm[size()];</span>
-<span class="fc" id="L160">		Iterator&lt;PrologTerm&gt; i = iterator();</span>
-<span class="fc bfc" id="L161" title="All 2 branches covered.">		for (int index = 0; i.hasNext(); index++) {</span>
-<span class="fc" id="L162">			a[index] = i.next();</span>
+<span class="fc" id="L151">		PrologTerm[] a = new PrologTerm[size()];</span>
+<span class="fc" id="L152">		Iterator&lt;PrologTerm&gt; i = iterator();</span>
+<span class="fc bfc" id="L153" title="All 2 branches covered.">		for (int index = 0; i.hasNext(); index++) {</span>
+<span class="fc" id="L154">			a[index] = i.next();</span>
 		}
-<span class="fc" id="L164">		return a;</span>
+<span class="fc" id="L156">		return a;</span>
 	}
 
 	private class JTrologListIter extends AbstractIterator&lt;PrologTerm&gt; implements Iterator&lt;PrologTerm&gt; {
@@ -169,21 +161,21 @@ class JTrologList extends JTrologTerm implements PrologList {
 		private PrologTerm next;
 		private final Iterator&lt;?&gt; i;
 
-<span class="fc" id="L172">		private JTrologListIter(Struct list) {</span>
-<span class="fc" id="L173">			i = Struct.iterator(list);</span>
-<span class="pc bpc" id="L174" title="1 of 2 branches missed.">			if (i.hasNext()) {</span>
-<span class="fc" id="L175">				next = toTerm(i.next(), PrologTerm.class);</span>
+<span class="fc" id="L164">		private JTrologListIter(Struct list) {</span>
+<span class="fc" id="L165">			i = Struct.iterator(list);</span>
+<span class="pc bpc" id="L166" title="1 of 2 branches missed.">			if (i.hasNext()) {</span>
+<span class="fc" id="L167">				next = toTerm(i.next(), PrologTerm.class);</span>
 			}
-<span class="fc" id="L177">		}</span>
+<span class="fc" id="L169">		}</span>
 
 		public boolean hasNext() {
-<span class="pc bpc" id="L180" title="1 of 4 branches missed.">			return next != null &amp;&amp; !next.isEmptyList();</span>
+<span class="pc bpc" id="L172" title="1 of 4 branches missed.">			return next != null &amp;&amp; !next.isEmptyList();</span>
 		}
 
 		public PrologTerm next() {
-<span class="fc" id="L184">			PrologTerm lastReturned = next;</span>
-<span class="fc" id="L185">			next = toTerm(i.next(), PrologTerm.class);</span>
-<span class="fc" id="L186">			return lastReturned;</span>
+<span class="fc" id="L176">			PrologTerm lastReturned = next;</span>
+<span class="fc" id="L177">			next = toTerm(i.next(), PrologTerm.class);</span>
+<span class="fc" id="L178">			return lastReturned;</span>
 		}
 
 	}

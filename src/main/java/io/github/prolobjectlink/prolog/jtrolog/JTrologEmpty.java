@@ -52,14 +52,4 @@ final class JTrologEmpty extends JTrologList implements PrologList {
 		return ((Struct) value).name;
 	}
 
-	@Override
-	public String getIndicator() {
-		return getFunctor() + "/" + getArity();
-	}
-
-	@Override
-	public boolean hasIndicator(String functor, int arity) {
-		return getFunctor().equals(functor) && getArity() == arity;
-	}
-
 }

@@ -147,14 +147,6 @@ class JTrologList extends JTrologTerm implements PrologList {
 		return ((Struct) value).name;
 	}
 
-	public String getIndicator() {
-		return getFunctor() + "/" + getArity();
-	}
-
-	public boolean hasIndicator(String functor, int arity) {
-		return getFunctor().equals(functor) && getArity() == arity;
-	}
-
 	public PrologTerm[] getArguments() {
 		PrologTerm[] a = new PrologTerm[size()];
 		Iterator<PrologTerm> i = iterator();
