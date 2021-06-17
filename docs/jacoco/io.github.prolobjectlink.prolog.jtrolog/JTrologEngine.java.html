@@ -476,38 +476,42 @@ public class JTrologEngine extends AbstractEngine implements PrologEngine {
 <span class="fc" id="L476">		return JTrolog.VERSION;</span>
 	}
 
+	public final String getVendor() {
+<span class="nc" id="L480">		return JTrolog.NAME;</span>
+	}
+
 	public String getName() {
-<span class="fc" id="L480">		return JTrolog.NAME;</span>
+<span class="fc" id="L484">		return JTrolog.NAME;</span>
 	}
 
 	@Override
 	public int hashCode() {
-<span class="nc" id="L485">		final int prime = 31;</span>
-<span class="nc" id="L486">		int result = 1;</span>
-<span class="nc bnc" id="L487" title="All 2 branches missed.">		result = prime * result + ((engine == null) ? 0 : engine.hashCode());</span>
-<span class="nc" id="L488">		return result;</span>
+<span class="nc" id="L489">		final int prime = 31;</span>
+<span class="nc" id="L490">		int result = 1;</span>
+<span class="nc bnc" id="L491" title="All 2 branches missed.">		result = prime * result + ((engine == null) ? 0 : engine.hashCode());</span>
+<span class="nc" id="L492">		return result;</span>
 	}
 
 	@Override
 	public boolean equals(Object obj) {
-<span class="pc bpc" id="L493" title="1 of 2 branches missed.">		if (this == obj)</span>
-<span class="fc" id="L494">			return true;</span>
-<span class="nc bnc" id="L495" title="All 2 branches missed.">		if (obj == null)</span>
-<span class="nc" id="L496">			return false;</span>
-<span class="nc bnc" id="L497" title="All 2 branches missed.">		if (getClass() != obj.getClass())</span>
-<span class="nc" id="L498">			return false;</span>
-<span class="nc" id="L499">		JTrologEngine other = (JTrologEngine) obj;</span>
-<span class="nc bnc" id="L500" title="All 4 branches missed.">		return engine != null &amp;&amp; other.engine != null;</span>
+<span class="pc bpc" id="L497" title="1 of 2 branches missed.">		if (this == obj)</span>
+<span class="fc" id="L498">			return true;</span>
+<span class="nc bnc" id="L499" title="All 2 branches missed.">		if (obj == null)</span>
+<span class="nc" id="L500">			return false;</span>
+<span class="nc bnc" id="L501" title="All 2 branches missed.">		if (getClass() != obj.getClass())</span>
+<span class="nc" id="L502">			return false;</span>
+<span class="nc" id="L503">		JTrologEngine other = (JTrologEngine) obj;</span>
+<span class="nc bnc" id="L504" title="All 4 branches missed.">		return engine != null &amp;&amp; other.engine != null;</span>
 	}
 
 	public void dispose() {
-<span class="pc bpc" id="L504" title="1 of 2 branches missed.">		if (engine != null) {</span>
-<span class="fc" id="L505">			engine.clearTheory();</span>
+<span class="pc bpc" id="L508" title="1 of 2 branches missed.">		if (engine != null) {</span>
+<span class="fc" id="L509">			engine.clearTheory();</span>
 		}
-<span class="fc" id="L507">	}</span>
+<span class="fc" id="L511">	}</span>
 
 	public final List&lt;String&gt; verify() {
-<span class="nc" id="L510">		return Arrays.asList(&quot;OK&quot;);</span>
+<span class="nc" id="L514">		return Arrays.asList(&quot;OK&quot;);</span>
 	}
 
 }

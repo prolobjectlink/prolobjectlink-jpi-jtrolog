@@ -192,29 +192,25 @@ abstract class JTrologTerm extends AbstractTerm implements PrologTerm {
 <span class="nc" id="L192">		return false;</span>
 	}
 
-	public final Object getObject() {
-<span class="nc" id="L196">		return null;</span>
-	}
-
 	public final PrologTerm getTerm() {
-<span class="fc" id="L200">		return this;</span>
+<span class="fc" id="L196">		return this;</span>
 	}
 
 	public final boolean unify(PrologTerm term) {
-<span class="fc" id="L204">		Term otherTerm = fromTerm(term, Term.class);</span>
-<span class="fc" id="L205">		return Prolog.match(value, otherTerm);</span>
+<span class="fc" id="L200">		Term otherTerm = fromTerm(term, Term.class);</span>
+<span class="fc" id="L201">		return Prolog.match(value, otherTerm);</span>
 	}
 
 	public final int compareTo(PrologTerm term) {
-<span class="fc" id="L209">		int termType = term.getType();</span>
+<span class="fc" id="L205">		int termType = term.getType();</span>
 
-<span class="fc bfc" id="L211" title="All 2 branches covered.">		if ((type &gt;&gt; 8) &lt; (termType &gt;&gt; 8)) {</span>
-<span class="fc" id="L212">			return -1;</span>
-<span class="fc bfc" id="L213" title="All 2 branches covered.">		} else if ((type &gt;&gt; 8) &gt; (termType &gt;&gt; 8)) {</span>
-<span class="fc" id="L214">			return 1;</span>
+<span class="fc bfc" id="L207" title="All 2 branches covered.">		if ((type &gt;&gt; 8) &lt; (termType &gt;&gt; 8)) {</span>
+<span class="fc" id="L208">			return -1;</span>
+<span class="fc bfc" id="L209" title="All 2 branches covered.">		} else if ((type &gt;&gt; 8) &gt; (termType &gt;&gt; 8)) {</span>
+<span class="fc" id="L210">			return 1;</span>
 		}
 
-<span class="pc bpc" id="L217" title="1 of 8 branches missed.">		switch (type) {</span>
+<span class="pc bpc" id="L213" title="1 of 8 branches missed.">		switch (type) {</span>
 		case NIL_TYPE:
 		case CUT_TYPE:
 		case FAIL_TYPE:
@@ -223,63 +219,63 @@ abstract class JTrologTerm extends AbstractTerm implements PrologTerm {
 		case ATOM_TYPE:
 
 			// alphabetic functor comparison
-<span class="fc" id="L226">			StructAtom atom = (StructAtom) value;</span>
-<span class="fc" id="L227">			int result = atom.name.compareTo(term.getFunctor());</span>
-<span class="fc bfc" id="L228" title="All 2 branches covered.">			if (result &lt; 0) {</span>
-<span class="fc" id="L229">				return -1;</span>
-<span class="fc bfc" id="L230" title="All 2 branches covered.">			} else if (result &gt; 0) {</span>
-<span class="fc" id="L231">				return 1;</span>
+<span class="fc" id="L222">			StructAtom atom = (StructAtom) value;</span>
+<span class="fc" id="L223">			int result = atom.name.compareTo(term.getFunctor());</span>
+<span class="fc bfc" id="L224" title="All 2 branches covered.">			if (result &lt; 0) {</span>
+<span class="fc" id="L225">				return -1;</span>
+<span class="fc bfc" id="L226" title="All 2 branches covered.">			} else if (result &gt; 0) {</span>
+<span class="fc" id="L227">				return 1;</span>
 			}
 			break;
 
 		case FLOAT_TYPE:
 
-<span class="fc" id="L237">			float thisFloatValue = ((Number) value).floatValue();</span>
-<span class="fc" id="L238">			float otherFloatValue = ((PrologNumber) term).getFloatValue();</span>
+<span class="fc" id="L233">			float thisFloatValue = ((Number) value).floatValue();</span>
+<span class="fc" id="L234">			float otherFloatValue = ((PrologNumber) term).getFloatValue();</span>
 
-<span class="fc bfc" id="L240" title="All 2 branches covered.">			if (thisFloatValue &lt; otherFloatValue) {</span>
-<span class="fc" id="L241">				return -1;</span>
-<span class="fc bfc" id="L242" title="All 2 branches covered.">			} else if (thisFloatValue &gt; otherFloatValue) {</span>
-<span class="fc" id="L243">				return 1;</span>
+<span class="fc bfc" id="L236" title="All 2 branches covered.">			if (thisFloatValue &lt; otherFloatValue) {</span>
+<span class="fc" id="L237">				return -1;</span>
+<span class="fc bfc" id="L238" title="All 2 branches covered.">			} else if (thisFloatValue &gt; otherFloatValue) {</span>
+<span class="fc" id="L239">				return 1;</span>
 			}
 
 			break;
 
 		case LONG_TYPE:
 
-<span class="fc" id="L250">			long thisLongValue = ((Number) value).longValue();</span>
-<span class="fc" id="L251">			long otherLongValue = ((PrologNumber) term).getLongValue();</span>
+<span class="fc" id="L246">			long thisLongValue = ((Number) value).longValue();</span>
+<span class="fc" id="L247">			long otherLongValue = ((PrologNumber) term).getLongValue();</span>
 
-<span class="fc bfc" id="L253" title="All 2 branches covered.">			if (thisLongValue &lt; otherLongValue) {</span>
-<span class="fc" id="L254">				return -1;</span>
-<span class="pc bpc" id="L255" title="1 of 2 branches missed.">			} else if (thisLongValue &gt; otherLongValue) {</span>
-<span class="nc" id="L256">				return 1;</span>
+<span class="fc bfc" id="L249" title="All 2 branches covered.">			if (thisLongValue &lt; otherLongValue) {</span>
+<span class="fc" id="L250">				return -1;</span>
+<span class="pc bpc" id="L251" title="1 of 2 branches missed.">			} else if (thisLongValue &gt; otherLongValue) {</span>
+<span class="nc" id="L252">				return 1;</span>
 			}
 
 			break;
 
 		case DOUBLE_TYPE:
 
-<span class="fc" id="L263">			double thisDoubleValue = ((Number) value).doubleValue();</span>
-<span class="fc" id="L264">			double otherDoubleValue = ((PrologNumber) term).getDoubleValue();</span>
+<span class="fc" id="L259">			double thisDoubleValue = ((Number) value).doubleValue();</span>
+<span class="fc" id="L260">			double otherDoubleValue = ((PrologNumber) term).getDoubleValue();</span>
 
-<span class="fc bfc" id="L266" title="All 2 branches covered.">			if (thisDoubleValue &lt; otherDoubleValue) {</span>
-<span class="fc" id="L267">				return -1;</span>
-<span class="fc bfc" id="L268" title="All 2 branches covered.">			} else if (thisDoubleValue &gt; otherDoubleValue) {</span>
-<span class="fc" id="L269">				return 1;</span>
+<span class="fc bfc" id="L262" title="All 2 branches covered.">			if (thisDoubleValue &lt; otherDoubleValue) {</span>
+<span class="fc" id="L263">				return -1;</span>
+<span class="fc bfc" id="L264" title="All 2 branches covered.">			} else if (thisDoubleValue &gt; otherDoubleValue) {</span>
+<span class="fc" id="L265">				return 1;</span>
 			}
 
 			break;
 
 		case INTEGER_TYPE:
 
-<span class="fc" id="L276">			int thisIntegerValue = ((Number) value).intValue();</span>
-<span class="fc" id="L277">			int otherIntegerValue = ((PrologNumber) term).getIntegerValue();</span>
+<span class="fc" id="L272">			int thisIntegerValue = ((Number) value).intValue();</span>
+<span class="fc" id="L273">			int otherIntegerValue = ((PrologNumber) term).getIntegerValue();</span>
 
-<span class="fc bfc" id="L279" title="All 2 branches covered.">			if (thisIntegerValue &lt; otherIntegerValue) {</span>
-<span class="fc" id="L280">				return -1;</span>
-<span class="fc bfc" id="L281" title="All 2 branches covered.">			} else if (thisIntegerValue &gt; otherIntegerValue) {</span>
-<span class="fc" id="L282">				return 1;</span>
+<span class="fc bfc" id="L275" title="All 2 branches covered.">			if (thisIntegerValue &lt; otherIntegerValue) {</span>
+<span class="fc" id="L276">				return -1;</span>
+<span class="fc bfc" id="L277" title="All 2 branches covered.">			} else if (thisIntegerValue &gt; otherIntegerValue) {</span>
+<span class="fc" id="L278">				return 1;</span>
 			}
 
 			break;
@@ -287,88 +283,88 @@ abstract class JTrologTerm extends AbstractTerm implements PrologTerm {
 		case LIST_TYPE:
 		case STRUCTURE_TYPE:
 
-<span class="fc" id="L290">			PrologTerm thisCompound = this;</span>
-<span class="fc" id="L291">			PrologTerm otherCompound = term;</span>
+<span class="fc" id="L286">			PrologTerm thisCompound = this;</span>
+<span class="fc" id="L287">			PrologTerm otherCompound = term;</span>
 
 			// comparison by arity
-<span class="fc bfc" id="L294" title="All 2 branches covered.">			if (thisCompound.getArity() &lt; otherCompound.getArity()) {</span>
-<span class="fc" id="L295">				return -1;</span>
-<span class="fc bfc" id="L296" title="All 2 branches covered.">			} else if (thisCompound.getArity() &gt; otherCompound.getArity()) {</span>
-<span class="fc" id="L297">				return 1;</span>
+<span class="fc bfc" id="L290" title="All 2 branches covered.">			if (thisCompound.getArity() &lt; otherCompound.getArity()) {</span>
+<span class="fc" id="L291">				return -1;</span>
+<span class="fc bfc" id="L292" title="All 2 branches covered.">			} else if (thisCompound.getArity() &gt; otherCompound.getArity()) {</span>
+<span class="fc" id="L293">				return 1;</span>
 			}
 
 			// alphabetic functor comparison
-<span class="fc" id="L301">			result = thisCompound.getFunctor().compareTo(otherCompound.getFunctor());</span>
-<span class="fc bfc" id="L302" title="All 2 branches covered.">			if (result &lt; 0) {</span>
-<span class="fc" id="L303">				return -1;</span>
-<span class="pc bpc" id="L304" title="1 of 2 branches missed.">			} else if (result &gt; 0) {</span>
-<span class="nc" id="L305">				return 1;</span>
+<span class="fc" id="L297">			result = thisCompound.getFunctor().compareTo(otherCompound.getFunctor());</span>
+<span class="fc bfc" id="L298" title="All 2 branches covered.">			if (result &lt; 0) {</span>
+<span class="fc" id="L299">				return -1;</span>
+<span class="pc bpc" id="L300" title="1 of 2 branches missed.">			} else if (result &gt; 0) {</span>
+<span class="nc" id="L301">				return 1;</span>
 			}
 
 			// arguments comparison
-<span class="fc" id="L309">			PrologTerm[] thisArguments = thisCompound.getArguments();</span>
-<span class="fc" id="L310">			PrologTerm[] otherArguments = otherCompound.getArguments();</span>
+<span class="fc" id="L305">			PrologTerm[] thisArguments = thisCompound.getArguments();</span>
+<span class="fc" id="L306">			PrologTerm[] otherArguments = otherCompound.getArguments();</span>
 
-<span class="fc bfc" id="L312" title="All 2 branches covered.">			for (int i = 0; i &lt; thisArguments.length; i++) {</span>
-<span class="fc" id="L313">				PrologTerm thisArgument = thisArguments[i];</span>
-<span class="fc" id="L314">				PrologTerm otherArgument = otherArguments[i];</span>
-<span class="pc bpc" id="L315" title="2 of 4 branches missed.">				if (thisArgument != null &amp;&amp; otherArgument != null) {</span>
-<span class="fc" id="L316">					result = thisArgument.compareTo(otherArgument);</span>
-<span class="fc bfc" id="L317" title="All 2 branches covered.">					if (result != 0) {</span>
-<span class="fc" id="L318">						return result;</span>
+<span class="fc bfc" id="L308" title="All 2 branches covered.">			for (int i = 0; i &lt; thisArguments.length; i++) {</span>
+<span class="fc" id="L309">				PrologTerm thisArgument = thisArguments[i];</span>
+<span class="fc" id="L310">				PrologTerm otherArgument = otherArguments[i];</span>
+<span class="pc bpc" id="L311" title="2 of 4 branches missed.">				if (thisArgument != null &amp;&amp; otherArgument != null) {</span>
+<span class="fc" id="L312">					result = thisArgument.compareTo(otherArgument);</span>
+<span class="fc bfc" id="L313" title="All 2 branches covered.">					if (result != 0) {</span>
+<span class="fc" id="L314">						return result;</span>
 					}
 				}
 			}
-<span class="fc" id="L322">			break;</span>
+<span class="fc" id="L318">			break;</span>
 
 		case VARIABLE_TYPE:
 
-<span class="fc" id="L326">			PrologTerm thisVariable = this;</span>
-<span class="fc" id="L327">			PrologTerm otherVariable = term;</span>
-<span class="fc bfc" id="L328" title="All 2 branches covered.">			if (thisVariable.hashCode() &lt; otherVariable.hashCode()) {</span>
-<span class="fc" id="L329">				return -1;</span>
-<span class="pc bpc" id="L330" title="1 of 2 branches missed.">			} else if (thisVariable.hashCode() &gt; otherVariable.hashCode()) {</span>
-<span class="nc" id="L331">				return 1;</span>
+<span class="fc" id="L322">			PrologTerm thisVariable = this;</span>
+<span class="fc" id="L323">			PrologTerm otherVariable = term;</span>
+<span class="fc bfc" id="L324" title="All 2 branches covered.">			if (thisVariable.hashCode() &lt; otherVariable.hashCode()) {</span>
+<span class="fc" id="L325">				return -1;</span>
+<span class="pc bpc" id="L326" title="1 of 2 branches missed.">			} else if (thisVariable.hashCode() &gt; otherVariable.hashCode()) {</span>
+<span class="nc" id="L327">				return 1;</span>
 			}
 			break;
 
 		default:
-<span class="nc" id="L336">			return 0;</span>
+<span class="nc" id="L332">			return 0;</span>
 
 		}
 
-<span class="fc" id="L340">		return 0;</span>
+<span class="fc" id="L336">		return 0;</span>
 	}
 
 	public int hashCode() {
-<span class="fc" id="L344">		final int prime = 31;</span>
-<span class="fc" id="L345">		int result = 1;</span>
-<span class="fc" id="L346">		result = prime * result + type;</span>
-<span class="pc bpc" id="L347" title="1 of 2 branches missed.">		result = prime * result + ((value == null) ? 0 : value.toString().hashCode());</span>
-<span class="fc" id="L348">		return result;</span>
+<span class="fc" id="L340">		final int prime = 31;</span>
+<span class="fc" id="L341">		int result = 1;</span>
+<span class="fc" id="L342">		result = prime * result + type;</span>
+<span class="pc bpc" id="L343" title="1 of 2 branches missed.">		result = prime * result + ((value == null) ? 0 : value.toString().hashCode());</span>
+<span class="fc" id="L344">		return result;</span>
 	}
 
 	public boolean equals(Object obj) {
-<span class="fc bfc" id="L352" title="All 2 branches covered.">		if (this == obj)</span>
-<span class="fc" id="L353">			return true;</span>
-<span class="pc bpc" id="L354" title="1 of 2 branches missed.">		if (obj == null)</span>
-<span class="nc" id="L355">			return false;</span>
-<span class="pc bpc" id="L356" title="1 of 2 branches missed.">		if (!(obj instanceof JTrologTerm))</span>
-<span class="nc" id="L357">			return false;</span>
-<span class="fc" id="L358">		JTrologTerm other = (JTrologTerm) obj;</span>
-<span class="pc bpc" id="L359" title="1 of 2 branches missed.">		if (value == null) {</span>
-<span class="nc bnc" id="L360" title="All 2 branches missed.">			if (other.value != null)</span>
-<span class="nc" id="L361">				return false;</span>
-<span class="fc bfc" id="L362" title="All 2 branches covered.">		} else if (value.toString().equals(other.value.toString())) {</span>
-<span class="fc" id="L363">			return true;</span>
-<span class="pc bpc" id="L364" title="1 of 2 branches missed.">		} else if (!Prolog.match(value, other.value)) {</span>
-<span class="fc" id="L365">			return false;</span>
+<span class="fc bfc" id="L348" title="All 2 branches covered.">		if (this == obj)</span>
+<span class="fc" id="L349">			return true;</span>
+<span class="pc bpc" id="L350" title="1 of 2 branches missed.">		if (obj == null)</span>
+<span class="nc" id="L351">			return false;</span>
+<span class="pc bpc" id="L352" title="1 of 2 branches missed.">		if (!(obj instanceof JTrologTerm))</span>
+<span class="nc" id="L353">			return false;</span>
+<span class="fc" id="L354">		JTrologTerm other = (JTrologTerm) obj;</span>
+<span class="pc bpc" id="L355" title="1 of 2 branches missed.">		if (value == null) {</span>
+<span class="nc bnc" id="L356" title="All 2 branches missed.">			if (other.value != null)</span>
+<span class="nc" id="L357">				return false;</span>
+<span class="fc bfc" id="L358" title="All 2 branches covered.">		} else if (value.toString().equals(other.value.toString())) {</span>
+<span class="fc" id="L359">			return true;</span>
+<span class="pc bpc" id="L360" title="1 of 2 branches missed.">		} else if (!Prolog.match(value, other.value)) {</span>
+<span class="fc" id="L361">			return false;</span>
 		}
-<span class="nc" id="L367">		return true;</span>
+<span class="nc" id="L363">		return true;</span>
 	}
 
 	public final String toString() {
-<span class="fc" id="L371">		return value.toStringSmall();</span>
+<span class="fc" id="L367">		return value.toStringSmall();</span>
 	}
 
 }

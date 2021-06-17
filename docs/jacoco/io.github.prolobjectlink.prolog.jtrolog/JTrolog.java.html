@@ -64,191 +64,187 @@ public class JTrolog extends AbstractProvider implements PrologProvider {
 <span class="fc" id="L64">		super(converter);</span>
 <span class="fc" id="L65">	}</span>
 
-	public boolean isCompliant() {
-<span class="nc" id="L68">		return false;</span>
-	}
-
 	public PrologTerm prologNil() {
-<span class="fc" id="L72">		return new JTrologNil(this);</span>
+<span class="fc" id="L68">		return new JTrologNil(this);</span>
 	}
 
 	public PrologTerm prologCut() {
-<span class="fc" id="L76">		return new JTrologCut(this);</span>
+<span class="fc" id="L72">		return new JTrologCut(this);</span>
 	}
 
 	public PrologTerm prologFail() {
-<span class="fc" id="L80">		return new JTrologFail(this);</span>
+<span class="fc" id="L76">		return new JTrologFail(this);</span>
 	}
 
 	public PrologTerm prologTrue() {
-<span class="fc" id="L84">		return new JTrologTrue(this);</span>
+<span class="fc" id="L80">		return new JTrologTrue(this);</span>
 	}
 
 	public PrologTerm prologFalse() {
-<span class="fc" id="L88">		return new JTrologFalse(this);</span>
+<span class="fc" id="L84">		return new JTrologFalse(this);</span>
 	}
 
 	public PrologTerm prologEmpty() {
-<span class="fc" id="L92">		return new JTrologEmpty(this);</span>
+<span class="fc" id="L88">		return new JTrologEmpty(this);</span>
 	}
 
 	public PrologTerm prologInclude(String file) {
-<span class="nc" id="L96">		return newStructure(&quot;include&quot;, newAtom(file));</span>
+<span class="nc" id="L92">		return newStructure(&quot;include&quot;, newAtom(file));</span>
 	}
 
 	// engine
 
 	public PrologEngine newEngine() {
-<span class="fc" id="L102">		Prolog prolog = new Prolog();</span>
-<span class="fc" id="L103">		return new JTrologEngine(this, prolog);</span>
+<span class="fc" id="L98">		Prolog prolog = new Prolog();</span>
+<span class="fc" id="L99">		return new JTrologEngine(this, prolog);</span>
 	}
 
 	public PrologEngine newEngine(String path) {
-<span class="nc" id="L107">		PrologEngine engine = newEngine();</span>
-<span class="nc" id="L108">		engine.consult(path);</span>
-<span class="nc" id="L109">		return engine;</span>
+<span class="nc" id="L103">		PrologEngine engine = newEngine();</span>
+<span class="nc" id="L104">		engine.consult(path);</span>
+<span class="nc" id="L105">		return engine;</span>
 	}
 
 	// parser helpers
 
 	public PrologTerm parseTerm(String term) {
-<span class="fc" id="L115">		return toTerm(new Parser(term).nextTerm(false), PrologTerm.class);</span>
+<span class="fc" id="L111">		return toTerm(new Parser(term).nextTerm(false), PrologTerm.class);</span>
 	}
 
 	public PrologTerm[] parseTerms(String stringTerms) {
-<span class="fc" id="L119">		List&lt;PrologTerm&gt; list = new ArrayList&lt;PrologTerm&gt;();</span>
-<span class="fc" id="L120">		Parser parser = new Parser(stringTerms);</span>
-<span class="fc" id="L121">		Term term = parser.nextTerm(false);</span>
-<span class="fc bfc" id="L122" title="All 2 branches covered.">		while (term instanceof Struct) {</span>
-<span class="fc" id="L123">			Struct struct = (Struct) term;</span>
-<span class="fc bfc" id="L124" title="All 4 branches covered.">			if (struct.name.equals(&quot;,&quot;) &amp;&amp; struct.arity == 2) {</span>
-<span class="fc" id="L125">				list.add(toTerm(struct.getArg(0), PrologTerm.class));</span>
-<span class="fc" id="L126">				term = struct.getArg(1);</span>
+<span class="fc" id="L115">		List&lt;PrologTerm&gt; list = new ArrayList&lt;PrologTerm&gt;();</span>
+<span class="fc" id="L116">		Parser parser = new Parser(stringTerms);</span>
+<span class="fc" id="L117">		Term term = parser.nextTerm(false);</span>
+<span class="fc bfc" id="L118" title="All 2 branches covered.">		while (term instanceof Struct) {</span>
+<span class="fc" id="L119">			Struct struct = (Struct) term;</span>
+<span class="fc bfc" id="L120" title="All 4 branches covered.">			if (struct.name.equals(&quot;,&quot;) &amp;&amp; struct.arity == 2) {</span>
+<span class="fc" id="L121">				list.add(toTerm(struct.getArg(0), PrologTerm.class));</span>
+<span class="fc" id="L122">				term = struct.getArg(1);</span>
 			} else {
-<span class="fc" id="L128">				list.add(toTerm(term, PrologTerm.class));</span>
-<span class="fc" id="L129">				term = parser.nextTerm(false);</span>
+<span class="fc" id="L124">				list.add(toTerm(term, PrologTerm.class));</span>
+<span class="fc" id="L125">				term = parser.nextTerm(false);</span>
 			}
-<span class="fc" id="L131">		}</span>
-<span class="fc" id="L132">		return list.toArray(new PrologTerm[0]);</span>
+<span class="fc" id="L127">		}</span>
+<span class="fc" id="L128">		return list.toArray(new PrologTerm[0]);</span>
 	}
 
 	// terms
 
 	public PrologAtom newAtom(String functor) {
-<span class="fc" id="L138">		return new JTrologAtom(this, functor);</span>
+<span class="fc" id="L134">		return new JTrologAtom(this, functor);</span>
 	}
 
 	public PrologFloat newFloat(Number value) {
-<span class="fc" id="L142">		return new JTrologFloat(this, value);</span>
+<span class="fc" id="L138">		return new JTrologFloat(this, value);</span>
 	}
 
 	public PrologDouble newDouble(Number value) {
-<span class="fc" id="L146">		return new JTrologDouble(this, value);</span>
+<span class="fc" id="L142">		return new JTrologDouble(this, value);</span>
 	}
 
 	public PrologInteger newInteger(Number value) {
-<span class="fc" id="L150">		return new JTrologInteger(this, value);</span>
+<span class="fc" id="L146">		return new JTrologInteger(this, value);</span>
 	}
 
 	public PrologLong newLong(Number value) {
-<span class="fc" id="L154">		return new JTrologLong(this, value);</span>
+<span class="fc" id="L150">		return new JTrologLong(this, value);</span>
 	}
 
 	public PrologVariable newVariable(int position) {
-<span class="pc bpc" id="L158" title="1 of 2 branches missed.">		if (position &lt; 0) {</span>
-<span class="nc" id="L159">			throw new IllegalArgumentException(&quot;Not allowed negative position&quot;);</span>
+<span class="pc bpc" id="L154" title="1 of 2 branches missed.">		if (position &lt; 0) {</span>
+<span class="nc" id="L155">			throw new IllegalArgumentException(&quot;Not allowed negative position&quot;);</span>
 		}
-<span class="fc" id="L161">		return new JTrologVariable(this, position + 1);</span>
+<span class="fc" id="L157">		return new JTrologVariable(this, position + 1);</span>
 	}
 
 	public PrologVariable newVariable(String name, int position) {
-<span class="pc bpc" id="L165" title="1 of 2 branches missed.">		if (position &lt; 0) {</span>
-<span class="nc" id="L166">			throw new IllegalArgumentException(&quot;Not allowed negative position&quot;);</span>
+<span class="pc bpc" id="L161" title="1 of 2 branches missed.">		if (position &lt; 0) {</span>
+<span class="nc" id="L162">			throw new IllegalArgumentException(&quot;Not allowed negative position&quot;);</span>
 		}
-<span class="fc" id="L168">		return new JTrologVariable(this, name, position + 1);</span>
+<span class="fc" id="L164">		return new JTrologVariable(this, name, position + 1);</span>
 	}
 
 	public PrologList newList() {
-<span class="nc" id="L172">		return new JTrologEmpty(this);</span>
+<span class="nc" id="L168">		return new JTrologEmpty(this);</span>
 	}
 
 	public PrologList newList(PrologTerm[] arguments) {
-<span class="pc bpc" id="L176" title="2 of 4 branches missed.">		if (arguments != null &amp;&amp; arguments.length &gt; 0) {</span>
-<span class="fc" id="L177">			return new JTrologList(this, arguments);</span>
+<span class="pc bpc" id="L172" title="2 of 4 branches missed.">		if (arguments != null &amp;&amp; arguments.length &gt; 0) {</span>
+<span class="fc" id="L173">			return new JTrologList(this, arguments);</span>
 		}
-<span class="nc" id="L179">		return new JTrologEmpty(this);</span>
+<span class="nc" id="L175">		return new JTrologEmpty(this);</span>
 	}
 
 	public PrologList newList(PrologTerm head, PrologTerm tail) {
-<span class="nc" id="L183">		return new JTrologList(this, head, tail);</span>
+<span class="nc" id="L179">		return new JTrologList(this, head, tail);</span>
 	}
 
 	public PrologList newList(PrologTerm[] arguments, PrologTerm tail) {
-<span class="nc" id="L187">		return new JTrologList(this, arguments, tail);</span>
+<span class="nc" id="L183">		return new JTrologList(this, arguments, tail);</span>
 	}
 
 	public PrologStructure newStructure(String functor, PrologTerm... arguments) {
-<span class="fc" id="L191">		return new JTrologStructure(this, functor, arguments);</span>
+<span class="fc" id="L187">		return new JTrologStructure(this, functor, arguments);</span>
 	}
 
 	public PrologTerm newStructure(PrologTerm left, String operator, PrologTerm right) {
-<span class="fc" id="L195">		return new JTrologStructure(this, left, operator, right);</span>
+<span class="fc" id="L191">		return new JTrologStructure(this, left, operator, right);</span>
 	}
 
 	public PrologTerm newReference(Object reference) {
-<span class="fc" id="L199">		return new JTrologReference(this, reference);</span>
+<span class="fc" id="L195">		return new JTrologReference(this, reference);</span>
 	}
 
 	public final PrologTerm newEntry(PrologTerm key, PrologTerm value) {
-<span class="fc" id="L203">		return new JTrologEntry(this, key, value);</span>
+<span class="fc" id="L199">		return new JTrologEntry(this, key, value);</span>
 	}
 
 	public final PrologTerm newEntry(Object key, Object value) {
-<span class="nc" id="L207">		PrologJavaConverter transformer = getJavaConverter();</span>
-<span class="nc" id="L208">		PrologTerm keyTerm = transformer.toTerm(key);</span>
-<span class="nc" id="L209">		PrologTerm valueTerm = transformer.toTerm(value);</span>
-<span class="nc" id="L210">		return new JTrologEntry(this, keyTerm, valueTerm);</span>
+<span class="nc" id="L203">		PrologJavaConverter transformer = getJavaConverter();</span>
+<span class="nc" id="L204">		PrologTerm keyTerm = transformer.toTerm(key);</span>
+<span class="nc" id="L205">		PrologTerm valueTerm = transformer.toTerm(value);</span>
+<span class="nc" id="L206">		return new JTrologEntry(this, keyTerm, valueTerm);</span>
 	}
 
 	public final PrologTerm newMap(Map&lt;PrologTerm, PrologTerm&gt; map) {
-<span class="nc" id="L214">		return new JTrologMap(this, map);</span>
+<span class="nc" id="L210">		return new JTrologMap(this, map);</span>
 	}
 
 	public final PrologTerm newMap(int initialCapacity) {
-<span class="fc" id="L218">		return new JTrologMap(this, initialCapacity);</span>
+<span class="fc" id="L214">		return new JTrologMap(this, initialCapacity);</span>
 	}
 
 	public final PrologTerm newMap() {
-<span class="fc" id="L222">		return new JTrologMap(this);</span>
+<span class="fc" id="L218">		return new JTrologMap(this);</span>
 	}
 
 	public PrologTerm falseReference() {
-<span class="fc" id="L226">		return newReference(false);</span>
+<span class="fc" id="L222">		return newReference(false);</span>
 	}
 
 	public PrologTerm trueReference() {
-<span class="fc" id="L230">		return newReference(true);</span>
+<span class="fc" id="L226">		return newReference(true);</span>
 	}
 
 	public PrologTerm nullReference() {
-<span class="fc" id="L234">		return newReference(null);</span>
+<span class="fc" id="L230">		return newReference(null);</span>
 	}
 
 	public PrologTerm voidReference() {
-<span class="fc" id="L238">		return newReference(void.class);</span>
+<span class="fc" id="L234">		return newReference(void.class);</span>
 	}
 
 	public PrologJavaConverter getJavaConverter() {
-<span class="fc" id="L242">		return new JTrologJavaConverter(this);</span>
+<span class="fc" id="L238">		return new JTrologJavaConverter(this);</span>
 	}
 
 	public PrologLogger getLogger() {
-<span class="nc" id="L246">		return logger;</span>
+<span class="nc" id="L242">		return logger;</span>
 	}
 
 	@Override
 	public String toString() {
-<span class="nc" id="L251">		return &quot;TuPrologProvider [converter=&quot; + converter + &quot;]&quot;;</span>
+<span class="nc" id="L247">		return &quot;TuPrologProvider [converter=&quot; + converter + &quot;]&quot;;</span>
 	}
 
 }

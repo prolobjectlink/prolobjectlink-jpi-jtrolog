@@ -192,10 +192,6 @@ abstract class JTrologTerm extends AbstractTerm implements PrologTerm {
 		return false;
 	}
 
-	public final Object getObject() {
-		return null;
-	}
-
 	public final PrologTerm getTerm() {
 		return this;
 	}
