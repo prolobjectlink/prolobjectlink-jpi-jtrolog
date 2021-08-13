@@ -28,6 +28,7 @@ import io.github.prolobjectlink.prolog.FunctorError;
 import io.github.prolobjectlink.prolog.PrologProvider;
 import io.github.prolobjectlink.prolog.PrologTerm;
 import io.github.prolobjectlink.prolog.PrologVariable;
+import jTrolog.terms.Term;
 import jTrolog.terms.Var;
 
 /**
@@ -35,7 +36,7 @@ import jTrolog.terms.Var;
  * @author Jose Zalacain
  * @since 1.0
  */
-final class JTrologVariable extends JTrologTerm implements PrologVariable {
+class JTrologVariable extends JTrologTerm implements PrologVariable {
 
 	private String name;
 
@@ -47,6 +48,19 @@ final class JTrologVariable extends JTrologTerm implements PrologVariable {
 	JTrologVariable(PrologProvider provider, String name, int n) {
 		super(VARIABLE_TYPE, provider, name, n);
 		this.name = name;
+	}
+
+	JTrologVariable(int type, PrologProvider provider) {
+		super(type, provider);
+	}
+
+	JTrologVariable(int type, PrologProvider provider, String name, int n) {
+		super(type, provider, name, n);
+		this.name = name;
+	}
+
+	JTrologVariable(int type, PrologProvider provider, Term var) {
+		super(type, provider, var);
 	}
 
 	public boolean isAnonymous() {
