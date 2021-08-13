@@ -37,12 +37,12 @@ public class JTrologTypedParameter extends JTrologParameter implements PrologTyp
 
 	JTrologTypedParameter(PrologProvider provider, String kind, int position) {
 <span class="nc" id="L39">		super(provider, provider.newVariable(position));</span>
-<span class="nc" id="L40">		this.kind = provider.newAtom(kind);</span>
+<span class="nc" id="L40">		this.kind = provider.newVariable(kind, position);</span>
 <span class="nc" id="L41">	}</span>
 
 	JTrologTypedParameter(PrologProvider provider, String name, String kind, int position) {
 <span class="nc" id="L44">		super(provider, provider.newVariable(name, position));</span>
-<span class="nc" id="L45">		this.kind = provider.newAtom(kind);</span>
+<span class="nc" id="L45">		this.kind = provider.newVariable(kind, position);</span>
 <span class="nc" id="L46">	}</span>
 
 	public final int getArity() {

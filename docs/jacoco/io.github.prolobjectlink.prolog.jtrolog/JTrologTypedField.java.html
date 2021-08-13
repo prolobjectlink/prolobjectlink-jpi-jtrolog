@@ -30,18 +30,18 @@ public class JTrologTypedField extends JTrologField implements PrologTypedField 
 	private final PrologTerm kind;
 
 	JTrologTypedField(PrologProvider provider, PrologTerm name, PrologTerm kind) {
-<span class="nc" id="L33">		super(provider, name);</span>
-<span class="nc" id="L34">		this.kind = kind;</span>
-<span class="nc" id="L35">	}</span>
+<span class="fc" id="L33">		super(provider, name);</span>
+<span class="fc" id="L34">		this.kind = kind;</span>
+<span class="fc" id="L35">	}</span>
 
 	JTrologTypedField(PrologProvider provider, String kind, int position) {
 <span class="nc" id="L38">		super(provider, provider.newVariable(position));</span>
-<span class="nc" id="L39">		this.kind = provider.newAtom(kind);</span>
+<span class="nc" id="L39">		this.kind = provider.newVariable(kind, position);</span>
 <span class="nc" id="L40">	}</span>
 
 	JTrologTypedField(PrologProvider provider, String name, String kind, int position) {
 <span class="nc" id="L43">		super(provider, provider.newVariable(name, position));</span>
-<span class="nc" id="L44">		this.kind = provider.newAtom(kind);</span>
+<span class="nc" id="L44">		this.kind = provider.newVariable(kind, position);</span>
 <span class="nc" id="L45">	}</span>
 
 	public final int getArity() {

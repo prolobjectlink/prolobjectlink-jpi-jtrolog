@@ -49,7 +49,7 @@ final class JTrologQuery extends AbstractQuery implements PrologQuery {
 
 	private Solution solution;
 	private Prolog jtrolog;
-<span class="pc" id="L52">	private List&lt;String&gt; variables = new ArrayList&lt;String&gt;();</span>
+<span class="fc" id="L52">	private List&lt;String&gt; variables = new ArrayList&lt;String&gt;();</span>
 
 	private void enumerateVariables(List&lt;String&gt; vector, Term term) {
 <span class="fc bfc" id="L55" title="All 2 branches covered.">		if (!(term instanceof Var)) {</span>
@@ -89,22 +89,22 @@ final class JTrologQuery extends AbstractQuery implements PrologQuery {
 <span class="fc" id="L89">	}</span>
 
 	JTrologQuery(AbstractEngine engine, PrologTerm[] terms) {
-<span class="nc" id="L92">		super(engine);</span>
-<span class="nc" id="L93">		jtrolog = ((JTrologEngine) engine).engine;</span>
-<span class="nc bnc" id="L94" title="All 4 branches missed.">		if (terms != null &amp;&amp; terms.length &gt; 0) {</span>
-<span class="nc" id="L95">			enumerateVariables(variables, fromTerm(terms[terms.length - 1], Term.class));</span>
-<span class="nc bnc" id="L96" title="All 2 branches missed.">			for (int i = terms.length; i &gt; 1; i--) {</span>
-<span class="nc" id="L97">				enumerateVariables(variables, fromTerm(terms[i - 2], Term.class));</span>
+<span class="fc" id="L92">		super(engine);</span>
+<span class="fc" id="L93">		jtrolog = ((JTrologEngine) engine).engine;</span>
+<span class="pc bpc" id="L94" title="1 of 4 branches missed.">		if (terms != null &amp;&amp; terms.length &gt; 0) {</span>
+<span class="fc" id="L95">			enumerateVariables(variables, fromTerm(terms[terms.length - 1], Term.class));</span>
+<span class="fc bfc" id="L96" title="All 2 branches covered.">			for (int i = terms.length; i &gt; 1; i--) {</span>
+<span class="fc" id="L97">				enumerateVariables(variables, fromTerm(terms[i - 2], Term.class));</span>
 			}
-<span class="nc" id="L99">			String str = Arrays.toString(terms).substring(1);</span>
-<span class="nc" id="L100">			str = str.substring(0, str.length() - 1) + '.';</span>
+<span class="fc" id="L99">			String str = Arrays.toString(terms).substring(1);</span>
+<span class="fc" id="L100">			str = str.substring(0, str.length() - 1) + '.';</span>
 			try {
-<span class="nc" id="L102">				this.solution = jtrolog.solve(str);</span>
+<span class="fc" id="L102">				this.solution = jtrolog.solve(str);</span>
 <span class="nc" id="L103">			} catch (Throwable e) {</span>
 				// do nothing
-<span class="nc" id="L105">			}</span>
+<span class="fc" id="L105">			}</span>
 		}
-<span class="nc" id="L107">	}</span>
+<span class="fc" id="L107">	}</span>
 
 	JTrologQuery(AbstractEngine engine, PrologTerm term, PrologTerm[] terms) {
 <span class="fc" id="L110">		super(engine);</span>
@@ -133,10 +133,10 @@ final class JTrologQuery extends AbstractQuery implements PrologQuery {
 	public boolean hasMoreSolutions() {
 		try {
 <span class="fc" id="L135">			return jtrolog.hasOpenAlternatives();</span>
-<span class="nc" id="L136">		} catch (Throwable e) {</span>
+<span class="fc" id="L136">		} catch (Throwable e) {</span>
 			// do nothing
 		}
-<span class="nc" id="L139">		return false;</span>
+<span class="fc" id="L139">		return false;</span>
 	}
 
 	public PrologTerm[] oneSolution() {
@@ -258,7 +258,7 @@ final class JTrologQuery extends AbstractQuery implements PrologQuery {
 <span class="fc" id="L258">		List&lt;PrologTerm[]&gt; all = new ArrayList&lt;PrologTerm[]&gt;();</span>
 
 <span class="fc" id="L260">		PrologTerm[] array = oneSolution();</span>
-<span class="pc bpc" id="L261" title="1 of 2 branches missed.">		if (array.length &gt; 0) {</span>
+<span class="fc bfc" id="L261" title="All 2 branches covered.">		if (array.length &gt; 0) {</span>
 <span class="pc bpc" id="L262" title="1 of 2 branches missed.">			m = array.length &gt; m ? array.length : m;</span>
 <span class="fc" id="L263">			n++;</span>
 <span class="fc" id="L264">			all.add(array);</span>

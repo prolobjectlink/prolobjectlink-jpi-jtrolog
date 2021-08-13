@@ -152,7 +152,7 @@ import jTrolog.terms.Var;
 	}
 
 	public Term fromTerm(PrologTerm term) {
-<span class="pc bpc" id="L155" title="2 of 15 branches missed.">		switch (term.getType()) {</span>
+<span class="pc bpc" id="L155" title="1 of 15 branches missed.">		switch (term.getType()) {</span>
 		case NIL_TYPE:
 <span class="fc" id="L157">			return new StructAtom(&quot;nil&quot;);</span>
 		case CUT_TYPE:
@@ -205,7 +205,7 @@ import jTrolog.terms.Var;
 <span class="fc" id="L205">			Term[] arguments = fromTermArray(((PrologStructure) term).getArguments());</span>
 <span class="fc" id="L206">			return new Struct(functor, arguments);</span>
 		case OBJECT_TYPE:
-<span class="nc" id="L208">			return new Struct(&quot;'@'&quot;, new Term[] { new StructAtom(&quot;'&quot; + term.getObject() + &quot;'&quot;) });</span>
+<span class="fc" id="L208">			return new Struct(&quot;'@'&quot;, new Term[] { new StructAtom(&quot;'&quot; + term.getObject() + &quot;'&quot;) });</span>
 		default:
 <span class="nc" id="L210">			throw new UnknownTermError(term);</span>
 		}

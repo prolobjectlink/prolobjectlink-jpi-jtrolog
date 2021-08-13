@@ -200,14 +200,14 @@ public class JTrolog extends AbstractProvider implements PrologProvider {
 	}
 
 	public final PrologTerm newEntry(Object key, Object value) {
-<span class="nc" id="L203">		PrologJavaConverter transformer = getJavaConverter();</span>
-<span class="nc" id="L204">		PrologTerm keyTerm = transformer.toTerm(key);</span>
-<span class="nc" id="L205">		PrologTerm valueTerm = transformer.toTerm(value);</span>
-<span class="nc" id="L206">		return new JTrologEntry(this, keyTerm, valueTerm);</span>
+<span class="fc" id="L203">		PrologJavaConverter transformer = getJavaConverter();</span>
+<span class="fc" id="L204">		PrologTerm keyTerm = transformer.toTerm(key);</span>
+<span class="fc" id="L205">		PrologTerm valueTerm = transformer.toTerm(value);</span>
+<span class="fc" id="L206">		return new JTrologEntry(this, keyTerm, valueTerm);</span>
 	}
 
 	public final PrologTerm newMap(Map&lt;PrologTerm, PrologTerm&gt; map) {
-<span class="nc" id="L210">		return new JTrologMap(this, map);</span>
+<span class="fc" id="L210">		return new JTrologMap(this, map);</span>
 	}
 
 	public final PrologTerm newMap(int initialCapacity) {
@@ -243,13 +243,13 @@ public class JTrolog extends AbstractProvider implements PrologProvider {
 	}
 
 	public PrologTerm newField(PrologTerm name, PrologTerm type) {
-<span class="nc" id="L246">		return new JTrologTypedField(this, name, type);</span>
+<span class="fc" id="L246">		return new JTrologTypedField(this, name, type);</span>
 	}
 
 	public PrologTerm newField(String name, String type) {
-<span class="nc" id="L250">		PrologTerm oname = newVariable(name, 0);</span>
-<span class="nc" id="L251">		PrologTerm otype = newVariable(type, 1);</span>
-<span class="nc" id="L252">		return new JTrologTypedField(this, oname, otype);</span>
+<span class="fc" id="L250">		PrologTerm oname = newVariable(name, 0);</span>
+<span class="fc" id="L251">		PrologTerm otype = newVariable(type, 1);</span>
+<span class="fc" id="L252">		return new JTrologTypedField(this, oname, otype);</span>
 	}
 
 	public PrologTerm newResult(PrologTerm name) {
@@ -293,12 +293,12 @@ public class JTrolog extends AbstractProvider implements PrologProvider {
 	}
 
 	public PrologLogger getLogger() {
-<span class="nc" id="L296">		return logger;</span>
+<span class="fc" id="L296">		return logger;</span>
 	}
 
 	@Override
 	public String toString() {
-<span class="nc" id="L301">		return &quot;TuPrologProvider [converter=&quot; + converter + &quot;]&quot;;</span>
+<span class="fc" id="L301">		return &quot;JTrolog [converter=&quot; + converter + &quot;]&quot;;</span>
 	}
 
 }

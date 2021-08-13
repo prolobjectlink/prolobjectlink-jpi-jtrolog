@@ -1,0 +1,906 @@
+Comparing source compatibility of C:\Users\Jose Zalacain\Documents\eclipse-java-photon-workspace\prolobjectlink-jpi-jtrolog\target\prolobjectlink-jpi-jtrolog-1.1-SNAPSHOT.jar against C:\Users\Jose Zalacain\.m2\repository\io\github\prolobjectlink\prolobjectlink-jpi-jtrolog\1.0\prolobjectlink-jpi-jtrolog-1.0.jar
+***  MODIFIED CLASS: PUBLIC io.github.prolobjectlink.prolog.jtrolog.JTrolog  (not serializable)
+	===  CLASS FILE FORMAT VERSION: 50.0 <- 50.0
+	===  UNCHANGED INTERFACE: io.github.prolobjectlink.prolog.PrologProvider
+	===  UNCHANGED INTERFACE: java.util.Map
+	===  UNCHANGED INTERFACE: io.github.prolobjectlink.prolog.PrologMapper
+	===  UNCHANGED INTERFACE: io.github.prolobjectlink.prolog.PrologParser
+	===  UNCHANGED SUPERCLASS: io.github.prolobjectlink.prolog.AbstractProvider (<- io.github.prolobjectlink.prolog.AbstractProvider)
+	===  UNCHANGED CONSTRUCTOR: PUBLIC JTrolog()
+	+++  NEW METHOD: PUBLIC(+) io.github.prolobjectlink.prolog.PrologTerm falseReference()
+	===  UNCHANGED METHOD: PUBLIC io.github.prolobjectlink.prolog.PrologJavaConverter getJavaConverter()
+	===  UNCHANGED METHOD: PUBLIC io.github.prolobjectlink.prolog.PrologLogger getLogger()
+	---  REMOVED METHOD: PUBLIC(-) boolean isCompliant()
+	===  UNCHANGED METHOD: PUBLIC io.github.prolobjectlink.prolog.PrologAtom newAtom(java.lang.String)
+	===  UNCHANGED METHOD: PUBLIC io.github.prolobjectlink.prolog.PrologDouble newDouble(java.lang.Number)
+	===  UNCHANGED METHOD: PUBLIC io.github.prolobjectlink.prolog.PrologEngine newEngine()
+	===  UNCHANGED METHOD: PUBLIC io.github.prolobjectlink.prolog.PrologEngine newEngine(java.lang.String)
+	+++  NEW METHOD: PUBLIC(+) FINAL(+) io.github.prolobjectlink.prolog.PrologTerm newEntry(io.github.prolobjectlink.prolog.PrologTerm, io.github.prolobjectlink.prolog.PrologTerm)
+	+++  NEW METHOD: PUBLIC(+) FINAL(+) io.github.prolobjectlink.prolog.PrologTerm newEntry(java.lang.Object, java.lang.Object)
+	+++  NEW METHOD: PUBLIC(+) io.github.prolobjectlink.prolog.PrologTerm newField(io.github.prolobjectlink.prolog.PrologTerm)
+	+++  NEW METHOD: PUBLIC(+) io.github.prolobjectlink.prolog.PrologTerm newField(java.lang.String)
+	+++  NEW METHOD: PUBLIC(+) io.github.prolobjectlink.prolog.PrologTerm newField(io.github.prolobjectlink.prolog.PrologTerm, io.github.prolobjectlink.prolog.PrologTerm)
+	+++  NEW METHOD: PUBLIC(+) io.github.prolobjectlink.prolog.PrologTerm newField(java.lang.String, java.lang.String)
+	===  UNCHANGED METHOD: PUBLIC io.github.prolobjectlink.prolog.PrologFloat newFloat(java.lang.Number)
+	===  UNCHANGED METHOD: PUBLIC io.github.prolobjectlink.prolog.PrologInteger newInteger(java.lang.Number)
+	===  UNCHANGED METHOD: PUBLIC io.github.prolobjectlink.prolog.PrologList newList()
+	===  UNCHANGED METHOD: PUBLIC io.github.prolobjectlink.prolog.PrologList newList(io.github.prolobjectlink.prolog.PrologTerm[])
+	===  UNCHANGED METHOD: PUBLIC io.github.prolobjectlink.prolog.PrologList newList(io.github.prolobjectlink.prolog.PrologTerm, io.github.prolobjectlink.prolog.PrologTerm)
+	===  UNCHANGED METHOD: PUBLIC io.github.prolobjectlink.prolog.PrologList newList(io.github.prolobjectlink.prolog.PrologTerm[], io.github.prolobjectlink.prolog.PrologTerm)
+	===  UNCHANGED METHOD: PUBLIC io.github.prolobjectlink.prolog.PrologLong newLong(java.lang.Number)
+	+++  NEW METHOD: PUBLIC(+) FINAL(+) io.github.prolobjectlink.prolog.PrologTerm newMap(java.util.Map)
+	+++  NEW METHOD: PUBLIC(+) FINAL(+) io.github.prolobjectlink.prolog.PrologTerm newMap(int)
+	+++  NEW METHOD: PUBLIC(+) FINAL(+) io.github.prolobjectlink.prolog.PrologTerm newMap()
+	+++  NEW METHOD: PUBLIC(+) io.github.prolobjectlink.prolog.PrologTerm newParameter(io.github.prolobjectlink.prolog.PrologTerm)
+	+++  NEW METHOD: PUBLIC(+) io.github.prolobjectlink.prolog.PrologTerm newParameter(java.lang.String)
+	+++  NEW METHOD: PUBLIC(+) io.github.prolobjectlink.prolog.PrologTerm newParameter(io.github.prolobjectlink.prolog.PrologTerm, io.github.prolobjectlink.prolog.PrologTerm)
+	+++  NEW METHOD: PUBLIC(+) io.github.prolobjectlink.prolog.PrologTerm newParameter(java.lang.String, java.lang.String)
+	===  UNCHANGED METHOD: PUBLIC io.github.prolobjectlink.prolog.PrologTerm newReference(java.lang.Object)
+	+++  NEW METHOD: PUBLIC(+) io.github.prolobjectlink.prolog.PrologTerm newResult(io.github.prolobjectlink.prolog.PrologTerm)
+	+++  NEW METHOD: PUBLIC(+) io.github.prolobjectlink.prolog.PrologTerm newResult(java.lang.String)
+	+++  NEW METHOD: PUBLIC(+) io.github.prolobjectlink.prolog.PrologTerm newResult(io.github.prolobjectlink.prolog.PrologTerm, io.github.prolobjectlink.prolog.PrologTerm)
+	+++  NEW METHOD: PUBLIC(+) io.github.prolobjectlink.prolog.PrologTerm newResult(java.lang.String, java.lang.String)
+	===  UNCHANGED METHOD: PUBLIC io.github.prolobjectlink.prolog.PrologStructure newStructure(java.lang.String, io.github.prolobjectlink.prolog.PrologTerm[])
+	===  UNCHANGED METHOD: PUBLIC io.github.prolobjectlink.prolog.PrologTerm newStructure(io.github.prolobjectlink.prolog.PrologTerm, java.lang.String, io.github.prolobjectlink.prolog.PrologTerm)
+	===  UNCHANGED METHOD: PUBLIC io.github.prolobjectlink.prolog.PrologVariable newVariable(int)
+	===  UNCHANGED METHOD: PUBLIC io.github.prolobjectlink.prolog.PrologVariable newVariable(java.lang.String, int)
+	+++  NEW METHOD: PUBLIC(+) io.github.prolobjectlink.prolog.PrologTerm nullReference()
+	===  UNCHANGED METHOD: PUBLIC io.github.prolobjectlink.prolog.PrologTerm parseTerm(java.lang.String)
+	===  UNCHANGED METHOD: PUBLIC io.github.prolobjectlink.prolog.PrologTerm[] parseTerms(java.lang.String)
+	===  UNCHANGED METHOD: PUBLIC io.github.prolobjectlink.prolog.PrologTerm prologCut()
+	===  UNCHANGED METHOD: PUBLIC io.github.prolobjectlink.prolog.PrologTerm prologEmpty()
+	===  UNCHANGED METHOD: PUBLIC io.github.prolobjectlink.prolog.PrologTerm prologFail()
+	===  UNCHANGED METHOD: PUBLIC io.github.prolobjectlink.prolog.PrologTerm prologFalse()
+	===  UNCHANGED METHOD: PUBLIC io.github.prolobjectlink.prolog.PrologTerm prologInclude(java.lang.String)
+	===  UNCHANGED METHOD: PUBLIC io.github.prolobjectlink.prolog.PrologTerm prologNil()
+	===  UNCHANGED METHOD: PUBLIC io.github.prolobjectlink.prolog.PrologTerm prologTrue()
+	===  UNCHANGED METHOD: PUBLIC java.lang.String toString()
+	+++  NEW METHOD: PUBLIC(+) io.github.prolobjectlink.prolog.PrologTerm trueReference()
+	+++  NEW METHOD: PUBLIC(+) io.github.prolobjectlink.prolog.PrologTerm voidReference()
+===  UNCHANGED CLASS: PUBLIC io.github.prolobjectlink.prolog.jtrolog.JTrologConsole  (not serializable)
+	===  CLASS FILE FORMAT VERSION: 50.0 <- 50.0
+	===  UNCHANGED INTERFACE: io.github.prolobjectlink.prolog.PrologConsole
+	===  UNCHANGED SUPERCLASS: io.github.prolobjectlink.prolog.AbstractConsole (<- io.github.prolobjectlink.prolog.AbstractConsole)
+	===  UNCHANGED CONSTRUCTOR: PUBLIC JTrologConsole()
+	===  UNCHANGED METHOD: PUBLIC STATIC void main(java.lang.String[])
+***  MODIFIED CLASS: PUBLIC io.github.prolobjectlink.prolog.jtrolog.JTrologEngine  (not serializable)
+	===  CLASS FILE FORMAT VERSION: 50.0 <- 50.0
+	===  UNCHANGED INTERFACE: java.util.Map
+	===  UNCHANGED INTERFACE: io.github.prolobjectlink.prolog.PrologEngine
+	===  UNCHANGED INTERFACE: java.lang.Iterable
+	===  UNCHANGED SUPERCLASS: io.github.prolobjectlink.prolog.AbstractEngine (<- io.github.prolobjectlink.prolog.AbstractEngine)
+	===  UNCHANGED CONSTRUCTOR: PROTECTED JTrologEngine(io.github.prolobjectlink.prolog.PrologProvider, jTrolog.engine.Prolog)
+	===  UNCHANGED METHOD: PUBLIC void abolish(java.lang.String, int)
+	===  UNCHANGED METHOD: PUBLIC void asserta(java.lang.String)
+	===  UNCHANGED METHOD: PUBLIC void asserta(io.github.prolobjectlink.prolog.PrologTerm, io.github.prolobjectlink.prolog.PrologTerm[])
+	+++  NEW METHOD: PUBLIC(+) void asserta(io.github.prolobjectlink.prolog.PrologTerm)
+	===  UNCHANGED METHOD: PUBLIC void assertz(java.lang.String)
+	===  UNCHANGED METHOD: PUBLIC void assertz(io.github.prolobjectlink.prolog.PrologTerm, io.github.prolobjectlink.prolog.PrologTerm[])
+	+++  NEW METHOD: PUBLIC(+) void assertz(io.github.prolobjectlink.prolog.PrologTerm)
+	===  UNCHANGED METHOD: PUBLIC boolean clause(java.lang.String)
+	===  UNCHANGED METHOD: PUBLIC boolean clause(io.github.prolobjectlink.prolog.PrologTerm, io.github.prolobjectlink.prolog.PrologTerm[])
+	+++  NEW METHOD: PUBLIC(+) boolean clause(io.github.prolobjectlink.prolog.PrologTerm)
+	===  UNCHANGED METHOD: PUBLIC void consult(java.lang.String)
+	===  UNCHANGED METHOD: PUBLIC void consult(java.io.Reader)
+	===  UNCHANGED METHOD: PUBLIC boolean currentOperator(int, java.lang.String, java.lang.String)
+	===  UNCHANGED METHOD: PUBLIC java.util.Set currentOperators()
+	===  UNCHANGED METHOD: PUBLIC boolean currentPredicate(java.lang.String, int)
+	===  UNCHANGED METHOD: PUBLIC void dispose()
+	===  UNCHANGED METHOD: PUBLIC boolean equals(java.lang.Object)
+	===  UNCHANGED METHOD: PUBLIC java.util.Set getBuiltIns()
+	===  UNCHANGED METHOD: PUBLIC java.lang.String getLicense()
+	===  UNCHANGED METHOD: PUBLIC java.lang.String getName()
+	===  UNCHANGED METHOD: PUBLIC java.util.Set getPredicates()
+	+++  NEW METHOD: PUBLIC(+) io.github.prolobjectlink.prolog.PrologProgram getProgram()
+	===  UNCHANGED METHOD: PUBLIC int getProgramSize()
+	+++  NEW METHOD: PUBLIC(+) FINAL(+) java.lang.String getVendor()
+	===  UNCHANGED METHOD: PUBLIC java.lang.String getVersion()
+	===  UNCHANGED METHOD: PUBLIC int hashCode()
+	===  UNCHANGED METHOD: PUBLIC void include(java.lang.String)
+	===  UNCHANGED METHOD: PUBLIC void include(java.io.Reader)
+	===  UNCHANGED METHOD: PUBLIC java.util.Iterator iterator()
+	===  UNCHANGED METHOD: PUBLIC void operator(int, java.lang.String, java.lang.String)
+	===  UNCHANGED METHOD: PUBLIC void persist(java.lang.String)
+	===  UNCHANGED METHOD: PUBLIC io.github.prolobjectlink.prolog.PrologQuery query(java.lang.String)
+	===  UNCHANGED METHOD: PUBLIC io.github.prolobjectlink.prolog.PrologQuery query(io.github.prolobjectlink.prolog.PrologTerm[])
+	===  UNCHANGED METHOD: PUBLIC io.github.prolobjectlink.prolog.PrologQuery query(io.github.prolobjectlink.prolog.PrologTerm, io.github.prolobjectlink.prolog.PrologTerm[])
+	+++  NEW METHOD: PUBLIC(+) io.github.prolobjectlink.prolog.PrologQuery query(io.github.prolobjectlink.prolog.PrologTerm)
+	===  UNCHANGED METHOD: PUBLIC void retract(java.lang.String)
+	===  UNCHANGED METHOD: PUBLIC void retract(io.github.prolobjectlink.prolog.PrologTerm, io.github.prolobjectlink.prolog.PrologTerm[])
+	+++  NEW METHOD: PUBLIC(+) void retract(io.github.prolobjectlink.prolog.PrologTerm)
+	===  UNCHANGED METHOD: PUBLIC FINAL java.util.List verify()
++++* NEW CLASS: PUBLIC(+) FINAL(+) io.github.prolobjectlink.prolog.jtrolog.JTrologEntry  (not serializable)
+	+++  CLASS FILE FORMAT VERSION: 50.0 <- n.a.
+	+++  NEW INTERFACE: io.github.prolobjectlink.prolog.PrologEntry
+	+++  NEW INTERFACE: java.util.Map$Entry
+	+++  NEW INTERFACE: io.github.prolobjectlink.prolog.PrologElement
+	+++  NEW INTERFACE: java.lang.Comparable
+	+++  NEW INTERFACE: io.github.prolobjectlink.prolog.PrologTerm
+	+++  NEW SUPERCLASS: io.github.prolobjectlink.prolog.AbstractCompounds
+	+++  NEW METHOD: PUBLIC(+) boolean equals(java.lang.Object)
+	+++  NEW METHOD: PUBLIC(+) io.github.prolobjectlink.prolog.PrologTerm[] getArguments()
+	+++  NEW METHOD: PUBLIC(+) int getArity()
+	+++  NEW METHOD: PUBLIC(+) java.lang.String getFunctor()
+	+++  NEW METHOD: PUBLIC(+) io.github.prolobjectlink.prolog.PrologTerm getKey()
+	+++  NEW METHOD: PUBLIC(+) io.github.prolobjectlink.prolog.PrologTerm getValue()
+	+++  NEW METHOD: PUBLIC(+) int hashCode()
+	+++  NEW METHOD: PUBLIC(+) boolean isEmptyList()
+	+++  NEW METHOD: PUBLIC(+) boolean isList()
+	+++  NEW METHOD: PUBLIC(+) boolean isStructure()
+	+++  NEW METHOD: PUBLIC(+) io.github.prolobjectlink.prolog.PrologTerm setValue(io.github.prolobjectlink.prolog.PrologTerm)
+	+++  NEW METHOD: PUBLIC(+) java.lang.String toString()
++++* NEW CLASS: PUBLIC(+) io.github.prolobjectlink.prolog.jtrolog.JTrologField  (not serializable)
+	+++  CLASS FILE FORMAT VERSION: 50.0 <- n.a.
+	+++  NEW INTERFACE: io.github.prolobjectlink.prolog.PrologVariable
+	+++  NEW INTERFACE: io.github.prolobjectlink.prolog.PrologElement
+	+++  NEW INTERFACE: java.lang.Comparable
+	+++  NEW INTERFACE: io.github.prolobjectlink.prolog.PrologTerm
+	+++  NEW INTERFACE: io.github.prolobjectlink.prolog.PrologField
+	+++  NEW SUPERCLASS: io.github.prolobjectlink.prolog.jtrolog.JTrologVariable
+	+++  NEW METHOD: PUBLIC(+) FINAL(+) io.github.prolobjectlink.prolog.PrologTerm getNameTerm()
++++* NEW CLASS: PUBLIC(+) FINAL(+) io.github.prolobjectlink.prolog.jtrolog.JTrologMap  (not serializable)
+	+++  CLASS FILE FORMAT VERSION: 50.0 <- n.a.
+	+++  NEW INTERFACE: io.github.prolobjectlink.prolog.PrologList
+	+++  NEW INTERFACE: io.github.prolobjectlink.prolog.PrologMap
+	+++  NEW INTERFACE: java.util.Map
+	+++  NEW INTERFACE: io.github.prolobjectlink.prolog.PrologElement
+	+++  NEW INTERFACE: java.lang.Comparable
+	+++  NEW INTERFACE: io.github.prolobjectlink.prolog.PrologTerm
+	+++  NEW INTERFACE: java.lang.Iterable
+	+++  NEW SUPERCLASS: io.github.prolobjectlink.prolog.AbstractCompounds
+	+++  NEW METHOD: PUBLIC(+) void clear()
+	+++  NEW METHOD: PUBLIC(+) boolean contains(java.util.Map$Entry)
+	+++  NEW METHOD: PUBLIC(+) boolean containsKey(java.lang.Object)
+	+++  NEW METHOD: PUBLIC(+) boolean containsValue(java.lang.Object)
+	+++  NEW METHOD: PUBLIC(+) java.util.Set entrySet()
+	+++  NEW METHOD: PUBLIC(+) boolean equals(java.lang.Object)
+	+++  NEW METHOD: PUBLIC(+) io.github.prolobjectlink.prolog.PrologTerm get(java.lang.Object)
+	+++  NEW METHOD: PUBLIC(+) io.github.prolobjectlink.prolog.PrologTerm getArgument(int)
+	+++  NEW METHOD: PUBLIC(+) io.github.prolobjectlink.prolog.PrologTerm[] getArguments()
+	+++  NEW METHOD: PUBLIC(+) int getArity()
+	+++  NEW METHOD: PUBLIC(+) java.lang.String getFunctor()
+	+++  NEW METHOD: PUBLIC(+) io.github.prolobjectlink.prolog.PrologTerm getHead()
+	+++  NEW METHOD: PUBLIC(+) io.github.prolobjectlink.prolog.PrologTerm getTail()
+	+++  NEW METHOD: PUBLIC(+) int hashCode()
+	+++  NEW METHOD: PUBLIC(+) boolean isEmpty()
+	+++  NEW METHOD: PUBLIC(+) boolean isEmptyList()
+	+++  NEW METHOD: PUBLIC(+) boolean isList()
+	+++  NEW METHOD: PUBLIC(+) boolean isStructure()
+	+++  NEW METHOD: PUBLIC(+) java.util.Iterator iterator()
+	+++  NEW METHOD: PUBLIC(+) java.util.Set keySet()
+	+++  NEW METHOD: PUBLIC(+) void put(java.util.Map$Entry)
+	+++  NEW METHOD: PUBLIC(+) io.github.prolobjectlink.prolog.PrologTerm put(io.github.prolobjectlink.prolog.PrologTerm, io.github.prolobjectlink.prolog.PrologTerm)
+	+++  NEW METHOD: PUBLIC(+) void putAll(java.util.Collection)
+	+++  NEW METHOD: PUBLIC(+) void putAll(java.util.Map)
+	+++  NEW METHOD: PUBLIC(+) void remove(java.util.Map$Entry)
+	+++  NEW METHOD: PUBLIC(+) io.github.prolobjectlink.prolog.PrologTerm remove(java.lang.Object)
+	+++  NEW METHOD: PUBLIC(+) int size()
+	+++  NEW METHOD: PUBLIC(+) java.lang.String toString()
+	+++  NEW METHOD: PUBLIC(+) java.util.Collection values()
++++* NEW CLASS: PUBLIC(+) io.github.prolobjectlink.prolog.jtrolog.JTrologParameter  (not serializable)
+	+++  CLASS FILE FORMAT VERSION: 50.0 <- n.a.
+	+++  NEW INTERFACE: io.github.prolobjectlink.prolog.PrologVariable
+	+++  NEW INTERFACE: io.github.prolobjectlink.prolog.PrologElement
+	+++  NEW INTERFACE: java.lang.Comparable
+	+++  NEW INTERFACE: io.github.prolobjectlink.prolog.PrologTerm
+	+++  NEW INTERFACE: io.github.prolobjectlink.prolog.PrologParameter
+	+++  NEW SUPERCLASS: io.github.prolobjectlink.prolog.jtrolog.JTrologVariable
+	+++  NEW METHOD: PUBLIC(+) FINAL(+) io.github.prolobjectlink.prolog.PrologTerm getNameTerm()
++++* NEW CLASS: PUBLIC(+) FINAL(+) io.github.prolobjectlink.prolog.jtrolog.JTrologReference  (not serializable)
+	+++  CLASS FILE FORMAT VERSION: 50.0 <- n.a.
+	+++  NEW INTERFACE: io.github.prolobjectlink.prolog.PrologElement
+	+++  NEW INTERFACE: java.lang.Comparable
+	+++  NEW INTERFACE: io.github.prolobjectlink.prolog.PrologTerm
+	+++  NEW INTERFACE: io.github.prolobjectlink.prolog.PrologReference
+	+++  NEW SUPERCLASS: io.github.prolobjectlink.prolog.jtrolog.JTrologTerm
+	+++  NEW FIELD: PROTECTED(+) FINAL(+) java.lang.Object reference
+	+++  NEW CONSTRUCTOR: PROTECTED(+) JTrologReference(io.github.prolobjectlink.prolog.PrologProvider, java.lang.Object)
+	+++  NEW METHOD: PUBLIC(+) boolean equals(java.lang.Object)
+	+++  NEW METHOD: PUBLIC(+) io.github.prolobjectlink.prolog.PrologTerm[] getArguments()
+	+++  NEW METHOD: PUBLIC(+) int getArity()
+	+++  NEW METHOD: PUBLIC(+) java.lang.String getFunctor()
+	+++  NEW METHOD: PUBLIC(+) java.lang.Object getObject()
+	+++  NEW METHOD: PUBLIC(+) java.lang.Class getReferenceType()
+	+++  NEW METHOD: PUBLIC(+) io.github.prolobjectlink.prolog.PrologTerm getTerm()
+	+++  NEW METHOD: PUBLIC(+) int hashCode()
+	+++  NEW METHOD: PUBLIC(+) java.lang.String toString()
++++* NEW CLASS: PUBLIC(+) io.github.prolobjectlink.prolog.jtrolog.JTrologResult  (not serializable)
+	+++  CLASS FILE FORMAT VERSION: 50.0 <- n.a.
+	+++  NEW INTERFACE: io.github.prolobjectlink.prolog.PrologResult
+	+++  NEW INTERFACE: io.github.prolobjectlink.prolog.PrologVariable
+	+++  NEW INTERFACE: io.github.prolobjectlink.prolog.PrologElement
+	+++  NEW INTERFACE: java.lang.Comparable
+	+++  NEW INTERFACE: io.github.prolobjectlink.prolog.PrologTerm
+	+++  NEW SUPERCLASS: io.github.prolobjectlink.prolog.jtrolog.JTrologVariable
+	+++  NEW METHOD: PUBLIC(+) FINAL(+) io.github.prolobjectlink.prolog.PrologTerm getNameTerm()
+===  UNCHANGED CLASS: PUBLIC FINAL io.github.prolobjectlink.prolog.jtrolog.JTrologScriptFactory  (not serializable)
+	===  CLASS FILE FORMAT VERSION: 50.0 <- 50.0
+	===  UNCHANGED INTERFACE: javax.script.ScriptEngineFactory
+	===  UNCHANGED SUPERCLASS: io.github.prolobjectlink.prolog.PrologScriptEngineFactory (<- io.github.prolobjectlink.prolog.PrologScriptEngineFactory)
+	===  UNCHANGED CONSTRUCTOR: PUBLIC JTrologScriptFactory()
+	===  UNCHANGED METHOD: PUBLIC java.lang.String getMethodCallSyntax(java.lang.String, java.lang.String, java.lang.String[])
++++* NEW CLASS: PUBLIC(+) io.github.prolobjectlink.prolog.jtrolog.JTrologTypedField  (not serializable)
+	+++  CLASS FILE FORMAT VERSION: 50.0 <- n.a.
+	+++  NEW INTERFACE: io.github.prolobjectlink.prolog.PrologTypedField
+	+++  NEW INTERFACE: io.github.prolobjectlink.prolog.PrologEntry
+	+++  NEW INTERFACE: java.util.Map$Entry
+	+++  NEW INTERFACE: io.github.prolobjectlink.prolog.PrologVariable
+	+++  NEW INTERFACE: io.github.prolobjectlink.prolog.PrologElement
+	+++  NEW INTERFACE: java.lang.Comparable
+	+++  NEW INTERFACE: io.github.prolobjectlink.prolog.PrologTerm
+	+++  NEW INTERFACE: io.github.prolobjectlink.prolog.PrologField
+	+++  NEW SUPERCLASS: io.github.prolobjectlink.prolog.jtrolog.JTrologField
+	+++  NEW METHOD: PUBLIC(+) io.github.prolobjectlink.prolog.PrologTerm[] getArguments()
+	+++  NEW METHOD: PUBLIC(+) FINAL(+) int getArity()
+	+++  NEW METHOD: PUBLIC(+) FINAL(+) java.lang.String getFunctor()
+	+++  NEW METHOD: PUBLIC(+) io.github.prolobjectlink.prolog.PrologTerm getKey()
+	+++  NEW METHOD: PUBLIC(+) java.lang.String getKind()
+	+++  NEW METHOD: PUBLIC(+) io.github.prolobjectlink.prolog.PrologTerm getKindTerm()
+	+++  NEW METHOD: PUBLIC(+) io.github.prolobjectlink.prolog.PrologTerm getValue()
+	+++  NEW METHOD: PUBLIC(+) io.github.prolobjectlink.prolog.PrologTerm setValue(io.github.prolobjectlink.prolog.PrologTerm)
++++* NEW CLASS: PUBLIC(+) io.github.prolobjectlink.prolog.jtrolog.JTrologTypedParameter  (not serializable)
+	+++  CLASS FILE FORMAT VERSION: 50.0 <- n.a.
+	+++  NEW INTERFACE: io.github.prolobjectlink.prolog.PrologEntry
+	+++  NEW INTERFACE: java.util.Map$Entry
+	+++  NEW INTERFACE: io.github.prolobjectlink.prolog.PrologTypedParameter
+	+++  NEW INTERFACE: io.github.prolobjectlink.prolog.PrologVariable
+	+++  NEW INTERFACE: io.github.prolobjectlink.prolog.PrologElement
+	+++  NEW INTERFACE: java.lang.Comparable
+	+++  NEW INTERFACE: io.github.prolobjectlink.prolog.PrologTerm
+	+++  NEW INTERFACE: io.github.prolobjectlink.prolog.PrologParameter
+	+++  NEW SUPERCLASS: io.github.prolobjectlink.prolog.jtrolog.JTrologParameter
+	+++  NEW METHOD: PUBLIC(+) io.github.prolobjectlink.prolog.PrologTerm[] getArguments()
+	+++  NEW METHOD: PUBLIC(+) FINAL(+) int getArity()
+	+++  NEW METHOD: PUBLIC(+) FINAL(+) java.lang.String getFunctor()
+	+++  NEW METHOD: PUBLIC(+) io.github.prolobjectlink.prolog.PrologTerm getKey()
+	+++  NEW METHOD: PUBLIC(+) java.lang.String getKind()
+	+++  NEW METHOD: PUBLIC(+) io.github.prolobjectlink.prolog.PrologTerm getKindTerm()
+	+++  NEW METHOD: PUBLIC(+) io.github.prolobjectlink.prolog.PrologTerm getValue()
+	+++  NEW METHOD: PUBLIC(+) io.github.prolobjectlink.prolog.PrologTerm setValue(io.github.prolobjectlink.prolog.PrologTerm)
++++* NEW CLASS: PUBLIC(+) io.github.prolobjectlink.prolog.jtrolog.JTrologTypedResult  (not serializable)
+	+++  CLASS FILE FORMAT VERSION: 50.0 <- n.a.
+	+++  NEW INTERFACE: io.github.prolobjectlink.prolog.PrologEntry
+	+++  NEW INTERFACE: io.github.prolobjectlink.prolog.PrologResult
+	+++  NEW INTERFACE: io.github.prolobjectlink.prolog.PrologTypedResult
+	+++  NEW INTERFACE: java.util.Map$Entry
+	+++  NEW INTERFACE: io.github.prolobjectlink.prolog.PrologVariable
+	+++  NEW INTERFACE: io.github.prolobjectlink.prolog.PrologElement
+	+++  NEW INTERFACE: java.lang.Comparable
+	+++  NEW INTERFACE: io.github.prolobjectlink.prolog.PrologTerm
+	+++  NEW INTERFACE: io.github.prolobjectlink.prolog.PrologField
+	+++  NEW SUPERCLASS: io.github.prolobjectlink.prolog.jtrolog.JTrologResult
+	+++  NEW METHOD: PUBLIC(+) io.github.prolobjectlink.prolog.PrologTerm[] getArguments()
+	+++  NEW METHOD: PUBLIC(+) FINAL(+) int getArity()
+	+++  NEW METHOD: PUBLIC(+) FINAL(+) java.lang.String getFunctor()
+	+++  NEW METHOD: PUBLIC(+) io.github.prolobjectlink.prolog.PrologTerm getKey()
+	+++  NEW METHOD: PUBLIC(+) java.lang.String getKind()
+	+++  NEW METHOD: PUBLIC(+) io.github.prolobjectlink.prolog.PrologTerm getKindTerm()
+	+++  NEW METHOD: PUBLIC(+) io.github.prolobjectlink.prolog.PrologTerm getValue()
+	+++  NEW METHOD: PUBLIC(+) io.github.prolobjectlink.prolog.PrologTerm setValue(io.github.prolobjectlink.prolog.PrologTerm)
+===  UNCHANGED CLASS: PUBLIC jTrolog.engine.BindingsTable  (not serializable)
+	===  CLASS FILE FORMAT VERSION: 50.0 <- 50.0
+	===  UNCHANGED SUPERCLASS: java.lang.Object (<- java.lang.Object)
+	===  UNCHANGED CONSTRUCTOR: PUBLIC BindingsTable()
+	===  UNCHANGED METHOD: PUBLIC jTrolog.terms.Struct createStructList(java.util.Collection)
+	===  UNCHANGED METHOD: PUBLIC jTrolog.terms.Number evalExpression(jTrolog.engine.Prolog, jTrolog.terms.EvaluableTerm)
+		===  UNCHANGED EXCEPTION: jTrolog.errors.PrologException
+		===  UNCHANGED EXCEPTION: java.lang.Throwable
+	===  UNCHANGED METHOD: PUBLIC void expandLinkTable(int)
+	===  UNCHANGED METHOD: PUBLIC jTrolog.terms.Term flatCopy(jTrolog.terms.Term, int)
+	===  UNCHANGED METHOD: PUBLIC int getUniqueExecutionCtxID()
+	===  UNCHANGED METHOD: PUBLIC jTrolog.terms.Term resolve(jTrolog.terms.Term)
+	===  UNCHANGED METHOD: PUBLIC jTrolog.terms.Term resolveFaster(jTrolog.terms.Term, int)
+	===  UNCHANGED METHOD: PUBLIC java.util.Iterator structListIterator(jTrolog.terms.Struct, boolean)
+		===  UNCHANGED EXCEPTION: jTrolog.errors.PrologException
+	===  UNCHANGED METHOD: PUBLIC boolean unify(jTrolog.terms.Term, jTrolog.terms.Term)
+	===  UNCHANGED METHOD: PUBLIC STATIC jTrolog.terms.Term unWrap(jTrolog.terms.Term)
+	===  UNCHANGED METHOD: PUBLIC jTrolog.terms.Term variant(jTrolog.terms.Term)
+	===  UNCHANGED METHOD: PUBLIC jTrolog.terms.Term wrapWithID(jTrolog.terms.Term)
+	===  UNCHANGED METHOD: PUBLIC STATIC jTrolog.terms.Term wrapWithID(jTrolog.terms.Term, int)
+===  UNCHANGED CLASS: PUBLIC jTrolog.engine.Prolog  (compatible)
+	===  CLASS FILE FORMAT VERSION: 50.0 <- 50.0
+	===  UNCHANGED INTERFACE: java.io.Serializable
+	===  UNCHANGED SUPERCLASS: java.lang.Object (<- java.lang.Object)
+	===  UNCHANGED FIELD: PUBLIC STATIC FINAL jTrolog.engine.Prolog defaultMachine
+	===  UNCHANGED FIELD: PUBLIC STATIC FINAL int XFY
+	===  UNCHANGED FIELD: PUBLIC STATIC FINAL int YFX
+	===  UNCHANGED FIELD: PUBLIC STATIC FINAL int XFX
+	===  UNCHANGED FIELD: PUBLIC STATIC FINAL int OP_HIGH
+	===  UNCHANGED FIELD: PUBLIC STATIC FINAL int YF
+	===  UNCHANGED FIELD: PUBLIC STATIC FINAL int XF
+	===  UNCHANGED FIELD: PUBLIC STATIC FINAL int FX
+	===  UNCHANGED FIELD: PUBLIC STATIC FINAL int FY
+	===  UNCHANGED FIELD: PUBLIC STATIC FINAL int OP_LOW
+	===  UNCHANGED FIELD: PUBLIC STATIC FINAL java.lang.String VERSION
+	===  UNCHANGED CONSTRUCTOR: PUBLIC Prolog(java.lang.String[])
+	===  UNCHANGED CONSTRUCTOR: PUBLIC Prolog()
+	===  UNCHANGED CONSTRUCTOR: PUBLIC Prolog(java.lang.String)
+	===  UNCHANGED METHOD: PUBLIC void abolish(java.lang.String)
+		===  UNCHANGED EXCEPTION: jTrolog.errors.PrologException
+	===  UNCHANGED METHOD: PUBLIC void addTheory(java.lang.String)
+		===  UNCHANGED EXCEPTION: jTrolog.errors.PrologException
+	===  UNCHANGED METHOD: PUBLIC void assertA(jTrolog.terms.Clause)
+		===  UNCHANGED EXCEPTION: jTrolog.errors.PrologException
+	===  UNCHANGED METHOD: PUBLIC void assertZ(jTrolog.terms.Clause)
+		===  UNCHANGED EXCEPTION: jTrolog.errors.PrologException
+	===  UNCHANGED METHOD: PUBLIC void clearTheory()
+	===  UNCHANGED METHOD: PUBLIC void defineFlag(java.lang.String, jTrolog.terms.Struct, jTrolog.terms.Term, boolean)
+	===  UNCHANGED METHOD: PUBLIC java.util.Iterator dynamicPredicateIndicators()
+	===  UNCHANGED METHOD: PUBLIC STATIC boolean evalPrimitive(jTrolog.engine.PrimitiveInfo, java.lang.Object[])
+		===  UNCHANGED EXCEPTION: java.lang.Throwable
+	===  UNCHANGED METHOD: PUBLIC java.util.List find(java.lang.String)
+		===  UNCHANGED EXCEPTION: jTrolog.errors.PrologException
+	===  UNCHANGED METHOD: PUBLIC java.util.List getAndResetWarnings()
+	===  UNCHANGED METHOD: PUBLIC java.util.Iterator getCurrentLibraries()
+	===  UNCHANGED METHOD: PUBLIC java.util.Iterator getCurrentOperators()
+	===  UNCHANGED METHOD: PUBLIC jTrolog.terms.Flag getFlag(java.lang.String)
+	===  UNCHANGED METHOD: PUBLIC jTrolog.terms.Term getFlagValue(java.lang.String)
+	===  UNCHANGED METHOD: PUBLIC java.lang.String getLastConsultedTheory()
+	===  UNCHANGED METHOD: PUBLIC jTrolog.lib.Library getLibrary(java.lang.String)
+	===  UNCHANGED METHOD: PUBLIC int getOperatorPriority(java.lang.String, int)
+	===  UNCHANGED METHOD: PUBLIC java.io.PrintStream getPrintStream()
+	===  UNCHANGED METHOD: PUBLIC jTrolog.terms.Term getPrologFlagList()
+	===  UNCHANGED METHOD: PUBLIC java.lang.String getTheory()
+	===  UNCHANGED METHOD: PUBLIC boolean hasOpenAlternatives()
+		===  UNCHANGED EXCEPTION: java.lang.Throwable
+	===  UNCHANGED METHOD: PUBLIC boolean hasPrimitive(java.lang.String)
+	===  UNCHANGED METHOD: PUBLIC boolean hasPrimitiveExp(java.lang.String)
+	===  UNCHANGED METHOD: PUBLIC jTrolog.lib.Library loadLibrary(java.lang.String)
+		===  UNCHANGED EXCEPTION: jTrolog.errors.InvalidLibraryException
+	===  UNCHANGED METHOD: PUBLIC jTrolog.lib.Library loadLibrary(jTrolog.lib.Library)
+		===  UNCHANGED EXCEPTION: jTrolog.errors.InvalidLibraryException
+	===  UNCHANGED METHOD: PUBLIC STATIC void main(java.lang.String[])
+		===  UNCHANGED EXCEPTION: java.io.IOException
+	===  UNCHANGED METHOD: PUBLIC STATIC boolean match(jTrolog.terms.Term, jTrolog.terms.Term)
+	===  UNCHANGED METHOD: PUBLIC void onSolveBegin(jTrolog.terms.Term)
+	===  UNCHANGED METHOD: PUBLIC void onSolveEnd()
+	===  UNCHANGED METHOD: PUBLIC void opNew(java.lang.String, int, int)
+	===  UNCHANGED METHOD: PUBLIC void opNew(java.lang.String, java.lang.String, int)
+	===  UNCHANGED METHOD: PUBLIC void resetWarningList()
+	===  UNCHANGED METHOD: PUBLIC jTrolog.terms.Struct retract(jTrolog.terms.Struct)
+		===  UNCHANGED EXCEPTION: jTrolog.errors.PrologException
+	===  UNCHANGED METHOD: PUBLIC void setDynamicPredicateIndicator(java.lang.String)
+		===  UNCHANGED EXCEPTION: jTrolog.errors.PrologException
+	===  UNCHANGED METHOD: PUBLIC void setPrintStream(java.io.PrintStream)
+	===  UNCHANGED METHOD: PUBLIC void setTheory(java.lang.String)
+		===  UNCHANGED EXCEPTION: jTrolog.errors.PrologException
+	===  UNCHANGED METHOD: PUBLIC jTrolog.engine.Solution solve(java.lang.String)
+		===  UNCHANGED EXCEPTION: java.lang.Throwable
+	===  UNCHANGED METHOD: PUBLIC jTrolog.engine.Solution solve(jTrolog.terms.Struct)
+		===  UNCHANGED EXCEPTION: java.lang.Throwable
+	===  UNCHANGED METHOD: PUBLIC jTrolog.engine.Solution solveNext()
+		===  UNCHANGED EXCEPTION: java.lang.Throwable
+	===  UNCHANGED METHOD: PUBLIC void unloadLibrary(java.lang.String)
+		===  UNCHANGED EXCEPTION: jTrolog.errors.InvalidLibraryException
+	===  UNCHANGED METHOD: PUBLIC void warn(java.lang.String)
+===  UNCHANGED CLASS: PUBLIC jTrolog.engine.Solution  (not serializable)
+	===  CLASS FILE FORMAT VERSION: 50.0 <- 50.0
+	===  UNCHANGED SUPERCLASS: java.lang.Object (<- java.lang.Object)
+	===  UNCHANGED CONSTRUCTOR: PUBLIC Solution(java.util.HashMap, jTrolog.terms.Term)
+	===  UNCHANGED CONSTRUCTOR: PUBLIC Solution(jTrolog.terms.Term)
+	===  UNCHANGED METHOD: PUBLIC java.lang.String bindingsToString()
+	===  UNCHANGED METHOD: PUBLIC jTrolog.terms.Term getBinding(java.lang.String)
+	===  UNCHANGED METHOD: PUBLIC jTrolog.terms.Term getSolution()
+	===  UNCHANGED METHOD: PUBLIC boolean success()
+	===  UNCHANGED METHOD: PUBLIC java.lang.String toString()
+===  UNCHANGED CLASS: PUBLIC jTrolog.errors.InvalidLibraryException  (compatible)
+	===  CLASS FILE FORMAT VERSION: 50.0 <- 50.0
+	===  UNCHANGED INTERFACE: java.io.Serializable
+	===  UNCHANGED SUPERCLASS: jTrolog.errors.PrologException (<- jTrolog.errors.PrologException)
+	===  UNCHANGED CONSTRUCTOR: PUBLIC InvalidLibraryException(java.lang.String, jTrolog.errors.PrologException)
+	===  UNCHANGED CONSTRUCTOR: PUBLIC InvalidLibraryException()
+	===  UNCHANGED CONSTRUCTOR: PUBLIC InvalidLibraryException(java.lang.String)
+	===  UNCHANGED METHOD: PUBLIC java.lang.String getLibraryName()
+	===  UNCHANGED METHOD: PUBLIC java.lang.String getMessage()
+	===  UNCHANGED METHOD: PUBLIC java.lang.String toString()
+===  UNCHANGED CLASS: PUBLIC jTrolog.errors.InvalidTermException  (compatible)
+	===  CLASS FILE FORMAT VERSION: 50.0 <- 50.0
+	===  UNCHANGED INTERFACE: java.io.Serializable
+	===  UNCHANGED SUPERCLASS: java.lang.RuntimeException (<- java.lang.RuntimeException)
+	===  UNCHANGED CONSTRUCTOR: PUBLIC InvalidTermException(java.lang.String)
+===  UNCHANGED CLASS: PUBLIC jTrolog.errors.NoMorePrologSolutions  (compatible)
+	===  CLASS FILE FORMAT VERSION: 50.0 <- 50.0
+	===  UNCHANGED INTERFACE: java.io.Serializable
+	===  UNCHANGED SUPERCLASS: jTrolog.errors.PrologException (<- jTrolog.errors.PrologException)
+	===  UNCHANGED CONSTRUCTOR: PUBLIC NoMorePrologSolutions()
+===  UNCHANGED CLASS: PUBLIC jTrolog.errors.PrologException  (compatible)
+	===  CLASS FILE FORMAT VERSION: 50.0 <- 50.0
+	===  UNCHANGED INTERFACE: java.io.Serializable
+	===  UNCHANGED SUPERCLASS: java.lang.Exception (<- java.lang.Exception)
+	===  UNCHANGED CONSTRUCTOR: PUBLIC PrologException()
+	===  UNCHANGED CONSTRUCTOR: PUBLIC PrologException(java.lang.String)
+===  UNCHANGED CLASS: PUBLIC jTrolog.lib.BasicLibrary  (compatible)
+	===  CLASS FILE FORMAT VERSION: 50.0 <- 50.0
+	===  UNCHANGED INTERFACE: java.io.Serializable
+	===  UNCHANGED SUPERCLASS: jTrolog.lib.Library (<- jTrolog.lib.Library)
+	===  UNCHANGED CONSTRUCTOR: PUBLIC BasicLibrary()
+	===  UNCHANGED METHOD: PUBLIC boolean $all_dynamic_predicate_indicators_1(jTrolog.engine.BindingsTable, jTrolog.terms.Term)
+		===  UNCHANGED EXCEPTION: jTrolog.errors.PrologException
+	===  UNCHANGED METHOD: PUBLIC boolean $arg_3(jTrolog.engine.BindingsTable, jTrolog.terms.Int, jTrolog.terms.Struct, jTrolog.terms.Term)
+		===  UNCHANGED EXCEPTION: jTrolog.errors.PrologException
+	===  UNCHANGED METHOD: PUBLIC boolean $current_pred_impl_3(jTrolog.engine.BindingsTable, jTrolog.terms.Term, jTrolog.terms.Term, jTrolog.terms.IteratorAsTerm)
+	===  UNCHANGED METHOD: PUBLIC boolean $functor_3(jTrolog.engine.BindingsTable, jTrolog.terms.Term, jTrolog.terms.Term, jTrolog.terms.Term)
+		===  UNCHANGED EXCEPTION: jTrolog.errors.PrologException
+	===  UNCHANGED METHOD: PUBLIC boolean $has_next_1(jTrolog.engine.BindingsTable, jTrolog.terms.IteratorAsTerm)
+	===  UNCHANGED METHOD: PUBLIC boolean $list_diff_3(jTrolog.engine.BindingsTable, jTrolog.terms.Struct, jTrolog.terms.Struct, jTrolog.terms.Var)
+		===  UNCHANGED EXCEPTION: jTrolog.errors.PrologException
+	===  UNCHANGED METHOD: PUBLIC boolean $stripBagList_5(jTrolog.engine.BindingsTable, jTrolog.terms.Struct, jTrolog.terms.Struct, jTrolog.terms.Term, jTrolog.terms.Term, jTrolog.terms.Term)
+		===  UNCHANGED EXCEPTION: jTrolog.errors.PrologException
+	===  UNCHANGED METHOD: PUBLIC boolean $tofromlist_2(jTrolog.engine.BindingsTable, jTrolog.terms.Term, jTrolog.terms.Term)
+		===  UNCHANGED EXCEPTION: jTrolog.errors.PrologException
+	===  UNCHANGED METHOD: PUBLIC boolean add_theory_1(jTrolog.engine.BindingsTable, jTrolog.terms.Term)
+		===  UNCHANGED EXCEPTION: jTrolog.errors.PrologException
+	===  UNCHANGED METHOD: PUBLIC STATIC boolean atom_1(jTrolog.engine.BindingsTable, jTrolog.terms.Term)
+	===  UNCHANGED METHOD: PUBLIC STATIC boolean atomic_1(jTrolog.engine.BindingsTable, jTrolog.terms.Term)
+	===  UNCHANGED METHOD: PUBLIC STATIC boolean compound_1(jTrolog.engine.BindingsTable, jTrolog.terms.Term)
+	===  UNCHANGED METHOD: PUBLIC STATIC boolean constant_1(jTrolog.engine.BindingsTable, jTrolog.terms.Term)
+	===  UNCHANGED METHOD: PUBLIC boolean current_time_1(jTrolog.engine.BindingsTable, jTrolog.terms.Term)
+		===  UNCHANGED EXCEPTION: java.lang.Throwable
+	===  UNCHANGED METHOD: PUBLIC boolean erase_1(jTrolog.engine.BindingsTable, jTrolog.terms.Number)
+	===  UNCHANGED METHOD: PUBLIC boolean erase_2(jTrolog.engine.BindingsTable, jTrolog.terms.Number, jTrolog.terms.Term)
+	===  UNCHANGED METHOD: PUBLIC jTrolog.terms.Term eval_1(jTrolog.engine.BindingsTable, jTrolog.terms.EvaluableTerm)
+		===  UNCHANGED EXCEPTION: java.lang.Throwable
+	===  UNCHANGED METHOD: PUBLIC jTrolog.terms.Term expression_bitwise_and_2(jTrolog.engine.BindingsTable, jTrolog.terms.EvaluableTerm, jTrolog.terms.EvaluableTerm)
+		===  UNCHANGED EXCEPTION: java.lang.Throwable
+	===  UNCHANGED METHOD: PUBLIC jTrolog.terms.Term expression_bitwise_not_1(jTrolog.engine.BindingsTable, jTrolog.terms.EvaluableTerm)
+		===  UNCHANGED EXCEPTION: java.lang.Throwable
+	===  UNCHANGED METHOD: PUBLIC jTrolog.terms.Term expression_bitwise_or_2(jTrolog.engine.BindingsTable, jTrolog.terms.EvaluableTerm, jTrolog.terms.EvaluableTerm)
+		===  UNCHANGED EXCEPTION: java.lang.Throwable
+	===  UNCHANGED METHOD: PUBLIC jTrolog.terms.Term expression_bitwise_shift_left_2(jTrolog.engine.BindingsTable, jTrolog.terms.EvaluableTerm, jTrolog.terms.EvaluableTerm)
+		===  UNCHANGED EXCEPTION: java.lang.Throwable
+	===  UNCHANGED METHOD: PUBLIC jTrolog.terms.Term expression_bitwise_shift_right_2(jTrolog.engine.BindingsTable, jTrolog.terms.EvaluableTerm, jTrolog.terms.EvaluableTerm)
+		===  UNCHANGED EXCEPTION: java.lang.Throwable
+	===  UNCHANGED METHOD: PUBLIC jTrolog.terms.Term expression_div_2(jTrolog.engine.BindingsTable, jTrolog.terms.EvaluableTerm, jTrolog.terms.EvaluableTerm)
+		===  UNCHANGED EXCEPTION: java.lang.Throwable
+	===  UNCHANGED METHOD: PUBLIC boolean expression_equality_2(jTrolog.engine.BindingsTable, jTrolog.terms.EvaluableTerm, jTrolog.terms.EvaluableTerm)
+		===  UNCHANGED EXCEPTION: java.lang.Throwable
+	===  UNCHANGED METHOD: PUBLIC boolean expression_greater_or_equal_than_2(jTrolog.engine.BindingsTable, jTrolog.terms.EvaluableTerm, jTrolog.terms.EvaluableTerm)
+		===  UNCHANGED EXCEPTION: java.lang.Throwable
+	===  UNCHANGED METHOD: PUBLIC boolean expression_greater_than_2(jTrolog.engine.BindingsTable, jTrolog.terms.EvaluableTerm, jTrolog.terms.EvaluableTerm)
+		===  UNCHANGED EXCEPTION: java.lang.Throwable
+	===  UNCHANGED METHOD: PUBLIC jTrolog.terms.Term expression_integer_div_2(jTrolog.engine.BindingsTable, jTrolog.terms.EvaluableTerm, jTrolog.terms.EvaluableTerm)
+		===  UNCHANGED EXCEPTION: java.lang.Throwable
+	===  UNCHANGED METHOD: PUBLIC boolean expression_less_or_equal_than_2(jTrolog.engine.BindingsTable, jTrolog.terms.EvaluableTerm, jTrolog.terms.EvaluableTerm)
+		===  UNCHANGED EXCEPTION: java.lang.Throwable
+	===  UNCHANGED METHOD: PUBLIC boolean expression_less_than_2(jTrolog.engine.BindingsTable, jTrolog.terms.EvaluableTerm, jTrolog.terms.EvaluableTerm)
+		===  UNCHANGED EXCEPTION: java.lang.Throwable
+	===  UNCHANGED METHOD: PUBLIC jTrolog.terms.Term expression_minus_1(jTrolog.engine.BindingsTable, jTrolog.terms.EvaluableTerm)
+		===  UNCHANGED EXCEPTION: java.lang.Throwable
+	===  UNCHANGED METHOD: PUBLIC jTrolog.terms.Term expression_minus_2(jTrolog.engine.BindingsTable, jTrolog.terms.EvaluableTerm, jTrolog.terms.EvaluableTerm)
+		===  UNCHANGED EXCEPTION: java.lang.Throwable
+	===  UNCHANGED METHOD: PUBLIC jTrolog.terms.Term expression_multiply_2(jTrolog.engine.BindingsTable, jTrolog.terms.EvaluableTerm, jTrolog.terms.EvaluableTerm)
+		===  UNCHANGED EXCEPTION: java.lang.Throwable
+	===  UNCHANGED METHOD: PUBLIC jTrolog.terms.Term expression_plus_1(jTrolog.engine.BindingsTable, jTrolog.terms.EvaluableTerm)
+		===  UNCHANGED EXCEPTION: java.lang.Throwable
+	===  UNCHANGED METHOD: PUBLIC jTrolog.terms.Term expression_plus_2(jTrolog.engine.BindingsTable, jTrolog.terms.EvaluableTerm, jTrolog.terms.EvaluableTerm)
+		===  UNCHANGED EXCEPTION: java.lang.Throwable
+	===  UNCHANGED METHOD: PUBLIC jTrolog.terms.Term expression_pow_2(jTrolog.engine.BindingsTable, jTrolog.terms.EvaluableTerm, jTrolog.terms.EvaluableTerm)
+		===  UNCHANGED EXCEPTION: java.lang.Throwable
+	===  UNCHANGED METHOD: PUBLIC STATIC boolean float_1(jTrolog.engine.BindingsTable, jTrolog.terms.Term)
+	===  UNCHANGED METHOD: PUBLIC boolean get_operators_list_1(jTrolog.engine.BindingsTable, jTrolog.terms.Struct)
+	===  UNCHANGED METHOD: PUBLIC boolean get_theory_1(jTrolog.engine.BindingsTable, jTrolog.terms.Term)
+	===  UNCHANGED METHOD: PUBLIC java.lang.String[] getSynonym(java.lang.String)
+	===  UNCHANGED METHOD: PUBLIC java.lang.String getTheory()
+	===  UNCHANGED METHOD: PUBLIC STATIC boolean ground_1(jTrolog.engine.BindingsTable, jTrolog.terms.Term)
+	===  UNCHANGED METHOD: PUBLIC STATIC boolean integer_1(jTrolog.engine.BindingsTable, jTrolog.terms.Term)
+	===  UNCHANGED METHOD: PUBLIC boolean is_2(jTrolog.engine.BindingsTable, jTrolog.terms.Term, jTrolog.terms.EvaluableTerm)
+		===  UNCHANGED EXCEPTION: java.lang.Throwable
+	===  UNCHANGED METHOD: PUBLIC STATIC boolean list_1(jTrolog.engine.BindingsTable, jTrolog.terms.Term)
+		===  UNCHANGED EXCEPTION: jTrolog.errors.PrologException
+	===  UNCHANGED METHOD: PUBLIC boolean load_library_2(jTrolog.engine.BindingsTable, jTrolog.terms.Struct, jTrolog.terms.Term)
+		===  UNCHANGED EXCEPTION: jTrolog.errors.InvalidLibraryException
+	===  UNCHANGED METHOD: PUBLIC boolean new_record_key_1(jTrolog.engine.BindingsTable, jTrolog.terms.Var)
+	===  UNCHANGED METHOD: PUBLIC boolean nonvar_1(jTrolog.engine.BindingsTable, jTrolog.terms.Term)
+	===  UNCHANGED METHOD: PUBLIC boolean nowarning_0(jTrolog.engine.BindingsTable)
+	===  UNCHANGED METHOD: PUBLIC boolean num_atom_2(jTrolog.engine.BindingsTable, jTrolog.terms.Term, jTrolog.terms.Term)
+	===  UNCHANGED METHOD: PUBLIC STATIC boolean number_1(jTrolog.engine.BindingsTable, jTrolog.terms.Term)
+	===  UNCHANGED METHOD: PUBLIC STATIC boolean number_equality_2(jTrolog.terms.Number, jTrolog.terms.Number)
+	===  UNCHANGED METHOD: PUBLIC boolean record_2(jTrolog.engine.BindingsTable, jTrolog.terms.Number, jTrolog.terms.Term)
+	===  UNCHANGED METHOD: PUBLIC boolean recorded_2(jTrolog.engine.BindingsTable, jTrolog.terms.Number, jTrolog.terms.Term)
+	===  UNCHANGED METHOD: PUBLIC boolean set_theory_1(jTrolog.engine.BindingsTable, jTrolog.terms.Term)
+	===  UNCHANGED METHOD: PUBLIC STATIC boolean term_equality_2(jTrolog.engine.BindingsTable, jTrolog.terms.Term, jTrolog.terms.Term)
+	===  UNCHANGED METHOD: PUBLIC STATIC boolean term_greater_than_2(jTrolog.engine.BindingsTable, jTrolog.terms.Term, jTrolog.terms.Term)
+	===  UNCHANGED METHOD: PUBLIC STATIC boolean term_less_than_2(jTrolog.engine.BindingsTable, jTrolog.terms.Term, jTrolog.terms.Term)
+	===  UNCHANGED METHOD: PUBLIC boolean text_concat_3(jTrolog.engine.BindingsTable, jTrolog.terms.Term, jTrolog.terms.Term, jTrolog.terms.Term)
+	===  UNCHANGED METHOD: PUBLIC boolean text_term_2(jTrolog.engine.BindingsTable, jTrolog.terms.Term, jTrolog.terms.Term)
+	===  UNCHANGED METHOD: PUBLIC boolean var_1(jTrolog.engine.BindingsTable, jTrolog.terms.Term)
+	===  UNCHANGED METHOD: PUBLIC boolean variable_set_2(jTrolog.engine.BindingsTable, jTrolog.terms.Term, jTrolog.terms.Term)
+	===  UNCHANGED METHOD: PUBLIC boolean warning_0(jTrolog.engine.BindingsTable)
+===  UNCHANGED CLASS: PUBLIC jTrolog.lib.BuiltIn  (compatible)
+	===  CLASS FILE FORMAT VERSION: 50.0 <- 50.0
+	===  UNCHANGED INTERFACE: java.io.Serializable
+	===  UNCHANGED SUPERCLASS: jTrolog.lib.Library (<- jTrolog.lib.Library)
+	===  UNCHANGED CONSTRUCTOR: PUBLIC BuiltIn(jTrolog.engine.Prolog)
+	===  UNCHANGED METHOD: PUBLIC boolean $debug_1(jTrolog.engine.BindingsTable, jTrolog.terms.Term)
+	===  UNCHANGED METHOD: PUBLIC boolean $debug_3(jTrolog.engine.BindingsTable, jTrolog.terms.Term, jTrolog.terms.Term, jTrolog.terms.Term)
+	===  UNCHANGED METHOD: PUBLIC boolean $domain_error_zero_1(jTrolog.engine.BindingsTable, jTrolog.terms.Term)
+		===  UNCHANGED EXCEPTION: java.lang.Exception
+	===  UNCHANGED METHOD: PUBLIC boolean $find_2(jTrolog.engine.BindingsTable, jTrolog.terms.Struct, jTrolog.terms.Term)
+		===  UNCHANGED EXCEPTION: jTrolog.errors.PrologException
+		===  UNCHANGED EXCEPTION: java.lang.CloneNotSupportedException
+	===  UNCHANGED METHOD: PUBLIC boolean $instantiation_error_0(jTrolog.engine.BindingsTable)
+		===  UNCHANGED EXCEPTION: jTrolog.errors.PrologException
+	===  UNCHANGED METHOD: PUBLIC boolean $representation_error_1(jTrolog.engine.BindingsTable, jTrolog.terms.Term)
+		===  UNCHANGED EXCEPTION: jTrolog.errors.PrologException
+	===  UNCHANGED METHOD: PUBLIC boolean $retract_1(jTrolog.engine.BindingsTable, jTrolog.terms.Struct)
+		===  UNCHANGED EXCEPTION: jTrolog.errors.PrologException
+	===  UNCHANGED METHOD: PUBLIC boolean $type_error_2(jTrolog.engine.BindingsTable, jTrolog.terms.Term, jTrolog.terms.Term)
+		===  UNCHANGED EXCEPTION: jTrolog.errors.PrologException
+	===  UNCHANGED METHOD: PUBLIC boolean abolish_1(jTrolog.engine.BindingsTable, jTrolog.terms.Struct)
+		===  UNCHANGED EXCEPTION: jTrolog.errors.PrologException
+	===  UNCHANGED METHOD: PUBLIC boolean asserta_1(jTrolog.engine.BindingsTable, jTrolog.terms.Term)
+		===  UNCHANGED EXCEPTION: jTrolog.errors.PrologException
+	===  UNCHANGED METHOD: PUBLIC boolean assertz_1(jTrolog.engine.BindingsTable, jTrolog.terms.Term)
+		===  UNCHANGED EXCEPTION: jTrolog.errors.PrologException
+	===  UNCHANGED METHOD: PUBLIC STATIC boolean call_1(jTrolog.engine.BindingsTable, jTrolog.terms.Term)
+	===  UNCHANGED METHOD: PUBLIC boolean comma_2(jTrolog.engine.BindingsTable, jTrolog.terms.Term, jTrolog.terms.Term)
+	===  UNCHANGED METHOD: PUBLIC void consult_1(jTrolog.engine.BindingsTable, jTrolog.terms.Term)
+		===  UNCHANGED EXCEPTION: java.io.FileNotFoundException
+		===  UNCHANGED EXCEPTION: jTrolog.errors.PrologException
+		===  UNCHANGED EXCEPTION: java.io.IOException
+	===  UNCHANGED METHOD: PUBLIC STATIC jTrolog.terms.Clause convertTermToClause(jTrolog.terms.Term)
+		===  UNCHANGED EXCEPTION: jTrolog.errors.PrologException
+	===  UNCHANGED METHOD: PUBLIC STATIC jTrolog.terms.Struct convertTermToClauseBody(jTrolog.terms.Term)
+		===  UNCHANGED EXCEPTION: jTrolog.errors.PrologException
+	===  UNCHANGED METHOD: PUBLIC STATIC jTrolog.terms.Struct[] convertTermToClauseBody2(jTrolog.terms.Term)
+		===  UNCHANGED EXCEPTION: jTrolog.errors.PrologException
+	===  UNCHANGED METHOD: PUBLIC boolean copy_2(jTrolog.engine.BindingsTable, jTrolog.terms.Term, jTrolog.terms.Term)
+	===  UNCHANGED METHOD: PUBLIC STATIC boolean cut_0(jTrolog.engine.BindingsTable)
+	===  UNCHANGED METHOD: PUBLIC boolean deunify_2(jTrolog.engine.BindingsTable, jTrolog.terms.Term, jTrolog.terms.Term)
+	===  UNCHANGED METHOD: PUBLIC boolean dynamic_1(jTrolog.engine.BindingsTable, jTrolog.terms.Struct)
+		===  UNCHANGED EXCEPTION: jTrolog.errors.PrologException
+	===  UNCHANGED METHOD: PUBLIC STATIC boolean fail_0(jTrolog.engine.BindingsTable)
+	===  UNCHANGED METHOD: PUBLIC void flag_4(jTrolog.engine.BindingsTable, jTrolog.terms.Term, jTrolog.terms.Struct, jTrolog.terms.Term, jTrolog.terms.Term)
+	===  UNCHANGED METHOD: PUBLIC boolean flag_list_1(jTrolog.engine.BindingsTable, jTrolog.terms.Term)
+	===  UNCHANGED METHOD: PUBLIC boolean get_prolog_flag_2(jTrolog.engine.BindingsTable, jTrolog.terms.Term, jTrolog.terms.Term)
+	===  UNCHANGED METHOD: PUBLIC java.lang.String[] getSynonym(java.lang.String)
+	===  UNCHANGED METHOD: PUBLIC STATIC boolean halt_0(jTrolog.engine.BindingsTable)
+		===  UNCHANGED EXCEPTION: jTrolog.errors.PrologException
+	===  UNCHANGED METHOD: PUBLIC boolean halt_1(jTrolog.engine.BindingsTable, jTrolog.terms.Number)
+		===  UNCHANGED EXCEPTION: jTrolog.errors.PrologException
+	===  UNCHANGED METHOD: PUBLIC STATIC java.lang.String isPredicateIndicator(jTrolog.terms.Struct, jTrolog.engine.BindingsTable)
+		===  UNCHANGED EXCEPTION: jTrolog.errors.PrologException
+	===  UNCHANGED METHOD: PUBLIC boolean load_library_1(jTrolog.engine.BindingsTable, jTrolog.terms.Struct)
+		===  UNCHANGED EXCEPTION: jTrolog.errors.InvalidLibraryException
+	===  UNCHANGED METHOD: PUBLIC void load_library_1(jTrolog.engine.BindingsTable, jTrolog.terms.Term)
+		===  UNCHANGED EXCEPTION: jTrolog.errors.InvalidLibraryException
+	===  UNCHANGED METHOD: PUBLIC boolean newlist_2(jTrolog.engine.BindingsTable, jTrolog.terms.Int, jTrolog.terms.Var)
+		===  UNCHANGED EXCEPTION: jTrolog.errors.PrologException
+	===  UNCHANGED METHOD: PUBLIC void op_3(jTrolog.engine.BindingsTable, jTrolog.terms.Number, jTrolog.terms.StructAtom, jTrolog.terms.StructAtom)
+	===  UNCHANGED METHOD: PUBLIC boolean set_prolog_flag_2(jTrolog.engine.BindingsTable, jTrolog.terms.Term, jTrolog.terms.Term)
+	===  UNCHANGED METHOD: PUBLIC void solve_1(jTrolog.engine.BindingsTable, jTrolog.terms.Struct)
+		===  UNCHANGED EXCEPTION: java.lang.Throwable
+	===  UNCHANGED METHOD: PUBLIC STATIC boolean true_0(jTrolog.engine.BindingsTable)
+	===  UNCHANGED METHOD: PUBLIC boolean unify_2(jTrolog.engine.BindingsTable, jTrolog.terms.Term, jTrolog.terms.Term)
+	===  UNCHANGED METHOD: PUBLIC boolean unload_library_1(jTrolog.engine.BindingsTable, jTrolog.terms.Struct)
+		===  UNCHANGED EXCEPTION: jTrolog.errors.InvalidLibraryException
+===  UNCHANGED CLASS: PUBLIC jTrolog.lib.DCGLibrary  (compatible)
+	===  CLASS FILE FORMAT VERSION: 50.0 <- 50.0
+	===  UNCHANGED INTERFACE: java.io.Serializable
+	===  UNCHANGED SUPERCLASS: jTrolog.lib.Library (<- jTrolog.lib.Library)
+	===  UNCHANGED CONSTRUCTOR: PUBLIC DCGLibrary()
+	===  UNCHANGED METHOD: PUBLIC java.lang.String getTheory()
+===  UNCHANGED CLASS: PUBLIC jTrolog.lib.IOLibrary  (compatible)
+	===  CLASS FILE FORMAT VERSION: 50.0 <- 50.0
+	===  UNCHANGED INTERFACE: java.io.Serializable
+	===  UNCHANGED SUPERCLASS: jTrolog.lib.Library (<- jTrolog.lib.Library)
+	===  UNCHANGED CONSTRUCTOR: PUBLIC IOLibrary()
+	===  UNCHANGED METHOD: PUBLIC boolean get0_1(jTrolog.engine.BindingsTable, jTrolog.terms.Term)
+		===  UNCHANGED EXCEPTION: java.lang.Exception
+	===  UNCHANGED METHOD: PUBLIC boolean get_1(jTrolog.engine.BindingsTable, jTrolog.terms.Term)
+		===  UNCHANGED EXCEPTION: java.lang.Exception
+	===  UNCHANGED METHOD: PUBLIC java.lang.String getTheory()
+	===  UNCHANGED METHOD: PUBLIC boolean nl_0(jTrolog.engine.BindingsTable)
+		===  UNCHANGED EXCEPTION: java.lang.Exception
+	===  UNCHANGED METHOD: PUBLIC boolean print_1(jTrolog.engine.BindingsTable, jTrolog.terms.Term)
+		===  UNCHANGED EXCEPTION: java.lang.Exception
+	===  UNCHANGED METHOD: PUBLIC boolean put_1(jTrolog.engine.BindingsTable, jTrolog.terms.Term)
+		===  UNCHANGED EXCEPTION: java.lang.Exception
+	===  UNCHANGED METHOD: PUBLIC boolean rand_float_1(jTrolog.engine.BindingsTable, jTrolog.terms.Term)
+	===  UNCHANGED METHOD: PUBLIC boolean rand_int_2(jTrolog.engine.BindingsTable, jTrolog.terms.Number, jTrolog.terms.Term)
+	===  UNCHANGED METHOD: PUBLIC boolean read_1(jTrolog.engine.BindingsTable, jTrolog.terms.Term)
+		===  UNCHANGED EXCEPTION: java.lang.Exception
+	===  UNCHANGED METHOD: PUBLIC STATIC java.lang.String readStream(java.io.InputStream)
+		===  UNCHANGED EXCEPTION: java.io.IOException
+	===  UNCHANGED METHOD: PUBLIC boolean see_1(jTrolog.engine.BindingsTable, jTrolog.terms.Term)
+		===  UNCHANGED EXCEPTION: java.lang.Exception
+	===  UNCHANGED METHOD: PUBLIC boolean seeing_1(jTrolog.engine.BindingsTable, jTrolog.terms.Term)
+	===  UNCHANGED METHOD: PUBLIC boolean seen_0(jTrolog.engine.BindingsTable)
+		===  UNCHANGED EXCEPTION: java.lang.Exception
+	===  UNCHANGED METHOD: PUBLIC boolean tab_1(jTrolog.engine.BindingsTable, jTrolog.terms.Int)
+		===  UNCHANGED EXCEPTION: java.lang.Exception
+	===  UNCHANGED METHOD: PUBLIC boolean tell_1(jTrolog.engine.BindingsTable, jTrolog.terms.Term)
+		===  UNCHANGED EXCEPTION: java.lang.Exception
+	===  UNCHANGED METHOD: PUBLIC boolean telling_1(jTrolog.engine.BindingsTable, jTrolog.terms.Term)
+	===  UNCHANGED METHOD: PUBLIC boolean text_from_file_2(jTrolog.engine.BindingsTable, jTrolog.terms.Term, jTrolog.terms.Term)
+		===  UNCHANGED EXCEPTION: java.io.IOException
+	===  UNCHANGED METHOD: PUBLIC boolean told_0(jTrolog.engine.BindingsTable)
+		===  UNCHANGED EXCEPTION: java.lang.Exception
+	===  UNCHANGED METHOD: PUBLIC boolean write_1(jTrolog.engine.BindingsTable, jTrolog.terms.Term)
+		===  UNCHANGED EXCEPTION: java.lang.Exception
+===  UNCHANGED CLASS: PUBLIC jTrolog.lib.ISOLibrary  (compatible)
+	===  CLASS FILE FORMAT VERSION: 50.0 <- 50.0
+	===  UNCHANGED INTERFACE: java.io.Serializable
+	===  UNCHANGED SUPERCLASS: jTrolog.lib.Library (<- jTrolog.lib.Library)
+	===  UNCHANGED CONSTRUCTOR: PUBLIC ISOLibrary()
+	===  UNCHANGED METHOD: PUBLIC jTrolog.terms.Term abs_1(jTrolog.engine.BindingsTable, jTrolog.terms.EvaluableTerm)
+		===  UNCHANGED EXCEPTION: java.lang.Throwable
+	===  UNCHANGED METHOD: PUBLIC jTrolog.terms.Term atan_1(jTrolog.engine.BindingsTable, jTrolog.terms.EvaluableTerm)
+		===  UNCHANGED EXCEPTION: java.lang.Throwable
+	===  UNCHANGED METHOD: PUBLIC boolean atom_chars_2(jTrolog.engine.BindingsTable, jTrolog.terms.Term, jTrolog.terms.Term)
+		===  UNCHANGED EXCEPTION: jTrolog.errors.PrologException
+	===  UNCHANGED METHOD: PUBLIC boolean atom_length_2(jTrolog.engine.BindingsTable, jTrolog.terms.Struct, jTrolog.terms.Term)
+	===  UNCHANGED METHOD: PUBLIC jTrolog.terms.Term ceiling_1(jTrolog.engine.BindingsTable, jTrolog.terms.EvaluableTerm)
+		===  UNCHANGED EXCEPTION: java.lang.Throwable
+	===  UNCHANGED METHOD: PUBLIC boolean char_code_2(jTrolog.engine.BindingsTable, jTrolog.terms.Term, jTrolog.terms.Term)
+	===  UNCHANGED METHOD: PUBLIC jTrolog.terms.Term cos_1(jTrolog.engine.BindingsTable, jTrolog.terms.EvaluableTerm)
+		===  UNCHANGED EXCEPTION: java.lang.Throwable
+	===  UNCHANGED METHOD: PUBLIC jTrolog.terms.Term div_2(jTrolog.engine.BindingsTable, jTrolog.terms.EvaluableTerm, jTrolog.terms.EvaluableTerm)
+		===  UNCHANGED EXCEPTION: java.lang.Throwable
+	===  UNCHANGED METHOD: PUBLIC jTrolog.terms.Term exp_1(jTrolog.engine.BindingsTable, jTrolog.terms.EvaluableTerm)
+		===  UNCHANGED EXCEPTION: java.lang.Throwable
+	===  UNCHANGED METHOD: PUBLIC jTrolog.terms.Term float_fractional_part_1(jTrolog.engine.BindingsTable, jTrolog.terms.EvaluableTerm)
+		===  UNCHANGED EXCEPTION: java.lang.Throwable
+	===  UNCHANGED METHOD: PUBLIC jTrolog.terms.Term float_integer_part_1(jTrolog.engine.BindingsTable, jTrolog.terms.EvaluableTerm)
+		===  UNCHANGED EXCEPTION: java.lang.Throwable
+	===  UNCHANGED METHOD: PUBLIC jTrolog.terms.Term floor_1(jTrolog.engine.BindingsTable, jTrolog.terms.EvaluableTerm)
+		===  UNCHANGED EXCEPTION: java.lang.Throwable
+	===  UNCHANGED METHOD: PUBLIC java.lang.String[] getSynonym(java.lang.String)
+	===  UNCHANGED METHOD: PUBLIC java.lang.String getTheory()
+	===  UNCHANGED METHOD: PUBLIC jTrolog.terms.Term log_1(jTrolog.engine.BindingsTable, jTrolog.terms.EvaluableTerm)
+		===  UNCHANGED EXCEPTION: java.lang.Throwable
+	===  UNCHANGED METHOD: PUBLIC jTrolog.terms.Term mod_2(jTrolog.engine.BindingsTable, jTrolog.terms.EvaluableTerm, jTrolog.terms.EvaluableTerm)
+		===  UNCHANGED EXCEPTION: java.lang.Throwable
+	===  UNCHANGED METHOD: PUBLIC jTrolog.terms.Term rem_2(jTrolog.engine.BindingsTable, jTrolog.terms.EvaluableTerm, jTrolog.terms.EvaluableTerm)
+		===  UNCHANGED EXCEPTION: java.lang.Throwable
+	===  UNCHANGED METHOD: PUBLIC jTrolog.terms.Term round_1(jTrolog.engine.BindingsTable, jTrolog.terms.EvaluableTerm)
+		===  UNCHANGED EXCEPTION: java.lang.Throwable
+	===  UNCHANGED METHOD: PUBLIC jTrolog.terms.Term sign_1(jTrolog.engine.BindingsTable, jTrolog.terms.EvaluableTerm)
+		===  UNCHANGED EXCEPTION: java.lang.Throwable
+	===  UNCHANGED METHOD: PUBLIC jTrolog.terms.Term sin_1(jTrolog.engine.BindingsTable, jTrolog.terms.EvaluableTerm)
+		===  UNCHANGED EXCEPTION: java.lang.Throwable
+	===  UNCHANGED METHOD: PUBLIC jTrolog.terms.Term sqrt_1(jTrolog.engine.BindingsTable, jTrolog.terms.EvaluableTerm)
+		===  UNCHANGED EXCEPTION: java.lang.Throwable
+	===  UNCHANGED METHOD: PUBLIC jTrolog.terms.Term truncate_1(jTrolog.engine.BindingsTable, jTrolog.terms.EvaluableTerm)
+		===  UNCHANGED EXCEPTION: java.lang.Throwable
+===  UNCHANGED CLASS: PUBLIC ABSTRACT jTrolog.lib.Library  (compatible)
+	===  CLASS FILE FORMAT VERSION: 50.0 <- 50.0
+	===  UNCHANGED INTERFACE: java.io.Serializable
+	===  UNCHANGED SUPERCLASS: java.lang.Object (<- java.lang.Object)
+	===  UNCHANGED FIELD: PROTECTED jTrolog.engine.Prolog engine
+	===  UNCHANGED CONSTRUCTOR: PUBLIC Library()
+	===  UNCHANGED METHOD: PUBLIC void dismiss()
+	===  UNCHANGED METHOD: PUBLIC java.lang.String getName()
+	===  UNCHANGED METHOD: PUBLIC java.lang.String[] getSynonym(java.lang.String)
+	===  UNCHANGED METHOD: PUBLIC java.lang.String getTheory()
+	===  UNCHANGED METHOD: PUBLIC void onSolveBegin(jTrolog.terms.Term)
+	===  UNCHANGED METHOD: PUBLIC void onSolveEnd()
+	===  UNCHANGED METHOD: PUBLIC void setEngine(jTrolog.engine.Prolog)
+===  UNCHANGED CLASS: PUBLIC jTrolog.parser.Parser  (compatible)
+	===  CLASS FILE FORMAT VERSION: 50.0 <- 50.0
+	===  UNCHANGED INTERFACE: java.io.Serializable
+	===  UNCHANGED SUPERCLASS: java.lang.Object (<- java.lang.Object)
+	===  UNCHANGED FIELD: PUBLIC STATIC FINAL java.lang.String throwSignature
+	===  UNCHANGED FIELD: PUBLIC STATIC FINAL java.lang.String trueSignature
+	===  UNCHANGED FIELD: PUBLIC STATIC FINAL java.lang.String failSignature
+	===  UNCHANGED FIELD: PUBLIC STATIC FINAL java.lang.String doubleClauseSignature
+	===  UNCHANGED FIELD: PUBLIC STATIC FINAL java.lang.String listSignature
+	===  UNCHANGED FIELD: PUBLIC STATIC FINAL java.lang.String singleClauseSignature
+	===  UNCHANGED FIELD: PUBLIC STATIC FINAL java.lang.String floatSignature
+	===  UNCHANGED FIELD: PUBLIC STATIC FINAL java.lang.String commaSignature
+	===  UNCHANGED FIELD: PUBLIC STATIC FINAL java.lang.String callSignature
+	===  UNCHANGED FIELD: PUBLIC STATIC FINAL java.lang.String cutSignature
+	===  UNCHANGED FIELD: PUBLIC STATIC FINAL java.lang.String semiColonSignature
+	===  UNCHANGED FIELD: PUBLIC STATIC FINAL java.lang.String ifSignature
+	===  UNCHANGED FIELD: PUBLIC STATIC FINAL java.lang.String catchSignature
+	===  UNCHANGED CONSTRUCTOR: PUBLIC Parser(java.io.InputStream)
+	===  UNCHANGED CONSTRUCTOR: PUBLIC Parser(java.lang.String)
+	===  UNCHANGED CONSTRUCTOR: PUBLIC Parser(java.io.InputStream, jTrolog.engine.Prolog)
+	===  UNCHANGED CONSTRUCTOR: PUBLIC Parser(java.lang.String, jTrolog.engine.Prolog)
+	===  UNCHANGED METHOD: PUBLIC STATIC jTrolog.terms.Struct createListContainingAnyVars(int)
+	===  UNCHANGED METHOD: PUBLIC STATIC jTrolog.terms.Struct createStructList(java.util.LinkedList)
+	===  UNCHANGED METHOD: PUBLIC int getCurrentLine()
+	===  UNCHANGED METHOD: PUBLIC STATIC jTrolog.terms.Struct intsToStructList(int[])
+	===  UNCHANGED METHOD: PUBLIC STATIC boolean isAtom(java.lang.String)
+	===  UNCHANGED METHOD: PUBLIC STATIC boolean isSemiAndNotIf(jTrolog.terms.Struct)
+	===  UNCHANGED METHOD: PUBLIC java.util.Iterator iterator()
+		===  UNCHANGED EXCEPTION: jTrolog.errors.InvalidTermException
+	===  UNCHANGED METHOD: PUBLIC jTrolog.terms.Term nextTerm(boolean)
+		===  UNCHANGED EXCEPTION: jTrolog.errors.InvalidTermException
+	===  UNCHANGED METHOD: PUBLIC STATIC jTrolog.terms.Number parseNumber(java.lang.String)
+		===  UNCHANGED EXCEPTION: jTrolog.errors.InvalidTermException
+	===  UNCHANGED METHOD: PUBLIC STATIC java.lang.String removeApices(java.lang.String)
+	===  UNCHANGED METHOD: PUBLIC STATIC jTrolog.terms.Struct stringToStructList(java.lang.String)
+	===  UNCHANGED METHOD: PUBLIC STATIC java.lang.String wrapAtom(java.lang.String)
+===  UNCHANGED CLASS: PUBLIC jTrolog.terms.Clause  (not serializable)
+	===  CLASS FILE FORMAT VERSION: 50.0 <- 50.0
+	===  UNCHANGED SUPERCLASS: java.lang.Object (<- java.lang.Object)
+	===  UNCHANGED FIELD: PUBLIC FINAL jTrolog.terms.Struct head
+	===  UNCHANGED FIELD: PUBLIC FINAL jTrolog.terms.Struct original
+	===  UNCHANGED FIELD: PUBLIC FINAL jTrolog.terms.Struct[] tail
+	===  UNCHANGED CONSTRUCTOR: PUBLIC Clause(jTrolog.terms.Struct[], jTrolog.terms.Struct, jTrolog.terms.Struct)
+===  UNCHANGED CLASS: PUBLIC jTrolog.terms.Double  (compatible)
+	===  CLASS FILE FORMAT VERSION: 50.0 <- 50.0
+	===  UNCHANGED INTERFACE: java.io.Serializable
+	===  UNCHANGED SUPERCLASS: jTrolog.terms.Float (<- jTrolog.terms.Float)
+	===  UNCHANGED CONSTRUCTOR: PUBLIC Double(java.lang.String)
+		===  UNCHANGED EXCEPTION: java.lang.NumberFormatException
+	===  UNCHANGED CONSTRUCTOR: PUBLIC Double(double)
+	===  UNCHANGED METHOD: PUBLIC FINAL double doubleValue()
+	===  UNCHANGED METHOD: PUBLIC FINAL float floatValue()
+	===  UNCHANGED METHOD: PUBLIC FINAL int intValue()
+	===  UNCHANGED METHOD: PUBLIC FINAL long longValue()
+	===  UNCHANGED METHOD: PUBLIC java.lang.String toString()
+===  UNCHANGED CLASS: PUBLIC ABSTRACT jTrolog.terms.EvaluableTerm  (compatible)
+	===  CLASS FILE FORMAT VERSION: 50.0 <- 50.0
+	===  UNCHANGED INTERFACE: java.io.Serializable
+	===  UNCHANGED SUPERCLASS: jTrolog.terms.Term (<- jTrolog.terms.Term)
+	===  UNCHANGED CONSTRUCTOR: PUBLIC EvaluableTerm()
+===  UNCHANGED CLASS: PUBLIC jTrolog.terms.Flag  (compatible)
+	===  CLASS FILE FORMAT VERSION: 50.0 <- 50.0
+	===  UNCHANGED INTERFACE: java.io.Serializable
+	===  UNCHANGED SUPERCLASS: java.lang.Object (<- java.lang.Object)
+	===  UNCHANGED CONSTRUCTOR: PUBLIC Flag(java.lang.String, jTrolog.terms.Struct, jTrolog.terms.Term, boolean)
+	===  UNCHANGED METHOD: PUBLIC java.lang.String getName()
+	===  UNCHANGED METHOD: PUBLIC jTrolog.terms.Term getValue()
+	===  UNCHANGED METHOD: PUBLIC jTrolog.terms.Struct getValueList()
+	===  UNCHANGED METHOD: PUBLIC boolean isModifiable()
+	===  UNCHANGED METHOD: PUBLIC void setValue(jTrolog.terms.Term)
+===  UNCHANGED CLASS: PUBLIC jTrolog.terms.Float  (compatible)
+	===  CLASS FILE FORMAT VERSION: 50.0 <- 50.0
+	===  UNCHANGED INTERFACE: java.io.Serializable
+	===  UNCHANGED SUPERCLASS: jTrolog.terms.Number (<- jTrolog.terms.Number)
+	===  UNCHANGED CONSTRUCTOR: PUBLIC Float(java.lang.String)
+	===  UNCHANGED CONSTRUCTOR: PUBLIC Float(float)
+	===  UNCHANGED CONSTRUCTOR: PUBLIC Float()
+	===  UNCHANGED METHOD: PUBLIC double doubleValue()
+	===  UNCHANGED METHOD: PUBLIC boolean equals(java.lang.Object)
+	===  UNCHANGED METHOD: PUBLIC float floatValue()
+	===  UNCHANGED METHOD: PUBLIC int intValue()
+	===  UNCHANGED METHOD: PUBLIC long longValue()
+	===  UNCHANGED METHOD: PUBLIC java.lang.String toString()
+===  UNCHANGED CLASS: PUBLIC jTrolog.terms.Int  (compatible)
+	===  CLASS FILE FORMAT VERSION: 50.0 <- 50.0
+	===  UNCHANGED INTERFACE: java.io.Serializable
+	===  UNCHANGED SUPERCLASS: jTrolog.terms.Number (<- jTrolog.terms.Number)
+	===  UNCHANGED CONSTRUCTOR: PUBLIC Int(java.lang.String)
+		===  UNCHANGED EXCEPTION: java.lang.NumberFormatException
+	===  UNCHANGED CONSTRUCTOR: PUBLIC Int(int)
+	===  UNCHANGED CONSTRUCTOR: PUBLIC Int()
+	===  UNCHANGED METHOD: PUBLIC STATIC jTrolog.terms.Number create(java.lang.String)
+		===  UNCHANGED EXCEPTION: java.lang.NumberFormatException
+	===  UNCHANGED METHOD: PUBLIC double doubleValue()
+	===  UNCHANGED METHOD: PUBLIC boolean equals(java.lang.Object)
+	===  UNCHANGED METHOD: PUBLIC float floatValue()
+	===  UNCHANGED METHOD: PUBLIC int intValue()
+	===  UNCHANGED METHOD: PUBLIC long longValue()
+	===  UNCHANGED METHOD: PUBLIC java.lang.String toString()
+===  UNCHANGED CLASS: PUBLIC jTrolog.terms.IteratorAsTerm  (compatible)
+	===  CLASS FILE FORMAT VERSION: 50.0 <- 50.0
+	===  UNCHANGED INTERFACE: java.io.Serializable
+	===  UNCHANGED SUPERCLASS: jTrolog.terms.Term (<- jTrolog.terms.Term)
+	===  UNCHANGED CONSTRUCTOR: PUBLIC IteratorAsTerm(java.util.Iterator)
+	===  UNCHANGED METHOD: PUBLIC boolean hasNext()
+	===  UNCHANGED METHOD: PUBLIC java.lang.Object next()
+	===  UNCHANGED METHOD: PUBLIC java.lang.String toStringSmall()
+===  UNCHANGED CLASS: PUBLIC jTrolog.terms.Long  (compatible)
+	===  CLASS FILE FORMAT VERSION: 50.0 <- 50.0
+	===  UNCHANGED INTERFACE: java.io.Serializable
+	===  UNCHANGED SUPERCLASS: jTrolog.terms.Int (<- jTrolog.terms.Int)
+	===  UNCHANGED CONSTRUCTOR: PUBLIC Long(java.lang.String)
+	===  UNCHANGED CONSTRUCTOR: PUBLIC Long(long)
+	===  UNCHANGED METHOD: PUBLIC FINAL double doubleValue()
+	===  UNCHANGED METHOD: PUBLIC FINAL float floatValue()
+	===  UNCHANGED METHOD: PUBLIC FINAL int intValue()
+	===  UNCHANGED METHOD: PUBLIC FINAL long longValue()
+	===  UNCHANGED METHOD: PUBLIC java.lang.String toString()
+===  UNCHANGED CLASS: PUBLIC ABSTRACT jTrolog.terms.Number  (compatible)
+	===  CLASS FILE FORMAT VERSION: 50.0 <- 50.0
+	===  UNCHANGED INTERFACE: java.io.Serializable
+	===  UNCHANGED SUPERCLASS: jTrolog.terms.EvaluableTerm (<- jTrolog.terms.EvaluableTerm)
+	===  UNCHANGED FIELD: PUBLIC STATIC FINAL double MARGIN
+	===  UNCHANGED CONSTRUCTOR: PROTECTED Number()
+	===  UNCHANGED METHOD: PUBLIC STATIC int compareDoubleValues(jTrolog.terms.Number, jTrolog.terms.Number)
+	===  UNCHANGED METHOD: PUBLIC STATIC jTrolog.terms.Number create(java.lang.String)
+		===  UNCHANGED EXCEPTION: java.lang.NumberFormatException
+	===  UNCHANGED METHOD: PUBLIC ABSTRACT double doubleValue()
+	===  UNCHANGED METHOD: PUBLIC ABSTRACT float floatValue()
+	===  UNCHANGED METHOD: PUBLIC STATIC jTrolog.terms.Number getIntegerNumber(long)
+	===  UNCHANGED METHOD: PUBLIC ABSTRACT int intValue()
+	===  UNCHANGED METHOD: PUBLIC ABSTRACT long longValue()
+	===  UNCHANGED METHOD: PUBLIC java.lang.String toStringSmall()
+===  UNCHANGED CLASS: PUBLIC jTrolog.terms.Struct  (compatible)
+	===  CLASS FILE FORMAT VERSION: 50.0 <- 50.0
+	===  UNCHANGED INTERFACE: java.io.Serializable
+	===  UNCHANGED SUPERCLASS: jTrolog.terms.EvaluableTerm (<- jTrolog.terms.EvaluableTerm)
+	===  UNCHANGED FIELD: PUBLIC FINAL java.lang.String predicateIndicator
+	===  UNCHANGED FIELD: PUBLIC FINAL int arity
+	===  UNCHANGED FIELD: PUBLIC FINAL java.lang.String name
+	===  UNCHANGED FIELD: PUBLIC int operatorType
+	===  UNCHANGED CONSTRUCTOR: PUBLIC Struct(java.lang.String, jTrolog.terms.Term[], int)
+	===  UNCHANGED CONSTRUCTOR: PUBLIC Struct(java.lang.String, jTrolog.terms.Term[])
+	===  UNCHANGED METHOD: PUBLIC boolean equals(java.lang.Object)
+	===  UNCHANGED METHOD: PUBLIC jTrolog.terms.Term getArg(int)
+	===  UNCHANGED METHOD: PUBLIC int getOperatorType()
+	===  UNCHANGED METHOD: PUBLIC jTrolog.terms.Var[] getVarList()
+	===  UNCHANGED METHOD: PUBLIC STATIC java.util.Iterator iterator(jTrolog.terms.Struct)
+	===  UNCHANGED METHOD: PUBLIC java.lang.String toString()
+	===  UNCHANGED METHOD: PUBLIC java.lang.String toStringList(boolean)
+	===  UNCHANGED METHOD: PUBLIC java.lang.String toStringSmall()
+===  UNCHANGED CLASS: PUBLIC jTrolog.terms.StructAtom  (compatible)
+	===  CLASS FILE FORMAT VERSION: 50.0 <- 50.0
+	===  UNCHANGED INTERFACE: java.io.Serializable
+	===  UNCHANGED SUPERCLASS: jTrolog.terms.Struct (<- jTrolog.terms.Struct)
+	===  UNCHANGED CONSTRUCTOR: PUBLIC StructAtom(java.lang.String)
+	===  UNCHANGED METHOD: PUBLIC boolean equals(java.lang.Object)
+	===  UNCHANGED METHOD: PUBLIC java.lang.String toString()
+	===  UNCHANGED METHOD: PUBLIC java.lang.String toStringSmall()
+===  UNCHANGED CLASS: PUBLIC ABSTRACT jTrolog.terms.Term  (compatible)
+	===  CLASS FILE FORMAT VERSION: 50.0 <- 50.0
+	===  UNCHANGED INTERFACE: java.io.Serializable
+	===  UNCHANGED SUPERCLASS: java.lang.Object (<- java.lang.Object)
+	===  UNCHANGED FIELD: PUBLIC STATIC FINAL int NUMBER
+	===  UNCHANGED FIELD: PUBLIC STATIC FINAL jTrolog.terms.StructAtom emptyList
+	===  UNCHANGED FIELD: PUBLIC STATIC FINAL java.util.Iterator iterator
+	===  UNCHANGED FIELD: PUBLIC int[] prePost
+	===  UNCHANGED FIELD: PUBLIC int pos
+	===  UNCHANGED FIELD: PUBLIC STATIC FINAL int VAR
+	===  UNCHANGED FIELD: PUBLIC jTrolog.terms.Term[] tree
+	===  UNCHANGED FIELD: PUBLIC STATIC FINAL jTrolog.terms.Term TRUE
+	===  UNCHANGED FIELD: PUBLIC STATIC FINAL jTrolog.terms.Term FALSE
+	===  UNCHANGED FIELD: PUBLIC int type
+	===  UNCHANGED FIELD: PUBLIC STATIC FINAL int STRUCT
+	===  UNCHANGED FIELD: PUBLIC STATIC FINAL int ATOM
+	===  UNCHANGED CONSTRUCTOR: PROTECTED Term()
+	===  UNCHANGED METHOD: PUBLIC ABSTRACT java.lang.String toStringSmall()
+===  UNCHANGED CLASS: PUBLIC jTrolog.terms.Var  (compatible)
+	===  CLASS FILE FORMAT VERSION: 50.0 <- 50.0
+	===  UNCHANGED INTERFACE: java.io.Serializable
+	===  UNCHANGED SUPERCLASS: jTrolog.terms.Term (<- jTrolog.terms.Term)
+	===  UNCHANGED FIELD: PUBLIC FINAL int nrInStruct
+	===  UNCHANGED FIELD: PUBLIC STATIC FINAL java.lang.String ANY
+	===  UNCHANGED CONSTRUCTOR: PUBLIC Var(java.lang.String, int)
+		===  UNCHANGED EXCEPTION: jTrolog.errors.InvalidTermException
+	===  UNCHANGED METHOD: PUBLIC boolean equals(java.lang.Object)
+	===  UNCHANGED METHOD: PUBLIC int hashCode()
+	===  UNCHANGED METHOD: PUBLIC boolean isAnonymous()
+	===  UNCHANGED METHOD: PUBLIC java.lang.String toString()
+	===  UNCHANGED METHOD: PUBLIC java.lang.String toStringSmall()
+===  UNCHANGED INTERFACE: PUBLIC ABSTRACT jTrolog.terms.Wrapper  (not serializable)
+	===  CLASS FILE FORMAT VERSION: 50.0 <- 50.0
+	===  UNCHANGED SUPERCLASS: java.lang.Object (<- java.lang.Object)
+	===  UNCHANGED METHOD: PUBLIC ABSTRACT jTrolog.terms.Term getBasis()
+	===  UNCHANGED METHOD: PUBLIC ABSTRACT int getContext()
+===  UNCHANGED CLASS: PUBLIC STATIC jTrolog.terms.Wrapper$WrappedIterator  (not serializable)
+	===  CLASS FILE FORMAT VERSION: 50.0 <- 50.0
+	===  UNCHANGED INTERFACE: java.util.Iterator
+	===  UNCHANGED SUPERCLASS: java.lang.Object (<- java.lang.Object)
+	===  UNCHANGED METHOD: PUBLIC boolean hasNext()
+	===  UNCHANGED METHOD: PUBLIC java.lang.Object next()
+	===  UNCHANGED METHOD: PUBLIC void remove()
+===  UNCHANGED CLASS: PUBLIC jTrolog.terms.WrapStruct  (compatible)
+	===  CLASS FILE FORMAT VERSION: 50.0 <- 50.0
+	===  UNCHANGED INTERFACE: jTrolog.terms.Wrapper
+	===  UNCHANGED INTERFACE: java.io.Serializable
+	===  UNCHANGED SUPERCLASS: jTrolog.terms.Struct (<- jTrolog.terms.Struct)
+	===  UNCHANGED FIELD: PUBLIC FINAL int context
+	===  UNCHANGED CONSTRUCTOR: PUBLIC WrapStruct(jTrolog.terms.Struct, int)
+	===  UNCHANGED METHOD: PUBLIC jTrolog.terms.Term getArg(int)
+	===  UNCHANGED METHOD: PUBLIC jTrolog.terms.Term getBasis()
+	===  UNCHANGED METHOD: PUBLIC int getContext()
+	===  UNCHANGED METHOD: PUBLIC int getOperatorType()
+	===  UNCHANGED METHOD: PUBLIC jTrolog.terms.Var[] getVarList()
+	===  UNCHANGED METHOD: PUBLIC java.lang.String toString()
+===  UNCHANGED CLASS: PUBLIC jTrolog.terms.WrapVar  (compatible)
+	===  CLASS FILE FORMAT VERSION: 50.0 <- 50.0
+	===  UNCHANGED INTERFACE: jTrolog.terms.Wrapper
+	===  UNCHANGED INTERFACE: java.io.Serializable
+	===  UNCHANGED SUPERCLASS: jTrolog.terms.Var (<- jTrolog.terms.Var)
+	===  UNCHANGED CONSTRUCTOR: PUBLIC WrapVar(jTrolog.terms.Var, int)
+	===  UNCHANGED METHOD: PUBLIC boolean equals(java.lang.Object)
+	===  UNCHANGED METHOD: PUBLIC jTrolog.terms.Term getBasis()
+	===  UNCHANGED METHOD: PUBLIC int getContext()
+	===  UNCHANGED METHOD: PUBLIC int hashCode()
+	===  UNCHANGED METHOD: PUBLIC boolean isAnonymous()
+	===  UNCHANGED METHOD: PUBLIC java.lang.String toString()
+	===  UNCHANGED METHOD: PUBLIC java.lang.String toStringSmall()
