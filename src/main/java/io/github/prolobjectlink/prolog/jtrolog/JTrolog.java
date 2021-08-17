@@ -298,7 +298,7 @@ public class JTrolog extends AbstractProvider implements PrologProvider {
 
 	@Override
 	public String toString() {
-		return "TuPrologProvider [converter=" + converter + "]";
+		return "JTrolog [converter=" + converter + "]";
 	}
 
 }
