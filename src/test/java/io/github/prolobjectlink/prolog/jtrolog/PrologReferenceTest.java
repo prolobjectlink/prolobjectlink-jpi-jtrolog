@@ -331,9 +331,9 @@ public class PrologReferenceTest extends PrologBaseTest {
 		// true because are equals
 		assertEquals(0, ref.compareTo(ref));
 		// true because match and their arguments compareTo
-		assertEquals(1, ref.compareTo(structure1));
+		assertEquals(-1, ref.compareTo(structure1));
 		// false because match but their arguments not compareTo
-		assertEquals(1, ref.compareTo(structure2));
+		assertEquals(-1, ref.compareTo(structure2));
 
 		// with list
 		PrologList flattenList = provider.parseList("['Some Literal']");
@@ -341,7 +341,7 @@ public class PrologReferenceTest extends PrologBaseTest {
 		PrologTerm empty = provider.prologEmpty();
 		assertEquals(-1, ref.compareTo(flattenList));
 		assertEquals(-1, ref.compareTo(headTailList));
-		assertEquals(1, ref.compareTo(empty));
+		assertEquals(-1, ref.compareTo(empty));
 
 		// with expression
 		PrologTerm expression = provider.parseTerm("58+93*10");

@@ -31,6 +31,7 @@ import static io.github.prolobjectlink.prolog.PrologTermType.INTEGER_TYPE;
 import static io.github.prolobjectlink.prolog.PrologTermType.LIST_TYPE;
 import static io.github.prolobjectlink.prolog.PrologTermType.LONG_TYPE;
 import static io.github.prolobjectlink.prolog.PrologTermType.NIL_TYPE;
+import static io.github.prolobjectlink.prolog.PrologTermType.OBJECT_TYPE;
 import static io.github.prolobjectlink.prolog.PrologTermType.STRUCTURE_TYPE;
 import static io.github.prolobjectlink.prolog.PrologTermType.TRUE_TYPE;
 import static io.github.prolobjectlink.prolog.PrologTermType.VARIABLE_TYPE;
@@ -169,30 +170,30 @@ abstract class JTrologTerm extends AbstractTerm implements PrologTerm {
 	}
 
 	public final boolean isTrueType() {
-		return false;
+		return getObject().equals(true);
 	}
 
 	public final boolean isFalseType() {
-		return false;
+		return getObject().equals(false);
 	}
 
 	public final boolean isNullType() {
-		return false;
+		return getObject() == null;
 	}
 
 	public final boolean isVoidType() {
-		return false;
+		return getObject() == void.class;
 	}
 
 	public final boolean isObjectType() {
-		return false;
+		return getType() == OBJECT_TYPE;
 	}
 
 	public final boolean isReference() {
-		return false;
+		return isObjectType();
 	}
 
-	public final PrologTerm getTerm() {
+	public PrologTerm getTerm() {
 		return this;
 	}
 
@@ -363,7 +364,7 @@ abstract class JTrologTerm extends AbstractTerm implements PrologTerm {
 		return true;
 	}
 
-	public final String toString() {
+	public String toString() {
 		return value.toStringSmall();
 	}
 

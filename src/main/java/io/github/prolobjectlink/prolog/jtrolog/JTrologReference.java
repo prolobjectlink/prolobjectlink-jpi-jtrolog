@@ -21,14 +21,85 @@
  */
 package io.github.prolobjectlink.prolog.jtrolog;
 
-import io.github.prolobjectlink.prolog.AbstractReference;
+import static io.github.prolobjectlink.prolog.PrologTermType.OBJECT_TYPE;
+
 import io.github.prolobjectlink.prolog.PrologProvider;
 import io.github.prolobjectlink.prolog.PrologReference;
+import io.github.prolobjectlink.prolog.PrologTerm;
+import jTrolog.terms.Struct;
+import jTrolog.terms.StructAtom;
+import jTrolog.terms.Term;
 
-public final class JTrologReference extends AbstractReference implements PrologReference {
+public final class JTrologReference extends JTrologTerm implements PrologReference {
 
-	JTrologReference(PrologProvider provider, Object reference) {
-		super(provider, reference);
+	protected final Object reference;
+
+	protected JTrologReference(PrologProvider provider, Object reference) {
+		super(OBJECT_TYPE, provider, new Struct("'@'", new Term[] { new StructAtom("'" + reference + "'") }));
+		this.reference = reference;
 	}
 
+	@Override
+	public int getArity() {
+		return 1;
+	}
+
+	@Override
+	public String getFunctor() {
+		return "@";
+	}
+
+	@Override
+	public PrologTerm[] getArguments() {
+		String string = reference.toString();
+		PrologTerm tag = provider.newAtom(string);
+		return new PrologTerm[] { tag };
+	}
+
+	@Override
+	public PrologTerm getTerm() {
+		String string = reference.toString();
+		PrologTerm tag = provider.newAtom(string);
+		return provider.newStructure(getFunctor(), tag);
+	}
+
+	@Override
+	public Class<?> getReferenceType() {
+		return reference.getClass();
+	}
+
+	public Object getObject() {
+		return reference;
+	}
+
+	@Override
+	public String toString() {
+		return "" + getTerm() + "";
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((reference == null) ? 0 : reference.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		JTrologReference other = (JTrologReference) obj;
+		if (reference == null) {
+			if (other.reference != null)
+				return false;
+		} else if (!reference.equals(other.reference)) {
+			return false;
+		}
+		return true;
+	}
 }
