@@ -1,8 +1,7 @@
-Comparing source compatibility of C:\Users\Jose Zalacain\Documents\eclipse-java-photon-workspace\prolobjectlink-jpi-jtrolog\target\prolobjectlink-jpi-jtrolog-1.1-SNAPSHOT.jar against C:\Users\Jose Zalacain\.m2\repository\io\github\prolobjectlink\prolobjectlink-jpi-jtrolog\1.0\prolobjectlink-jpi-jtrolog-1.0.jar
+Comparing source compatibility of C:\Users\Jose Zalacain\Documents\eclipse-jee-photon-workspace\prolobjectlink-jpi-jtrolog\target\prolobjectlink-jpi-jtrolog-1.1-SNAPSHOT.jar against C:\Users\Jose Zalacain\.m2\repository\io\github\prolobjectlink\prolobjectlink-jpi-jtrolog\1.0\prolobjectlink-jpi-jtrolog-1.0.jar
 ***  MODIFIED CLASS: PUBLIC io.github.prolobjectlink.prolog.jtrolog.JTrolog  (not serializable)
 	===  CLASS FILE FORMAT VERSION: 50.0 <- 50.0
 	===  UNCHANGED INTERFACE: io.github.prolobjectlink.prolog.PrologProvider
-	===  UNCHANGED INTERFACE: java.util.Map
 	===  UNCHANGED INTERFACE: io.github.prolobjectlink.prolog.PrologMapper
 	===  UNCHANGED INTERFACE: io.github.prolobjectlink.prolog.PrologParser
 	===  UNCHANGED SUPERCLASS: io.github.prolobjectlink.prolog.AbstractProvider (<- io.github.prolobjectlink.prolog.AbstractProvider)
@@ -65,7 +64,6 @@ Comparing source compatibility of C:\Users\Jose Zalacain\Documents\eclipse-java-
 	===  UNCHANGED METHOD: PUBLIC STATIC void main(java.lang.String[])
 ***  MODIFIED CLASS: PUBLIC io.github.prolobjectlink.prolog.jtrolog.JTrologEngine  (not serializable)
 	===  CLASS FILE FORMAT VERSION: 50.0 <- 50.0
-	===  UNCHANGED INTERFACE: java.util.Map
 	===  UNCHANGED INTERFACE: io.github.prolobjectlink.prolog.PrologEngine
 	===  UNCHANGED INTERFACE: java.lang.Iterable
 	===  UNCHANGED SUPERCLASS: io.github.prolobjectlink.prolog.AbstractEngine (<- io.github.prolobjectlink.prolog.AbstractEngine)
