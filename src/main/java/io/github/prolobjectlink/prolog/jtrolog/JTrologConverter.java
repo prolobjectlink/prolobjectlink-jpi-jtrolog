@@ -22,19 +22,26 @@
 package io.github.prolobjectlink.prolog.jtrolog;
 
 import static io.github.prolobjectlink.prolog.PrologTermType.ATOM_TYPE;
+import static io.github.prolobjectlink.prolog.PrologTermType.CLASS_TYPE;
 import static io.github.prolobjectlink.prolog.PrologTermType.CUT_TYPE;
 import static io.github.prolobjectlink.prolog.PrologTermType.DOUBLE_TYPE;
 import static io.github.prolobjectlink.prolog.PrologTermType.FAIL_TYPE;
 import static io.github.prolobjectlink.prolog.PrologTermType.FALSE_TYPE;
+import static io.github.prolobjectlink.prolog.PrologTermType.FIELD_TYPE;
 import static io.github.prolobjectlink.prolog.PrologTermType.FLOAT_TYPE;
 import static io.github.prolobjectlink.prolog.PrologTermType.INTEGER_TYPE;
 import static io.github.prolobjectlink.prolog.PrologTermType.LIST_TYPE;
 import static io.github.prolobjectlink.prolog.PrologTermType.LONG_TYPE;
+import static io.github.prolobjectlink.prolog.PrologTermType.MAP_ENTRY_TYPE;
+import static io.github.prolobjectlink.prolog.PrologTermType.MAP_TYPE;
+import static io.github.prolobjectlink.prolog.PrologTermType.MIXIN_TYPE;
 import static io.github.prolobjectlink.prolog.PrologTermType.NIL_TYPE;
+import static io.github.prolobjectlink.prolog.PrologTermType.OBJECT_TYPE;
+import static io.github.prolobjectlink.prolog.PrologTermType.PARAMETER_TYPE;
+import static io.github.prolobjectlink.prolog.PrologTermType.RESULT_TYPE;
 import static io.github.prolobjectlink.prolog.PrologTermType.STRUCTURE_TYPE;
 import static io.github.prolobjectlink.prolog.PrologTermType.TRUE_TYPE;
 import static io.github.prolobjectlink.prolog.PrologTermType.VARIABLE_TYPE;
-import static io.github.prolobjectlink.prolog.PrologTermType.OBJECT_TYPE;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -183,6 +190,7 @@ final class JTrologConverter extends AbstractConverter<Term> implements PrologCo
 			}
 			return variable;
 		case LIST_TYPE:
+		case MAP_TYPE:
 			PrologTerm[] elements = term.getArguments();
 			if (elements != null && elements.length > 0) {
 				Term list = Term.emptyList;
@@ -194,6 +202,7 @@ final class JTrologConverter extends AbstractConverter<Term> implements PrologCo
 			}
 			return Term.emptyList;
 		case STRUCTURE_TYPE:
+		case MAP_ENTRY_TYPE:
 			String functor = term.getFunctor();
 			if (term.getArity() < 1) {
 				if (!functor.matches(SIMPLE_ATOM_REGEX)) {
@@ -206,6 +215,17 @@ final class JTrologConverter extends AbstractConverter<Term> implements PrologCo
 			return new Struct(functor, arguments);
 		case OBJECT_TYPE:
 			return new Struct("'@'", new Term[] { new StructAtom("'" + term.getObject() + "'") });
+		case PARAMETER_TYPE:
+		case RESULT_TYPE:
+		case FIELD_TYPE:
+			name = ((PrologVariable) term).getName();
+			int position = ((PrologVariable) term).getPosition();
+			return new Var(name, position);
+		case MIXIN_TYPE:
+		case CLASS_TYPE:
+			functor = removeQuoted(term.getFunctor());
+			arguments = fromTermArray(term.getArguments());
+			return new Struct(functor, arguments);
 		default:
 			throw new UnknownTermError(term);
 		}

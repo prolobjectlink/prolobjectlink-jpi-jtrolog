@@ -234,60 +234,6 @@ public class JTrolog extends AbstractProvider implements PrologProvider {
 		return newReference(void.class);
 	}
 
-	public PrologTerm newField(PrologTerm name) {
-		return new JTrologField(this, name);
-	}
-
-	public PrologTerm newField(String name) {
-		return new JTrologField(this, name);
-	}
-
-	public PrologTerm newField(PrologTerm name, PrologTerm type) {
-		return new JTrologTypedField(this, name, type);
-	}
-
-	public PrologTerm newField(String name, String type) {
-		PrologTerm oname = newVariable(name, 0);
-		PrologTerm otype = newVariable(type, 1);
-		return new JTrologTypedField(this, oname, otype);
-	}
-
-	public PrologTerm newResult(PrologTerm name) {
-		return new JTrologResult(this, name);
-	}
-
-	public PrologTerm newResult(String name) {
-		return new JTrologResult(this, name);
-	}
-
-	public PrologTerm newResult(PrologTerm name, PrologTerm type) {
-		return new JTrologTypedResult(this, name, type);
-	}
-
-	public PrologTerm newResult(String name, String type) {
-		PrologTerm oname = newVariable(name, 0);
-		PrologTerm otype = newVariable(type, 1);
-		return new JTrologTypedResult(this, oname, otype);
-	}
-
-	public PrologTerm newParameter(PrologTerm name) {
-		return new JTrologParameter(this, name);
-	}
-
-	public PrologTerm newParameter(String name) {
-		return new JTrologParameter(this, name);
-	}
-
-	public PrologTerm newParameter(PrologTerm name, PrologTerm type) {
-		return new JTrologTypedParameter(this, name, type);
-	}
-
-	public PrologTerm newParameter(String name, String type) {
-		PrologTerm oname = newVariable(name, 0);
-		PrologTerm otype = newVariable(type, 1);
-		return new JTrologTypedParameter(this, oname, otype);
-	}
-
 	public PrologJavaConverter getJavaConverter() {
 		return new JTrologJavaConverter(this);
 	}

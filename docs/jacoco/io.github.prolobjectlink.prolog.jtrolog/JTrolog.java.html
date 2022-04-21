@@ -234,71 +234,17 @@ public class JTrolog extends AbstractProvider implements PrologProvider {
 <span class="fc" id="L234">		return newReference(void.class);</span>
 	}
 
-	public PrologTerm newField(PrologTerm name) {
-<span class="nc" id="L238">		return new JTrologField(this, name);</span>
-	}
-
-	public PrologTerm newField(String name) {
-<span class="nc" id="L242">		return new JTrologField(this, name);</span>
-	}
-
-	public PrologTerm newField(PrologTerm name, PrologTerm type) {
-<span class="fc" id="L246">		return new JTrologTypedField(this, name, type);</span>
-	}
-
-	public PrologTerm newField(String name, String type) {
-<span class="fc" id="L250">		PrologTerm oname = newVariable(name, 0);</span>
-<span class="fc" id="L251">		PrologTerm otype = newVariable(type, 1);</span>
-<span class="fc" id="L252">		return new JTrologTypedField(this, oname, otype);</span>
-	}
-
-	public PrologTerm newResult(PrologTerm name) {
-<span class="nc" id="L256">		return new JTrologResult(this, name);</span>
-	}
-
-	public PrologTerm newResult(String name) {
-<span class="nc" id="L260">		return new JTrologResult(this, name);</span>
-	}
-
-	public PrologTerm newResult(PrologTerm name, PrologTerm type) {
-<span class="nc" id="L264">		return new JTrologTypedResult(this, name, type);</span>
-	}
-
-	public PrologTerm newResult(String name, String type) {
-<span class="nc" id="L268">		PrologTerm oname = newVariable(name, 0);</span>
-<span class="nc" id="L269">		PrologTerm otype = newVariable(type, 1);</span>
-<span class="nc" id="L270">		return new JTrologTypedResult(this, oname, otype);</span>
-	}
-
-	public PrologTerm newParameter(PrologTerm name) {
-<span class="nc" id="L274">		return new JTrologParameter(this, name);</span>
-	}
-
-	public PrologTerm newParameter(String name) {
-<span class="nc" id="L278">		return new JTrologParameter(this, name);</span>
-	}
-
-	public PrologTerm newParameter(PrologTerm name, PrologTerm type) {
-<span class="nc" id="L282">		return new JTrologTypedParameter(this, name, type);</span>
-	}
-
-	public PrologTerm newParameter(String name, String type) {
-<span class="nc" id="L286">		PrologTerm oname = newVariable(name, 0);</span>
-<span class="nc" id="L287">		PrologTerm otype = newVariable(type, 1);</span>
-<span class="nc" id="L288">		return new JTrologTypedParameter(this, oname, otype);</span>
-	}
-
 	public PrologJavaConverter getJavaConverter() {
-<span class="fc" id="L292">		return new JTrologJavaConverter(this);</span>
+<span class="fc" id="L238">		return new JTrologJavaConverter(this);</span>
 	}
 
 	public PrologLogger getLogger() {
-<span class="fc" id="L296">		return logger;</span>
+<span class="fc" id="L242">		return logger;</span>
 	}
 
 	@Override
 	public String toString() {
-<span class="fc" id="L301">		return &quot;JTrolog [converter=&quot; + converter + &quot;]&quot;;</span>
+<span class="fc" id="L247">		return &quot;JTrolog [converter=&quot; + converter + &quot;]&quot;;</span>
 	}
 
 }
