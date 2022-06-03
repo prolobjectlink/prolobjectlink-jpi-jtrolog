@@ -1,4 +1,9 @@
-![GitHub](https://img.shields.io/github/license/prolobjectlink/prolobjectlink-jpi/badge.svg)(https://github.com/prolobjectlink/prolobjectlink-jpi/blob/master/LICENSE.md)
+![Build Status](https://github.com/prolobjectlink/prolobjectlink-jpi-jtrolog/actions/workflows/maven.yml/badge.svg?event=push)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=prolobjectlink_prolobjectlink-jpi-jtrolog&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=prolobjectlink_prolobjectlink-jpi-jtrolog)
+[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=prolobjectlink_prolobjectlink-jpi-jtrolog&metric=coverage)](https://sonarcloud.io/summary/new_code?id=prolobjectlink_prolobjectlink-jpi-jtrolog)
+[![Reliability Rating](https://sonarcloud.io/api/project_badges/measure?project=prolobjectlink_prolobjectlink-jpi-jtrolog&metric=reliability_rating)](https://sonarcloud.io/summary/new_code?id=prolobjectlink_prolobjectlink-jpi-jtrolog)
+[![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=prolobjectlink_prolobjectlink-jpi-jtrolog&metric=sqale_rating)](https://sonarcloud.io/summary/new_code?id=prolobjectlink_prolobjectlink-jpi-jtrolog)
+[![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=prolobjectlink_prolobjectlink-jpi-jtrolog&metric=security_rating)](https://sonarcloud.io/summary/new_code?id=prolobjectlink_prolobjectlink-jpi-jtrolog)
 
 Java Prolog Interface (JPI) is an Application Provider Interface (API) for interaction between Java and Prolog programming languages. Is a bidirectional interface that communicate Java applications with Prolog program or database and Prolog procedures with Java class and methods.
 
