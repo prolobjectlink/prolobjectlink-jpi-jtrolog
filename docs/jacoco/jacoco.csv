@@ -77,7 +77,7 @@ prolobjectlink-jpi-jtrolog,io.github.prolobjectlink.prolog.jtrolog,JTrologFloat,
 prolobjectlink-jpi-jtrolog,io.github.prolobjectlink.prolog.jtrolog,JTrologScriptFactory,0,12,0,0,0,3,0,2,0,2
 prolobjectlink-jpi-jtrolog,io.github.prolobjectlink.prolog.jtrolog,JTrologReference,19,127,8,6,7,24,8,9,1,9
 prolobjectlink-jpi-jtrolog,io.github.prolobjectlink.prolog.jtrolog,JTrologClauses,165,0,26,0,43,0,24,0,11,0
-prolobjectlink-jpi-jtrolog,io.github.prolobjectlink.prolog.jtrolog,JTrologTerm,20,526,16,102,8,131,15,77,0,30
+prolobjectlink-jpi-jtrolog,io.github.prolobjectlink.prolog.jtrolog,JTrologTerm,18,528,15,103,7,132,14,78,0,30
 prolobjectlink-jpi-jtrolog,io.github.prolobjectlink.prolog.jtrolog,JTrologConverter,65,552,10,69,11,96,9,46,0,8
 prolobjectlink-jpi-jtrolog,io.github.prolobjectlink.prolog.jtrolog,JTrologEmpty,0,17,0,0,0,5,0,4,0,4
 prolobjectlink-jpi-jtrolog,io.github.prolobjectlink.prolog.jtrolog,JTrologMap,63,306,16,20,17,76,17,33,4,28
