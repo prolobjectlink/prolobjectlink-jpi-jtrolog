@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<pmd version="4.2.5" timestamp="2022-12-28T09:56:10.123">
+<pmd version="4.2.5" timestamp="2023-01-07T11:49:14.461">
 <file name="C:\eclipse-jee-2022-03-R-workspace\prolobjectlink-jpi-jtrolog\src\main\java\io\github\prolobjectlink\prolog\jtrolog\JTrologConverter.java">
 <violation beginline="22" endline="263" begincolumn="1" endcolumn="3" rule="TooManyStaticImports" ruleset="Import Statement Rules" package="io.github.prolobjectlink.prolog.jtrolog" externalInfoUrl="http://pmd.sourceforge.net/rules/imports.html#TooManyStaticImports" priority="3">
 Too many static imports may lead to messy code
