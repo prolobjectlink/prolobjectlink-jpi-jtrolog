@@ -1,4 +1,4 @@
-Comparing source compatibility of C:\eclipse-jee-2022-03-R-workspace\prolobjectlink-jpi-jtrolog\target\prolobjectlink-jpi-jtrolog-1.2-SNAPSHOT.jar against C:\Users\Jose Zalacain\.m2\repository\io\github\prolobjectlink\prolobjectlink-jpi-jtrolog\1.0\prolobjectlink-jpi-jtrolog-1.0.jar
+Comparing source compatibility of C:\prolobjectlink-dev\workspace\prolobjectlink-jpi-jtrolog\target\prolobjectlink-jpi-jtrolog-1.2-SNAPSHOT.jar against C:\Users\Jose Zalacain\.m2\repository\io\github\prolobjectlink\prolobjectlink-jpi-jtrolog\1.0\prolobjectlink-jpi-jtrolog-1.0.jar
 ***  MODIFIED CLASS: PUBLIC io.github.prolobjectlink.prolog.jtrolog.JTrolog  (not serializable)
 	===  CLASS FILE FORMAT VERSION: 50.0 <- 50.0
 	===  UNCHANGED INTERFACE: io.github.prolobjectlink.prolog.PrologProvider
