@@ -45,16 +45,16 @@ final class PrologQueryIterator extends AbstractIterator&lt;Collection&lt;Prolog
 	 * 
 	 * @param query PrologQuery to iterate
 	 */
-<span class="fc" id="L48">	PrologQueryIterator(PrologQuery query) {</span>
-<span class="fc" id="L49">		this.query = query;</span>
-<span class="fc" id="L50">	}</span>
+<span class="nc" id="L48">	PrologQueryIterator(PrologQuery query) {</span>
+<span class="nc" id="L49">		this.query = query;</span>
+<span class="nc" id="L50">	}</span>
 
 	/**
 	 * True if the current Prolog query has more solution, false if not has more
 	 * solution
 	 */
 	public boolean hasNext() {
-<span class="fc" id="L57">		return query.hasMoreSolutions();</span>
+<span class="nc" id="L57">		return query.hasMoreSolutions();</span>
 	}
 
 	/**

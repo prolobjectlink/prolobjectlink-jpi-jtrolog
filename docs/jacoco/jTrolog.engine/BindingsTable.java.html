@@ -106,7 +106,7 @@ import java.util.NoSuchElementException;
 	// like to view the entire terms..
 	public boolean unify(Term t0, Term t1) {
 <span class="fc bfc" id="L108" title="All 2 branches covered.">		int oneCtx = t0 instanceof Wrapper ? ((Wrapper) t0).getContext() : 0;</span>
-<span class="pc bpc" id="L109" title="1 of 2 branches missed.">		int twoCtx = t1 instanceof Wrapper ? ((Wrapper) t1).getContext() : 0;</span>
+<span class="fc bfc" id="L109" title="All 2 branches covered.">		int twoCtx = t1 instanceof Wrapper ? ((Wrapper) t1).getContext() : 0;</span>
 <span class="fc" id="L110">		return unifyBranch(unWrap(t0), unWrap(t1), oneCtx, twoCtx);</span>
 	}
 
