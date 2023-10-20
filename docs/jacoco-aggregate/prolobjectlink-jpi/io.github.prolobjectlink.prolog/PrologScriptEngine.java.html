@@ -51,99 +51,99 @@ public final class PrologScriptEngine extends AbstractScriptEngine implements Sc
 	private final PrologEngine prolog;
 	private final ScriptEngineFactory factory;
 
-<span class="nc" id="L54">	PrologScriptEngine(ScriptEngineFactory factory, PrologEngine prolog) {</span>
-<span class="nc" id="L55">		this.factory = factory;</span>
-<span class="nc" id="L56">		this.prolog = prolog;</span>
-<span class="nc" id="L57">	}</span>
+<span class="fc" id="L54">	PrologScriptEngine(ScriptEngineFactory factory, PrologEngine prolog) {</span>
+<span class="fc" id="L55">		this.factory = factory;</span>
+<span class="fc" id="L56">		this.prolog = prolog;</span>
+<span class="fc" id="L57">	}</span>
 
 	public Bindings createBindings() {
-<span class="nc" id="L60">		return new SimpleBindings();</span>
+<span class="fc" id="L60">		return new SimpleBindings();</span>
 	}
 
 	public ScriptEngineFactory getFactory() {
-<span class="nc" id="L64">		return factory;</span>
+<span class="fc" id="L64">		return factory;</span>
 	}
 
 	public Object eval(String script, ScriptContext context) throws ScriptException {
-<span class="nc" id="L68">		return eval(script, context.getBindings(ScriptContext.ENGINE_SCOPE));</span>
+<span class="fc" id="L68">		return eval(script, context.getBindings(ScriptContext.ENGINE_SCOPE));</span>
 	}
 
 	public Object eval(Reader reader, ScriptContext context) throws ScriptException {
-<span class="nc" id="L72">		return eval(reader, context.getBindings(ScriptContext.ENGINE_SCOPE));</span>
+<span class="fc" id="L72">		return eval(reader, context.getBindings(ScriptContext.ENGINE_SCOPE));</span>
 	}
 
 	@Override
 	public Object eval(Reader reader, Bindings bindings) throws ScriptException {
-<span class="nc" id="L77">		BufferedReader bfr = new BufferedReader(reader);</span>
-<span class="nc" id="L78">		StringBuilder script = new StringBuilder();</span>
+<span class="fc" id="L77">		BufferedReader bfr = new BufferedReader(reader);</span>
+<span class="fc" id="L78">		StringBuilder script = new StringBuilder();</span>
 		try {
-<span class="nc" id="L80">			String line = bfr.readLine();</span>
-<span class="nc bnc" id="L81" title="All 2 branches missed.">			while (line != null) {</span>
-<span class="nc" id="L82">				script.append(line);</span>
-<span class="nc" id="L83">				script.append(&quot;\n&quot;);</span>
-<span class="nc" id="L84">				line = bfr.readLine();</span>
+<span class="fc" id="L80">			String line = bfr.readLine();</span>
+<span class="fc bfc" id="L81" title="All 2 branches covered.">			while (line != null) {</span>
+<span class="fc" id="L82">				script.append(line);</span>
+<span class="fc" id="L83">				script.append(&quot;\n&quot;);</span>
+<span class="fc" id="L84">				line = bfr.readLine();</span>
 			}
 <span class="nc" id="L86">		} catch (IOException ex) {</span>
 <span class="nc" id="L87">			throw new ScriptException(ex);</span>
-		}
-<span class="nc" id="L89">		return eval(&quot;&quot; + script + &quot;&quot;, bindings);</span>
+<span class="fc" id="L88">		}</span>
+<span class="fc" id="L89">		return eval(&quot;&quot; + script + &quot;&quot;, bindings);</span>
 	}
 
 	@Override
 	public Object eval(String script, Bindings bindings) throws ScriptException {
 
-<span class="nc" id="L95">		String code = script;</span>
+<span class="fc" id="L95">		String code = script;</span>
 
 		// check code goal to query
-<span class="nc bnc" id="L98" title="All 2 branches missed.">		if (code.startsWith(&quot;?-&quot;)) {</span>
+<span class="fc bfc" id="L98" title="All 2 branches covered.">		if (code.startsWith(&quot;?-&quot;)) {</span>
 
 			// replace all bindings
-<span class="nc bnc" id="L101" title="All 2 branches missed.">			for (Entry&lt;String, Object&gt; entry : bindings.entrySet()) {</span>
-<span class="nc" id="L102">				code = code.replace(entry.getKey(), &quot;&quot; + entry.getValue() + &quot;&quot;);</span>
-			}
+<span class="fc bfc" id="L101" title="All 2 branches covered.">			for (Entry&lt;String, Object&gt; entry : bindings.entrySet()) {</span>
+<span class="fc" id="L102">				code = code.replace(entry.getKey(), &quot;&quot; + entry.getValue() + &quot;&quot;);</span>
+<span class="fc" id="L103">			}</span>
 
-<span class="nc" id="L105">			code = code.substring(2).trim();</span>
+<span class="fc" id="L105">			code = code.substring(2).trim();</span>
 
 			// remove dot at the end if needed
-<span class="nc bnc" id="L108" title="All 2 branches missed.">			if (code.endsWith(&quot;.&quot;)) {</span>
-<span class="nc" id="L109">				code = code.substring(0, code.length() - 1);</span>
+<span class="fc bfc" id="L108" title="All 2 branches covered.">			if (code.endsWith(&quot;.&quot;)) {</span>
+<span class="fc" id="L109">				code = code.substring(0, code.length() - 1);</span>
 			}
 
-<span class="nc" id="L112">			PrologQuery query = prolog.query(code);</span>
-<span class="nc bnc" id="L113" title="All 2 branches missed.">			if (!query.hasSolution()) {</span>
+<span class="fc" id="L112">			PrologQuery query = prolog.query(code);</span>
+<span class="pc bpc" id="L113" title="1 of 2 branches missed.">			if (!query.hasSolution()) {</span>
 <span class="nc" id="L114">				return false;</span>
 			}
 
 			// set variables result in the binding map
-<span class="nc" id="L118">			Map&lt;String, Object&gt; map = query.oneVariablesResult();</span>
-<span class="nc bnc" id="L119" title="All 2 branches missed.">			for (Entry&lt;String, Object&gt; entry : map.entrySet()) {</span>
-<span class="nc" id="L120">				put(entry.getKey(), entry.getValue());</span>
-			}
+<span class="fc" id="L118">			Map&lt;String, Object&gt; map = query.oneVariablesResult();</span>
+<span class="fc bfc" id="L119" title="All 2 branches covered.">			for (Entry&lt;String, Object&gt; entry : map.entrySet()) {</span>
+<span class="fc" id="L120">				put(entry.getKey(), entry.getValue());</span>
+<span class="fc" id="L121">			}</span>
 
-<span class="nc" id="L123">		}</span>
+<span class="fc" id="L123">		}</span>
 
 		// code is prolog program
 		// code need ensure_loaded
 		else {
-<span class="nc" id="L128">			prolog.include(new StringReader(code));</span>
+<span class="fc" id="L128">			prolog.include(new StringReader(code));</span>
 		}
 
-<span class="nc" id="L131">		return true;</span>
+<span class="fc" id="L131">		return true;</span>
 
 	}
 
 	@Override
 	public Object eval(String string) throws ScriptException {
-<span class="nc" id="L137">		return eval(string, getContext());</span>
+<span class="fc" id="L137">		return eval(string, getContext());</span>
 	}
 
 	@Override
 	public Object eval(Reader reader) throws ScriptException {
-<span class="nc" id="L142">		return eval(reader, getContext());</span>
+<span class="fc" id="L142">		return eval(reader, getContext());</span>
 	}
 
 	public PrologProvider getProvider() {
-<span class="nc" id="L146">		return prolog.getProvider();</span>
+<span class="fc" id="L146">		return prolog.getProvider();</span>
 	}
 
 }

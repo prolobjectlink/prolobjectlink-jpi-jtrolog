@@ -52,12 +52,12 @@ public abstract class AbstractEngine implements PrologEngine {
 	protected final PrologProvider provider;
 	private static final String UNKNOWN = &quot;unknown&quot;;
 
-<span class="nc" id="L55">	protected AbstractEngine(PrologProvider provider) {</span>
-<span class="nc" id="L56">		this.provider = provider;</span>
-<span class="nc" id="L57">	}</span>
+<span class="fc" id="L55">	protected AbstractEngine(PrologProvider provider) {</span>
+<span class="fc" id="L56">		this.provider = provider;</span>
+<span class="fc" id="L57">	}</span>
 
 	public final PrologProvider getProvider() {
-<span class="nc" id="L60">		return provider;</span>
+<span class="fc" id="L60">		return provider;</span>
 	}
 
 	public final void persist(Writer writer) {
@@ -67,8 +67,8 @@ public abstract class AbstractEngine implements PrologEngine {
 <span class="nc" id="L67">				writer.write(&quot;&quot; + prologClause + &quot;&quot;);</span>
 <span class="nc" id="L68">			} catch (IOException e) {</span>
 <span class="nc" id="L69">				getLogger().error(getClass(), IO, e);</span>
-			}
-		}
+<span class="nc" id="L70">			}</span>
+<span class="nc" id="L71">		}</span>
 <span class="nc" id="L72">	}</span>
 
 	public final boolean unify(PrologTerm t1, PrologTerm t2) {
@@ -76,7 +76,7 @@ public abstract class AbstractEngine implements PrologEngine {
 	}
 
 	public Map&lt;String, PrologTerm&gt; match(PrologTerm t1, PrologTerm t2) {
-<span class="nc" id="L79">		return queryOne(t1 + &quot;=&quot; + t2);</span>
+<span class="fc" id="L79">		return queryOne(t1 + &quot;=&quot; + t2);</span>
 	}
 
 	public final boolean contains(String goal) {
@@ -92,15 +92,15 @@ public abstract class AbstractEngine implements PrologEngine {
 	}
 
 	public final Map&lt;String, PrologTerm&gt; queryOne(String goal) {
-<span class="nc" id="L95">		return query(goal).oneVariablesSolution();</span>
+<span class="fc" id="L95">		return query(goal).oneVariablesSolution();</span>
 	}
 
 	public final Map&lt;String, PrologTerm&gt; queryOne(PrologTerm goal) {
-<span class="nc" id="L99">		return query(goal).oneVariablesSolution();</span>
+<span class="fc" id="L99">		return query(goal).oneVariablesSolution();</span>
 	}
 
 	public final Map&lt;String, PrologTerm&gt; queryOne(PrologTerm goal, PrologTerm... goals) {
-<span class="nc" id="L103">		return query(goal, goals).oneVariablesSolution();</span>
+<span class="fc" id="L103">		return query(goal, goals).oneVariablesSolution();</span>
 	}
 
 	public final List&lt;Map&lt;String, PrologTerm&gt;&gt; queryN(int n, String goal) {
@@ -116,15 +116,15 @@ public abstract class AbstractEngine implements PrologEngine {
 	}
 
 	public final List&lt;Map&lt;String, PrologTerm&gt;&gt; queryAll(String goal) {
-<span class="nc" id="L119">		return query(goal).all();</span>
+<span class="fc" id="L119">		return query(goal).all();</span>
 	}
 
 	public final List&lt;Map&lt;String, PrologTerm&gt;&gt; queryAll(PrologTerm goal) {
-<span class="nc" id="L123">		return query(goal).all();</span>
+<span class="fc" id="L123">		return query(goal).all();</span>
 	}
 
 	public final List&lt;Map&lt;String, PrologTerm&gt;&gt; queryAll(PrologTerm goal, PrologTerm... goals) {
-<span class="nc" id="L127">		return query(goal, goals).all();</span>
+<span class="fc" id="L127">		return query(goal, goals).all();</span>
 	}
 
 	public final Map&lt;String, List&lt;PrologClause&gt;&gt; getProgramMap() {
@@ -136,38 +136,38 @@ public abstract class AbstractEngine implements PrologEngine {
 <span class="nc" id="L136">				l = new ArrayList&lt;PrologClause&gt;();</span>
 <span class="nc" id="L137">				l.add(clause);</span>
 <span class="nc" id="L138">				m.put(key, l);</span>
-<span class="nc" id="L139">			} else {</span>
+			} else {
 <span class="nc" id="L140">				l.add(clause);</span>
 			}
-		}
+<span class="nc" id="L142">		}</span>
 <span class="nc" id="L143">		return m;</span>
 	}
 
 	public final Set&lt;PrologClause&gt; getProgramClauses() {
-<span class="nc" id="L147">		Set&lt;PrologClause&gt; c = new LinkedHashSet&lt;PrologClause&gt;();</span>
-<span class="nc bnc" id="L148" title="All 2 branches missed.">		for (PrologClause prologClause : this) {</span>
-<span class="nc" id="L149">			c.add(prologClause);</span>
-		}
-<span class="nc" id="L151">		return c;</span>
+<span class="fc" id="L147">		Set&lt;PrologClause&gt; c = new LinkedHashSet&lt;PrologClause&gt;();</span>
+<span class="fc bfc" id="L148" title="All 2 branches covered.">		for (PrologClause prologClause : this) {</span>
+<span class="fc" id="L149">			c.add(prologClause);</span>
+<span class="fc" id="L150">		}</span>
+<span class="fc" id="L151">		return c;</span>
 	}
 
 	public final boolean isProgramEmpty() {
-<span class="nc bnc" id="L155" title="All 2 branches missed.">		return getProgramSize() == 0;</span>
+<span class="fc bfc" id="L155" title="All 2 branches covered.">		return getProgramSize() == 0;</span>
 	}
 
 	public final Set&lt;PrologIndicator&gt; currentPredicates() {
-<span class="nc" id="L159">		Set&lt;PrologIndicator&gt; pis = new HashSet&lt;PrologIndicator&gt;();</span>
-<span class="nc" id="L160">		pis.addAll(getPredicates());</span>
-<span class="nc" id="L161">		pis.addAll(getBuiltIns());</span>
-<span class="nc" id="L162">		return pis;</span>
+<span class="fc" id="L159">		Set&lt;PrologIndicator&gt; pis = new HashSet&lt;PrologIndicator&gt;();</span>
+<span class="fc" id="L160">		pis.addAll(getPredicates());</span>
+<span class="fc" id="L161">		pis.addAll(getBuiltIns());</span>
+<span class="fc" id="L162">		return pis;</span>
 	}
 
 	public final DefaultQueryBuilder newQueryBuilder() {
-<span class="nc" id="L166">		return new DefaultQueryBuilder(this);</span>
+<span class="fc" id="L166">		return new DefaultQueryBuilder(this);</span>
 	}
 
 	public final DefaultClauseBuilder newClauseBuilder() {
-<span class="nc" id="L170">		return new DefaultClauseBuilder(this);</span>
+<span class="fc" id="L170">		return new DefaultClauseBuilder(this);</span>
 	}
 
 	public final boolean runOnOSX() {
@@ -202,7 +202,7 @@ public abstract class AbstractEngine implements PrologEngine {
 	}
 
 	protected final &lt;K extends PrologTerm&gt; K toTerm(Object o, Class&lt;K&gt; from) {
-<span class="nc" id="L205">		return provider.toTerm(o, from);</span>
+<span class="fc" id="L205">		return provider.toTerm(o, from);</span>
 	}
 
 	protected final &lt;K extends PrologTerm, V extends Object&gt; Map&lt;String, PrologTerm&gt;[] toTermMapArray(
@@ -211,11 +211,11 @@ public abstract class AbstractEngine implements PrologEngine {
 	}
 
 	protected final &lt;K&gt; K fromTerm(PrologTerm term, Class&lt;K&gt; to) {
-<span class="nc" id="L214">		return provider.fromTerm(term, to);</span>
+<span class="fc" id="L214">		return provider.fromTerm(term, to);</span>
 	}
 
 	protected final &lt;K&gt; K fromTerm(PrologTerm head, PrologTerm[] body, Class&lt;K&gt; to) {
-<span class="nc" id="L218">		return provider.fromTerm(head, body, to);</span>
+<span class="fc" id="L218">		return provider.fromTerm(head, body, to);</span>
 	}
 
 	protected final String removeQuoted(String functor) {
@@ -261,20 +261,20 @@ public abstract class AbstractEngine implements PrologEngine {
 		private PrologClause last;
 		private final Iterator&lt;PrologClause&gt; i;
 
-<span class="nc" id="L264">		public PrologProgramIterator(Collection&lt;PrologClause&gt; cls) {</span>
-<span class="nc" id="L265">			i = cls.iterator();</span>
-<span class="nc" id="L266">		}</span>
+<span class="fc" id="L264">		public PrologProgramIterator(Collection&lt;PrologClause&gt; cls) {</span>
+<span class="fc" id="L265">			i = cls.iterator();</span>
+<span class="fc" id="L266">		}</span>
 
 		public boolean hasNext() {
-<span class="nc" id="L269">			return i.hasNext();</span>
+<span class="fc" id="L269">			return i.hasNext();</span>
 		}
 
 		public PrologClause next() {
-<span class="nc bnc" id="L273" title="All 2 branches missed.">			if (!i.hasNext()) {</span>
+<span class="pc bpc" id="L273" title="1 of 2 branches missed.">			if (!i.hasNext()) {</span>
 <span class="nc" id="L274">				throw new NoSuchElementException();</span>
 			}
-<span class="nc" id="L276">			last = i.next();</span>
-<span class="nc" id="L277">			return last;</span>
+<span class="fc" id="L276">			last = i.next();</span>
+<span class="fc" id="L277">			return last;</span>
 		}
 
 		@Override
