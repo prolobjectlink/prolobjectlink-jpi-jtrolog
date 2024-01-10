@@ -55,30 +55,30 @@ public abstract class AbstractJavaConverter implements PrologJavaConverter {
 
 	private final PrologProvider provider;
 
-<span class="fc" id="L58">	protected AbstractJavaConverter(PrologProvider provider) {</span>
-<span class="fc" id="L59">		this.provider = provider;</span>
-<span class="fc" id="L60">	}</span>
+<span class="nc" id="L58">	protected AbstractJavaConverter(PrologProvider provider) {</span>
+<span class="nc" id="L59">		this.provider = provider;</span>
+<span class="nc" id="L60">	}</span>
 
 	public final boolean containQuotes(String functor) {
-<span class="pc bpc" id="L63" title="2 of 4 branches missed.">		if (functor != null &amp;&amp; !functor.isEmpty()) {</span>
-<span class="pc bpc" id="L64" title="3 of 4 branches missed.">			return functor.startsWith(&quot;\'&quot;) &amp;&amp; functor.endsWith(&quot;\'&quot;);</span>
+<span class="nc bnc" id="L63" title="All 4 branches missed.">		if (functor != null &amp;&amp; !functor.isEmpty()) {</span>
+<span class="nc bnc" id="L64" title="All 4 branches missed.">			return functor.startsWith(&quot;\'&quot;) &amp;&amp; functor.endsWith(&quot;\'&quot;);</span>
 		}
 <span class="nc" id="L66">		return false;</span>
 	}
 
 	public final String removeQuotes(String functor) {
-<span class="pc bpc" id="L70" title="1 of 2 branches missed.">		if (containQuotes(functor)) {</span>
+<span class="nc bnc" id="L70" title="All 2 branches missed.">		if (containQuotes(functor)) {</span>
 <span class="nc" id="L71">			return functor.substring(1, functor.length() - 1);</span>
 		}
-<span class="fc" id="L73">		return functor;</span>
+<span class="nc" id="L73">		return functor;</span>
 	}
 
 	public final Object toObject(PrologTerm prologTerm) {
-<span class="pc bpc" id="L77" title="1 of 2 branches missed.">		if (prologTerm == null) {</span>
+<span class="nc bnc" id="L77" title="All 2 branches missed.">		if (prologTerm == null) {</span>
 <span class="nc" id="L78">			return null;</span>
 		}
 
-<span class="pc bpc" id="L81" title="11 of 13 branches missed.">		switch (prologTerm.getType()) {</span>
+<span class="nc bnc" id="L81" title="All 13 branches missed.">		switch (prologTerm.getType()) {</span>
 		case NIL_TYPE:
 <span class="nc" id="L83">			return null;</span>
 		case TRUE_TYPE:
@@ -86,9 +86,9 @@ public abstract class AbstractJavaConverter implements PrologJavaConverter {
 		case FALSE_TYPE:
 <span class="nc" id="L87">			return false;</span>
 		case ATOM_TYPE:
-<span class="fc" id="L89">			return removeQuotes(prologTerm.getFunctor());</span>
+<span class="nc" id="L89">			return removeQuotes(prologTerm.getFunctor());</span>
 		case INTEGER_TYPE:
-<span class="fc" id="L91">			return ((PrologInteger) prologTerm).getIntegerValue();</span>
+<span class="nc" id="L91">			return ((PrologInteger) prologTerm).getIntegerValue();</span>
 		case FLOAT_TYPE:
 <span class="nc" id="L93">			return ((PrologFloat) prologTerm).getFloatValue();</span>
 		case LONG_TYPE:
@@ -118,16 +118,16 @@ public abstract class AbstractJavaConverter implements PrologJavaConverter {
 
 	public final PrologTerm toTerm(Object object) {
 		// null pointer
-<span class="pc bpc" id="L121" title="1 of 2 branches missed.">		if (object == null) {</span>
+<span class="nc bnc" id="L121" title="All 2 branches missed.">		if (object == null) {</span>
 <span class="nc" id="L122">			return provider.prologNil();</span>
 		}
 
 		// string data type
-<span class="pc bpc" id="L126" title="1 of 2 branches missed.">		else if (object instanceof String) {</span>
-<span class="fc bfc" id="L127" title="All 2 branches covered.">			if (((String) object).matches(&quot;[A-Z_]*&quot;)) {</span>
-<span class="fc" id="L128">				return provider.newVariable(&quot;&quot; + (String) object + &quot;&quot;, 0);</span>
+<span class="nc bnc" id="L126" title="All 2 branches missed.">		else if (object instanceof String) {</span>
+<span class="nc bnc" id="L127" title="All 2 branches missed.">			if (((String) object).matches(&quot;[A-Z_]*&quot;)) {</span>
+<span class="nc" id="L128">				return provider.newVariable(&quot;&quot; + (String) object + &quot;&quot;, 0);</span>
 			}
-<span class="fc" id="L130">			return provider.newAtom(&quot;&quot; + (String) object + &quot;&quot;);</span>
+<span class="nc" id="L130">			return provider.newAtom(&quot;&quot; + (String) object + &quot;&quot;);</span>
 		}
 
 		// primitives and wrappers data types
@@ -175,11 +175,11 @@ public abstract class AbstractJavaConverter implements PrologJavaConverter {
 	}
 
 	public final Map&lt;String, Object&gt; toObjectMap(Map&lt;String, PrologTerm&gt; map) {
-<span class="fc" id="L178">		Map&lt;String, Object&gt; objects = new HashMap&lt;String, Object&gt;(map.size());</span>
-<span class="fc bfc" id="L179" title="All 2 branches covered.">		for (Entry&lt;String, PrologTerm&gt; entry : map.entrySet()) {</span>
-<span class="fc" id="L180">			objects.put(entry.getKey(), toObject(entry.getValue()));</span>
-<span class="fc" id="L181">		}</span>
-<span class="fc" id="L182">		return objects;</span>
+<span class="nc" id="L178">		Map&lt;String, Object&gt; objects = new HashMap&lt;String, Object&gt;(map.size());</span>
+<span class="nc bnc" id="L179" title="All 2 branches missed.">		for (Entry&lt;String, PrologTerm&gt; entry : map.entrySet()) {</span>
+<span class="nc" id="L180">			objects.put(entry.getKey(), toObject(entry.getValue()));</span>
+		}
+<span class="nc" id="L182">		return objects;</span>
 	}
 
 	public final List&lt;Object&gt; toObjectList(PrologTerm[] terms) {

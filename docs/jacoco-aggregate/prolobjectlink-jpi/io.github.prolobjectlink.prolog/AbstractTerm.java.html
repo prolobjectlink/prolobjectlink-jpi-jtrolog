@@ -63,10 +63,10 @@ public abstract class AbstractTerm implements PrologTerm {
 	protected int type;
 	protected final PrologProvider provider;
 
-<span class="fc" id="L66">	protected AbstractTerm(int type, PrologProvider provider) {</span>
-<span class="fc" id="L67">		this.type = type;</span>
-<span class="fc" id="L68">		this.provider = provider;</span>
-<span class="fc" id="L69">	}</span>
+<span class="nc" id="L66">	protected AbstractTerm(int type, PrologProvider provider) {</span>
+<span class="nc" id="L67">		this.type = type;</span>
+<span class="nc" id="L68">		this.provider = provider;</span>
+<span class="nc" id="L69">	}</span>
 
 	protected final void checkIndex(int index) {
 <span class="nc bnc" id="L72" title="All 2 branches missed.">		if (index &lt; 0) {</span>
@@ -75,10 +75,10 @@ public abstract class AbstractTerm implements PrologTerm {
 <span class="nc" id="L75">	}</span>
 
 	protected final void checkIndex(int index, int max) {
-<span class="pc bpc" id="L78" title="1 of 4 branches missed.">		if (index &lt; 0 || index &gt; max) {</span>
-<span class="fc" id="L79">			throw new ArrayIndexOutOfBoundsException(index);</span>
+<span class="nc bnc" id="L78" title="All 4 branches missed.">		if (index &lt; 0 || index &gt; max) {</span>
+<span class="nc" id="L79">			throw new ArrayIndexOutOfBoundsException(index);</span>
 		}
-<span class="fc" id="L81">	}</span>
+<span class="nc" id="L81">	}</span>
 
 	protected final String removeQuoted(String functor) {
 <span class="nc bnc" id="L84" title="All 6 branches missed.">		if (functor != null &amp;&amp; functor.startsWith(&quot;\'&quot;) &amp;&amp; functor.endsWith(&quot;\'&quot;)) {</span>
@@ -88,7 +88,7 @@ public abstract class AbstractTerm implements PrologTerm {
 	}
 
 	protected final &lt;K extends PrologTerm&gt; K toTerm(Object o, Class&lt;K&gt; from) {
-<span class="fc" id="L91">		return provider.toTerm(o, from);</span>
+<span class="nc" id="L91">		return provider.toTerm(o, from);</span>
 	}
 
 	protected final &lt;K extends PrologTerm&gt; K[] toTermArray(Object[] os, Class&lt;K[]&gt; from) {
@@ -96,7 +96,7 @@ public abstract class AbstractTerm implements PrologTerm {
 	}
 
 	protected final &lt;K&gt; K fromTerm(PrologTerm term, Class&lt;K&gt; to) {
-<span class="fc" id="L99">		return provider.fromTerm(term, to);</span>
+<span class="nc" id="L99">		return provider.fromTerm(term, to);</span>
 	}
 
 	protected final &lt;K&gt; K[] fromTermArray(PrologTerm[] terms, Class&lt;K[]&gt; to) {
@@ -108,29 +108,29 @@ public abstract class AbstractTerm implements PrologTerm {
 	}
 
 	public PrologTerm getArgument(int index) {
-<span class="fc" id="L111">		PrologTerm[] array = getArguments();</span>
-<span class="fc" id="L112">		checkIndex(index, array.length);</span>
-<span class="fc" id="L113">		return array[index];</span>
+<span class="nc" id="L111">		PrologTerm[] array = getArguments();</span>
+<span class="nc" id="L112">		checkIndex(index, array.length);</span>
+<span class="nc" id="L113">		return array[index];</span>
 	}
 
 	public final String getIndicator() {
-<span class="fc" id="L117">		return getFunctor() + &quot;/&quot; + getArity();</span>
+<span class="nc" id="L117">		return getFunctor() + &quot;/&quot; + getArity();</span>
 	}
 
 	public final boolean hasIndicator(String functor, int arity) {
-<span class="fc bfc" id="L121" title="All 4 branches covered.">		return getFunctor().equals(functor) &amp;&amp; getArity() == arity;</span>
+<span class="nc bnc" id="L121" title="All 4 branches missed.">		return getFunctor().equals(functor) &amp;&amp; getArity() == arity;</span>
 	}
 
 	public PrologTerm getTerm() {
-<span class="fc" id="L125">		return this;</span>
+<span class="nc" id="L125">		return this;</span>
 	}
 
 	public final int getType() {
-<span class="fc" id="L129">		return type;</span>
+<span class="nc" id="L129">		return type;</span>
 	}
 
 	public final PrologProvider getProvider() {
-<span class="fc" id="L133">		return provider;</span>
+<span class="nc" id="L133">		return provider;</span>
 	}
 
 	/**
@@ -161,16 +161,16 @@ public abstract class AbstractTerm implements PrologTerm {
 	 * @since 1.1
 	 */
 	protected final &lt;T extends PrologTerm&gt; T cast(PrologTerm term) {
-<span class="fc" id="L164">		return (T) term;</span>
+<span class="nc" id="L164">		return (T) term;</span>
 	}
 
 	public final &lt;T extends PrologTerm&gt; T cast() {
-<span class="fc" id="L168">		return cast(this);</span>
+<span class="nc" id="L168">		return cast(this);</span>
 	}
 
 	public Object getObject() {
-<span class="fc" id="L172">		PrologTerm term = this;</span>
-<span class="pc bpc" id="L173" title="18 of 19 branches missed.">		switch (term.getType()) {</span>
+<span class="nc" id="L172">		PrologTerm term = this;</span>
+<span class="nc bnc" id="L173" title="All 19 branches missed.">		switch (term.getType()) {</span>
 		case NIL_TYPE:
 <span class="nc" id="L175">			return null;</span>
 		case CUT_TYPE:
@@ -212,16 +212,16 @@ public abstract class AbstractTerm implements PrologTerm {
 		case MIXIN_TYPE:
 <span class="nc" id="L213">			return &quot;class &quot; + term.getFunctor();</span>
 		default:
-<span class="fc" id="L215">			return null;</span>
+<span class="nc" id="L215">			return null;</span>
 		}
 	}
 
 	public final boolean isEntry() {
-<span class="fc bfc" id="L220" title="All 2 branches covered.">		return getType() == MAP_ENTRY_TYPE;</span>
+<span class="nc bnc" id="L220" title="All 2 branches missed.">		return getType() == MAP_ENTRY_TYPE;</span>
 	}
 
 	public final boolean isMap() {
-<span class="fc bfc" id="L224" title="All 2 branches covered.">		return getType() == MAP_TYPE;</span>
+<span class="nc bnc" id="L224" title="All 2 branches missed.">		return getType() == MAP_TYPE;</span>
 	}
 
 	public boolean isField() {
@@ -245,11 +245,11 @@ public abstract class AbstractTerm implements PrologTerm {
 	}
 
 	public boolean isVariableBound() {
-<span class="pc bpc" id="L248" title="1 of 4 branches missed.">		return isVariable() &amp;&amp; getTerm() != this;</span>
+<span class="nc bnc" id="L248" title="All 4 branches missed.">		return isVariable() &amp;&amp; getTerm() != this;</span>
 	}
 
 	public boolean isVariableNotBound() {
-<span class="pc bpc" id="L252" title="2 of 4 branches missed.">		return isVariable() &amp;&amp; getTerm() == this;</span>
+<span class="nc bnc" id="L252" title="All 4 branches missed.">		return isVariable() &amp;&amp; getTerm() == this;</span>
 	}
 
 	public final boolean isClause() {
@@ -267,17 +267,17 @@ public abstract class AbstractTerm implements PrologTerm {
 	 * @return list of substitutions.
 	 */
 	public final Map&lt;String, PrologTerm&gt; match(PrologTerm term) {
-<span class="fc" id="L270">		Deque&lt;PrologTerm&gt; stack = new ArrayDeque&lt;PrologTerm&gt;();</span>
-<span class="pc bpc" id="L271" title="1 of 2 branches missed.">		if (unify(term, stack)) {</span>
-<span class="fc" id="L272">			int size = stack.size();</span>
-<span class="fc" id="L273">			HashMap&lt;String, PrologTerm&gt; substitution = new HashMap&lt;String, PrologTerm&gt;(size);</span>
-<span class="fc bfc" id="L274" title="All 2 branches covered.">			while (size &gt; 0) {</span>
-<span class="fc" id="L275">				PrologVariable variable = (PrologVariable) stack.pop();</span>
-<span class="fc" id="L276">				substitution.put(variable.getName(), variable.getTerm());</span>
+<span class="nc" id="L270">		Deque&lt;PrologTerm&gt; stack = new ArrayDeque&lt;PrologTerm&gt;();</span>
+<span class="nc bnc" id="L271" title="All 2 branches missed.">		if (unify(term, stack)) {</span>
+<span class="nc" id="L272">			int size = stack.size();</span>
+<span class="nc" id="L273">			HashMap&lt;String, PrologTerm&gt; substitution = new HashMap&lt;String, PrologTerm&gt;(size);</span>
+<span class="nc bnc" id="L274" title="All 2 branches missed.">			while (size &gt; 0) {</span>
+<span class="nc" id="L275">				PrologVariable variable = (PrologVariable) stack.pop();</span>
+<span class="nc" id="L276">				substitution.put(variable.getName(), variable.getTerm());</span>
 				// variable.unbind();
-<span class="fc" id="L278">				size--;</span>
-<span class="fc" id="L279">			}</span>
-<span class="fc" id="L280">			return substitution;</span>
+<span class="nc" id="L278">				size--;</span>
+			}
+<span class="nc" id="L280">			return substitution;</span>
 		}
 <span class="nc" id="L282">		return new HashMap&lt;String, PrologTerm&gt;();</span>
 	}
@@ -304,23 +304,23 @@ public abstract class AbstractTerm implements PrologTerm {
 	 */
 	private boolean unify(PrologTerm term, Deque&lt;PrologTerm&gt; stack) throws PrologError {
 
-<span class="fc" id="L307">		PrologTerm thisTerm = this;</span>
-<span class="fc" id="L308">		PrologTerm otherTerm = term;</span>
+<span class="nc" id="L307">		PrologTerm thisTerm = this;</span>
+<span class="nc" id="L308">		PrologTerm otherTerm = term;</span>
 
-<span class="pc bpc" id="L310" title="1 of 2 branches missed.">		if (thisTerm.isVariableBound()) {</span>
+<span class="nc bnc" id="L310" title="All 2 branches missed.">		if (thisTerm.isVariableBound()) {</span>
 <span class="nc" id="L311">			return ((AbstractTerm) thisTerm.getTerm()).unify(otherTerm, stack);</span>
 		}
 
-<span class="pc bpc" id="L314" title="1 of 2 branches missed.">		else if (otherTerm.isVariableBound()) {</span>
+<span class="nc bnc" id="L314" title="All 2 branches missed.">		else if (otherTerm.isVariableBound()) {</span>
 <span class="nc" id="L315">			return ((AbstractTerm) otherTerm.getTerm()).unify(thisTerm, stack);</span>
 		}
 
 		// current term is a free variable
-<span class="pc bpc" id="L319" title="1 of 2 branches missed.">		else if (thisTerm.isVariableNotBound()) {</span>
+<span class="nc bnc" id="L319" title="All 2 branches missed.">		else if (thisTerm.isVariableNotBound()) {</span>
 			// if (!thisTerm.occurs(otherTerm)) {
 			// thisTerm.bind(otherTerm);
-<span class="fc" id="L322">			stack.push(thisTerm);</span>
-<span class="fc" id="L323">			return true;</span>
+<span class="nc" id="L322">			stack.push(thisTerm);</span>
+<span class="nc" id="L323">			return true;</span>
 			// }
 		}
 

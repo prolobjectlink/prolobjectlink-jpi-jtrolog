@@ -33,24 +33,24 @@ package io.github.prolobjectlink.prolog;
 final class DefaultQueryBuilder extends AbstractBuilder implements PrologQueryBuilder {
 
 	DefaultQueryBuilder(PrologEngine engine) {
-<span class="fc" id="L36">		super(engine);</span>
-<span class="fc" id="L37">	}</span>
+<span class="nc" id="L36">		super(engine);</span>
+<span class="nc" id="L37">	}</span>
 
 	public PrologQueryBuilder begin(String functor, PrologTerm... arguments) {
-<span class="fc" id="L40">		append(functor, arguments);</span>
-<span class="fc" id="L41">		return this;</span>
+<span class="nc" id="L40">		append(functor, arguments);</span>
+<span class="nc" id="L41">		return this;</span>
 	}
 
 	public PrologQueryBuilder begin(PrologTerm term) {
-<span class="fc" id="L45">		append(term);</span>
-<span class="fc" id="L46">		return this;</span>
+<span class="nc" id="L45">		append(term);</span>
+<span class="nc" id="L46">		return this;</span>
 	}
 
 	public PrologQueryBuilder comma(PrologTerm body) {
-<span class="fc" id="L50">		append(',');</span>
-<span class="fc" id="L51">		append(' ');</span>
-<span class="fc" id="L52">		append(body);</span>
-<span class="fc" id="L53">		return this;</span>
+<span class="nc" id="L50">		append(',');</span>
+<span class="nc" id="L51">		append(' ');</span>
+<span class="nc" id="L52">		append(body);</span>
+<span class="nc" id="L53">		return this;</span>
 	}
 
 	public PrologQueryBuilder comma(String functor, PrologTerm... arguments) {
@@ -68,10 +68,10 @@ final class DefaultQueryBuilder extends AbstractBuilder implements PrologQueryBu
 	}
 
 	public PrologQueryBuilder semicolon(PrologTerm term) {
-<span class="fc" id="L71">		append(';');</span>
-<span class="fc" id="L72">		append(' ');</span>
-<span class="fc" id="L73">		append(term);</span>
-<span class="fc" id="L74">		return this;</span>
+<span class="nc" id="L71">		append(';');</span>
+<span class="nc" id="L72">		append(' ');</span>
+<span class="nc" id="L73">		append(term);</span>
+<span class="nc" id="L74">		return this;</span>
 	}
 
 	public PrologQueryBuilder semicolon(String functor, PrologTerm... arguments) {
@@ -89,9 +89,9 @@ final class DefaultQueryBuilder extends AbstractBuilder implements PrologQueryBu
 	}
 
 	public PrologQuery query() {
-<span class="fc" id="L92">		String q = &quot;&quot; + builder + &quot;&quot;;</span>
-<span class="fc" id="L93">		builder = new StringBuilder();</span>
-<span class="fc" id="L94">		return engine.query(q);</span>
+<span class="nc" id="L92">		String q = &quot;&quot; + builder + &quot;&quot;;</span>
+<span class="nc" id="L93">		builder = new StringBuilder();</span>
+<span class="nc" id="L94">		return engine.query(q);</span>
 	}
 
 	public String getQueryString() {

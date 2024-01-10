@@ -39,31 +39,31 @@ abstract class AbstractBuilder implements PrologBuilder {
 	protected final PrologEngine engine;
 	private final PrologProvider provider;
 
-<span class="fc" id="L42">	AbstractBuilder(PrologEngine engine) {</span>
-<span class="fc" id="L43">		this.provider = engine.getProvider();</span>
-<span class="fc" id="L44">		this.builder = new StringBuilder();</span>
-<span class="fc" id="L45">		this.engine = engine;</span>
-<span class="fc" id="L46">	}</span>
+<span class="nc" id="L42">	AbstractBuilder(PrologEngine engine) {</span>
+<span class="nc" id="L43">		this.provider = engine.getProvider();</span>
+<span class="nc" id="L44">		this.builder = new StringBuilder();</span>
+<span class="nc" id="L45">		this.engine = engine;</span>
+<span class="nc" id="L46">	}</span>
 
 	protected final void append(Object object) {
-<span class="fc" id="L49">		builder.append(object);</span>
-<span class="fc" id="L50">	}</span>
+<span class="nc" id="L49">		builder.append(object);</span>
+<span class="nc" id="L50">	}</span>
 
 	protected final void append(String functor, PrologTerm... arguments) {
-<span class="pc bpc" id="L53" title="2 of 4 branches missed.">		if (arguments != null &amp;&amp; arguments.length &gt; 0) {</span>
-<span class="fc" id="L54">			builder.append(provider.newStructure(functor, arguments));</span>
-		} else {
+<span class="nc bnc" id="L53" title="All 4 branches missed.">		if (arguments != null &amp;&amp; arguments.length &gt; 0) {</span>
+<span class="nc" id="L54">			builder.append(provider.newStructure(functor, arguments));</span>
+<span class="nc" id="L55">		} else {</span>
 <span class="nc" id="L56">			builder.append(provider.newAtom(functor));</span>
 		}
-<span class="fc" id="L58">	}</span>
+<span class="nc" id="L58">	}</span>
 
 	protected final void append(Object left, String operator, Object right) {
-<span class="fc" id="L61">		builder.append(left);</span>
-<span class="fc" id="L62">		append(' ');</span>
-<span class="fc" id="L63">		builder.append(operator);</span>
-<span class="fc" id="L64">		append(' ');</span>
-<span class="fc" id="L65">		builder.append(right);</span>
-<span class="fc" id="L66">	}</span>
+<span class="nc" id="L61">		builder.append(left);</span>
+<span class="nc" id="L62">		append(' ');</span>
+<span class="nc" id="L63">		builder.append(operator);</span>
+<span class="nc" id="L64">		append(' ');</span>
+<span class="nc" id="L65">		builder.append(right);</span>
+<span class="nc" id="L66">	}</span>
 
 	public final PrologEngine getEngine() {
 <span class="nc" id="L69">		return engine;</span>

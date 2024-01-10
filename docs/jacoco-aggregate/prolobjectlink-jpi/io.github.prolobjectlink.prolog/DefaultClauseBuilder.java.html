@@ -33,34 +33,34 @@ package io.github.prolobjectlink.prolog;
 final class DefaultClauseBuilder extends AbstractBuilder implements PrologClauseBuilder {
 
 	DefaultClauseBuilder(PrologEngine engine) {
-<span class="fc" id="L36">		super(engine);</span>
-<span class="fc" id="L37">	}</span>
+<span class="nc" id="L36">		super(engine);</span>
+<span class="nc" id="L37">	}</span>
 
 	public PrologClauseBuilder begin(PrologTerm term) {
-<span class="fc" id="L40">		append(' ');</span>
-<span class="fc" id="L41">		append(term);</span>
-<span class="fc" id="L42">		return this;</span>
+<span class="nc" id="L40">		append(' ');</span>
+<span class="nc" id="L41">		append(term);</span>
+<span class="nc" id="L42">		return this;</span>
 	}
 
 	public PrologClauseBuilder begin(String functor, PrologTerm... arguments) {
-<span class="fc" id="L46">		append(functor, arguments);</span>
-<span class="fc" id="L47">		return this;</span>
+<span class="nc" id="L46">		append(functor, arguments);</span>
+<span class="nc" id="L47">		return this;</span>
 	}
 
 	public PrologClauseBuilder neck(PrologTerm body) {
-<span class="fc" id="L51">		append(':');</span>
-<span class="fc" id="L52">		append('-');</span>
-<span class="fc" id="L53">		append(' ');</span>
-<span class="fc" id="L54">		append(body);</span>
-<span class="fc" id="L55">		return this;</span>
+<span class="nc" id="L51">		append(':');</span>
+<span class="nc" id="L52">		append('-');</span>
+<span class="nc" id="L53">		append(' ');</span>
+<span class="nc" id="L54">		append(body);</span>
+<span class="nc" id="L55">		return this;</span>
 	}
 
 	public PrologClauseBuilder neck(String functor, PrologTerm... arguments) {
-<span class="fc" id="L59">		append(':');</span>
-<span class="fc" id="L60">		append('-');</span>
-<span class="fc" id="L61">		append(' ');</span>
-<span class="fc" id="L62">		append(functor, arguments);</span>
-<span class="fc" id="L63">		return this;</span>
+<span class="nc" id="L59">		append(':');</span>
+<span class="nc" id="L60">		append('-');</span>
+<span class="nc" id="L61">		append(' ');</span>
+<span class="nc" id="L62">		append(functor, arguments);</span>
+<span class="nc" id="L63">		return this;</span>
 	}
 
 	public PrologClauseBuilder neck(PrologTerm left, String operator, int right) {
@@ -72,61 +72,61 @@ final class DefaultClauseBuilder extends AbstractBuilder implements PrologClause
 	}
 
 	public PrologClauseBuilder neck(PrologTerm left, String operator, PrologTerm right) {
-<span class="fc" id="L75">		append(':');</span>
-<span class="fc" id="L76">		append('-');</span>
-<span class="fc" id="L77">		append(' ');</span>
-<span class="fc" id="L78">		append(left, operator, right);</span>
-<span class="fc" id="L79">		return this;</span>
+<span class="nc" id="L75">		append(':');</span>
+<span class="nc" id="L76">		append('-');</span>
+<span class="nc" id="L77">		append(' ');</span>
+<span class="nc" id="L78">		append(left, operator, right);</span>
+<span class="nc" id="L79">		return this;</span>
 	}
 
 	public PrologClauseBuilder comma(PrologTerm body) {
-<span class="fc" id="L83">		append(',');</span>
-<span class="fc" id="L84">		append(' ');</span>
-<span class="fc" id="L85">		append(body);</span>
-<span class="fc" id="L86">		return this;</span>
+<span class="nc" id="L83">		append(',');</span>
+<span class="nc" id="L84">		append(' ');</span>
+<span class="nc" id="L85">		append(body);</span>
+<span class="nc" id="L86">		return this;</span>
 	}
 
 	public PrologClauseBuilder comma(String functor, PrologTerm... arguments) {
-<span class="fc" id="L90">		append(',');</span>
-<span class="fc" id="L91">		append(' ');</span>
-<span class="fc" id="L92">		append(functor, arguments);</span>
-<span class="fc" id="L93">		return this;</span>
+<span class="nc" id="L90">		append(',');</span>
+<span class="nc" id="L91">		append(' ');</span>
+<span class="nc" id="L92">		append(functor, arguments);</span>
+<span class="nc" id="L93">		return this;</span>
 	}
 
 	public PrologClauseBuilder comma(PrologTerm left, String operator, PrologTerm right) {
-<span class="fc" id="L97">		append(',');</span>
-<span class="fc" id="L98">		append(' ');</span>
-<span class="fc" id="L99">		append(left, operator, right);</span>
-<span class="fc" id="L100">		return this;</span>
+<span class="nc" id="L97">		append(',');</span>
+<span class="nc" id="L98">		append(' ');</span>
+<span class="nc" id="L99">		append(left, operator, right);</span>
+<span class="nc" id="L100">		return this;</span>
 	}
 
 	public String getClauseString() {
-<span class="fc" id="L104">		return &quot;&quot; + builder + &quot;&quot;;</span>
+<span class="nc" id="L104">		return &quot;&quot; + builder + &quot;&quot;;</span>
 	}
 
 	public boolean clause() {
-<span class="fc" id="L108">		String c = getClauseString();</span>
-<span class="fc" id="L109">		builder = new StringBuilder();</span>
-<span class="fc" id="L110">		return engine.clause(c);</span>
+<span class="nc" id="L108">		String c = getClauseString();</span>
+<span class="nc" id="L109">		builder = new StringBuilder();</span>
+<span class="nc" id="L110">		return engine.clause(c);</span>
 	}
 
 	public void asserta() {
-<span class="fc" id="L114">		String c = getClauseString();</span>
-<span class="fc" id="L115">		builder = new StringBuilder();</span>
-<span class="fc" id="L116">		engine.asserta(c);</span>
-<span class="fc" id="L117">	}</span>
+<span class="nc" id="L114">		String c = getClauseString();</span>
+<span class="nc" id="L115">		builder = new StringBuilder();</span>
+<span class="nc" id="L116">		engine.asserta(c);</span>
+<span class="nc" id="L117">	}</span>
 
 	public void assertz() {
-<span class="fc" id="L120">		String c = getClauseString();</span>
-<span class="fc" id="L121">		builder = new StringBuilder();</span>
-<span class="fc" id="L122">		engine.assertz(c);</span>
-<span class="fc" id="L123">	}</span>
+<span class="nc" id="L120">		String c = getClauseString();</span>
+<span class="nc" id="L121">		builder = new StringBuilder();</span>
+<span class="nc" id="L122">		engine.assertz(c);</span>
+<span class="nc" id="L123">	}</span>
 
 	public void retract() {
-<span class="fc" id="L126">		String c = getClauseString();</span>
-<span class="fc" id="L127">		builder = new StringBuilder();</span>
-<span class="fc" id="L128">		engine.retract(c);</span>
-<span class="fc" id="L129">	}</span>
+<span class="nc" id="L126">		String c = getClauseString();</span>
+<span class="nc" id="L127">		builder = new StringBuilder();</span>
+<span class="nc" id="L128">		engine.retract(c);</span>
+<span class="nc" id="L129">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span></div></body></html>
